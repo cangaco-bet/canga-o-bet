@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cangaço Bet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0b0614;
+            color: #ffffff;
+            padding-bottom: 90px;
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #130a24;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #1f1035;
+        }
+
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #d1d1d1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 900;
+            font-size: 16px;
+            color: #ffaa00;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .btn-entrar {
+            background: linear-gradient(135deg, #ff3b30, #ff6b00);
+            color: white;
+            border: none;
+            padding: 7px 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        /* Barra de Música */
+        .music-bar {
+            background: linear-gradient(90deg, #ff3b30, #ff9500);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4);
+        }
+
+        .music-bar button {
+            background: #fff;
+            color: #ff3b30;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 11px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Atalhos Superiores */
+        .quick-nav {
+            display: flex;
+            gap: 10px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .quick-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-pill {
+            background: linear-gradient(135deg, #261148, #3b166e);
+            padding: 8px 14px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid #4a2185;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Seções */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px 8px 16px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #ff3b30;
+        }
+
+        .see-all {
+            background: #1a0d2e;
+            border: 1px solid #2d1752;
+            color: #9a9a9a;
+            padding: 2px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Grade de Jogos */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 16px;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, #180d2b, #251245);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #33185c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            position: relative;
+            transition: transform 0.15s ease;
+        }
+
+        .game-card:active {
+            transform: scale(0.95);
+        }
+
+        .game-thumb {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #130a24;
+            margin-bottom: 4px;
+        }
+
+        .game-name {
+            font-size: 10px;
+            color: #e2d9f3;
+            text-align: center;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        /* Tela de Jogo Aberto */
+        #game-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0614;
+            z-index: 200;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .btn-back {
+            background: #ff3b30;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Menu Inferior Fixo */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #110820;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0;
+            border-top: 1px solid #211138;
+            z-index: 100;
+        }
+
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: #8c7ea6;
+            font-size: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .footer-item.active {
+            color: #ff3b30;
+        }
+
+        .footer-icon {
+            font-size: 18px;
+        }
+
+        .center-wallet {
+            background: linear-gradient(135deg, #ff3b30, #ff8400);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-top: -18px;
+            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4);
+            border: 2px solid #110820;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ficheiro de áudio local no GitHub -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="lengo-tengo.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="menu-icon">☰</div>
+        <div class="logo">🤠 CANGAÇO <span>BET</span></div>
+        <button class="btn-entrar">ENTRAR</button>
+    </header>
+
+    <!-- Barra de Música -->
+    <div class="music-bar">
+        <span>🎵 Luiz Gonzaga - Lengo Tengo</span>
+        <button id="music-btn" onclick="toggleMusic()">LIGAR SOM</button>
+    </div>
+
+    <!-- Atalhos Superiores -->
+    <div class="quick-nav">
+        <div class="nav-pill">🏆 Cangaço torneios</div>
+        <div class="nav-pill">🚀 Cangaço missões</div>
+        <div class="nav-pill">🔥 Top</div>
+    </div>
+
+    <!-- Seção TOP -->
+    <div class="section-header">
+        <div class="section-title">📊 <span>TOP</span></div>
+        <button class="see-all">Todos ➔</button>
+    </div>
+
+    <div class="games-grid">
+        <div class="game-card" onclick="openGame('Fortune Tiger')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=300&auto=format&fit=crop&q=80" alt="Fortune Tiger">
+            <div class="game-name">Fortune Tiger</div>
+        </div>
+        <div class="game-card" onclick="openGame('Aviator')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=300&auto=format&fit=crop&q=80" alt="Aviator">
+            <div class="game-name">Aviator</div>
+        </div>
+        <div class="game-card" onclick="openGame('Big Bass Bonanza')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=300&auto=format&fit=crop&q=80" alt="Big Bass Bonanza">
+            <div class="game-name">Big Bass Bonanza</div>
+        </div>
+        <div class="game-card" onclick="openGame('Gates of Olympus')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1599839575945-a9e5af0c3fae?w=300&auto=format&fit=crop&q=80" alt="Gates of Olympus">
+            <div class="game-name">Gates of Olympus</div>
+        </div>
+        <div class="game-card" onclick="openGame('Sweet Bonanza')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=300&auto=format&fit=crop&q=80" alt="Sweet Bonanza">
+            <div class="game-name">Sweet Bonanza</div>
+        </div>
+        <div class="game-card" onclick="openGame('Fortune Ox')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1563889279-052b63510c44?w=300&auto=format&fit=crop&q=80" alt="Fortune Ox">
+            <div class="game-name">Fortune Ox</div>
+        </div>
+    </div>
+
+    <!-- Seção MAIS JOGADOS -->
+    <div class="section-header" style="margin-top: 10px;">
+        <div class="section-title">🔥 <span>MAIS JOGADOS</span></div>
+        <button class="see-all">Todos ➔</button>
+    </div>
+
+    <div class="games-grid">
+        <div class="game-card" onclick="openGame('Mines')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=80" alt="Mines">
+            <div class="game-name">Mines</div>
+        </div>
+        <div class="game-card" onclick="openGame('Spaceman')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80" alt="Spaceman">
+            <div class="game-name">Spaceman</div>
+        </div>
+        <div class="game-card" onclick="openGame('Fortune Rabbit')">
+            <img class="game-thumb" src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=300&auto=format&fit=crop&q=80" alt="Fortune Rabbit">
+            <div class="game-name">Fortune Rabbit</div>
+        </div>
+    </div>
+
+    <!-- Tela do Jogo Aberto -->
+    <div id="game-screen">
+        <h1 id="playing-game-title" style="color: #ffaa00; margin-bottom: 10px;">JOGO</h1>
+        <p style="color: #a0a0a0; font-size: 14px;">A música foi pausada para você jogar.</p>
+        <button class="btn-back" onclick="closeGame()">Voltar ao Início</button>
+    </div>
+
+    <!-- Menu Inferior Fixo -->
+    <footer>
+        <button class="footer-item">
+            <span class="footer-icon">📝</span>
+            Registrar
+        </button>
+        <button class="footer-item">
+            <span class="footer-icon">🗂️</span>
+            Categorias
+        </button>
+        <div class="center-wallet">
+            💰
+        </div>
+        <button class="footer-item">
+            <span class="footer-icon">📺</span>
+            Ao Vivo
+        </button>
+        <button class="footer-item active">
+            <span class="footer-icon">🔍</span>
+            Pesquisar
+        </button>
+    </footer>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicBtn.innerText = "PAUSAR SOM";
+                }).catch(error => {
+                    console.log("Erro de reprodução:", error);
+                });
+            } else {
+                music.pause();
+                musicBtn.innerText = "LIGAR SOM";
+            }
+        }
+
+        function openGame(gameName) {
+            music.pause();
+            musicBtn.innerText = "LIGAR SOM";
+            document.getElementById('playing-game-title').innerText = gameName;
+            document.getElementById('game-screen').style.display = 'flex';
+        }
+
+        function closeGame() {
+            document.getElementById('game-screen').style.display = 'none';
+            music.play();
+            musicBtn.innerText = "PAUSAR SOM";
+        }
+    </script>
+</body>
+</html>
