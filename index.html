@@ -47,8 +47,8 @@
             padding: 12px 15px;
             border-radius: 12px;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .player-info {
@@ -57,16 +57,15 @@
             align-items: center;
             gap: 8px;
         }
-        .video-container {
-            width: 100%;
-            height: 80px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
+        .btn-som {
+            background-color: #ff4500;
+            color: white;
             border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
         }
         .categories {
             display: flex;
@@ -151,15 +150,19 @@
         <div class="player-info">
             <span>🎵</span>
             <div>
-                <div style="font-weight: bold;">Som Exclusivo</div>
-                <div style="font-size: 12px; color: #aaa;">Modo Cangaço Bet</div>
+                <div style="font-weight: bold;">Cangaço Bet Sound</div>
+                <div style="font-size: 12px; color: #aaa;">Trilha Sonora Exclusiva</div>
             </div>
         </div>
-        <!-- Leitor integrado pronto -->
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <!-- Botão direto controlado por JavaScript -->
+        <button class="btn-som" id="btnTocar" onclick="toggleAudio()">LIGAR SOM</button>
     </div>
+
+    <!-- Elemento de áudio escondido controlado pelo botão -->
+    <audio id="audioPlayer" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+        Seu navegador não suporta áudio.
+    </audio>
 
     <div class="categories">
         <div class="category-pill">🤠 Cangaço torneios</div>
@@ -195,5 +198,24 @@
         <a href="#" class="nav-item">📺<br>Ao Vivo</a>
         <a href="#" class="nav-item">🔍<br>Pesquisar</a>
     </nav>
+
+    <script>
+        function toggleAudio() {
+            var audio = document.getElementById("audioPlayer");
+            var btn = document.getElementById("btnTocar");
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.innerText = "PARAR SOM";
+                    btn.style.backgroundColor = "#d32f2f";
+                }).catch(e => {
+                    console.log("Erro ao reproduzir:", e);
+                });
+            } else {
+                audio.pause();
+                btn.innerText = "LIGAR SOM";
+                btn.style.backgroundColor = "#ff4500";
+            }
+        }
+    </script>
 </body>
 </html>
