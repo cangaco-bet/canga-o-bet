@@ -41,30 +41,46 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .player-bar {
+        .music-bar {
             background: #1e2029;
             margin: 15px;
-            padding: 15px;
+            padding: 12px 15px;
             border-radius: 12px;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            justify-content: space-between;
+            align-items: center;
             border: 1px solid #2a2d3d;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .player-info {
-            font-size: 14px;
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .music-title {
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .music-artist {
+            font-size: 11px;
+            color: #aaa;
+        }
+        .btn-music {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
+            transition: background 0.2s;
         }
-        .player-info audio {
-            width: 100%;
-            height: 40px;
-            border-radius: 8px;
-        }
-        audio::-webkit-media-controls-panel {
-            background-color: #2a2d3d;
+        .btn-music:active {
+            transform: scale(0.95);
         }
         .categories {
             display: flex;
@@ -145,20 +161,19 @@
         <button class="btn-entrar">ENTRAR</button>
     </header>
 
-    <!-- Leitor de Música atualizado com o link direto -->
-    <div class="player-bar">
-        <div class="player-info">
-            <span>🎵</span>
-            <div style="width: 100%;">
-                <div style="font-weight: bold; margin-bottom: 4px;">Famoso Ímã | O Poderoso Chatão</div>
-                <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">MC Lele JP, Poze do Rodo</div>
-                <audio controls preload="auto">
-                    <source src="https://files.catbox.moe/4plmor.mp3" type="audio/mp3">
-                    O seu navegador não suporta áudio.
-                </audio>
-            </div>
+    <!-- Barra de Música Elegante com Botão Único -->
+    <div class="music-bar">
+        <div class="music-info">
+            <span class="music-title">🎵 Famoso Ímã</span>
+            <span class="music-artist">MC Lele JP, Poze do Rodo</span>
         </div>
+        <button class="btn-music" id="btnPlayMusic" onclick="togglePlay()">
+            ▶ Reproduzir
+        </button>
     </div>
+
+    <!-- Elemento de áudio oculto -->
+    <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto"></audio>
 
     <div class="categories">
         <div class="category-pill">🤠 Cangaço torneios</div>
@@ -194,5 +209,22 @@
         <a href="#" class="nav-item">📺<br>Ao Vivo</a>
         <a href="#" class="nav-item">🔍<br>Pesquisar</a>
     </nav>
+
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const btn = document.getElementById('btnPlayMusic');
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = "⏸ Pausar";
+                btn.style.backgroundColor = "#333";
+            } else {
+                audio.pause();
+                btn.innerHTML = "▶ Reproduzir";
+                btn.style.backgroundColor = "#ff4500";
+            }
+        }
+    </script>
 </body>
 </html>
