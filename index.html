@@ -494,7 +494,7 @@
         let apostaSelecionada = null;
         let oddAtual = 0;
 
-        // Dicionário básico para tradução de nomes de times e ligas comuns para o português
+        // Dicionário ampliado para tradução de nomes de times para o português
         const traducoesTimes = {
             "Manchester City FC": "Manchester City",
             "Manchester United FC": "Manchester United",
@@ -526,7 +526,18 @@
             "PSV Eindhoven": "PSV",
             "SL Benfica": "Benfica",
             "FC Porto": "Porto",
-            "Sporting CP": "Sporting"
+            "Sporting CP": "Sporting",
+            "CR Flamengo": "Flamengo",
+            "SE Palmeiras": "Palmeiras",
+            "São Paulo FC": "São Paulo",
+            "SC Corinthians Paulista": "Corinthians",
+            "Fluminense FC": "Fluminense",
+            "Botafogo FR": "Botafogo",
+            "CR Vasco da Gama": "Vasco da Gama",
+            "Grêmio FBPA": "Grêmio",
+            "SC Internacional": "Internacional",
+            "CA Mineiro": "Atlético Mineiro",
+            "Cruzeiro EC": "Cruzeiro"
         };
 
         const traducoesLigas = {
@@ -538,7 +549,9 @@
             "Ligue 1": "Campeonato Francês",
             "Eredivisie": "Campeonato Holandês",
             "Primeira Liga": "Campeonato Português",
-            "UEFA Nations League": "Liga das Nações da UEFA"
+            "UEFA Nations League": "Liga das Nações da UEFA",
+            "Copa Libertadores": "Copa Libertadores",
+            "Campeonato Brasileiro Série A": "Brasileirão Série A"
         };
 
         function traduzirTime(nome) {
@@ -552,12 +565,16 @@
         function converterParaHorarioBrasilia(utcString) {
             if (!utcString) return "";
             try {
-                // Se a string já vier formatada apenas com hora (ex: HH:mm) ou UTC do football-data
-                let data = new Date(utcString);
+                // Garante que o formato seja reconhecido como UTC adicionando o 'Z' se faltar
+                let isoFormat = utcString;
+                if (!isoFormat.endsWith('Z') && !isoFormat.includes('+') && !isoFormat.includes('-')) {
+                    isoFormat += 'Z';
+                }
+                let data = new Date(isoFormat);
                 if (isNaN(data.getTime())) {
                     return utcString.substring(0, 5);
                 }
-                // Ajusta para o fuso de Brasília (UTC-3)
+                // Converte estritamente para o horário de Brasília (America/Sao_Paulo)
                 return data.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
             } catch (e) {
                 return utcString.substring(11, 16) || "";
@@ -639,7 +656,7 @@
 
         function renderizarPartidasNaTela(listaPartidas, container) {
             container.innerHTML = '';
-            listaPartidas.slice(0, 10).forEach(match => {
+            listaPartidas.slice(0, 15).forEach(match => {
                 const casa = match.casa;
                 const fora = match.fora;
                 const liga = match.liga;
@@ -697,7 +714,7 @@
                         const statusCurto = match.fixture.status.short;
                         let statusHora = "";
 
-                        if (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H') {
+                        if (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H' || statusCurto === 'HT') {
                             statusHora = `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>`;
                         } else {
                             statusHora = converterParaHorarioBrasilia(match.fixture.date);
@@ -712,10 +729,10 @@
                     });
                 }
             } catch (erro) {
-                console.log("Erro na API principal, tentando secundária...");
+                console.log("Erro na API principal.");
             }
 
-            // 2. TENTATIVA COM A SEGUNDA API (FOOTBALL-DATA.ORG) PARA JUNTAR OS JOGOS
+            // 2. TENTATIVA COM A SEGUNDA API (FOOTBALL-DATA.ORG)
             try {
                 const resposta2 = await fetch(`https://api.football-data.org/v4/matches`, {
                     headers: { "X-Auth-Token": footballDataApiKey }
@@ -723,7 +740,7 @@
                 const dados2 = await resposta2.json();
 
                 if (dados2.matches && dados2.matches.length > 0) {
-                    const statusExcluidosFd = ['FINISHED', 'POSTPONED', 'CANCELED', 'SUSPENDED'];
+                    const statusExcluidosFd = ['FINISHED', 'POSTPONED', 'CANCELED', 'SUSPENDED', 'AWARDED'];
                     const partidasAtivasFd = dados2.matches.filter(match => !statusExcluidosFd.includes(match.status));
 
                     partidasAtivasFd.forEach(match => {
@@ -746,7 +763,7 @@
                 console.log("Erro na API secundaria.");
             }
 
-            // EXIBIR RESULTADOS COMBINADOS DAS DUAS APIS
+            // EXIBIR RESULTADOS COMBINADOS
             if (listaFormatada.length > 0) {
                 renderizarPartidasNaTela(listaFormatada, container);
             } else {
