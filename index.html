@@ -44,7 +44,7 @@
             cursor: pointer;
         }
 
-        /* Banner Promocional Menor com Fundo e Carrossel Automático */
+        /* Banner Promocional */
         .promo-carousel-container {
             margin: 15px;
             border-radius: 12px;
@@ -148,7 +148,7 @@
             letter-spacing: 1px;
         }
 
-        /* Carrossel de Últimos Vencedores */
+        /* Vencedores */
         .winners-section {
             margin: 15px 0;
             padding: 0 15px;
@@ -244,7 +244,7 @@
             font-weight: 500;
         }
 
-        /* Modais Dinâmicos (Pesquisa, Categorias, Depósito, Registro) */
+        /* Modais */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -325,7 +325,7 @@
             color: #ff4500;
         }
 
-        /* TELA DO TIGRINHO INTEGRADA (TELA INTEIRA) */
+        /* --- TELA DO FORTUNE TIGER EM 3D/4D (EXATAMENTE COMO NA FOTO) --- */
         #tiger-game-screen {
             display: none;
             position: fixed;
@@ -336,194 +336,209 @@
             justify-content: space-between;
             align-items: center;
             overflow: hidden;
+            perspective: 1000px;
         }
-        .slot-container {
+
+        .tiger-app-container {
             width: 100%;
+            max-width: 450px;
             height: 100%;
-            background: linear-gradient(180deg, #600202 0%, #3b0000 60%, #1a0000 100%);
+            background: radial-gradient(circle, #7a0909 0%, #3b0000 70%);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-        }
-        .top-bar-game {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            font-size: 13px;
-            color: #ffcc00;
-            background: rgba(0, 0, 0, 0.3);
-        }
-        .tiger-header {
-            text-align: center;
-            position: relative;
-            margin-top: 5px;
-        }
-        .multiplier-badge {
-            display: inline-block;
-            background: #ffcc00;
-            color: #8b0000;
-            font-weight: 900;
-            font-size: 18px;
-            padding: 3px 16px;
-            border-radius: 20px;
-            border: 2px solid #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 2;
-        }
-        
-        @keyframes balancar {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-8deg); }
-            75% { transform: rotate(8deg); }
-            100% { transform: rotate(0deg); }
-        }
-        @keyframes girarBrincando {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-
-        .tiger-img-animada {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin-top: -5px;
-            position: relative;
-            z-index: 1;
-            cursor: pointer;
-            animation: balancar 1.5s ease-in-out infinite;
-            transform-origin: top center;
-            transition: filter 0.2s;
-        }
-        .tiger-img-animada.girando-ativo {
-            animation: girarBrincando 0.6s linear infinite !important;
-        }
-
-        .machine-frame {
-            background: #7a0505;
-            margin: 0 auto;
-            width: 90%;
-            max-width: 420px;
-            padding: 15px;
-            border-radius: 14px;
-            border: 3px solid #ffcc00;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
-        }
-        .tiger-reels {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            background: #ffffff;
-            padding: 12px;
-            border-radius: 10px;
-        }
-        .reel {
-            font-size: 42px;
-            background: #fcfcfc;
-            width: 30%;
-            height: 105px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
-        }
-        @keyframes tremer {
-            0% { transform: translateY(0); }
-            25% { transform: translateY(-4px); }
-            50% { transform: translateY(4px); }
-            75% { transform: translateY(-2px); }
-            100% { transform: translateY(0); }
-        }
-        .girando {
-            animation: tremer 0.12s infinite;
-        }
-        .game-message {
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffcc00;
-            text-shadow: 1px 1px 2px #000;
-            min-height: 25px;
-            margin: 5px 0;
-        }
-        .bottom-panel {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 15px 20px;
-            border-top: 2px solid #ffcc00;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
-        .stats-row {
-            display: flex;
-            justify-content: space-between;
-            background: #2b0000;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid #ffcc00;
-            font-size: 12px;
-        }
-        .stat-box span {
-            display: block;
-            font-size: 10px;
-            color: #ccc;
-            text-transform: uppercase;
-        }
-        .stat-box strong {
-            color: #00ff88;
-            font-size: 13px;
-        }
-        .controls-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .btn-side {
-            background: #7a0505;
-            color: #fff;
-            border: 2px solid #ffcc00;
-            padding: 10px 12px;
-            border-radius: 50%;
-            font-weight: bold;
-            font-size: 10px;
-            cursor: pointer;
-        }
-        .btn-girar-tiger {
-            background: radial-gradient(circle, #00ff88 0%, #008844 100%);
-            color: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
             border: 4px solid #ffcc00;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            font-size: 14px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 1px 1px 2px #000;
+            overflow-y: auto;
         }
+
         .btn-voltar-home {
             position: absolute;
-            top: 12px;
-            left: 15px;
+            top: 10px;
+            left: 10px;
             background: #2a2d3d;
             color: white;
             border: 1px solid #ffcc00;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             z-index: 50;
+        }
+
+        /* Topo do Tigre 3D/4D com telhado */
+        .tiger-roof-section {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            padding-top: 15px;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float3D {
+            0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+            50% { transform: translateY(-8px) rotateX(5deg) rotateY(-5deg) scale(1.03); filter: drop-shadow(0 15px 10px rgba(255,204,0,0.4)); }
+            100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+        }
+
+        @keyframes spin3D {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(540deg) scale(1.15); filter: drop-shadow(0 0 20px #ffcc00); }
+            100% { transform: rotateY(1080deg) scale(1); }
+        }
+
+        .tiger-img-3d {
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            animation: float3D 3s ease-in-out infinite;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .tiger-img-3d.girando-ativo {
+            animation: spin3D 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+        }
+
+        /* Estrutura dos Rolos (3x3 igual à foto) */
+        .machine-frame-img {
+            background: linear-gradient(135deg, #b8860b, #ffd700, #b8860b);
+            margin: 0 auto;
+            width: 92%;
+            max-width: 380px;
+            padding: 8px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.6);
+            border: 2px solid #fff;
+            transform: translateZ(20px);
+        }
+
+        .tiger-reels-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            background: #fdfbf7;
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .reel-cell {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 38px;
+            border: 1px solid #d4d4d4;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        @keyframes tremerRolos {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(-3px); }
+            50% { transform: translateY(3px); }
+            75% { transform: translateY(-2px); }
+            100% { transform: translateY(0); }
+        }
+        .girando-rolo {
+            animation: tremerRolos 0.1s infinite;
+        }
+
+        .win-banner-text {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 900;
+            color: #55ff99;
+            text-shadow: 0 2px 4px #000;
+            margin: 4px 0;
+            font-style: italic;
+        }
+
+        /* Painel Inferior exato da imagem */
+        .bottom-panel-img {
+            background: linear-gradient(180deg, #600202 0%, #200000 100%);
+            padding: 10px 15px;
+            border-top: 3px solid #ffcc00;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+        }
+
+        .stats-bar-img {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid #ffcc00;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item span {
+            display: block;
+            font-size: 9px;
+            color: #ffcc00;
+            text-transform: uppercase;
+        }
+
+        .stat-item strong {
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        .controls-bar-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-control-circle {
+            background: #8b0000;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        /* Botão Verde Principal 3D/4D */
+        .btn-girar-verde-3d {
+            background: radial-gradient(circle, #00ff88 0%, #008844 70%, #004422 100%);
+            color: white;
+            border: 4px solid #ffcc00;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.6), inset 0 4px 6px rgba(255,255,255,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 2px #000;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-girar-verde-3d:active {
+            transform: scale(0.92) translateY(3px);
+            box-shadow: 0 3px 10px rgba(0, 255, 136, 0.8), inset 0 2px 3px rgba(0,0,0,0.5);
         }
     </style>
 </head>
@@ -605,13 +620,6 @@
                         <div class="winner-prize">R$ 250.50 BRL</div>
                     </div>
                 </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/3kg3ao.webp" alt="Big Bass">
-                    <div class="winner-info">
-                        <div class="winner-name">Joao***</div>
-                        <div class="winner-prize">R$ 88.30 BRL</div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -662,58 +670,63 @@
         </nav>
     </div>
 
-    <!-- TELA DO JOGO FORTUNE TIGER INTEGRADA (TELA INTEIRA) -->
+    <!-- TELA DO TIGRINHO EXATA (BASEADA NA SUA FOTO) -->
     <div id="tiger-game-screen">
         <button class="btn-voltar-home" onclick="sairFortuneTiger()">← Voltar</button>
 
-        <div class="slot-container">
-            <div class="top-bar-game">
-                <span>Fortune Tiger</span>
-                <span id="relogioJogo">01:31:49</span>
+        <div class="tiger-app-container">
+            <div class="tiger-roof-section">
+                <img src="https://files.catbox.moe/gys1kk.png" alt="Tigre 3D" class="tiger-img-3d" id="tigerImage" onclick="acionarGirar()">
             </div>
 
-            <div class="tiger-header">
-                <div class="multiplier-badge">x10</div>
-                <img src="https://files.catbox.moe/gys1kk.png" alt="Tiger" class="tiger-img-animada" id="tigerImage" onclick="girarTiger(event)">
-            </div>
-
-            <div class="machine-frame">
-                <div class="tiger-reels">
-                    <div class="reel" id="reel1">💰</div>
-                    <div class="reel" id="reel2">🍊</div>
-                    <div class="reel" id="reel3">🍋</div>
+            <div class="machine-frame-img">
+                <div class="tiger-reels-grid">
+                    <div class="reel-cell" id="r1">💰</div>
+                    <div class="reel-cell" id="r2">🍊</div>
+                    <div class="reel-cell" id="r3">🍋</div>
+                    <div class="reel-cell" id="r4">🍊</div>
+                    <div class="reel-cell" id="r5">🏆</div>
+                    <div class="reel-cell" id="r6">🍊</div>
+                    <div class="reel-cell" id="r7">🏆</div>
+                    <div class="reel-cell" id="r8">🧧</div>
+                    <div class="reel-cell" id="r9">💰</div>
                 </div>
             </div>
 
-            <div class="game-message" id="gameStatus">Tente novamente!</div>
+            <div class="win-banner-text" id="gameStatus">Win up to 2500x!</div>
 
-            <div class="bottom-panel">
-                <div class="stats-row">
-                    <div class="stat-box">
+            <div class="bottom-panel-img">
+                <div class="stats-bar-img">
+                    <div class="stat-item">
                         <span>Saldo</span>
-                        <strong id="saldoJogo">R$ 97,00</strong>
+                        <strong id="saldoJogo">9,750.00</strong>
                     </div>
-                    <div class="stat-box">
+                    <div class="stat-item">
                         <span>Aposta</span>
-                        <strong style="color: #ffcc00;">R$ 2,00</strong>
+                        <strong style="color: #ffcc00;">250.00</strong>
                     </div>
-                    <div class="stat-box">
+                    <div class="stat-item">
                         <span>Ganho</span>
-                        <strong id="ganhoJogo" style="color: #00ff88;">R$ 0,00</strong>
+                        <strong id="ganhoJogo" style="color: #00ff88;">0.00</strong>
                     </div>
                 </div>
 
-                <div class="controls-row">
-                    <button class="btn-side">⚡<br>TURBO</button>
-                    <button class="btn-girar-tiger" onclick="girarTiger(event)">
-                        🐯<span style="font-size: 9px;">GIRAR</span>
+                <div class="controls-bar-img">
+                    <button class="btn-control-circle">⚡<br>TURBO</button>
+                    <button class="btn-control-circle">-</button>
+                    
+                    <button class="btn-girar-verde-3d" onclick="acionarGirar()">
+                        GIRAR
                     </button>
-                    <button class="btn-side">🔄<br>AUTO</button>
+
+                    <button class="btn-control-circle">+</button>
+                    <button class="btn-control-circle">🔄<br>AUTO</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modais do Site -->
     <div id="searchModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -759,44 +772,24 @@
             audio.play().catch(e => console.log(e));
         }
 
-        // Modais
-        function abrirModalPesquisa() {
-            tocarAudioInicio();
-            document.getElementById('searchModal').style.display = 'flex';
-        }
-        function abrirModalCategorias() {
-            tocarAudioInicio();
-            document.getElementById('categoryModal').style.display = 'flex';
-        }
-        function abrirModalDeposito() {
-            tocarAudioInicio();
-            document.getElementById('depositModal').style.display = 'flex';
-        }
-        function abrirModalRegistro() {
-            tocarAudioInicio();
-            document.getElementById('registerModal').style.display = 'flex';
-        }
-        function fecharModais() {
-            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
-        }
+        function abrirModalPesquisa() { tocarAudioInicio(); document.getElementById('searchModal').style.display = 'flex'; }
+        function abrirModalCategorias() { tocarAudioInicio(); document.getElementById('categoryModal').style.display = 'flex'; }
+        function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
+        function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
+        function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
         function realizarCadastro() {
             const usuario = document.getElementById('usuario').value;
-            if (usuario.trim() === '') {
-                alert('Por favor, preencha o seu nome de utilizador!');
-                return;
-            }
+            if (usuario.trim() === '') { alert('Por favor, preencha o seu nome de utilizador!'); return; }
             fecharModais();
             alert('Cadastro efetuado com sucesso! Bem-vindo ao Cangaço Bet, ' + usuario + '!');
         }
 
         function pararMusicaEEntrar(nomeJogo) {
-            audio.pause(); 
-            audio.currentTime = 0; 
+            audio.pause(); audio.currentTime = 0; 
             alert('A entrar em ' + nomeJogo + '...');
         }
 
-        // Funções específicas do Mini-Jogo do Tigrinho
         function entrarFortuneTiger() {
             audio.pause();
             audio.currentTime = 0;
@@ -809,96 +802,74 @@
             document.getElementById('main-content').style.display = 'block';
         }
 
-        let saldo = 97.00;
+        let saldo = 9750.00;
 
         function atualizarUI() {
-            document.getElementById('saldoJogo').innerText = 'R$ ' + saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById('saldoJogo').innerText = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         }
 
-        function girarTiger(event) {
-            event.stopPropagation();
-
+        // Função de Giro com Animação 3D do Tigre e Rolos
+        function acionarGirar() {
             const tigerImg = document.getElementById('tigerImage');
-            tigerImg.classList.add('girando-ativo');
-            setTimeout(() => {
-                tigerImg.classList.remove('girando-ativo');
-            }, 1200);
+            const status = document.getElementById('gameStatus');
+            const ganhoEl = document.getElementById('ganhoJogo');
 
-            if (saldo < 2.00) {
+            if (saldo < 250.00) {
                 alert('Saldo insuficiente!');
                 return;
             }
 
-            saldo -= 2.00;
+            saldo -= 250.00;
             atualizarUI();
 
-            const r1 = document.getElementById('reel1');
-            const r2 = document.getElementById('reel2');
-            const r3 = document.getElementById('reel3');
-            const status = document.getElementById('gameStatus');
-            const ganhoEl = document.getElementById('ganhoJogo');
-
+            // Ativar rotação 3D no tigrinho e agitação nos rolos
+            tigerImg.classList.add('girando-ativo');
             status.innerText = "Girando...";
-            ganhoEl.innerText = "R$ 0,00";
+            ganhoEl.innerText = "0.00";
 
-            r1.classList.add('girando');
-            r2.classList.add('girando');
-            r3.classList.add('girando');
+            const celulas = document.querySelectorAll('.reel-cell');
+            celulas.forEach(c => c.classList.add('girando-rolo'));
 
             setTimeout(() => {
-                r1.classList.remove('girando');
-                r2.classList.remove('girando');
-                r3.classList.remove('girando');
+                tigerImg.classList.remove('girando-ativo');
+                celulas.forEach(c => c.classList.remove('girando-rolo'));
 
-                const simbolos = ["💰", "🍊", "🍋", "🧧", "⭐"];
+                const simbolos = ["💰", "🍊", "🍋", "🧧", "🏆"];
+                celulas.forEach(c => {
+                    c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                });
+
                 let chance = Math.random();
-
-                if (chance < 0.75) {
-                    r1.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-                    r2.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-                    r3.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                if (chance < 0.7) {
                     status.innerText = "Tente novamente!";
                 } else {
-                    r1.innerText = "💰";
-                    r2.innerText = "💰";
-                    r3.innerText = "💰";
-                    let premio = 10.00;
+                    // Simular Linha premiada central com sacos de ouro
+                    document.getElementById('r4').innerText = "💰";
+                    document.getElementById('r5').innerText = "💰";
+                    document.getElementById('r6').innerText = "💰";
+                    let premio = 1250.00;
                     saldo += premio;
-                    ganhoEl.innerText = "R$ " + premio.toFixed(2);
-                    status.innerText = "Funcionalidade Tigre da Sorte!";
+                    ganhoEl.innerText = premio.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+                    status.innerText = "🎉 TIGRE DA SORTE! GANHO ÉPICO!";
                 }
                 atualizarUI();
-            }, 900);
+            }, 1000);
         }
 
-        // Relógio do jogo do Tigre
-        setInterval(() => {
-            const agora = new Date();
-            const relogioEl = document.getElementById('relogioJogo');
-            if (relogioEl) {
-                relogioEl.innerText = agora.toTimeString().split(' ')[0];
-            }
-        }, 1000);
-
-        // Filtro de Pesquisa de Jogos em tempo real
         function filtrarJogos() {
             const termo = document.getElementById('searchInput').value.toLowerCase();
             const resultBox = document.getElementById('searchResultBox');
             resultBox.innerHTML = '';
-
             if (termo.trim() === '') return;
 
             const jogos = [
                 { nome: 'Fortune Tiger', img: 'https://files.catbox.moe/75mifn.jpeg' },
                 { nome: 'Aviator', img: 'https://files.catbox.moe/f5zgx9.webp' },
                 { nome: 'Mines', img: 'https://files.catbox.moe/9k06uq.jpeg' },
-                { nome: 'Gates of Olympus', img: 'https://files.catbox.moe/7dkz4q.jpeg' },
-                { nome: 'Master Joker', img: 'https://files.catbox.moe/wy9jwg.jpeg' },
-                { nome: 'Big Bass Bonanza', img: 'https://files.catbox.moe/3kg3ao.webp' }
+                { nome: 'Gates of Olympus', img: 'https://files.catbox.moe/7dkz4q.jpeg' }
             ];
 
             const encontrados = jogos.filter(j => j.nome.toLowerCase().includes(termo));
-
             if (encontrados.length > 0) {
                 encontrados.forEach(j => {
                     const item = document.createElement('div');
@@ -908,11 +879,8 @@
                     item.innerHTML = `🎰 ${j.nome}`;
                     item.onclick = () => {
                         fecharModais();
-                        if (j.nome === 'Fortune Tiger') {
-                            entrarFortuneTiger();
-                        } else {
-                            pararMusicaEEntrar(j.nome);
-                        }
+                        if (j.nome === 'Fortune Tiger') entrarFortuneTiger();
+                        else pararMusicaEEntrar(j.nome);
                     };
                     resultBox.appendChild(item);
                 });
@@ -921,7 +889,6 @@
             }
         }
 
-        // Movimento automático do carrossel de vencedores
         const scrollContainer = document.getElementById('winnersScroll');
         setInterval(() => {
             if (scrollContainer) {
@@ -933,7 +900,6 @@
             }
         }, 3000);
 
-        // Movimento automático do carrossel de promoções/bônus/cashback
         const promoTrack = document.getElementById('promoTrack');
         let currentSlide = 0;
         setInterval(() => {
