@@ -306,7 +306,35 @@
         .bet-slip-input { width: 100%; padding: 8px; background: #13141b; border: 1px solid #363a4f; color: white; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
         .btn-place-bet { width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: 900; font-size: 13px; cursor: pointer; }
 
-        .bilhetes-container, .extrato-container { padding: 15px; }
+        /* Botão Flutuante de Suporte com Logotipo */
+        .floating-support-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff4500, #ffb703);
+            color: #0f1015;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.5);
+            cursor: pointer;
+            z-index: 997;
+            transition: transform 0.2s;
+            border: 2px solid #fff;
+        }
+        .floating-support-btn:active {
+            transform: scale(0.9);
+        }
+        .floating-support-btn svg {
+            width: 26px;
+            height: 26px;
+            fill: #0f1015;
+        }
+
+        .bilhetes-container, .extrato-container, .suporte-container { padding: 15px; }
         .bilhete-impresso, .extrato-item {
             background: #161821;
             border: 1px solid #ff4500;
@@ -409,6 +437,13 @@
         <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
     </div>
 
+    <!-- Botão Flutuante de Atendimento com Logotipo de Suporte -->
+    <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
+        <svg viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+        </svg>
+    </div>
+
     <!-- Menu Lateral -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
@@ -427,6 +462,9 @@
         </div>
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">
             📜 Histórico / Extrato
+        </div>
+        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">
+            💬 Suporte Online
         </div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
             💰 Depositar (PIX)
@@ -525,7 +563,6 @@
         <div class="sports-container" style="padding-top: 15px;">
             <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Apostas Esportivas</div>
             
-            <!-- Barra de Filtros de Ligas da API -->
             <div class="filtro-ligas-scroll" id="filtroLigasContainer">
                 <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
             </div>
@@ -556,6 +593,22 @@
         </div>
     </div>
 
+    <!-- ABA 5: SUPORTE ONLINE -->
+    <div id="tab-suporte" class="main-tab-content">
+        <div class="suporte-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Atendimento ao Cliente / Suporte</div>
+            <div style="background: #161821; border: 1px solid #ff4500; border-radius: 12px; padding: 20px; text-align: center;">
+                <p style="font-size: 14px; margin-bottom: 15px; color: #ddd;">Perdeu o acesso à conta, precisa recuperar login ou tem dúvidas sobre depósitos? Fale com o nosso suporte oficial 24h.</p>
+                <div style="background: #13141b; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; color: #00ff88; border: 1px dashed #2a2d3d;">
+                    🟢 Atendente Online Disponível
+                </div>
+                <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Recuperar Acesso / Erro no Pix)">
+                <textarea id="suporteMensagem" class="modal-input" placeholder="Escreva a sua mensagem ou informe o seu E-mail/Telefone de cadastro..." style="height: 90px; resize: none;"></textarea>
+                <button class="modal-btn" onclick="enviarMensagemSuporte()">Enviar Mensagem ao Suporte</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
@@ -568,18 +621,25 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
-    <!-- Modal de Registro Completo -->
+    <!-- Modal de Registro com Verificação por Código (SMS / Gmail) -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title">📝 CRIAR CONTA</div>
-            <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
-            <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
-            <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone">
-            <input type="text" id="regCpf" class="modal-input" placeholder="CPF">
-            <input type="date" id="regNascimento" class="modal-input" placeholder="Data de Nascimento">
-            <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
-            <button class="modal-btn" onclick="realizarRegistro()">Registar Conta</button>
+            <div id="etapaCadastro1">
+                <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
+                <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
+                <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone / WhatsApp">
+                <input type="text" id="regCpf" class="modal-input" placeholder="CPF">
+                <input type="date" id="regNascimento" class="modal-input" placeholder="Data de Nascimento">
+                <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
+                <button class="modal-btn" onclick="solicitarCodigoConfirmacao()">Avançar e Enviar Código</button>
+            </div>
+            <div id="etapaCadastro2" style="display: none;">
+                <p style="font-size: 12px; color: #bbb; margin-bottom: 12px;">Enviámos um código de confirmação de 4 dígitos para o seu E-mail / Telefone.</p>
+                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código (ex: 4821)" maxlength="4" style="text-align: center; letter-spacing: 5px; font-size: 18px;">
+                <button class="modal-btn" onclick="validarCodigoEConcluir()">Confirmar Código e Registar</button>
+            </div>
         </div>
     </div>
 
@@ -602,16 +662,29 @@
         let oddAtual = 0;
         let horaPartidaSelecionada = "";
         let ligaPartidaSelecionada = "";
-        let saldo = 1000.00;
+        let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
         let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
         let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
+        let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
+        
         let listaGlobalPartidas = [];
         let ligaFiltroAtual = 'TODAS';
+        let codigoGeradoTemp = "";
+        let dadosTempRegistro = {};
+
+        atualizarSaldoNaTela();
+        if (usuarioLogado) {
+            document.querySelector('.btn-entrar-topo').innerText = usuarioLogado.nome.split(' ')[0];
+        }
 
         function salvarDadosStorage() {
             localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
             localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
+            localStorage.setItem('cangaco_saldo', saldo);
+            if (usuarioLogado) {
+                localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
+            }
         }
 
         function atualizarSaldoNaTela() {
@@ -620,12 +693,7 @@
 
         function registarTransacao(tipo, descricao, valor) {
             const dataHora = new Date().toLocaleString('pt-BR');
-            historicoTransacoes.unshift({
-                tipo: tipo, // 'deposito', 'aposta', 'premio', 'cassino_perca', 'cassino_ganho'
-                descricao: descricao,
-                valor: valor.toFixed(2),
-                data: dataHora
-            });
+            historicoTransacoes.unshift({ tipo: tipo, descricao: descricao, valor: valor.toFixed(2), data: dataHora });
             salvarDadosStorage();
         }
 
@@ -692,6 +760,8 @@
             } else if (aba === 'extrato') {
                 document.getElementById('tab-extrato').classList.add('active-tab');
                 renderizarExtratoNaTela();
+            } else if (aba === 'suporte') {
+                document.getElementById('tab-suporte').classList.add('active-tab');
             }
         }
 
@@ -700,6 +770,7 @@
             if (saldo < custoAposta) { alert("Saldo insuficiente para jogar! Faça um depósito."); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
+            salvarDadosStorage();
             
             let ganhou = Math.random() >= 0.5;
             if (ganhou) {
@@ -714,7 +785,7 @@
             }
         }
 
-        function realizarRegistro() {
+        function solicitarCodigoConfirmacao() {
             const nome = document.getElementById('regNome').value;
             const email = document.getElementById('regEmail').value;
             const telefone = document.getElementById('regTelefone').value;
@@ -722,9 +793,36 @@
             const nascimento = document.getElementById('regNascimento').value;
             const senha = document.getElementById('regSenha').value;
 
-            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) { alert('Por favor, preencha todos os campos!'); return; }
+            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
+                alert('Por favor, preencha todos os campos do registo!');
+                return;
+            }
+
+            dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
+            codigoGeradoTemp = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            alert(`📲 [SIMULAÇÃO SMS/GMAIL]: O seu código de confirmação Cangaço Bet é: ${codigoGeradoTemp}`);
+            
+            document.getElementById('etapaCadastro1').style.display = 'none';
+            document.getElementById('etapaCadastro2').style.display = 'block';
+        }
+
+        function validarCodigoEConcluir() {
+            const codigoDigitado = document.getElementById('codigoDigitado').value;
+            if (codigoDigitado !== codigoGeradoTemp) {
+                alert('❌ Código incorreto! Verifique o código enviado para o seu telemóvel/e-mail.');
+                return;
+            }
+
+            usuarioLogado = dadosTempRegistro;
+            salvarDadosStorage();
+            document.querySelector('.btn-entrar-topo').innerText = usuarioLogado.nome.split(' ')[0];
             fecharModais();
-            alert(`✅ Conta criada com sucesso para ${nome}! Bem-vindo ao Cangaço Bet.`);
+            
+            document.getElementById('etapaCadastro1').style.display = 'block';
+            document.getElementById('etapaCadastro2').style.display = 'none';
+            
+            alert(`✅ Conta verificada e criada com sucesso para ${usuarioLogado.nome}! Sessão salva no navegador.`);
         }
 
         function realizarDeposito() {
@@ -735,6 +833,15 @@
             registarTransacao('deposito', 'Depósito via Pix', valorDep);
             fecharModais();
             alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado com sucesso!`);
+        }
+
+        function enviarMensagemSuporte() {
+            const assunto = document.getElementById('suporteAssunto').value;
+            const msg = document.getElementById('suporteMensagem').value;
+            if (!assunto || !msg) { alert("Preencha o assunto e a mensagem para o suporte."); return; }
+            alert("✅ Mensagem enviada com sucesso ao suporte! Um atendente responderá em breve via E-mail ou WhatsApp.");
+            document.getElementById('suporteAssunto').value = "";
+            document.getElementById('suporteMensagem').value = "";
         }
 
         function pesquisaGeral() {
@@ -748,7 +855,8 @@
                 { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
                 { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
                 { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' },
-                { nome: '📜 Histórico / Extrato', tipo: 'extrato' }
+                { nome: '📜 Histórico / Extrato', tipo: 'extrato' },
+                { nome: '💬 Suporte Online', tipo: 'suporte' }
             ];
 
             const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
