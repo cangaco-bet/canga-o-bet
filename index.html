@@ -12,13 +12,13 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
-            background-color: #0f1015;
+            background-color: #0b0c10;
             color: #ffffff;
-            padding-bottom: 20px;
+            padding-bottom: 25px;
         }
 
         header {
-            background: linear-gradient(135deg, #1a1c23, #0f1015);
+            background: linear-gradient(135deg, #151821, #0b0c10);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -27,6 +27,7 @@
             position: sticky;
             top: 0;
             z-index: 90;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
         .header-left {
             display: flex;
@@ -39,7 +40,7 @@
             gap: 8px;
         }
         .btn-menu-lateral {
-            background: #1e2029;
+            background: #191d28;
             border: 1px solid #ff4500;
             width: 38px;
             height: 38px;
@@ -51,7 +52,7 @@
             gap: 4px;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
         }
         .btn-menu-lateral span {
             width: 18px;
@@ -65,100 +66,112 @@
 
         .logo {
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 900;
             color: #ff4500;
             cursor: pointer;
+            text-shadow: 0 2px 10px rgba(255,69,0,0.5);
+            letter-spacing: 0.5px;
         }
-        .saldo-topo {
-            background: #1e2029;
+
+        /* 🌟 BARRA DE SALDO 3D PROFISSIONAL */
+        .saldo-topo-3d {
+            background: linear-gradient(145deg, #1f2430, #13161f);
             border: 1px solid #ffb703;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 11px;
+            padding: 7px 14px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: bold;
             color: #ffb703;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 5px 15px rgba(255, 183, 3, 0.25);
+            transform: translateY(-1px);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+        .saldo-topo-3d span {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+        }
+
         .btn-topo-acao {
-            background-color: #ff4500;
+            background: linear-gradient(135deg, #ff4500, #cc3500);
             color: white;
             border: none;
-            padding: 7px 10px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 11px;
+            box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4);
+            transition: transform 0.2s;
         }
+        .btn-topo-acao:active { transform: scale(0.95); }
+
         .btn-topo-login {
-            background-color: transparent;
+            background: transparent;
             color: #ffb703;
             border: 1px solid #ffb703;
-            padding: 7px 10px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 11px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .quick-search-bar {
-            padding: 10px 15px;
-            background: #13141b;
-            border-bottom: 1px solid #222;
+            padding: 12px 15px;
+            background: #0f1118;
+            border-bottom: 1px solid #1a1d28;
         }
         .quick-search-input {
             width: 100%;
             padding: 10px 15px;
-            background: #1a1c23;
-            border: 1px solid #2a2d3d;
+            background: #151821;
+            border: 1px solid #232838;
             border-radius: 20px;
             color: white;
             font-size: 13px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        /* Menu Lateral (Gaveta) */
+        /* Menu Lateral 3D (Gaveta) */
         .sidebar-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(3px);
             z-index: 998;
         }
         .sidebar {
             position: fixed;
             top: 0; left: -280px; width: 280px; height: 100%;
-            background: #161821;
+            background: linear-gradient(180deg, #151821, #0f1118);
             border-right: 2px solid #ff4500;
             z-index: 999;
             transition: left 0.3s ease;
             padding: 20px;
             display: flex;
             flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
         }
-        .sidebar.open {
-            left: 0;
-        }
+        .sidebar.open { left: 0; }
         .sidebar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            border-bottom: 1px solid #2a2d3d;
+            border-bottom: 1px solid #232838;
             padding-bottom: 15px;
         }
-        .sidebar-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ff4500;
-        }
-        .sidebar-close {
-            font-size: 22px;
-            color: #aaa;
-            cursor: pointer;
-        }
+        .sidebar-title { font-size: 16px; font-weight: bold; color: #ff4500; }
+        .sidebar-close { font-size: 22px; color: #aaa; cursor: pointer; }
         .sidebar-item {
-            background: #1e2029;
-            border: 1px solid #2a2d3d;
+            background: #191d28;
+            border: 1px solid #232838;
             padding: 12px 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             color: #fff;
             font-size: 14px;
             font-weight: bold;
@@ -167,88 +180,73 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: 0.2s;
         }
-        .sidebar-item:hover {
-            border-color: #ff4500;
-            background: #252836;
-        }
+        .sidebar-item:hover { border-color: #ff4500; background: #212635; transform: translateX(3px); }
 
         .main-tab-content { display: none; }
         .main-tab-content.active-tab { display: block; }
 
         .promo-carousel-container {
             margin: 15px;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             border: 1px solid #ff4500;
             position: relative;
-            height: 110px;
+            height: 120px;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
         }
-        .promo-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            height: 100%;
-            width: 300%;
-        }
+        .promo-track { display: flex; transition: transform 0.5s ease-in-out; height: 100%; width: 300%; }
         .promo-slide {
-            width: 33.333%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 10px;
-            position: relative;
+            width: 33.333%; height: 100%;
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 10px; position: relative;
         }
         .promo-slide::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); z-index: 1;
         }
         .promo-content { position: relative; z-index: 2; }
         .promo-slide h3 { font-size: 14px; color: #ffb703; margin-bottom: 3px; }
         .promo-slide p { font-size: 11px; color: #ddd; margin-bottom: 6px; }
-        .btn-cadastre { background-color: #ff4500; color: white; border: none; padding: 5px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; box-shadow: 0 4px 10px rgba(255,69,0,0.4); }
 
         .jackpot-box {
-            background: linear-gradient(135deg, #2b110a, #1a1c23);
+            background: linear-gradient(135deg, #2b110a, #151821);
             margin: 0 15px 15px 15px;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 14px;
             border: 1px solid #ff4500;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.25);
         }
-        .jackpot-title { font-size: 13px; font-weight: bold; color: #ffb703; margin-bottom: 3px; }
-        .jackpot-value { font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
+        .jackpot-title { font-size: 12px; font-weight: bold; color: #ffb703; letter-spacing: 1px; margin-bottom: 4px; }
+        .jackpot-value { font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 15px rgba(255,69,0,0.6); }
 
         .winners-section { margin: 15px 0; padding: 0 15px; }
-        .winners-title { font-size: 15px; font-weight: bold; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
+        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
         .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
         .winners-scroll::-webkit-scrollbar { display: none; }
         .winner-card {
-            background: #1a1c23;
-            border: 1px solid #2a2d3d;
-            border-radius: 10px;
+            background: #151821;
+            border: 1px solid #232838;
+            border-radius: 12px;
             padding: 10px;
-            min-width: 150px;
+            min-width: 155px;
             display: flex;
             align-items: center;
             gap: 10px;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-        .winner-card img { width: 35px; height: 35px; border-radius: 6px; object-fit: cover; }
+        .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
         .winner-info { font-size: 12px; }
-        .winner-name { color: #aaa; font-size: 11px; }
+        .winner-name { color: #aaa; font-size: 10px; }
         .winner-prize { color: #ffb703; font-weight: bold; }
 
-        .section-title { padding: 0 15px; font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
+        .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; }
         .section-title span { font-size: 12px; color: #888; }
 
         .games-grid {
@@ -259,19 +257,20 @@
             margin-bottom: 25px;
         }
         .game-card {
-            background: #1e2029;
-            border-radius: 12px;
+            background: linear-gradient(145deg, #191d28, #13161f);
+            border-radius: 14px;
             overflow: hidden;
-            border: 1px solid #2a2d3d;
+            border: 1px solid #232838;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+            transition: transform 0.2s, border-color 0.2s;
         }
+        .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
         .game-card:active { transform: scale(0.97); }
-        .game-img { width: 100%; height: 110px; object-fit: cover; }
-        .game-name { padding: 10px; font-size: 14px; font-weight: 500; }
+        .game-img { width: 100%; height: 115px; object-fit: cover; }
+        .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
-        /* Filtro de Ligas */
         .filtro-ligas-scroll {
             display: flex;
             gap: 8px;
@@ -280,147 +279,147 @@
         }
         .filtro-ligas-scroll::-webkit-scrollbar { display: none; }
         .btn-filtro-liga {
-            background: #1e2029;
-            border: 1px solid #2a2d3d;
+            background: #151821;
+            border: 1px solid #232838;
             color: #aaa;
-            padding: 6px 12px;
-            border-radius: 16px;
+            padding: 7px 14px;
+            border-radius: 18px;
             font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: 0.2s;
         }
         .btn-filtro-liga.ativo, .btn-filtro-liga:hover {
-            background: #ff4500;
+            background: linear-gradient(135deg, #ff4500, #ff6a00);
             border-color: #ffb703;
             color: #fff;
+            box-shadow: 0 4px 15px rgba(255,69,0,0.4);
         }
 
         .sports-container { padding: 0 15px; }
-        .match-card { background: #1a1c23; border: 1px solid #2a2d3d; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
-        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
-        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold; margin-bottom: 12px; }
+        .match-card {
+            background: linear-gradient(145deg, #151821, #11141c);
+            border: 1px solid #232838;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
         .team-name { width: 42%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .team-name img { width: 22px; height: 16px; object-fit: contain; border-radius: 2px; }
-        .match-vs { font-size: 11px; color: #888; background: #13141b; padding: 4px 8px; border-radius: 20px; }
+        .match-vs { font-size: 10px; color: #888; background: #0b0c10; padding: 4px 8px; border-radius: 20px; border: 1px solid #1a1d28; }
         .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .odd-btn { background: #252836; border: 1px solid #363a4f; padding: 8px 4px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .odd-btn:hover, .odd-btn.selected { background: #ff4500; border-color: #ffb703; color: white; }
+        .odd-btn {
+            background: #1c212f;
+            border: 1px solid #2c3347;
+            padding: 9px 4px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.05);
+            transition: all 0.2s;
+        }
+        .odd-btn:hover, .odd-btn.selected { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: white; box-shadow: 0 4px 12px rgba(255,69,0,0.4); }
         .odd-label { font-size: 10px; color: #aaa; display: block; }
         .odd-value { font-size: 13px; font-weight: bold; color: #fff; display: block; margin-top: 2px; }
 
-        .bet-slip { position: fixed; bottom: 20px; left: 15px; right: 15px; background: #1e2029; border: 2px solid #ff4500; border-radius: 12px; padding: 12px; display: none; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); z-index: 998; }
+        .bet-slip {
+            position: fixed; bottom: 20px; left: 15px; right: 15px;
+            background: linear-gradient(145deg, #191d28, #13161f);
+            border: 2px solid #ff4500; border-radius: 14px; padding: 15px; display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9); z-index: 998;
+        }
         .bet-slip-title { font-size: 12px; font-weight: bold; color: #ffb703; margin-bottom: 6px; display: flex; justify-content: space-between; }
         .bet-slip-info { font-size: 13px; margin-bottom: 8px; color: #ddd; }
-        .bet-slip-input { width: 100%; padding: 8px; background: #13141b; border: 1px solid #363a4f; color: white; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
-        .btn-place-bet { width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: 900; font-size: 13px; cursor: pointer; }
+        .bet-slip-input { width: 100%; padding: 10px; background: #0f1118; border: 1px solid #2c3347; color: white; border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
+        .btn-place-bet { width: 100%; background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,255,136,0.3); }
 
-        /* Botão Flutuante de Suporte com Logotipo */
-        .floating-support-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 20px;
-            background: linear-gradient(135deg, #ff4500, #ffb703);
-            color: #0f1015;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
+        /* 🌟 NOVO SUPORTE EM 3D ELEGANTE */
+        .suporte-container { padding: 15px; }
+        .suporte-card-3d {
+            background: linear-gradient(145deg, #171b26, #10121a);
+            border: 1px solid #ff4500;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .suporte-badge-online {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px dashed #00ff88;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 12px;
+            color: #00ff88;
+            font-weight: bold;
             display: flex;
-            justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.5);
-            cursor: pointer;
-            z-index: 997;
-            transition: transform 0.2s;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: inset 0 0 10px rgba(0,255,136,0.1);
+        }
+
+        /* 🌟 BOTÃO FLUTUANTE 3D DE SUPORTE */
+        .floating-support-btn {
+            position: fixed; bottom: 25px; right: 20px;
+            background: linear-gradient(135deg, #ff4500, #ffb703);
+            color: #0f1015; width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6), inset 0 2px 4px rgba(255,255,255,0.4);
+            cursor: pointer; z-index: 997; transition: transform 0.2s;
             border: 2px solid #fff;
         }
-        .floating-support-btn:active {
-            transform: scale(0.9);
-        }
-        .floating-support-btn svg {
-            width: 26px;
-            height: 26px;
-            fill: #0f1015;
-        }
+        .floating-support-btn:hover { transform: scale(1.08); }
+        .floating-support-btn:active { transform: scale(0.92); }
+        .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); }
 
-        .bilhetes-container, .extrato-container, .suporte-container { padding: 15px; }
+        .bilhetes-container, .extrato-container { padding: 15px; }
         .bilhete-impresso, .extrato-item {
-            background: #161821;
+            background: linear-gradient(145deg, #151821, #11141c);
             border: 1px solid #ff4500;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
         }
         .bilhete-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #ffb703;
-            font-weight: bold;
-            border-bottom: 1px solid #2a2d3d;
-            padding-bottom: 6px;
-            margin-bottom: 8px;
+            display: flex; justify-content: space-between; font-size: 12px;
+            color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
+            padding-bottom: 6px; margin-bottom: 8px;
         }
-        .bilhete-detalhes, .extrato-detalhes {
-            font-size: 13px;
-            color: #ddd;
-            line-height: 1.5;
-        }
-        .bilhete-status {
-            margin-top: 8px;
-            font-weight: bold;
-            font-size: 12px;
-        }
+        .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
+        .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+            z-index: 999; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-card {
-            background: #1a1c23;
-            width: 100%;
-            max-width: 380px;
-            padding: 25px;
-            border-radius: 16px;
+            background: linear-gradient(145deg, #191d28, #11141c);
+            width: 100%; max-width: 380px; padding: 25px; border-radius: 18px;
             border: 1px solid #ff4500;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-            text-align: center;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.1);
+            text-align: center; position: relative; max-height: 90vh; overflow-y: auto;
         }
-        .modal-title { font-size: 18px; font-weight: bold; color: #ff4500; margin-bottom: 15px; }
+        .modal-title { font-size: 18px; font-weight: 900; color: #ff4500; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(255,69,0,0.4); }
         .modal-input {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-            background: #13141b;
-            border: 1px solid #2a2d3d;
-            border-radius: 8px;
-            color: white;
-            font-size: 13px;
+            width: 100%; padding: 11px 14px; margin-bottom: 12px;
+            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px;
+            color: white; font-size: 13px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
         .modal-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 5px;
+            width: 100%; padding: 12px;
+            background: linear-gradient(135deg, #ff4500, #ff6a00); color: white;
+            border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
+            cursor: pointer; margin-top: 5px; box-shadow: 0 6px 20px rgba(255,69,0,0.4);
         }
-        .close-modal { position: absolute; top: 10px; right: 15px; color: #aaa; font-size: 20px; cursor: pointer; }
+        .close-modal { position: absolute; top: 12px; right: 16px; color: #aaa; font-size: 22px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -437,7 +436,8 @@
             <div class="logo" onclick="mudarAba('cassino')">🔥 CANGAÇO BET</div>
         </div>
         <div class="header-right">
-            <div class="saldo-topo">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
+            <!-- 🌟 BARRA DE SALDO 3D ELEGANTE NO TOPO -->
+            <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
         </div>
@@ -445,10 +445,10 @@
 
     <div class="quick-search-bar">
         <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
-        <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
+        <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
-    <!-- Botão Flutuante de Atendimento com Logotipo de Suporte -->
+    <!-- 🌟 BOTÃO FLUTUANTE 3D DE SUPORTE -->
     <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
         <svg viewBox="0 0 24 24">
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
@@ -462,30 +462,14 @@
             <div class="sidebar-title">🤠 MENU PRINCIPAL</div>
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
-        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">
-            🎰 Cassino
-        </div>
-        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">
-            ⚽ Apostas Esportivas
-        </div>
-        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">
-            📋 Meus Bilhetes
-        </div>
-        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">
-            📜 Histórico / Extrato
-        </div>
-        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">
-            💬 Suporte Online
-        </div>
-        <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
-            💰 Depositar (PIX)
-        </div>
-        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">
-            🔐 Entrar na Conta
-        </div>
-        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">
-            📝 Registrar Conta
-        </div>
+        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino</div>
+        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Esportivas</div>
+        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
+        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
+        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">💬 Suporte Online</div>
+        <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">💰 Depositar (PIX)</div>
+        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">🔐 Entrar na Conta</div>
+        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">📝 Registrar Conta</div>
     </div>
 
     <!-- ABA 1: CASSINO -->
@@ -517,7 +501,7 @@
         </div>
 
         <div class="jackpot-box">
-            <div class="jackpot-title">🔥 JACKPOT GLOBAL</div>
+            <div class="jackpot-title">🔥 JACKPOT GLOBAL 3D</div>
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
         </div>
 
@@ -549,7 +533,7 @@
         </div>
 
         <div class="section-title">
-            🏆 TOP <span>Todos ></span>
+            🏆 TOP JOGOS <span>Todos ></span>
         </div>
 
         <div class="games-grid">
@@ -607,17 +591,18 @@
         </div>
     </div>
 
-    <!-- ABA 5: SUPORTE ONLINE -->
+    <!-- 🌟 ABA 5: SUPORTE ONLINE EM 3D PROFISSIONAL -->
     <div id="tab-suporte" class="main-tab-content">
         <div class="suporte-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Atendimento ao Cliente / Suporte</div>
-            <div style="background: #161821; border: 1px solid #ff4500; border-radius: 12px; padding: 20px; text-align: center;">
-                <p style="font-size: 14px; margin-bottom: 15px; color: #ddd;">Perdeu o acesso à conta, precisa recuperar login ou tem dúvidas sobre depósitos? Fale com o nosso suporte oficial 24h.</p>
-                <div style="background: #13141b; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; color: #00ff88; border: 1px dashed #2a2d3d;">
-                    🟢 Atendente Online Disponível
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Central de Atendimento 3D</div>
+            <div class="suporte-card-3d">
+                <div class="suporte-badge-online">
+                    🟢 Operador Humano Online (Suporte 24h)
                 </div>
-                <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Recuperar Acesso / Erro no Pix)">
-                <textarea id="suporteMensagem" class="modal-input" placeholder="Escreva a sua mensagem ou informe o seu E-mail/Telefone de cadastro..." style="height: 90px; resize: none;"></textarea>
+                <p style="font-size: 13px; margin-bottom: 18px; color: #ccc; line-height: 1.5;">Perdeu o acesso à conta, precisa recuperar login ou tem dúvidas sobre pagamentos Pix? Envie sua mensagem diretamente para nossa equipe.</p>
+                
+                <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Recuperar Senha / Erro no Saldo)">
+                <textarea id="suporteMensagem" class="modal-input" placeholder="Escreva detalhadamente a sua dúvida ou informe seu e-mail de cadastro..." style="height: 100px; resize: none;"></textarea>
                 <button class="modal-btn" onclick="enviarMensagemSuporte()">Enviar Mensagem ao Suporte</button>
             </div>
         </div>
@@ -635,7 +620,7 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
-    <!-- Modal de Login (Entrar) -->
+    <!-- Modal de Login -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -646,7 +631,7 @@
         </div>
     </div>
 
-    <!-- Modal de Registro com Verificação por Código -->
+    <!-- Modal de Registro -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -689,7 +674,6 @@
         let ligaPartidaSelecionada = "";
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
-        // Base de dados local de utilizadores registados
         let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
         let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
         let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
@@ -840,12 +824,8 @@
                 return;
             }
 
-            // Verifica se o email já está cadastrado na base de dados
             let existe = baseDadosUtilizadores.find(u => u.email === email);
-            if (existe) {
-                alert('❌ Este e-mail já possui uma conta registada!');
-                return;
-            }
+            if (existe) { alert('❌ Este e-mail já possui uma conta registada!'); return; }
 
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
             codigoGeradoTemp = Math.floor(1000 + Math.random() * 9000).toString();
@@ -859,11 +839,10 @@
         function validarCodigoEConcluir() {
             const codigoDigitado = document.getElementById('codigoDigitado').value;
             if (codigoDigitado !== codigoGeradoTemp) {
-                alert('❌ Código incorreto! Verifique o código enviado para o seu telemóvel/e-mail.');
+                alert('❌ Código incorreto! Verifique o código enviado.');
                 return;
             }
 
-            // Salva na base de dados geral de utilizadores
             baseDadosUtilizadores.push(dadosTempRegistro);
             usuarioLogado = dadosTempRegistro;
             salvarDadosStorage();
@@ -881,12 +860,8 @@
             const emailInput = document.getElementById('loginEmail').value.trim();
             const senhaInput = document.getElementById('loginSenha').value.trim();
 
-            if (!emailInput || !senhaInput) {
-                alert("Preencha o E-mail e a Senha!");
-                return;
-            }
+            if (!emailInput || !senhaInput) { alert("Preencha o E-mail e a Senha!"); return; }
 
-            // Procura o utilizador na "base de dados" local
             let utilizadorEncontrado = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
 
             if (utilizadorEncontrado) {
@@ -937,7 +912,7 @@
             const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
             res.forEach(r => {
                 const div = document.createElement('div');
-                div.style.padding = '8px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #2a2d3d';
+                div.style.padding = '8px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #232838';
                 div.innerText = r.nome;
                 div.onclick = () => { mudarAba(r.tipo); box.innerHTML = ''; document.getElementById('quickSearchInput').value = ''; };
                 box.appendChild(div);
