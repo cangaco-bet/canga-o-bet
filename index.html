@@ -6,74 +6,83 @@
     <title>Cangaço Bet</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #0f1015; color: #ffffff; padding-bottom: 80px; }
-        header { background: linear-gradient(135deg, #1a1c23, #0f1015); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff4500; }
-        .logo { font-size: 20px; font-weight: bold; color: #ff4500; }
+        body { background-color: #0d0e12; color: #ffffff; padding-bottom: 70px; }
         
-        .main-tab-content { display: none; }
+        /* Cabeçalho */
+        header { background: #161922; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff4500; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 18px; font-weight: 900; color: #ff4500; letter-spacing: 0.5px; }
+        .saldo-box { font-size: 12px; background: #222634; padding: 6px 12px; border-radius: 20px; border: 1px solid #333a4d; font-weight: bold; color: #ffcc00; }
+
+        /* Abas */
+        .main-tab-content { display: none; padding: 12px; }
         .main-tab-content.active-tab { display: block; }
 
-        .sports-container { padding: 15px; }
-        .match-card { background: #1a1c23; border: 1px solid #2a2d3d; border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
-        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold; margin-bottom: 12px; }
-        .team-name { width: 40%; text-align: center; }
-        .match-vs { font-size: 11px; color: #888; background: #13141b; padding: 4px 8px; border-radius: 20px; }
-        .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .odd-btn { background: #252836; border: 1px solid #363a4f; padding: 8px 4px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .odd-btn:hover, .odd-btn.selected { background: #ff4500; border-color: #ffb703; color: white; }
-        .odd-label { font-size: 10px; color: #aaa; display: block; }
-        .odd-value { font-size: 13px; font-weight: bold; color: #fff; display: block; margin-top: 2px; }
+        /* Layout de Esportes original */
+        .section-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #ffb703; display: flex; align-items: center; gap: 6px; }
+        
+        .match-card { background: #161922; border: 1px solid #232836; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+        .match-header { display: flex; justify-content: space-between; font-size: 10px; color: #8c92a4; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
+        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 10px; }
+        .team-name { width: 38%; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .match-vs { font-size: 10px; color: #666; background: #0d0e12; padding: 3px 6px; border-radius: 10px; }
 
-        /* Estilos do Casino */
-        .casino-container { padding: 15px; text-align: center; }
-        .slot-machine { background: linear-gradient(180deg, #2b1d1d, #120909); border: 3px solid #ffb703; border-radius: 16px; padding: 15px; max-width: 350px; margin: 0 auto; box-shadow: 0 0 20px rgba(255,183,3,0.3); }
-        .slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #fff; padding: 10px; border-radius: 10px; margin-bottom: 15px; }
-        .slot-item { background: #f9f9f9; border: 1px solid #ddd; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 28px; border-radius: 6px; }
-        .btn-girar { background: linear-gradient(135deg, #ff4500, #ffb703); color: #000; border: none; width: 100%; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 900; cursor: pointer; }
+        .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .odd-btn { background: #1e222e; border: 1px solid #2a3042; padding: 6px 4px; border-radius: 6px; text-align: center; cursor: pointer; transition: 0.1s; }
+        .odd-btn:active, .odd-btn.selected { background: #ff4500; border-color: #ffb703; color: white; }
+        .odd-label { font-size: 9px; color: #999; display: block; }
+        .odd-value { font-size: 12px; font-weight: bold; color: #fff; display: block; margin-top: 1px; }
 
-        /* Boletim de Apostas Flutuante */
-        .bet-slip { position: fixed; bottom: 65px; left: 15px; right: 15px; background: #1e2029; border: 2px solid #ff4500; border-radius: 12px; padding: 12px; display: none; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); z-index: 998; }
-        .bet-slip-title { font-size: 12px; font-weight: bold; color: #ffb703; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .bet-slip-info { font-size: 13px; margin-bottom: 8px; color: #ddd; }
-        .bet-slip-input { width: 100%; padding: 8px; background: #13141b; border: 1px solid #363a4f; color: white; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
-        .btn-place-bet { width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: 900; font-size: 13px; cursor: pointer; }
+        /* Estilos Cassino */
+        .casino-container { text-align: center; padding-top: 10px; }
+        .slot-machine { background: #161922; border: 2px solid #ffb703; border-radius: 12px; padding: 15px; max-width: 340px; margin: 0 auto; }
+        .slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: #0d0e12; padding: 8px; border-radius: 8px; margin-bottom: 12px; }
+        .slot-item { background: #1e222e; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 24px; border-radius: 6px; border: 1px solid #2a3042; }
+        .btn-girar { background: #ff4500; color: #fff; border: none; width: 100%; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
-        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #13141b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222; z-index: 99; }
-        .nav-item { text-align: center; color: #888; font-size: 11px; text-decoration: none; cursor: pointer; }
-        .nav-item.active { color: #ff4500; }
+        /* Boletim de Aposta */
+        .bet-slip { position: fixed; bottom: 55px; left: 10px; right: 10px; background: #161922; border: 2px solid #ff4500; border-radius: 10px; padding: 10px; display: none; z-index: 998; box-shadow: 0 -4px 15px rgba(0,0,0,0.5); }
+        .bet-slip-title { font-size: 11px; font-weight: bold; color: #ffb703; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .bet-slip-info { font-size: 12px; margin-bottom: 6px; color: #ccc; }
+        .bet-slip-input { width: 100%; padding: 6px; background: #0d0e12; border: 1px solid #333; color: white; border-radius: 4px; margin-bottom: 6px; font-size: 12px; }
+        .btn-place-bet { width: 100%; background: #00c853; color: #000; border: none; padding: 8px; border-radius: 4px; font-weight: bold; font-size: 12px; cursor: pointer; }
+
+        /* Menu Inferior */
+        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #12141c; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #222; z-index: 99; }
+        .nav-item { text-align: center; color: #777; font-size: 10px; text-decoration: none; cursor: pointer; }
+        .nav-item.active { color: #ff4500; font-weight: bold; }
     </style>
 </head>
 <body>
 
+    <!-- ABA DE ESPORTES -->
     <div id="tab-esportes" class="main-tab-content active-tab">
         <header>
-            <div class="logo">⚽ CANGAÇO ESPORTES</div>
-            <div style="font-size: 13px; font-weight: bold; color: #ffcc00;">Saldo: R$ <span id="saldoGeralUI">9.250,00</span></div>
+            <div class="logo">⚽ CANGAÇO BET</div>
+            <div class="saldo-box">R$ <span id="saldoGeralUI">9.250,00</span></div>
         </header>
 
-        <div class="sports-container">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">🔥 Partidas Reais ao Vivo / Hoje</div>
-            
+        <div style="padding: 10px 0;">
+            <div class="section-title">🔥 Partidas de Hoje (Ao Vivo / Programadas)</div>
             <div id="lista-partidas-api">
-                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais e odds da API...</p>
+                <p style="color: #777; text-align: center; font-size: 12px; padding: 20px;">A carregar jogos reais da API...</p>
             </div>
         </div>
     </div>
 
+    <!-- ABA DE CASSINO -->
     <div id="tab-cassino" class="main-tab-content">
         <header>
             <div class="logo">🎰 CANGAÇO CASSINO</div>
-            <div style="font-size: 13px; font-weight: bold; color: #ffcc00;">Saldo: R$ <span id="saldoCassinoUI">9.250,00</span></div>
+            <div class="saldo-box">R$ <span id="saldoCassinoUI">9.250,00</span></div>
         </header>
 
         <div class="casino-container">
             <div class="slot-machine">
-                <div style="font-size: 13px; font-weight: bold; color: #ffb703; margin-bottom: 8px;">TIGER FORTUNE</div>
+                <div style="font-size: 12px; font-weight: bold; color: #ffb703; margin-bottom: 6px;">TIGER FORTUNE</div>
                 <div class="slot-grid" id="slotGrid">
                     <div class="slot-item">🍊</div>
                     <div class="slot-item">🏆</div>
-                    <div class="slot-item">🏆</div>
+                    <div class="slot-item">💰</div>
                     <div class="slot-item">🍊</div>
                     <div class="slot-item">💰</div>
                     <div class="slot-item">🧧</div>
@@ -81,16 +90,17 @@
                     <div class="slot-item">🍋</div>
                     <div class="slot-item">🏆</div>
                 </div>
-                <div style="margin-bottom: 10px; text-align: left;">
-                    <span style="font-size: 11px; color: #aaa;">Aposta (R$):</span>
-                    <input type="number" id="slotApostaInput" value="250" style="width: 100%; padding: 6px; background: #13141b; border: 1px solid #444; color: #fff; border-radius: 4px; margin-top: 3px;">
+                <div style="margin-bottom: 8px; text-align: left;">
+                    <span style="font-size: 10px; color: #999;">Aposta (R$):</span>
+                    <input type="number" id="slotApostaInput" value="100" style="width: 100%; padding: 5px; background: #0d0e12; border: 1px solid #333; color: #fff; border-radius: 4px; margin-top: 2px; font-size: 12px;">
                 </div>
                 <button class="btn-girar" onclick="girarSlot()">GIRAR</button>
-                <div id="slotMensagem" style="margin-top: 10px; font-size: 13px; font-weight: bold; color: #00ff88;"></div>
+                <div id="slotMensagem" style="margin-top: 8px; font-size: 12px; font-weight: bold; color: #00c853;"></div>
             </div>
         </div>
     </div>
 
+    <!-- Boletim de Aposta -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span>🎟️ BILHETE DE APOSTA</span>
@@ -98,10 +108,11 @@
         </div>
         <div class="bet-slip-info" id="betSelectionInfo">Seleção: -</div>
         <input type="number" id="betValorInput" class="bet-slip-input" placeholder="Valor da Aposta (R$)" value="50">
-        <div style="font-size: 11px; color: #00ff88; margin-bottom: 6px;" id="retornoPotencial">Retorno potencial: R$ 0,00</div>
+        <div style="font-size: 10px; color: #00c853; margin-bottom: 6px;" id="retornoPotencial">Retorno potencial: R$ 0,00</div>
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
+    <!-- MENU INFERIOR -->
     <nav>
         <a class="nav-item" id="navCassinoBtn" onclick="mudarAba('cassino')">🎰<br>Cassino</a>
         <a class="nav-item active" id="navEsportesBtn" onclick="mudarAba('esportes')">⚽<br>Esportes</a>
@@ -111,7 +122,7 @@
         let saldo = 9250.00;
         let apostaSelecionada = null;
         let oddAtual = 0;
-        const apiKey = '26203b2595a3fc5f4bdc92a2e768e757'; // Chave API inserida com sucesso
+        const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
 
         function mudarAba(aba) {
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
@@ -131,7 +142,7 @@
             document.getElementById('saldoCassinoUI').innerText = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         }
 
-        // Função para puxar partidas reais via API
+        // Puxar partidas reais usando a tua chave
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             try {
@@ -146,12 +157,11 @@
                 if (dados.response && dados.response.length > 0) {
                     container.innerHTML = '';
                     
-                    // Exibe até 10 partidas reais do dia
                     dados.response.slice(0, 10).forEach(match => {
                         const casa = match.teams.home.name;
                         const fora = match.teams.away.name;
                         const liga = match.league.name;
-                        const statusHora = match.fixture.status.short === 'LIVE' ? `<span style="color: #00ff88;">● ${match.fixture.status.elapsed}'</span>` : match.fixture.date.split('T')[1].substring(0,5);
+                        const statusHora = match.fixture.status.short === 'LIVE' ? `<span style="color: #00c853;">● ${match.fixture.status.elapsed}'</span>` : match.fixture.date.split('T')[1].substring(0,5);
 
                         const card = document.createElement('div');
                         card.className = 'match-card';
@@ -180,11 +190,11 @@
                         container.appendChild(card);
                     });
                 } else {
-                    container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Sem partidas oficiais encontradas para o dia de hoje.</p>`;
+                    container.innerHTML = `<p style="color: #777; text-align: center; font-size: 12px; padding: 20px;">Sem partidas oficiais encontradas para hoje.</p>`;
                 }
             } catch (erro) {
                 console.error("Erro ao puxar dados:", erro);
-                container.innerHTML = `<p style="color: #ff4500; text-align: center; padding: 20px;">Erro ao ligar à API de futebol.</p>`;
+                container.innerHTML = `<p style="color: #ff4500; text-align: center; font-size: 12px; padding: 20px;">Erro ao ligar à API de futebol.</p>`;
             }
         }
 
@@ -220,13 +230,13 @@
             saldo -= valor;
             atualizarSaldosUI();
             fecharBilhete();
-            alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}!`);
+            alert(`✅ Aposta registada com sucesso!`);
         }
 
         function girarSlot() {
             let valorAposta = parseFloat(document.getElementById('slotApostaInput').value) || 0;
             if (valorAposta <= 0 || saldo < valorAposta) {
-                alert('Saldo insuficiente para jogar no cassino!');
+                alert('Saldo insuficiente!');
                 return;
             }
 
@@ -237,18 +247,16 @@
             const gridItems = document.querySelectorAll('.slot-item');
             
             gridItems.forEach(item => {
-                const randomSymbol = simbolos[Math.floor(Math.random() * simbolos.length)];
-                item.innerText = randomSymbol;
+                item.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
             });
 
-            // Lógica simples de sorteio aleatório
             if (Math.random() > 0.6) {
                 let premio = valorAposta * 3;
                 saldo += premio;
                 atualizarSaldosUI();
                 document.getElementById('slotMensagem').innerText = `🎉 Ganhou R$ ${premio.toFixed(2)}!`;
             } else {
-                document.getElementById('slotMensagem').innerText = `Tente novamente!`;
+                document.getElementById('slotMensagem').innerText = `Não foi desta vez!`;
             }
         }
 
