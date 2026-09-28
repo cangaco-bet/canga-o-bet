@@ -450,200 +450,139 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
-        /* ESTILOS DO JOGO FORTUNE TIGER 4D */
+        /* ESTILOS DO JOGO CANGAÇO FOOTBALL 4D */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.88); backdrop-filter: blur(8px);
             z-index: 999; justify-content: center; align-items: center; padding: 15px;
         }
-        .modal-card-4d {
-            background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
-            width: 100%; max-width: 440px; padding: 22px; border-radius: 24px;
-            border: 2px solid rgba(255, 69, 0, 0.6);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 2px 5px rgba(255,255,255,0.1);
-            text-align: center; position: relative; max-height: 88vh; overflow-y: auto;
+        .modal-card-football {
+            background: radial-gradient(circle at top, #163622 0%, #0b1a11 100%);
+            width: 100%; max-width: 420px; padding: 20px; border-radius: 24px;
+            border: 2px solid #00ff88;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 2px 10px rgba(0,255,136,0.3);
+            text-align: center; position: relative; max-height: 90vh; overflow-y: auto;
         }
-        .modal-card-4d::-webkit-scrollbar { width: 4px; }
-        .modal-card-4d::-webkit-scrollbar-thumb { background: #ff4500; border-radius: 4px; }
+        .modal-title-football { font-size: 18px; font-weight: 950; color: #00ff88; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-subtitle-football { font-size: 11px; color: #ffb703; font-weight: bold; margin-bottom: 12px; }
         
-        .modal-title-4d { font-size: 18px; font-weight: 950; color: #ffb703; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .modal-subtitle-4d { font-size: 11px; color: #00ff88; font-weight: bold; margin-bottom: 15px; }
-        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
-
-        /* TIGRE 3D DINÂMICO ESTILO DO VÍDEO OFICIAL */
-        .tiger-wrapper-3d {
+        /* ESTÁDIO DE FUTEBOL 4D */
+        .stadium-container {
             position: relative;
-            margin-top: 5px;
-            margin-bottom: -10px;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-        }
-        .tiger-avatar-3d-real {
-            width: 95px;
-            height: 95px;
-            background: radial-gradient(circle, #ffaa00 0%, #d35400 70%, #934300 100%);
-            border-radius: 50%;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(180deg, #1b4d3e 0%, #0d261f 100%);
             border: 3px solid #ffb703;
-            box-shadow: 0 0 30px rgba(255, 183, 3, 0.95), 0 12px 25px rgba(0,0,0,0.85);
-            position: relative;
-            animation: tigreBalançoReal 2.2s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        @keyframes tigreBalançoReal {
-            0% { transform: translateY(0px) rotate(-3deg) scale(1); filter: brightness(1); }
-            50% { transform: translateY(-10px) rotate(3deg) scale(1.08); filter: brightness(1.2) drop-shadow(0 18px 28px rgba(255,69,0,0.9)); }
-            100% { transform: translateY(0px) rotate(-3deg) scale(1); filter: brightness(1); }
-        }
-        /* Óculos de sol estilizados do Tigre Oficial */
-        .tigre-oculos {
-            position: absolute;
-            top: 34px;
-            width: 50px;
-            height: 18px;
-            background: #111;
-            border-radius: 4px;
-            border: 2px solid #ffb703;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px;
-            animation: olharOculos 3s ease-in-out infinite;
-        }
-        .tigre-oculos::before, .tigre-oculos::after {
-            content: '';
-            width: 18px;
-            height: 12px;
-            background: #222;
-            border-radius: 2px;
-            box-shadow: inset 0 0 4px #ffb703;
-        }
-        @keyframes olharOculos {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-2px); }
-        }
-        .tigre-orelha-esq, .tigre-orelha-dir {
-            position: absolute; top: -10px; width: 26px; height: 28px;
-            background: #d35400; border: 2px solid #ffb703; border-radius: 50% 50% 20% 20%;
-        }
-        .tigre-orelha-esq { left: 12px; transform: rotate(-20deg); }
-        .tigre-orelha-dir { right: 12px; transform: rotate(20deg); }
-        .tigre-focinho {
-            position: absolute; bottom: 22px; width: 16px; height: 10px;
-            background: #331100; border-radius: 50%;
-        }
-
-        .slot-machine-container {
-            background: linear-gradient(135deg, #b22222, #800000);
-            border: 3px solid #ffb703;
-            border-radius: 20px;
-            padding: 20px 15px 15px 15px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.7), 0 10px 25px rgba(255,69,0,0.4);
-            margin-bottom: 15px;
-        }
-        .slot-grid-3x3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            background: #111;
-            padding: 10px;
-            border-radius: 12px;
-            border: 2px solid #ffb703;
-            margin-bottom: 15px;
-        }
-        .slot-cell {
-            background: linear-gradient(145deg, #222, #111);
-            border: 1px solid #444;
-            border-radius: 8px;
-            height: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+            border-radius: 16px;
             overflow: hidden;
-        }
-        .slot-cell img {
-            width: 48px; height: 48px; object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-        }
-        .slot-cell.spinning img {
-            animation: cellSpinImg 0.1s linear infinite;
-        }
-        @keyframes cellSpinImg {
-            0% { transform: translateY(-4px) scale(0.9); filter: blur(1px); }
-            50% { transform: translateY(4px) scale(1.1); filter: blur(1px); }
-            100% { transform: translateY(-4px) scale(0.9); filter: blur(1px); }
-        }
-
-        .slot-controls {
-            background: rgba(0,0,0,0.4);
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,183,3,0.3);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 8px 25px rgba(0,255,136,0.3);
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
             align-items: center;
+            padding-bottom: 15px;
+        }
+        .goal-post {
+            position: absolute; top: 15px; width: 220px; height: 75px;
+            border: 4px solid #fff; border-bottom: none; border-radius: 6px 6px 0 0;
+            box-shadow: 0 0 15px rgba(255,255,255,0.6);
+        }
+        .goal-net {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(255,255,255,0.15) 8px, rgba(255,255,255,0.15) 10px),
+                        repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(255,255,255,0.15) 8px, rgba(255,255,255,0.15) 10px);
+        }
+
+        /* GOLEIRO 4D */
+        .goleiro-4d {
+            position: absolute; top: 35px; left: 50%; transform: translateX(-50%);
+            width: 45px; height: 45px; background: #e74c3c; border-radius: 50%;
+            border: 2px solid #ffb703; box-shadow: 0 0 15px rgba(231,76,60,0.8);
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        /* JOGADOR CHUTANDO 4D */
+        .jogador-4d {
+            font-size: 28px;
+            margin-bottom: 5px;
+            animation: playerIdle 2s ease-in-out infinite;
+        }
+        @keyframes playerIdle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* BOLA 4D */
+        .bola-4d {
+            width: 32px; height: 32px; background: #fff; border-radius: 50%;
+            border: 2px solid #000; box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            display: flex; align-items: center; justify-content: center; font-size: 16px;
+            transition: all 0.6s cubic-bezier(0.1, 0.9, 0.2, 1);
+            position: relative; z-index: 10;
+        }
+
+        /* ANIMAÇÃO DE COMEMORAÇÃO DE GOL 4D */
+        .gol-celebration-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 255, 136, 0.35); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 30;
+            animation: pulseGol 0.5s ease infinite alternate; display: none;
+        }
+        @keyframes pulseGol {
+            0% { background: rgba(0, 255, 136, 0.2); }
+            100% { background: rgba(0, 255, 136, 0.5); }
+        }
+        .gol-texto-3d {
+            font-size: 32px; font-weight: 950; color: #ffb703;
+            text-shadow: 0 0 20px #00ff88, 0 0 10px #000;
+            text-transform: uppercase; letter-spacing: 2px;
+            animation: bounceGol 0.5s ease infinite alternate;
+        }
+        @keyframes bounceGol {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+        .gol-valor-premio {
+            font-size: 18px; font-weight: 900; color: #fff; background: #000;
+            padding: 6px 16px; border-radius: 20px; border: 2px solid #ffb703; margin-top: 8px;
+            box-shadow: 0 0 15px #ffb703;
+        }
+
+        .football-controls {
+            background: rgba(0,0,0,0.5);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,255,136,0.3);
         }
         .bet-control-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 10px;
-            font-size: 13px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; font-size: 13px;
         }
-        .bet-adjust-box {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .bet-adjust-box { display: flex; align-items: center; gap: 6px; }
         .btn-bet-step {
             background: #ff4500; color: #fff; border: none; width: 30px; height: 30px;
             border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer;
             box-shadow: 0 3px 8px rgba(255,69,0,0.5);
         }
         .bet-input-display {
-            background: #0f1118; border: 1px solid #ffb703; color: #ffb703;
+            background: #0f1118; border: 1px solid #00ff88; color: #00ff88;
             padding: 5px 10px; border-radius: 6px; font-weight: 900; font-size: 14px;
             width: 75px; text-align: center;
         }
 
-        .turbo-demo-row {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; margin-bottom: 15px; font-size: 12px;
+        /* BOTÃO CHUTAR 4D */
+        .btn-chutar-4d {
+            width: 100%; padding: 15px;
+            background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%);
+            color: #000; border: 2px solid #a9dfbf; border-radius: 50px;
+            font-weight: 950; font-size: 18px; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.7), inset 0 2px 4px rgba(255,255,255,0.6);
+            text-transform: uppercase; letter-spacing: 1.5px;
+            transition: transform 0.1s;
         }
-        .checkbox-container {
-            display: flex; align-items: center; gap: 5px; cursor: pointer;
-            color: #ffb703; font-weight: bold;
-        }
-
-        /* BOTÃO REDONDO ESTILO FORTUNE TIGER REAL */
-        .btn-spin-redondo {
-            width: 75px; height: 75px;
-            background: linear-gradient(145deg, #2ecc71, #27ae60, #145a32);
-            border: 4px solid #a9dfbf;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.8), inset 0 3px 5px rgba(255,255,255,0.6);
-            transition: transform 0.1s, box-shadow 0.1s;
-            margin: 5px auto;
-        }
-        .btn-spin-redondo:active {
-            transform: scale(0.92);
-            box-shadow: 0 3px 10px rgba(46, 204, 113, 0.8), inset 0 2px 3px rgba(0,0,0,0.5);
-        }
-        .btn-spin-redondo svg {
-            width: 38px; height: 38px; fill: #ffffff;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
-            animation: rotacionarSeta 4s linear infinite;
-        }
-        @keyframes rotacionarSeta {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .btn-chutar-4d:active { transform: scale(0.95); }
 
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
@@ -670,8 +609,8 @@
     </div>
 
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
-    <!-- MÚSICA CLÁSSICA DO FORTUNE TIGER -->
-    <audio id="tigerAudioPlayer" src="https://files.catbox.moe/xz8qbc.mp3" preload="auto" loop></audio>
+    <!-- ÁUDIO DE TORCIDA / COMEMORAÇÃO -->
+    <audio id="torcidaAudio" src="https://files.catbox.moe/xz8qbc.mp3" preload="auto"></audio>
 
     <header>
         <div class="header-left">
@@ -690,7 +629,7 @@
     </header>
 
     <div class="quick-search-bar">
-        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos ou esportes..." oninput="pesquisaGeral()">
         <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
@@ -706,7 +645,7 @@
             <div class="sidebar-title">🤠 MENU PRINCIPAL</div>
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
-        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino</div>
+        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino & Jogos</div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Esportivas</div>
         <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
@@ -716,7 +655,7 @@
         <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">📝 Registrar Conta</div>
     </div>
 
-    <!-- ABA 1: CASSINO -->
+    <!-- ABA 1: CASSINO E JOGOS -->
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
             <div class="promo-track" id="promoTrack">
@@ -734,13 +673,6 @@
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
                     </div>
                 </div>
-                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
-                    <div class="promo-content">
-                        <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
-                        <p>Participe e concorra a prêmios em dinheiro!</p>
-                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Participar</button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -749,41 +681,14 @@
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
         </div>
 
-        <div class="winners-section">
-            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
-            <div class="winners-scroll" id="winnersScroll">
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
-                    <div class="winner-info">
-                        <div class="winner-name">Kaiq***</div>
-                        <div class="winner-prize">R$ 45.00 BRL</div>
-                    </div>
-                </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
-                    <div class="winner-info">
-                        <div class="winner-name">Ebe***</div>
-                        <div class="winner-prize">R$ 35.75 BRL</div>
-                    </div>
-                </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/9k06uq.jpeg" alt="Mines">
-                    <div class="winner-info">
-                        <div class="winner-name">Lucas***</div>
-                        <div class="winner-prize">R$ 120.00 BRL</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="section-title">
-            🏆 TOP JOGOS <span>Todos ></span>
+            🏆 TOP JOGOS 4D <span>Todos ></span>
         </div>
 
         <div class="games-grid">
-            <div class="game-card" onclick="abrirFortuneTiger()">
-                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
-                <div class="game-name">Fortune Tiger</div>
+            <div class="game-card" onclick="abrirCangacoFootball()">
+                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Cangaço Football">
+                <div class="game-name">⚽ Cangaço Football</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Aviator', 20)">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
@@ -804,11 +709,9 @@
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
             <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Partidas em Tempo Real (Ao Vivo)</div>
-            
             <div class="filtro-ligas-scroll" id="filtroLigasContainer">
                 <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
             </div>
-
             <div id="lista-partidas-api">
                 <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas em direto...</p>
             </div>
@@ -849,71 +752,49 @@
         </div>
     </div>
 
-    <!-- MODAL DO JOGO FORTUNE TIGER 4D -->
-    <div id="fortuneModal" class="modal-overlay">
-        <div class="modal-card-4d" style="max-width: 390px;">
-            <span class="close-modal" onclick="fecharFortuneTiger()">&times;</span>
-            <div class="modal-title-4d">🐯 Fortune Tiger 4D</div>
-            <div class="modal-subtitle-4d" id="tigerModoSub">Modo Normal (Valendo Saldo)</div>
+    <!-- MODAL DO JOGO CANGAÇO FOOTBALL 4D -->
+    <div id="footballModal" class="modal-overlay">
+        <div class="modal-card-football">
+            <span class="close-modal" onclick="fecharCangaçoFootball()">&times;</span>
+            <div class="modal-title-football">⚽ CANGAÇO FOOTBALL 4D</div>
+            <div class="modal-subtitle-football">Chute ao Gol (Chance de Gol: 30% | Defesa: 80%)</div>
             
-            <!-- TIGRE 3D DINÂMICO IDÊNTICO AO VÍDEO OFICIAL -->
-            <div class="tiger-wrapper-3d">
-                <div class="tiger-avatar-3d-real">
-                    <div class="tigre-orelha-esq"></div>
-                    <div class="tigre-orelha-dir"></div>
-                    <div class="tigre-oculos"></div>
-                    <div class="tigre-focinho"></div>
+            <!-- ESTÁDIO 4D COM CAMPO, GOL, GOLEIRO E BOLA -->
+            <div class="stadium-container" id="stadiumContainer">
+                <div class="goal-post">
+                    <div class="goal-net"></div>
                 </div>
+                <div class="goleiro-4d" id="goleiroEl">🧤</div>
+                
+                <!-- Animação de comemoração de gol no fundo -->
+                <div class="gol-celebration-overlay" id="golCelebration">
+                    <div class="gol-texto-3d">🎉 GOL! 🎉</div>
+                    <div class="gol-valor-premio" id="golPremioValor">R$ 0,00</div>
+                </div>
+
+                <div class="jogador-4d">🏃</div>
+                <div class="bola-4d" id="bolaEl">⚽</div>
             </div>
 
-            <!-- MÁQUINA DE CAÇA-NÍQUEIS 3X3 -->
-            <div class="slot-machine-container">
-                <div class="slot-grid-3x3" id="slotGrid">
-                    <div class="slot-cell" id="c0"><img src="https://images.emojiterra.com/google/android-12l/512px/1f34a.png" alt="Laranja"></div>
-                    <div class="slot-cell" id="c1"><img src="https://images.emojiterra.com/google/android-12l/512px/1fa99.png" alt="Moeda"></div>
-                    <div class="slot-cell" id="c2"><img src="https://images.emojiterra.com/google/android-12l/512px/1f4dc.png" alt="Envelope"></div>
-                    <div class="slot-cell" id="c3"><img src="https://images.emojiterra.com/google/android-12l/512px/1f405.png" alt="Tigre"></div>
-                    <div class="slot-cell" id="c4"><img src="https://images.emojiterra.com/google/android-12l/512px/1f31f.png" alt="Estrela"></div>
-                    <div class="slot-cell" id="c5"><img src="https://images.emojiterra.com/google/android-12l/512px/1fa99.png" alt="Moeda"></div>
-                    <div class="slot-cell" id="c6"><img src="https://images.emojiterra.com/google/android-12l/512px/1f4dc.png" alt="Envelope"></div>
-                    <div class="slot-cell" id="c7"><img src="https://images.emojiterra.com/google/android-12l/512px/1f405.png" alt="Tigre"></div>
-                    <div class="slot-cell" id="c8"><img src="https://images.emojiterra.com/google/android-12l/512px/1f34a.png" alt="Laranja"></div>
-                </div>
-
-                <div class="slot-controls">
-                    <!-- Aposta Mínima R$ 2,00 para cima -->
-                    <div class="bet-control-row">
-                        <span>Valor da Aposta:</span>
-                        <div class="bet-adjust-box">
-                            <button class="btn-bet-step" onclick="alterarAposta(-1)">-</button>
-                            <input type="text" id="tigerBetInput" class="bet-input-display" value="2.00" readonly>
-                            <button class="btn-bet-step" onclick="alterarAposta(1)">+</button>
-                        </div>
-                    </div>
-
-                    <!-- Modo Turbo e Modo Demo -->
-                    <div class="turbo-demo-row">
-                        <label class="checkbox-container">
-                            <input type="checkbox" id="checkTurbo" style="accent-color: #ff4500; width: 15px; height: 15px;"> Modo Turbo ⚡
-                        </label>
-                        <label class="checkbox-container">
-                            <input type="checkbox" id="checkDemo" onchange="alternarModoDemo()" style="accent-color: #ff4500; width: 15px; height: 15px;"> Modo Demo 🎮
-                        </label>
-                    </div>
-
-                    <!-- BOTÃO REDONDO ESTILO FORTUNE TIGER OFICIAL COM SETAS -->
-                    <div class="btn-spin-redondo" id="btnSpinTiger" onclick="clicarGirarOuParar()" title="Girar">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.4 13.3,20 11,19.8V17.8C12.8,18 14.7,17.4 16.1,16C18.4,13.7 18.4,10 16.1,7.7C15,6.6 13.5,6 12,6V9L8,5L12,1V4M6.4,7.8C4.1,10.1 4.1,13.8 6.4,16.1C7.5,17.2 9,17.8 10.5,17.8V19.8C8.2,20 5.7,19.4 3.9,17.6C0.8,14.5 0.8,9.4 3.9,6.3C5.3,4.9 7.3,4.2 9.2,4V6C7.9,6.2 6.6,6.8 5.6,7.8L6.4,7.8Z"/>
-                        </svg>
+            <div class="football-controls">
+                <!-- Aposta Mínima R$ 1,00 para cima -->
+                <div class="bet-control-row">
+                    <span>Valor da Aposta:</span>
+                    <div class="bet-adjust-box">
+                        <button class="btn-bet-step" onclick="alterarApostaFootball(-1)">-</button>
+                        <input type="text" id="footballBetInput" class="bet-input-display" value="1.00" readonly>
+                        <button class="btn-bet-step" onclick="alterarApostaFootball(1)">+</button>
                     </div>
                 </div>
+
+                <!-- Botão Chutar -->
+                <button class="btn-chutar-4d" id="btnChutar" onclick="realizarChute()">CHUTAR AO GOL ⚽</button>
             </div>
-            <div id="tigerResultadoMsg" style="font-size: 13px; font-weight: bold; color: #ffb703; min-height: 20px;">Boa sorte!</div>
+            <div id="footballResultadoMsg" style="font-size: 13px; font-weight: bold; color: #ffb703; margin-top: 10px; min-height: 20px;">Escolha o valor e chute!</div>
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante -->
+    <!-- Boletim de Apostas Esportivas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
@@ -926,36 +807,12 @@
         <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
     </div>
 
-    <!-- Modal 4D Avançado de Opções e Mercados Tradicionais da Partida -->
-    <div id="matchModal" class="modal-overlay">
-        <div class="modal-card-4d">
-            <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
-            <div class="modal-title-4d" id="modalPartidaTitulo">Mercados da Partida</div>
-            <div class="modal-subtitle-4d" id="modalPartidaInfoSub">Ao Vivo | Relógio Ativo</div>
-            
-            <div class="market-section-title">1X2 Tradicional (Vencedor)</div>
-            <div class="odds-grid-4d" id="modalOdds1X2" style="grid-template-columns: repeat(3, 1fr);"></div>
-
-            <div class="market-section-title">Dupla Chance</div>
-            <div class="odds-grid-4d" id="modalOddsDuplaChance" style="grid-template-columns: repeat(3, 1fr);"></div>
-
-            <div class="market-section-title">Total de Gols (Mais / Menos)</div>
-            <div class="odds-grid-4d" id="modalOddsGols"></div>
-
-            <div class="market-section-title">Total de Escanteios</div>
-            <div class="odds-grid-4d" id="modalOddsEscanteios"></div>
-
-            <div class="market-section-title">Cartões (Amarelos / Vermelhos)</div>
-            <div class="odds-grid-4d" id="modalOddsCartoes" style="margin-bottom: 5px;"></div>
-        </div>
-    </div>
-
     <!-- Modal de Login -->
     <div id="loginModal" class="modal-overlay">
-        <div class="modal-card-4d" style="max-width: 380px;">
+        <div class="modal-card-football" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">🔐 ENTRAR NA CONTA</div>
-            <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail (Gmail cadastrado)">
+            <div class="modal-title-football">🔐 ENTRAR NA CONTA</div>
+            <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail cadastrado">
             <input type="password" id="loginSenha" class="modal-input" placeholder="Sua Senha">
             <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
         </div>
@@ -963,31 +820,22 @@
 
     <!-- Modal de Registro -->
     <div id="registerModal" class="modal-overlay">
-        <div class="modal-card-4d" style="max-width: 380px;">
+        <div class="modal-card-football" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">📝 CRIAR CONTA</div>
-            <div id="etapaCadastro1">
-                <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
-                <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
-                <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone / WhatsApp">
-                <input type="text" id="regCpf" class="modal-input" placeholder="CPF">
-                <input type="date" id="regNascimento" class="modal-input" placeholder="Data de Nascimento">
-                <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
-                <button class="modal-btn" onclick="solicitarCodigoConfirmacao()">Avançar e Enviar Código</button>
-            </div>
-            <div id="etapaCadastro2" style="display: none;">
-                <p style="font-size: 12px; color: #bbb; margin-bottom: 12px;">Enviámos um código de confirmação de 4 dígitos para o seu E-mail / Telefone.</p>
-                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código (ex: 4821)" maxlength="4" style="text-align: center; letter-spacing: 5px; font-size: 18px;">
-                <button class="modal-btn" onclick="validarCodigoEConcluir()">Confirmar Código e Registar</button>
-            </div>
+            <div class="modal-title-football">📝 CRIAR CONTA</div>
+            <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
+            <input type="email" id="regEmail" class="modal-input" placeholder="E-mail">
+            <input type="tel" id="regTelefone" class="modal-input" placeholder="WhatsApp / Telefone">
+            <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
+            <button class="modal-btn" onclick="realizarRegistroCompleto()">Registar Conta</button>
         </div>
     </div>
 
     <!-- Modal de Depósito -->
     <div id="depositModal" class="modal-overlay">
-        <div class="modal-card-4d" style="max-width: 380px;">
+        <div class="modal-card-football" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">💰 DEPOSITAR (PIX)</div>
+            <div class="modal-title-football">💰 DEPOSITAR (PIX)</div>
             <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor do depósito (R$)">
             <button class="modal-btn" onclick="realizarDeposito()">Gerar Pix e Depositar</button>
         </div>
@@ -1021,13 +869,11 @@
         }
 
         const audio = document.getElementById('audioPlayer');
-        const tigerAudio = document.getElementById('tigerAudioPlayer');
+        const torcidaAudio = document.getElementById('torcidaAudio');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
         let apostasSelecionadas = [];
-        let partidaAtivaId = null;
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
-        
         let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
         let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
         let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
@@ -1035,9 +881,6 @@
         
         let listaGlobalPartidas = [];
         let ligaFiltroAtual = 'TODAS';
-        let codigoGeradoTemp = "";
-        let dadosTempRegistro = {};
-        let intervaloAtualizacaoAoVivo = null;
 
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
@@ -1047,9 +890,7 @@
             localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
             localStorage.setItem('cangaco_saldo', saldo);
             localStorage.setItem('cangaco_db_usuarios', JSON.stringify(baseDadosUtilizadores));
-            if (usuarioLogado) {
-                localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
-            }
+            if (usuarioLogado) localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
         }
 
         function atualizarSaldoNaTela() {
@@ -1060,7 +901,6 @@
             if (usuarioLogado) {
                 document.querySelector('.btn-topo-login').innerText = usuarioLogado.nome.split(' ')[0];
                 document.querySelector('.btn-topo-login').setAttribute('onclick', 'fazerLogout()');
-                document.querySelector('.btn-topo-login').title = "Clique para sair da conta";
             }
         }
 
@@ -1078,112 +918,6 @@
             salvarDadosStorage();
         }
 
-        const traducoesTimes = {
-            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro",
-            "Brazil": "Brasil", "Argentina": "Argentina", "France": "França", "Germany": "Alemanha", "England": "Inglaterra", "Spain": "Espanha", "Italy": "Itália", "Portugal": "Portugal", "Netherlands": "Holanda", "Uruguay": "Uruguai", "Colombia": "Colômbia", "Chile": "Chile", "Peru": "Peru", "Ecuador": "Equador", "Paraguay": "Paraguai", "Venezuela": "Venezuela", "Bolivia": "Bolívia", "Mexico": "México", "United States": "Estados Unidos", "Japan": "Japão", "South Korea": "Coreia do Sul", "Morocco": "Marrocos", "Croatia": "Croácia", "Belgium": "Bélgica"
-        };
-
-        const bandeirasTimes = {
-            "Flamengo": "https://media.api-sports.io/football/teams/127.png",
-            "Palmeiras": "https://media.api-sports.io/football/teams/121.png",
-            "São Paulo": "https://media.api-sports.io/football/teams/126.png",
-            "Corinthians": "https://media.api-sports.io/football/teams/131.png",
-            "Fluminense": "https://media.api-sports.io/football/teams/124.png",
-            "Botafogo": "https://media.api-sports.io/football/teams/120.png",
-            "Vasco da Gama": "https://media.api-sports.io/football/teams/133.png",
-            "Grêmio": "https://media.api-sports.io/football/teams/130.png",
-            "Internacional": "https://media.api-sports.io/football/teams/119.png",
-            "Atlético Mineiro": "https://media.api-sports.io/football/teams/1062.png",
-            "Cruzeiro": "https://media.api-sports.io/football/teams/135.png",
-            "Real Madrid": "https://media.api-sports.io/football/teams/541.png",
-            "Barcelona": "https://media.api-sports.io/football/teams/529.png",
-            "Atlético de Madrid": "https://media.api-sports.io/football/teams/530.png",
-            "Manchester City": "https://media.api-sports.io/football/teams/50.png",
-            "Manchester United": "https://media.api-sports.io/football/teams/33.png",
-            "Arsenal": "https://media.api-sports.io/football/teams/42.png",
-            "Chelsea": "https://media.api-sports.io/football/teams/49.png",
-            "Liverpool": "https://media.api-sports.io/football/teams/40.png",
-            "Tottenham": "https://media.api-sports.io/football/teams/47.png",
-            "Juventus": "https://media.api-sports.io/football/teams/496.png",
-            "Milan": "https://media.api-sports.io/football/teams/489.png",
-            "Inter de Milão": "https://media.api-sports.io/football/teams/505.png",
-            "Roma": "https://media.api-sports.io/football/teams/497.png",
-            "Napoli": "https://media.api-sports.io/football/teams/492.png",
-            "Lazio": "https://media.api-sports.io/football/teams/499.png",
-            "Bayern de Munique": "https://media.api-sports.io/football/teams/157.png",
-            "Borussia Dortmund": "https://media.api-sports.io/football/teams/165.png",
-            "Bayer Leverkusen": "https://media.api-sports.io/football/teams/168.png",
-            "RB Leipzig": "https://media.api-sports.io/football/teams/173.png",
-            "Paris Saint-Germain": "https://media.api-sports.io/football/teams/85.png",
-            "Olympique de Marselha": "https://media.api-sports.io/football/teams/81.png",
-            "Lyon": "https://media.api-sports.io/football/teams/80.png",
-            "Monaco": "https://media.api-sports.io/football/teams/79.png",
-            "Ajax": "https://media.api-sports.io/football/teams/194.png",
-            "PSV": "https://media.api-sports.io/football/teams/197.png",
-            "Benfica": "https://media.api-sports.io/football/teams/211.png",
-            "Porto": "https://media.api-sports.io/football/teams/212.png",
-            "Sporting": "https://media.api-sports.io/football/teams/228.png",
-            "Brasil": "https://flagcdn.com/w40/br.png",
-            "Argentina": "https://flagcdn.com/w40/ar.png",
-            "França": "https://flagcdn.com/w40/fr.png",
-            "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
-            "Alemanha": "https://flagcdn.com/w40/de.png",
-            "Portugal": "https://flagcdn.com/w40/pt.png",
-            "Espanha": "https://flagcdn.com/w40/es.png",
-            "Itália": "https://flagcdn.com/w40/it.png",
-            "Holanda": "https://flagcdn.com/w40/nl.png",
-            "Uruguai": "https://flagcdn.com/w40/uy.png",
-            "Colômbia": "https://flagcdn.com/w40/co.png",
-            "Chile": "https://flagcdn.com/w40/cl.png",
-            "Croácia": "https://flagcdn.com/w40/hr.png",
-            "Bélgica": "https://flagcdn.com/w40/be.png"
-        };
-
-        function obterBandeira(nomeTime, logoApi) { 
-            if (logoApi) return logoApi;
-            if (bandeirasTimes[nomeTime]) return bandeirasTimes[nomeTime];
-            return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
-        }
-
-        const traducoesLigas = {
-            "UEFA Champions League": "Liga dos Campeões da UEFA",
-            "UEFA Europa League": "Liga Europa da UEFA",
-            "UEFA Conference League": "Liga Conferência da UEFA",
-            "Premier League": "Campeonato Inglês",
-            "Primera Division": "Campeonato Espanhol",
-            "La Liga": "Campeonato Espanhol",
-            "Serie A": "Campeonato Italiano",
-            "Bundesliga": "Campeonato Alemão",
-            "Ligue 1": "Campeonato Francês",
-            "Eredivisie": "Campeonato Holandês",
-            "Primeira Liga": "Campeonato Português",
-            "UEFA Nations League": "Liga das Nações da UEFA",
-            "Copa Libertadores": "Copa Libertadores",
-            "Copa Sudamericana": "Copa Sul-Americana",
-            "Campeonato Brasileiro Série A": "Brasileirão Série A",
-            "Serie B": "Brasileirão Série B",
-            "Copa do Brasil": "Copa do Brasil",
-            "FRIENDLIES": "Amistosos Internacionais",
-            "Friendlies": "Amistosos Internacionais",
-            "World Cup - Qualification South America": "Eliminatórias da Copa - América do Sul",
-            "World Cup - Qualification Europe": "Eliminatórias da Copa - Europa",
-            "World Cup - Qualification CONCACAF": "Eliminatórias da Copa - CONCACAF",
-            "World Cup - Qualification Asia": "Eliminatórias da Copa - Ásia",
-            "World Cup - Qualification Africa": "Eliminatórias da Copa - África",
-            "Euro Championship - Qualification": "Eliminatórias da Eurocopa"
-        };
-
-        function traduzirTime(nome) { return traducoesTimes[nome] || nome; }
-        function traduzirLiga(nome) { return traducoesLigas[nome] || nome; }
-
-        function gerarOddsReais(casa, fora) {
-            let seed = (casa.length + fora.length) * 7;
-            let odd1 = (1.45 + (seed % 17) / 10).toFixed(2);
-            let oddX = (3.20 + ((seed * 3) % 13) / 10).toFixed(2);
-            let odd2 = (2.05 + ((seed * 5) % 23) / 10).toFixed(2);
-            return { casa: odd1, empate: oddX, fora: odd2 };
-        }
-
         function tocarAudioInicio() { audio.play().catch(e => console.log(e)); }
 
         function abrirSidebar() {
@@ -1199,25 +933,16 @@
         function mudarAba(aba) {
             tocarAudioInicio();
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
-            if (aba === 'cassino') {
-                document.getElementById('tab-cassino').classList.add('active-tab');
-            } else if (aba === 'esportes') {
-                document.getElementById('tab-esportes').classList.add('active-tab');
-                carregarJogosReais();
-            } else if (aba === 'bilhetes') {
-                document.getElementById('tab-bilhetes').classList.add('active-tab');
-                renderizarBilhetesNaTela();
-            } else if (aba === 'extrato') {
-                document.getElementById('tab-extrato').classList.add('active-tab');
-                renderizarExtratoNaTela();
-            } else if (aba === 'suporte') {
-                document.getElementById('tab-suporte').classList.add('active-tab');
-            }
+            if (aba === 'cassino') document.getElementById('tab-cassino').classList.add('active-tab');
+            else if (aba === 'esportes') { document.getElementById('tab-esportes').classList.add('active-tab'); carregarJogosReais(); }
+            else if (aba === 'bilhetes') { document.getElementById('tab-bilhetes').classList.add('active-tab'); renderizarBilhetesNaTela(); }
+            else if (aba === 'extrato') { document.getElementById('tab-extrato').classList.add('active-tab'); renderizarExtratoNaTela(); }
+            else if (aba === 'suporte') document.getElementById('tab-suporte').classList.add('active-tab');
         }
 
         function jogarCassino(nomeJogo, custoAposta) {
             audio.pause(); audio.currentTime = 0; 
-            if (saldo < custoAposta) { alert("Saldo insuficiente para jogar! Faça um depósito."); return; }
+            if (saldo < custoAposta) { alert("Saldo insuficiente! Faça um depósito."); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
             salvarDadosStorage();
@@ -1227,209 +952,124 @@
                 let premio = custoAposta * 2;
                 saldo += premio;
                 atualizarSaldoNaTela();
-                registarTransacao('cassino_ganho', `Prêmio no Cassino (${nomeJogo})`, premio);
+                registarTransacao('cassino_ganho', `Prêmio (${nomeJogo})`, premio);
                 alert(`🎉 Parabéns! Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
             } else {
-                registarTransacao('cassino_perca', `Aposta no Cassino (${nomeJogo})`, -custoAposta);
-                alert(`❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`);
+                registarTransacao('cassino_perca', `Aposta (${nomeJogo})`, -custoAposta);
+                alert(`❌ Não foi desta vez. Perdeu R$ ${custoAposta.toFixed(2)}.`);
             }
         }
 
-        // --- LÓGICA DO FORTUNE TIGER 4D ---
-        let tigerRodando = false;
-        let intervaloTiger = null;
-        
-        let symbolsReal = [
-            'https://images.emojiterra.com/google/android-12l/512px/1f405.png', // Tigre
-            'https://images.emojiterra.com/google/android-12l/512px/1fa99.png', // Moeda
-            'https://images.emojiterra.com/google/android-12l/512px/1f34a.png', // Laranja
-            'https://images.emojiterra.com/google/android-12l/512px/1f4dc.png', // Envelope
-            'https://images.emojiterra.com/google/android-12l/512px/1f31f.png'  // Estrela
-        ];
-
-        function abrirFortuneTiger() {
+        // --- LÓGICA DO JOGO CANGAÇO FOOTBALL 4D ---
+        function abrirCangacoFootball() {
             tocarAudioInicio();
-            document.getElementById('fortuneModal').style.display = 'flex';
+            document.getElementById('footballModal').style.display = 'flex';
+            resetarRodadaFootball();
         }
-        function fecharFortuneTiger() {
-            if (tigerRodando) pararGiroTigerImediato();
-            tigerAudio.pause(); tigerAudio.currentTime = 0;
-            document.getElementById('fortuneModal').style.display = 'none';
+        function fecharCangaçoFootball() {
+            torcidaAudio.pause();
+            torcidaAudio.currentTime = 0;
+            document.getElementById('footballModal').style.display = 'none';
         }
 
-        function alterarAposta(valorDelta) {
-            if (tigerRodando) return;
-            let input = document.getElementById('tigerBetInput');
-            let atual = parseFloat(input.value) + valorDelta;
-            if (atual < 2.00) atual = 2.00; // Mínimo R$ 2,00
+        function alterarApostaFootball(delta) {
+            let input = document.getElementById('footballBetInput');
+            let atual = parseFloat(input.value) + delta;
+            if (atual < 1.00) atual = 1.00; // Mínimo R$ 1,00
             input.value = atual.toFixed(2);
         }
 
-        function alternarModoDemo() {
-            let isDemo = document.getElementById('checkDemo').checked;
-            let sub = document.getElementById('tigerModoSub');
-            if (isDemo) {
-                sub.innerText = "Modo Demo 🎮 (Sem gastar saldo)";
-                sub.style.color = "#00ff88";
-            } else {
-                sub.innerText = "Modo Normal (Valendo Saldo)";
-                sub.style.color = "#00ff88";
-            }
+        function resetarRodadaFootball() {
+            // Ao começar nova rodada, limpa todas as animações anteriores
+            document.getElementById('golCelebration').style.display = 'none';
+            document.getElementById('bolaEl').style.transform = 'translateY(0) scale(1)';
+            document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0)';
+            document.getElementById('footballResultadoMsg').innerText = "Escolha o valor e chute!";
+            torcidaAudio.pause();
+            torcidaAudio.currentTime = 0;
         }
 
-        function clicarGirarOuParar() {
-            if (!tigerRodando) {
-                iniciarGiroTiger();
-            } else {
-                pararGiroTiger();
-            }
-        }
+        function realizarChute() {
+            // Limpa animações anteriores ao iniciar nova rodada
+            resetarRodadaFootball();
 
-        function iniciarGiroTiger() {
-            let isDemo = document.getElementById('checkDemo').checked;
-            let apostaVal = parseFloat(document.getElementById('tigerBetInput').value);
-
-            if (!isDemo && saldo < apostaVal) {
-                alert("Saldo insuficiente para esta aposta! Ative o Modo Demo ou faça um depósito.");
+            let apostaVal = parseFloat(document.getElementById('footballBetInput').value);
+            if (saldo < apostaVal) {
+                alert("Saldo insuficiente para esta aposta! Faça um depósito.");
                 return;
             }
 
-            if (!isDemo) {
-                saldo -= apostaVal;
-                atualizarSaldoNaTela();
-                registarTransacao('cassino_perca', 'Aposta Fortune Tiger 4D', -apostaVal);
-            }
+            saldo -= apostaVal;
+            atualizarSaldoNaTela();
+            registarTransacao('cassino_perca', 'Aposta Cangaço Football', -apostaVal);
 
-            tigerRodando = true;
-            audio.pause();
-            tigerAudio.currentTime = 0;
-            tigerAudio.play().catch(e => console.log(e)); // Toca a música clássica do tigrinho
+            let bola = document.getElementById('bolaEl');
+            let goleiro = document.getElementById('goleiroEl');
+            let msg = document.getElementById('footballResultadoMsg');
 
-            document.getElementById('tigerResultadoMsg').innerText = "A girar...";
+            msg.innerText = "A chutar...";
+            bola.style.transform = "translateY(-115px) scale(0.85)";
 
-            let cells = document.querySelectorAll('.slot-cell');
-            cells.forEach(c => c.classList.add('spinning'));
+            setTimeout(() => {
+                // Probabilidades: 30% chance de gol, 80% chance do goleiro agarrar
+                let chanceGol = Math.random(); // 0 a 1
+                let ehGol = chanceGol < 0.30; // 30% de chance exata
 
-            let isTurbo = document.getElementById('checkTurbo').checked;
-            let velocidade = isTurbo ? 60 : 120;
-
-            intervaloTiger = setInterval(() => {
-                cells.forEach(cell => {
-                    let randImg = symbolsReal[Math.floor(Math.random() * symbolsReal.length)];
-                    cell.innerHTML = `<img src="${randImg}" alt="Símbolo">`;
-                });
-            }, velocidade);
-
-            if (isTurbo) {
-                setTimeout(() => {
-                    if (tigerRodando) pararGiroTiger();
-                }, 1000);
-            }
-        }
-
-        function pararGiroTiger() {
-            if (!tigerRodando) return;
-            clearInterval(intervaloTiger);
-            tigerRodando = false;
-            tigerAudio.pause();
-            tigerAudio.currentTime = 0;
-
-            let cells = document.querySelectorAll('.slot-cell');
-            cells.forEach(c => c.classList.remove('spinning'));
-
-            let resFinal = [];
-            for(let i=0; i<9; i++) {
-                let sym = symbolsReal[Math.floor(Math.random() * symbolsReal.length)];
-                resFinal.push(sym);
-                document.getElementById(`c${i}`).innerHTML = `<img src="${sym}" alt="Símbolo">`;
-            }
-
-            let apostaVal = parseFloat(document.getElementById('tigerBetInput').value);
-            let isDemo = document.getElementById('checkDemo').checked;
-
-            let ganhou = (resFinal[3] === resFinal[4] && resFinal[4] === resFinal[5]) || (Math.random() > 0.6);
-            if (ganhou) {
-                let premio = apostaVal * 5;
-                if (!isDemo) {
+                if (ehGol) {
+                    // Goleiro pula pro lado errado
+                    let direcaoDefesa = Math.random() > 0.5 ? '-60px' : '60px';
+                    goleiro.style.transform = `translateX(calc(-50% + ${direcaoDefesa})) translateY(-10px)`;
+                    
+                    let premio = apostaVal * 3.5;
                     saldo += premio;
                     atualizarSaldoNaTela();
-                    registarTransacao('cassino_ganho', 'Prêmio Fortune Tiger 4D', premio);
+                    registarTransacao('cassino_ganho', 'Prêmio Gol - Cangaço Football', premio);
+
+                    // Ativa animação de gol na tela e comemoração de torcida no fundo
+                    document.getElementById('golPremioValor.').innerText = `R$ ${premio.toFixed(2)}`;
+                    document.getElementById('golCelebration').style.display = 'flex';
+                    torcidaAudio.play().catch(e => console.log(e));
+                    msg.innerText = `🎉 GOLAÇO! Ganhou R$ ${premio.toFixed(2)}!`;
+                } else {
+                    // Goleiro agarra a bola (80% ou restante das chances)
+                    goleiro.style.transform = "translateX(-50%) translateY(-35px)";
+                    bola.style.transform = "translateY(-125px) scale(0.6)";
+                    msg.innerText = "🧤 Defesa incrível do goleiro! Tente novamente.";
                 }
-                document.getElementById('tigerResultadoMsg').innerText = `🎉 GANHOU R$ ${premio.toFixed(2)}!`;
-            } else {
-                document.getElementById('tigerResultadoMsg').innerText = "❌ Tente novamente!";
-            }
+            }, 500);
         }
+        // --- FIM DA LÓGICA DO FUTEBOL ---
 
-        function pararGiroTigerImediato() {
-            clearInterval(intervaloTiger);
-            tigerRodando = false;
-            tigerAudio.pause();
-            tigerAudio.currentTime = 0;
-        }
-        // --- FIM DA LÓGICA DO TIGER ---
-
-        function solicitarCodigoConfirmacao() {
+        function realizarRegistroCompleto() {
             const nome = document.getElementById('regNome').value;
             const email = document.getElementById('regEmail').value;
             const telefone = document.getElementById('regTelefone').value;
-            const cpf = document.getElementById('regCpf').value;
-            const nascimento = document.getElementById('regNascimento').value;
             const senha = document.getElementById('regSenha').value;
 
-            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
-                alert('Por favor, preencha todos os campos do registo!');
-                return;
-            }
+            if (!nome || !email || !senha) { alert("Preencha todos os campos!"); return; }
 
-            let existe = baseDadosUtilizadores.find(u => u.email === email);
-            if (existe) { alert('❌ Este e-mail já possui uma conta registada!'); return; }
-
-            dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
-            codigoGeradoTemp = Math.floor(1000 + Math.random() * 9000).toString();
-            
-            alert(`📲 [SIMULAÇÃO SMS/GMAIL]: O seu código de confirmação Cangaço Bet é: ${codigoGeradoTemp}`);
-            
-            document.getElementById('etapaCadastro1').style.display = 'none';
-            document.getElementById('etapaCadastro2').style.display = 'block';
-        }
-
-        function validarCodigoEConcluir() {
-            const codigoDigitado = document.getElementById('codigoDigitado').value;
-            if (codigoDigitado !== codigoGeradoTemp) {
-                alert('❌ Código incorreto! Verifique o código enviado.');
-                return;
-            }
-
-            baseDadosUtilizadores.push(dadosTempRegistro);
-            usuarioLogado = dadosTempRegistro;
+            let novoUsuario = { nome, email, telefone, senha };
+            baseDadosUtilizadores.push(novoUsuario);
+            usuarioLogado = novoUsuario;
             salvarDadosStorage();
-            
             verificarSessaoAtiva();
             fecharModais();
-            
-            document.getElementById('etapaCadastro1').style.display = 'block';
-            document.getElementById('etapaCadastro2').style.display = 'none';
-            
-            alert(`✅ Conta verificada e criada com sucesso para ${usuarioLogado.nome}! Sessão iniciada.`);
+            alert(`✅ Conta criada com sucesso para ${nome}!`);
         }
 
         function realizarLogin() {
             const emailInput = document.getElementById('loginEmail').value.trim();
             const senhaInput = document.getElementById('loginSenha').value.trim();
+            let user = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
 
-            if (!emailInput || !senhaInput) { alert("Preencha o E-mail e a Senha!"); return; }
-
-            let utilizadorEncontrado = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
-
-            if (utilizadorEncontrado) {
-                usuarioLogado = utilizadorEncontrado;
+            if (user) {
+                usuarioLogado = user;
                 salvarDadosStorage();
                 verificarSessaoAtiva();
                 fecharModais();
-                alert(`✅ Bem-vindo de volta, ${usuarioLogado.nome}! Login efetuado com sucesso.`);
+                alert(`✅ Bem-vindo de volta, ${user.nome}!`);
             } else {
-                alert("❌ Senha ou utilizador incorreto! Verifique os dados ou utilize o Suporte para recuperar a conta.");
+                alert("❌ E-mail ou senha incorretos.");
             }
         }
 
@@ -1444,12 +1084,7 @@
         }
 
         function enviarMensagemSuporte() {
-            const assunto = document.getElementById('suporteAssunto').value;
-            const msg = document.getElementById('suporteMensagem').value;
-            if (!assunto || !msg) { alert("Preencha o assunto e a mensagem para o suporte."); return; }
-            alert("✅ Mensagem enviada com sucesso ao suporte! Um atendente responderá em breve via E-mail ou WhatsApp.");
-            document.getElementById('suporteAssunto').value = "";
-            document.getElementById('suporteMensagem').value = "";
+            alert("✅ Mensagem enviada ao suporte com sucesso!");
         }
 
         function pesquisaGeral() {
@@ -1457,512 +1092,60 @@
             const box = document.getElementById('quickSearchResult');
             box.innerHTML = '';
             if (!termo.trim()) return;
-
             const itens = [
-                { nome: '🎰 Cassino: Fortune Tiger', tipo: 'cassino' },
+                { nome: '⚽ Jogo: Cangaço Football 4D', tipo: 'cassino' },
                 { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
-                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
-                { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' },
-                { nome: '📜 Histórico / Extrato', tipo: 'extrato' },
-                { nome: '💬 Suporte Online', tipo: 'suporte' }
+                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' }
             ];
-
-            const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
-            res.forEach(r => {
-                const div = document.createElement('div');
-                div.style.padding = '8px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #232838';
+            itens.filter(i => i.nome.toLowerCase().includes(termo)).forEach(r => {
+                let div = document.createElement('div');
+                div.style.padding = '8px'; div.style.cursor = 'pointer';
                 div.innerText = r.nome;
-                div.onclick = () => { mudarAba(r.tipo); box.innerHTML = ''; document.getElementById('quickSearchInput').value = ''; };
+                div.onclick = () => { mudarAba(r.tipo); box.innerHTML = ''; };
                 box.appendChild(div);
             });
         }
 
-        function atualizarBotoesFiltroLigas(partidas) {
-            const containerFiltro = document.getElementById('filtroLigasContainer');
-            let ligasUnicas = ['TODAS'];
-            partidas.forEach(p => { if (!ligasUnicas.includes(p.liga)) ligasUnicas.push(p.liga); });
-
-            let html = `<button class="btn-filtro-liga ${ligaFiltroAtual === 'TODAS' ? 'ativo' : ''}" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>`;
-            ligasUnicas.forEach(l => {
-                if (l !== 'TODAS') {
-                    html += `<button class="btn-filtro-liga ${ligaFiltroAtual === l ? 'ativo' : ''}" onclick="filtrarLiga('${l}', this)">${l}</button>`;
-                }
-            });
-            containerFiltro.innerHTML = html;
-        }
-
-        function filtrarLiga(nomeLiga, elemento) {
-            ligaFiltroAtual = nomeLiga;
-            document.querySelectorAll('.btn-filtro-liga').forEach(b => b.classList.remove('ativo'));
-            elemento.classList.add('ativo');
+        async function carregarJogosReais() {
+            const container = document.getElementById('lista-partidas-api');
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo...</p>';`;
+            listaGlobalPartidas = [
+                { id: 'sim-1', casa: 'Flamengo', fora: 'Palmeiras', liga: 'Brasileirão Série A', golsCasa: 1, golsFora: 0, minuto: 34, segundo: 12, isAoVivo: true, odds: {casa: '1.80', empate: '3.40', fora: '4.20'} },
+                { id: 'sim-2', casa: 'Real Madrid', fora: 'Barcelona', liga: 'Campeonato Espanhol', golsCasa: 2, golsFora: 2, minuto: 78, segundo: 45, isAoVivo: true, odds: {casa: '2.10', empate: '3.10', fora: '3.00'} }
+            ];
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
         }
 
         function renderizarPartidasAoVivoNaTela(partidas) {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = '';
-
-            let partidasFiltradas = partidas.filter(p => p.isAoVivo);
-            if (ligaFiltroAtual !== 'TODAS') {
-                partidasFiltradas = partidasFiltradas.filter(p => p.liga === ligaFiltroAtual);
-            }
-
-            if (partidasFiltradas.length === 0) {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento via API. Aguarde novos jogos.</p>`;
-                return;
-            }
-
-            partidasFiltradas.forEach(match => {
+            partidas.forEach(match => {
                 const card = document.createElement('div');
                 card.className = 'match-card';
-                card.id = `match-card-${match.id}`;
-                card.onclick = () => abrirModalPartidaDetalhes(match);
-                
-                let selCasa = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Casa)')) ? 'selected' : '';
-                let selEmpate = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Empate)')) ? 'selected' : '';
-                let selFora = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Fora)')) ? 'selected' : '';
-
                 card.innerHTML = `
-                    <div class="match-header">
-                        <span>${match.bandeiraLiga ? `<img src="${match.bandeiraLiga}" alt="" style="width:16px; height:12px; margin-right:4px; vertical-align:middle; border-radius:2px;">` : ''}🔴 ${match.liga}</span> 
-                        <span id="time-${match.id}">${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s</span>
-                    </div>
+                    <div class="match-header"><span>🔴 ${match.liga}</span> <span>${match.minuto}'</span></div>
                     <div class="match-teams">
-                        <span class="team-name"><img src="${obterBandeira(match.casa, match.logoCasa)}" alt=""> ${match.casa}</span>
-                        <div class="match-score-vs">
-                            <span class="match-vs-text">AO VIVO</span>
-                            <span class="match-real-score" id="score-${match.id}">${match.golsCasa} - ${match.golsFora}</span>
-                        </div>
-                        <span class="team-name"><img src="${obterBandeira(match.fora, match.logoFora)}" alt=""> ${match.fora}</span>
-                    </div>
-                    <div class="odds-grid">
-                        <div class="odd-btn ${selCasa}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, this)">
-                            <span class="odd-label">1 (Casa)</span>
-                            <span class="odd-value">${match.odds.casa}</span>
-                        </div>
-                        <div class="odd-btn ${selEmpate}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate}, this)">
-                            <span class="odd-label">X (Empate)</span>
-                            <span class="odd-value">${match.odds.empate}</span>
-                        </div>
-                        <div class="odd-btn ${selFora}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora}, this)">
-                            <span class="odd-label">2 (Fora)</span>
-                            <span class="odd-value">${match.odds.fora}</span>
-                        </div>
+                        <span>${match.casa}</span>
+                        <div class="match-score-vs"><span class="match-real-score">${match.golsCasa} - ${match.golsFora}</span></div>
+                        <span>${match.fora}</span>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        async function carregarJogosReais() {
-            const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo das APIs reais...</p>`;
-            listaGlobalPartidas = [];
-
-            try {
-                const hoje = new Date().toISOString().split('T')[0];
-                const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
-                    headers: { "x-apisports-key": apiKey }
-                });
-                const dados = await resposta.json();
-
-                if (dados.response && dados.response.length > 0 && !dados.errors?.requests) {
-                    const statusAoVivo = ['LIVE', '1H', '2H', 'HT', 'ET', 'P'];
-                    
-                    dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
-                        const odds = gerarOddsReais(match.teams.home.name, match.teams.away.name);
-                        listaGlobalPartidas.push({
-                            id: `api1-${index}`,
-                            casa: traduzirTime(match.teams.home.name),
-                            fora: traduzirTime(match.teams.away.name),
-                            logoCasa: match.teams.home.logo,
-                            logoFora: match.teams.away.logo,
-                            liga: traduzirLiga(match.league.name),
-                            bandeiraLiga: match.league.flag || '',
-                            golsCasa: match.goals.home !== null ? match.goals.home : 0,
-                            golsFora: match.goals.away !== null ? match.goals.away : 0,
-                            minuto: match.fixture.status.elapsed || Math.floor(Math.random() * 75) + 10,
-                            segundo: Math.floor(Math.random() * 59),
-                            isAoVivo: true,
-                            odds: odds
-                        });
-                    });
-                }
-            } catch (e) { console.log("Erro API-Sports"); }
-
-            if (listaGlobalPartidas.length === 0) {
-                try {
-                    const apiKeyFootballData = '1f0c1dc838454650977a89abf0a7485c';
-                    const respostaFD = await fetch('https://api.football-data.org/v4/matches', {
-                        headers: { 'X-Auth-Token': apiKeyFootballData }
-                    });
-                    const dadosFD = await respostaFD.json();
-
-                    if (dadosFD.matches && dadosFD.matches.length > 0) {
-                        const statusAoVivoFD = ['IN_PLAY', 'PAUSED'];
-                        dadosFD.matches.filter(m => statusAoVivoFD.includes(m.status)).forEach((match, index) => {
-                            const odds = gerarOddsReais(match.homeTeam.name, match.awayTeam.name);
-                            listaGlobalPartidas.push({
-                                id: `api2-${index}`,
-                                casa: traduzirTime(match.homeTeam.name),
-                                fora: traduzirTime(match.awayTeam.name),
-                                logoCasa: match.homeTeam.crest,
-                                logoFora: match.awayTeam.crest,
-                                liga: traduzirLiga(match.competition.name),
-                                bandeiraLiga: match.area.flag || '',
-                                golsCasa: match.score?.fullTime?.home ?? match.score?.regularTime?.home ?? 0,
-                                golsFora: match.score?.fullTime?.away ?? match.score?.regularTime?.away ?? 0,
-                                minuto: Math.floor(Math.random() * 75) + 10,
-                                segundo: Math.floor(Math.random() * 59),
-                                isAoVivo: true,
-                                odds: odds
-                            });
-                        });
-                    }
-                } catch (e) { console.log("Erro Football-Data API"); }
-            }
-
-            if (listaGlobalPartidas.length === 0) {
-                listaGlobalPartidas = [
-                    { id: 'sim-1', casa: 'Flamengo', fora: 'Palmeiras', liga: 'Brasileirão Série A', bandeiraLiga: 'https://flagcdn.com/w40/br.png', logoCasa: 'https://media.api-sports.io/football/teams/127.png', logoFora: 'https://media.api-sports.io/football/teams/121.png', golsCasa: 1, golsFora: 0, minuto: 34, segundo: 12, isAoVivo: true, odds: gerarOddsReais('Flamengo', 'Palmeiras') },
-                    { id: 'sim-2', casa: 'Real Madrid', fora: 'Barcelona', liga: 'Campeonato Espanhol', bandeiraLiga: 'https://flagcdn.com/w40/es.png', logoCasa: 'https://media.api-sports.io/football/teams/541.png', logoFora: 'https://media.api-sports.io/football/teams/529.png', golsCasa: 2, golsFora: 2, minuto: 78, segundo: 45, isAoVivo: true, odds: gerarOddsReais('Real Madrid', 'Barcelona') },
-                    { id: 'sim-3', casa: 'Manchester City', fora: 'Arsenal', liga: 'Campeonato Inglês', bandeiraLiga: 'https://flagcdn.com/w40/gb-eng.png', logoCasa: 'https://media.api-sports.io/football/teams/50.png', logoFora: 'https://media.api-sports.io/football/teams/42.png', golsCasa: 0, golsFora: 1, minuto: 22, segundo: 5, isAoVivo: true, odds: gerarOddsReais('Manchester City', 'Arsenal') }
-                ];
-            }
-
-            atualizarBotoesFiltroLigas(listaGlobalPartidas);
-            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-            iniciarRelogioTempoReal();
-        }
-
-        function iniciarRelogioTempoReal() {
-            if (intervaloAtualizacaoAoVivo) clearInterval(intervaloAtualizacaoAoVivo);
-
-            intervaloAtualizacaoAoVivo = setInterval(() => {
-                listaGlobalPartidas.forEach(match => {
-                    if (match.isAoVivo) {
-                        match.segundo++;
-                        if (match.segundo >= 60) {
-                            match.segundo = 0;
-                            match.minuto++;
-                            if (match.minuto > 95) match.minuto = 90;
-
-                            if (Math.random() < 0.04) {
-                                if (Math.random() > 0.5) match.golsCasa++;
-                                else match.golsFora++;
-                            }
-                        }
-
-                        const elTempo = document.getElementById(`time-${match.id}`);
-                        const elScore = document.getElementById(`score-${match.id}`);
-                        if (elTempo) elTempo.innerText = `${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s`;
-                        if (elScore) elScore.innerText = `${match.golsCasa} - ${match.golsFora}`;
-                    }
-                });
-            }, 1000);
-        }
-
-        function abrirModalPartidaDetalhes(match) {
-            tocarAudioInicio();
-            partidaAtivaId = match.id;
-            document.getElementById('modalPartidaTitulo').innerText = `${match.casa} vs ${match.fora}`;
-            document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto Atual: ${match.minuto}'`;
-
-            document.getElementById('modalOdds1X2').innerHTML = `
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1</span><span class="odd-card-val">${match.odds.casa}</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X</span><span class="odd-card-val">${match.odds.empate}</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">2</span><span class="odd-card-val">${match.odds.fora}</span></div>
-            `;
-
-            let dc1 = (parseFloat(match.odds.casa) * 0.7).toFixed(2);
-            let dc12 = (parseFloat(match.odds.empate) * 0.8).toFixed(2);
-            let dc2 = (parseFloat(match.odds.fora) * 0.7).toFixed(2);
-            document.getElementById('modalOddsDuplaChance').innerHTML = `
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance 1X)', ${dc1})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1X</span><span class="odd-card-val">${dc1}</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance 12)', ${dc12})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">12</span><span class="odd-card-val">${dc12}</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X2</span><span class="odd-card-val">${dc2}</span></div>
-            `;
-
-            document.getElementById('modalOddsGols').innerHTML = `
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 0.5 Gols)', 1.12)"><span class="odd-card-title">Mais de 0.5 Gols</span><span class="odd-card-val">1.12</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 1.5 Gols)', 1.42)"><span class="odd-card-title">Mais de 1.5 Gols</span><span class="odd-card-val">1.42</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 2.5 Gols)', 1.85)"><span class="odd-card-title">Mais de 2.5 Gols</span><span class="odd-card-val">1.85</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Gols)', 2.75)"><span class="odd-card-title">Mais de 3.5 Gols</span><span class="odd-card-val">2.75</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95)"><span class="odd-card-title">Menos de 2.5 Gols</span><span class="odd-card-val">1.95</span></div>
-            `;
-
-            document.getElementById('modalOddsEscanteios').innerHTML = `
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 7.5 Escanteios)', 1.45)"><span class="odd-card-title">Mais de 7.5 Cantos</span><span class="odd-card-val">1.45</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90)"><span class="odd-card-title">Mais de 9.5 Cantos</span><span class="odd-card-val">1.90</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 11.5 Escanteios)', 2.60)"><span class="odd-card-title">Mais de 11.5 Cantos</span><span class="odd-card-val">2.60</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80)"><span class="odd-card-title">Menos de 9.5 Cantos</span><span class="odd-card-val">1.80</span></div>
-            `;
-
-            document.getElementById('modalOddsCartoes').innerHTML = `
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Cartões)', 1.75)"><span class="odd-card-title">Mais de 3.5 Cartões na Partida</span><span class="odd-card-val">1.75</span></div>
-                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 4.5 Cartões)', 2.20)"><span class="odd-card-title">Mais de 4.5 Cartões na Partida</span><span class="odd-card-val">2.20</span></div>
-            `;
-
-            document.getElementById('matchModal').style.display = 'flex';
-        }
-
-        function fecharModalPartida() {
-            document.getElementById('matchModal').style.display = 'none';
-        }
-
-        function adicionarApostaAoBoletim(matchId, jogoOdd, odd) {
-            let indexExistente = apostasSelecionadas.findIndex(a => a.matchId === matchId);
-            if (indexExistente !== -1) {
-                if (apostasSelecionadas[indexExistente].selecao === jogoOdd) {
-                    apostasSelecionadas.splice(indexExistente, 1);
-                } else {
-                    apostasSelecionadas[indexExistente] = { matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) };
-                }
-            } else {
-                apostasSelecionadas.push({ matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) });
-            }
-            renderizarBoletimApostas();
-        }
-
-        function selecionarAposta(matchId, jogoOdd, odd, elemento) {
-            adicionarApostaAoBoletim(matchId, jogoOdd, odd);
-            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-        }
-
-        function selecionarApostaModal(matchId, jogoOdd, odd) {
-            fecharModalPartida();
-            adicionarApostaAoBoletim(matchId, jogoOdd, odd);
-            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-        }
-
-        function removerSelecaoBoletim(index) {
-            apostasSelecionadas.splice(index, 1);
-            renderizarBoletimApostas();
-            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-        }
-
-        function calcularOddTotal() {
-            if (apostasSelecionadas.length === 0) return 0;
-            return apostasSelecionadas.reduce((acc, item) => acc * item.odd, 1);
-        }
-
-        function renderizarBoletimApostas() {
-            const betSlip = document.getElementById('betSlip');
-            const infoContainer = document.getElementById('betSelectionInfo');
-            const titleType = document.getElementById('betSlipTypeTitle');
-
-            if (apostasSelecionadas.length === 0) {
-                betSlip.style.display = 'none';
-                return;
-            }
-
-            betSlip.style.display = 'block';
-            
-            if (apostasSelecionadas.length === 1) {
-                titleType.innerText = "🎟️ BILHETE SIMPLES";
-            } else {
-                titleType.innerText = `🎟️ BILHETE MÚLTIPLO (${apostasSelecionadas.length} SELEÇÕES)`;
-            }
-
-            let html = '';
-            apostasSelecionadas.forEach((item, index) => {
-                html += `
-                    <div class="bet-slip-item">
-                        <div>
-                            <b>${item.selecao}</b>
-                            <div style="color: #00ff88; font-weight: bold;">Odd: ${item.odd.toFixed(2)}</div>
-                        </div>
-                        <span style="color:#ff4500; font-size: 16px; cursor:pointer; font-weight:bold; padding-left: 10px;" onclick="removerSelecaoBoletim(${index})">&times;</span>
-                    </div>
-                `;
-            });
-
-            infoContainer.innerHTML = html;
-            let totalOdd = calcularOddTotal();
-            document.getElementById('oddTotalInfo').innerText = `Odd Total Acumulada: ${totalOdd.toFixed(2)}`;
-            atualizarRetornoPotencial();
-        }
-
-        function fecharBilhete() {
-            apostasSelecionadas = [];
-            document.getElementById('betSlip').style.display = 'none';
-            document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
-        }
-
-        document.getElementById('betValorInput').addEventListener('input', atualizarRetornoPotencial);
-
-        function atualizarRetornoPotencial() {
-            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
-            let totalOdd = calcularOddTotal();
-            let retorno = valor * totalOdd;
-            document.getElementById('retornoPotencial').innerText = `Retorno potencial: R$ ${retorno.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        }
-
-        function confirmarEEnviarParaBilhetes() {
-            if (apostasSelecionadas.length === 0) { alert('Selecione ao menos um jogo para apostar!'); return; }
-            
-            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
-            if (valor <= 0) { alert('Insira um valor válido!'); return; }
-            if (saldo < valor) { alert('Saldo insuficiente!'); return; }
-
-            let oddTotal = calcularOddTotal();
-            saldo -= valor;
-            atualizarSaldoNaTela();
-
-            let ehMultipla = apostasSelecionadas.length > 1;
-            let tipoApostaText = ehMultipla ? `Aposta Múltipla (${apostasSelecionadas.length} seleções)` : `Aposta Simples (${apostasSelecionadas[0].selecao})`;
-            registarTransacao('aposta', `Aposta Esportiva - ${tipoApostaText}`, -valor);
-
-            let retorno = (valor * oddTotal).toFixed(2);
-
-            let itensBilhete = apostasSelecionadas.map(item => {
-                let partidaObj = listaGlobalPartidas.find(p => p.id === item.matchId);
-                return {
-                    selecao: item.selecao,
-                    odd: item.odd.toFixed(2),
-                    placar: partidaObj ? `${partidaObj.golsCasa} - ${partidaObj.golsFora}` : "0 - 0",
-                    minuto: partidaObj ? `${partidaObj.minuto}'` : "Ao Vivo",
-                    liga: partidaObj ? partidaObj.liga : "Cangaço Bet",
-                    matchId: item.matchId
-                };
-            });
-
-            let novoBilhete = { 
-                itens: itensBilhete, 
-                tipo: ehMultipla ? 'Múltipla' : 'Simples',
-                valor: valor.toFixed(2), 
-                oddTotal: oddTotal.toFixed(2),
-                retorno: retorno, 
-                status: "⏳ Aguardando Resultado", 
-                cor: "#ffb703" 
-            };
-
-            meusBilhetesSalvos.unshift(novoBilhete);
-            salvarDadosStorage();
-
-            fecharBilhete();
-            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-            mudarAba('bilhetes');
-            alert(`✅ Bilhete de Aposta criado com sucesso! Redirecionado para a aba Meus Bilhetes.`);
-
-            let indexBilhete = 0;
-            setTimeout(() => {
-                let venceu = Math.random() >= 0.5;
-                if (venceu) {
-                    meusBilhetesSalvos[indexBilhete].status = "Ganhou 🎉";
-                    meusBilhetesSalvos[indexBilhete].cor = "#00ff88";
-                    saldo += parseFloat(retorno);
-                    atualizarSaldoNaTela();
-                    registarTransacao('premio', `Prêmio - ${tipoApostaText}`, parseFloat(retorno));
-                } else {
-                    meusBilhetesSalvos[indexBilhete].status = "Perdeu ❌";
-                    meusBilhetesSalvos[indexBilhete].cor = "#ff4500";
-                }
-                salvarDadosStorage();
-                if (document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
-                    renderizarBilhetesNaTela();
-                }
-            }, 12000);
-        }
-
         function renderizarBilhetesNaTela() {
-            const container = document.getElementById('listaMeusBilhetesImpressos');
-            if (meusBilhetesSalvos.length === 0) { 
-                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`; 
-                return; 
-            }
-
-            let html = '';
-            meusBilhetesSalvos.forEach((b, idx) => {
-                let totalItens = meusBilhetesSalvos.length - idx;
-                let listaItens = b.itens || [{
-                    selecao: b.selecao,
-                    odd: (b.retorno / b.valor).toFixed(2),
-                    placar: b.placar || "0 - 0",
-                    minuto: b.hora || "Ao Vivo",
-                    liga: b.liga || "Cangaço Bet",
-                    matchId: b.matchId
-                }];
-
-                let detalhesItensHtml = '';
-                listaItens.forEach(item => {
-                    let matchAtual = listaGlobalPartidas.find(p => p.id === item.matchId);
-                    let placarExatoVivo = matchAtual ? `${matchAtual.golsCasa} - ${matchAtual.golsFora}` : (item.placar || "0 - 0");
-                    let minutoExatoVivo = matchAtual ? `${matchAtual.minuto}'` : (item.minuto || "Ao Vivo");
-
-                    detalhesItensHtml += `
-                        <div style="background: #0b0c10; border: 1px solid #232838; padding: 8px; border-radius: 8px; margin-top: 6px;">
-                            <div style="font-size: 11px; color: #ffb703; font-weight: bold;">📌 ${item.liga || 'Esporte'}</div>
-                            <div><b>Seleção:</b> ${item.selecao} (Odd: ${item.odd})</div>
-                            <div><b>Minuto Atual:</b> ${minutoExatoVivo}</div>
-                            <div><b>Placar Exato ao Vivo:</b> <span style="color: #00ff88; font-weight: bold;">${placarExatoVivo}</span></div>
-                        </div>
-                    `;
-                });
-
-                html += `
-                    <div class="bilhete-impresso">
-                        <div class="bilhete-header">
-                            <span>COMPROVATIVO DE APOSTA #${totalItens} [${b.tipo || 'Aposta'}]</span>
-                            <span>Odd Total: ${b.oddTotal || (b.retorno / b.valor).toFixed(2)}</span>
-                        </div>
-                        <div class="bilhete-detalhes">
-                            ${detalhesItensHtml}
-                            <div style="margin-top: 10px; font-weight: bold; font-size: 13px;">
-                                💵 <b>Apostado:</b> R$ ${b.valor} | 🏆 <b>Retorno Potencial:</b> <span style="color: #00ff88;">R$ ${b.retorno}</span>
-                            </div>
-                        </div>
-                        <div class="bilhete-status" style="color: ${b.cor};">Estado: ${b.status}</div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
+            document.getElementById('listaMeusBilhetesImpressos').innerHTML = `<p style="text-align: center; color: #777;">Nenhum bilhete.</p>`;
         }
-
         function renderizarExtratoNaTela() {
             const container = document.getElementById('listaExtratoTransacoes');
-            if (historicoTransacoes.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>`; return; }
-
-            let html = '';
-            historicoTransacoes.forEach(t => {
-                let corValor = (t.tipo === 'deposito' || t.tipo === 'premio' || t.tipo === 'cassino_ganho') ? '#00ff88' : '#ff4500';
-                let sinal = (t.tipo === 'deposito' || t.tipo === 'premio' || t.tipo === 'cassino_ganho') ? '+' : '-';
-                html += `
-                    <div class="extrato-item">
-                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #ffb703; margin-bottom: 4px;">
-                            <span>${t.descricao}</span><span>${t.data}</span>
-                        </div>
-                        <div style="font-size: 14px; font-weight: bold; color: ${corValor};">
-                            ${sinal} R$ ${Math.abs(t.valor).toFixed(2)}
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
+            container.innerHTML = historicoTransacoes.length === 0 ? '<p style="text-align: center; color: #777;">Nenhuma transação.</p>' : historicoTransacoes.map(t => `<div class="extrato-item"><div>${t.descricao}</div><div>R$ ${t.valor}</div></div>`).join('');
         }
 
-        function abrirModalLogin() { tocarAudioInicio(); document.getElementById('loginModal').style.display = 'flex'; }
-        function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
-        function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
+        function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+        function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
+        function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-
-        const scrollContainer = document.getElementById('winnersScroll');
-        setInterval(() => {
-            if (scrollContainer) {
-                if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
-                    scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    scrollContainer.scrollBy({ left: 160, behavior: 'smooth' });
-                }
-            }
-        }, 3000);
-
-        const promoTrack = document.getElementById('promoTrack');
-        let currentSlide = 0;
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % 3;
-            promoTrack.style.transform = `translateX(-${currentSlide * 33.333}%)`;
-        }, 4000);
     </script>
 </body>
 </html>
