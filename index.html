@@ -3,22 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cangaço Bet - Fortune Tiger</title>
+    <title>Cangaço Bet</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
             background-color: #0f1015;
             color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding-bottom: 80px;
         }
+
+        header {
+            background: linear-gradient(135deg, #1a1c23, #0f1015);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff4500;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4500;
+            cursor: pointer;
+        }
+        .btn-entrar {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .category-pill {
+            background: #1e2029;
+            border: 1px solid #2a2d3d;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #ccc;
+            font-size: 13px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .jackpot-box {
+            background: linear-gradient(135deg, #2b110a, #1a1c23);
+            margin: 0 15px 15px 15px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #ff4500;
+            text-align: center;
+        }
+        .jackpot-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 3px;
+        }
+        .jackpot-value {
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+        }
+
+        .section-title {
+            padding: 0 15px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 15px;
+            margin-bottom: 25px;
+        }
+        .game-card {
+            background: #1e2029;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2d3d;
+            text-align: center;
+            cursor: pointer;
+        }
+        .game-img {
+            width: 100%;
+            height: 110px;
+            background: #2a2d3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        .game-name {
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* --- TELA DO JOGO FORTUNE TIGER EXATAMENTE COMO NO SEU PRINT --- */
+        #game-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f1015;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .game-screen-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 400px;
+        }
+        .btn-voltar-home {
+            background: #2a2d3d;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
         .tiger-machine {
             background: linear-gradient(180deg, #181922, #0d0e13);
             border: 2px solid #ff4500;
@@ -28,22 +153,7 @@
             max-width: 360px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
-        }
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 13px;
-        }
-        .btn-voltar {
-            background: #2a2d3d;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
+            margin: auto;
         }
         .tiger-aposta-texto {
             font-size: 14px;
@@ -94,36 +204,102 @@
         .btn-girar-tiger:active {
             transform: scale(0.97);
         }
+
+        nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: #13141b;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #222;
+        }
+        .nav-item {
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: #ff4500;
+        }
     </style>
 </head>
 <body>
 
-    <div class="tiger-machine">
-        <div class="game-header">
-            <button class="btn-voltar" onclick="alert('Voltando para o site...')">← Voltar</button>
+    <!-- Home do Cangaço Bet -->
+    <div id="main-content">
+        <header>
+            <div class="logo">🔥 CANGAÇO BET</div>
+            <button class="btn-entrar" onclick="alert('Área de registro')">REGISTRAR</button>
+        </header>
+
+        <div class="categories">
+            <div class="category-pill">🤠 Destaques</div>
+            <div class="category-pill">🌵 Cassino</div>
+        </div>
+
+        <div class="jackpot-box">
+            <div class="jackpot-title">🔥 JACKPOT GLOBAL</div>
+            <div class="jackpot-value">R$ 602,23</div>
+        </div>
+
+        <div class="section-title">🏆 Jogos populares</div>
+
+        <div class="games-grid">
+            <!-- CLICAR AQUI ABRE O TIGRINHO IGUAL NO SEU PRINT -->
+            <div class="game-card" onclick="entrarFortuneTiger()">
+                <div class="game-img">🐅</div>
+                <div class="game-name">Fortune Tiger</div>
+            </div>
+            <div class="game-card" onclick="alert('Abrindo Aviator...')">
+                <div class="game-img">✈️</div>
+                <div class="game-name">Aviator</div>
+            </div>
+        </div>
+
+        <nav>
+            <div class="nav-item">📁<br>Início</div>
+            <div class="nav-item active">💰<br>Cassino</div>
+            <div class="nav-item" onclick="alert('Perfil')">👤<br>Perfil</div>
+        </nav>
+    </div>
+
+    <!-- TELA DO JOGO FORTUNE TIGER EXATAMENTE COMO NO SEU PRINT -->
+    <div id="game-screen">
+        <div class="game-screen-header">
+            <button class="btn-voltar-home" onclick="sairDoJogo()">← Voltar</button>
             <div style="font-weight: bold; color: #ff4500;">🐅 FORTUNE TIGER</div>
-            <div id="saldoJogo" style="color: #00ff88; font-weight: bold;">Saldo: R$ 99,50</div>
+            <div id="saldoJogo" style="font-size: 13px; color: #00ff88; font-weight: bold;">Saldo: R$ 99,50</div>
         </div>
 
-        <div class="tiger-aposta-texto">Aposta: R$ 2,00</div>
-        
-        <div class="tiger-reels">
-            <div class="reel" id="reel1">💰</div>
-            <div class="reel" id="reel2">💰</div>
-            <div class="reel" id="reel3">💰</div>
+        <div class="tiger-machine">
+            <div class="tiger-aposta-texto">Aposta: R$ 2,00</div>
+            <div class="tiger-reels">
+                <div class="reel" id="reel1">💰</div>
+                <div class="reel" id="reel2">💰</div>
+                <div class="reel" id="reel3">💰</div>
+            </div>
+            <div class="tiger-status" id="gameStatus">Você ganhou um prêmio baixo: R$ 1.50</div>
+            <button class="btn-girar-tiger" onclick="girarTiger()">GIRAR 🐅</button>
         </div>
-
-        <div class="tiger-status" id="gameStatus">Você ganhou um prêmio baixo: R$ 1.50</div>
-
-        <button class="btn-girar-tiger" onclick="girarTiger()">GIRAR 🐅</button>
-        
-        <div style="font-size: 11px; color: #666; margin-top: 15px;">Modo Oficial Cangaço Bet</div>
+        <div style="font-size: 11px; color: #666;">Modo Oficial Cangaço Bet</div>
     </div>
 
     <script>
         let saldoVirtual = 99.50;
 
-        function atualizarSaldo() {
+        function entrarFortuneTiger() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+        }
+
+        function sairDoJogo() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function atualizarSaldoUI() {
             document.getElementById('saldoJogo').innerText = 'Saldo: R$ ' + saldoVirtual.toFixed(2).replace('.', ',');
         }
 
@@ -134,7 +310,7 @@
             }
 
             saldoVirtual -= 2.00;
-            atualizarSaldo();
+            atualizarSaldoUI();
 
             const r1 = document.getElementById('reel1');
             const r2 = document.getElementById('reel2');
@@ -143,16 +319,13 @@
 
             status.style.color = "#ccc";
             status.innerText = "Girando...";
-            r1.innerText = "🔄"; 
-            r2.innerText = "🔄"; 
-            r3.innerText = "🔄";
+            r1.innerText = "🔄"; r2.innerText = "🔄"; r3.innerText = "🔄";
 
             setTimeout(() => {
-                const icones = ["💰", "🍊", "🍋", "🍒", "⭐", "📜"];
                 let chance = Math.random();
-
-                if (chance < 0.85) {
-                    // Derrota
+                
+                if (chance < 0.80) {
+                    const icones = ["🍊", "🍋", "🍒", "⭐", "📜"];
                     r1.innerText = icones[Math.floor(Math.random() * icones.length)];
                     r2.innerText = icones[Math.floor(Math.random() * icones.length)];
                     r3.innerText = icones[Math.floor(Math.random() * icones.length)];
@@ -160,17 +333,14 @@
                     status.style.color = "#ff4444";
                     status.innerText = "Não foi dessa vez! Tente novamente.";
                 } else {
-                    // Vitória com prêmio baixo igualzinho ao vídeo
-                    let premio = 1.50;
-                    r1.innerText = "💰";
-                    r2.innerText = "💰";
-                    r3.innerText = "💰";
+                    let premioBaixo = 1.50;
+                    r1.innerText = "💰"; r2.innerText = "💰"; r3.innerText = "💰";
                     
-                    saldoVirtual += premio;
+                    saldoVirtual += premioBaixo;
                     status.style.color = "#00ff88";
-                    status.innerText = `Você ganhou um prêmio baixo: R$ ${premio.toFixed(2)}`;
+                    status.innerText = `Você ganhou um prêmio baixo: R$ ${premioBaixo.toFixed(2)}`;
                 }
-                atualizarSaldo();
+                atualizarSaldoUI();
             }, 800);
         }
     </script>
