@@ -36,7 +36,7 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .btn-menu-lateral {
             background: #1e2029;
@@ -72,21 +72,31 @@
         .saldo-topo {
             background: #1e2029;
             border: 1px solid #ffb703;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: #ffb703;
         }
-        .btn-entrar-topo {
+        .btn-topo-acao {
             background-color: #ff4500;
             color: white;
             border: none;
-            padding: 8px 14px;
+            padding: 7px 10px;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
+        }
+        .btn-topo-login {
+            background-color: transparent;
+            color: #ffb703;
+            border: 1px solid #ffb703;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
         }
 
         .quick-search-bar {
@@ -428,7 +438,8 @@
         </div>
         <div class="header-right">
             <div class="saldo-topo">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
-            <button class="btn-entrar-topo" onclick="abrirModalRegistro()">REGISTRAR</button>
+            <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
+            <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
         </div>
     </header>
 
@@ -468,6 +479,9 @@
         </div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
             💰 Depositar (PIX)
+        </div>
+        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">
+            🔐 Entrar na Conta
         </div>
         <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">
             📝 Registrar Conta
@@ -621,7 +635,18 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
-    <!-- Modal de Registro com Verificação por Código (SMS / Gmail) -->
+    <!-- Modal de Login (Entrar) -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">🔐 ENTRAR NA CONTA</div>
+            <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail (Gmail cadastrado)">
+            <input type="password" id="loginSenha" class="modal-input" placeholder="Sua Senha">
+            <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Registro com Verificação por Código -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -664,6 +689,8 @@
         let ligaPartidaSelecionada = "";
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
+        // Base de dados local de utilizadores registados
+        let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
         let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
         let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
         let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
@@ -674,14 +701,13 @@
         let dadosTempRegistro = {};
 
         atualizarSaldoNaTela();
-        if (usuarioLogado) {
-            document.querySelector('.btn-entrar-topo').innerText = usuarioLogado.nome.split(' ')[0];
-        }
+        verificarSessaoAtiva();
 
         function salvarDadosStorage() {
             localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
             localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
             localStorage.setItem('cangaco_saldo', saldo);
+            localStorage.setItem('cangaco_db_usuarios', JSON.stringify(baseDadosUtilizadores));
             if (usuarioLogado) {
                 localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
             }
@@ -689,6 +715,22 @@
 
         function atualizarSaldoNaTela() {
             document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
+        }
+
+        function verificarSessaoAtiva() {
+            if (usuarioLogado) {
+                document.querySelector('.btn-topo-login').innerText = usuarioLogado.nome.split(' ')[0];
+                document.querySelector('.btn-topo-login').setAttribute('onclick', 'fazerLogout()');
+                document.querySelector('.btn-topo-login').title = "Clique para sair da conta";
+            }
+        }
+
+        function fazerLogout() {
+            if (confirm("Deseja sair da sua conta?")) {
+                localStorage.removeItem('cangaco_usuario');
+                usuarioLogado = null;
+                location.reload();
+            }
         }
 
         function registarTransacao(tipo, descricao, valor) {
@@ -798,6 +840,13 @@
                 return;
             }
 
+            // Verifica se o email já está cadastrado na base de dados
+            let existe = baseDadosUtilizadores.find(u => u.email === email);
+            if (existe) {
+                alert('❌ Este e-mail já possui uma conta registada!');
+                return;
+            }
+
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
             codigoGeradoTemp = Math.floor(1000 + Math.random() * 9000).toString();
             
@@ -814,15 +863,41 @@
                 return;
             }
 
+            // Salva na base de dados geral de utilizadores
+            baseDadosUtilizadores.push(dadosTempRegistro);
             usuarioLogado = dadosTempRegistro;
             salvarDadosStorage();
-            document.querySelector('.btn-entrar-topo').innerText = usuarioLogado.nome.split(' ')[0];
+            
+            verificarSessaoAtiva();
             fecharModais();
             
             document.getElementById('etapaCadastro1').style.display = 'block';
             document.getElementById('etapaCadastro2').style.display = 'none';
             
-            alert(`✅ Conta verificada e criada com sucesso para ${usuarioLogado.nome}! Sessão salva no navegador.`);
+            alert(`✅ Conta verificada e criada com sucesso para ${usuarioLogado.nome}! Sessão iniciada.`);
+        }
+
+        function realizarLogin() {
+            const emailInput = document.getElementById('loginEmail').value.trim();
+            const senhaInput = document.getElementById('loginSenha').value.trim();
+
+            if (!emailInput || !senhaInput) {
+                alert("Preencha o E-mail e a Senha!");
+                return;
+            }
+
+            // Procura o utilizador na "base de dados" local
+            let utilizadorEncontrado = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
+
+            if (utilizadorEncontrado) {
+                usuarioLogado = utilizadorEncontrado;
+                salvarDadosStorage();
+                verificarSessaoAtiva();
+                fecharModais();
+                alert(`✅ Bem-vindo de volta, ${usuarioLogado.nome}! Login efetuado com sucesso.`);
+            } else {
+                alert("❌ Senha ou utilizador incorreto! Verifique os dados ou utilize o Suporte para recuperar a conta.");
+            }
         }
 
         function realizarDeposito() {
@@ -1085,6 +1160,7 @@
             container.innerHTML = html;
         }
 
+        function abrirModalLogin() { tocarAudioInicio(); document.getElementById('loginModal').style.display = 'flex'; }
         function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
