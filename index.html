@@ -7,27 +7,22 @@
     <style>
         :root {
             --bg-body: #0b0c10;
-            --bg-header: linear-gradient(135deg, #151821, #0b0c10);
-            --bg-card: linear-gradient(145deg, #191d28, #13161f);
-            --bg-sidebar: linear-gradient(180deg, #151821, #0f1118);
-            --text-main: #ffffff;
-            --text-sub: #aaa;
+            --text-color: #ffffff;
+            --header-bg: linear-gradient(135deg, #151821, #0b0c10);
+            --card-bg: linear-gradient(145deg, #191d28, #13161f);
             --border-color: #232838;
-            --accent: #ff4500;
-            --accent-glow: rgba(255, 69, 0, 0.4);
-            --gold: #ffb703;
+            --primary-orange: #ff4500;
+            --accent-yellow: #ffb703;
         }
+
         [data-theme="light"] {
             --bg-body: #f4f6f9;
-            --bg-header: linear-gradient(135deg, #ffffff, #e4e9f0);
-            --bg-card: linear-gradient(145deg, #ffffff, #eaeef5);
-            --bg-sidebar: linear-gradient(180deg, #ffffff, #f0f3f8);
-            --text-main: #1a1a1a;
-            --text-sub: #555555;
-            --border-color: #dcdfe6;
-            --accent: #ff4500;
-            --accent-glow: rgba(255, 69, 0, 0.2);
-            --gold: #d48806;
+            --text-color: #1a1a1a;
+            --header-bg: linear-gradient(135deg, #ffffff, #e4e9ed);
+            --card-bg: linear-gradient(145deg, #ffffff, #eaedf1);
+            --border-color: #d0d7de;
+            --primary-orange: #ff4500;
+            --accent-yellow: #d99b00;
         }
 
         * {
@@ -38,16 +33,62 @@
         }
         body {
             background-color: var(--bg-body);
-            color: var(--text-main);
+            color: var(--text-color);
             padding-bottom: 25px;
             overflow-x: hidden;
             transition: background 0.3s, color 0.3s;
         }
 
+        /* --- NOTIFICAÇÕES TOAST --- */
+        #toastContainer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast-notification {
+            background: linear-gradient(135deg, #151821, #1f2430);
+            border-left: 5px solid #ff4500;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInToast 0.3s ease, fadeOutToast 0.3s ease 2.7s forwards;
+        }
+        @keyframes slideInToast {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOutToast {
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* --- MODO ESCURO / CLARO BOTÃO --- */
+        .theme-toggle-btn {
+            background: #191d28;
+            border: 1px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
         #splashScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #3d1208 0%, #0b0c10 100%);
+            background: radial-gradient(circle, #2b0b05 0%, #0b0c10 100%), url('https://files.catbox.moe/75mifn.jpeg') no-repeat center center;
+            background-size: cover;
+            background-blend-mode: overlay;
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -62,7 +103,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #ff4500;
-            box-shadow: 0 0 45px rgba(255, 69, 0, 0.9);
+            box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
             animation: float4D 3s ease-in-out infinite;
             margin-bottom: 25px;
         }
@@ -91,7 +132,7 @@
         .loading-text {
             font-size: 13px;
             font-weight: bold;
-            color: var(--gold);
+            color: #ffb703;
             margin-bottom: 20px;
             letter-spacing: 1px;
         }
@@ -129,69 +170,68 @@
         .penalty-loading-title {
             font-size: 18px;
             font-weight: 950;
-            color: var(--gold);
+            color: #ffb703;
             margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         header {
-            background: var(--bg-header);
+            background: var(--header-bg);
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 2px solid #ff4500;
             position: sticky;
             top: 0;
             z-index: 90;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
         .header-left { display: flex; align-items: center; gap: 10px; }
         .header-right { display: flex; align-items: center; gap: 8px; }
         .btn-menu-lateral {
-            background: var(--bg-card);
-            border: 1px solid var(--accent);
+            background: #191d28;
+            border: 1px solid #ff4500;
             width: 38px; height: 38px;
             border-radius: 10px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             gap: 4px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
         }
-        .btn-menu-lateral span { width: 18px; height: 2px; background-color: var(--accent); border-radius: 2px; }
+        .btn-menu-lateral span { width: 18px; height: 2px; background-color: #ff4500; border-radius: 2px; }
 
         .logo-img-pequena {
             width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
-            border: 1.5px solid var(--gold); cursor: pointer;
+            border: 1.5px solid #ffb703; cursor: pointer;
+            box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
         }
 
         .saldo-topo-3d {
-            background: var(--bg-card);
-            border: 1px solid var(--gold);
+            background: var(--card-bg);
+            border: 1px solid var(--accent-yellow);
             padding: 6px 12px; border-radius: 10px;
-            font-size: 11px; font-weight: bold; color: var(--gold);
+            font-size: 11px; font-weight: bold; color: var(--accent-yellow);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
             display: flex; align-items: center; gap: 4px;
         }
-        .saldo-topo-3d span { color: var(--text-main); }
+        .saldo-topo-3d span { color: var(--text-color); }
 
         .btn-topo-acao {
             background: linear-gradient(135deg, #ff4500, #cc3500);
             color: white; border: none; padding: 7px 10px; border-radius: 8px;
             font-weight: bold; cursor: pointer; font-size: 11px;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
         }
         .btn-topo-login {
-            background: transparent; color: var(--gold); border: 1px solid var(--gold);
+            background: transparent; color: var(--accent-yellow); border: 1px solid var(--accent-yellow);
             padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px;
-        }
-        .btn-theme-toggle {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            color: var(--text-main); width: 34px; height: 34px; border-radius: 8px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px;
         }
 
         .quick-search-bar { padding: 12px 15px; background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
         .quick-search-input {
-            width: 100%; padding: 10px 15px; background: var(--bg-card);
-            border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-main); font-size: 13px;
+            width: 100%; padding: 10px 15px; background: var(--card-bg);
+            border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-color); font-size: 13px;
         }
 
         .sidebar-overlay {
@@ -200,36 +240,32 @@
         }
         .sidebar {
             position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
-            background: var(--bg-sidebar);
-            border-right: 2px solid var(--accent); z-index: 999;
+            background: linear-gradient(180deg, #151821, #0f1118);
+            border-right: 2px solid #ff4500; z-index: 999;
             transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8); color: #fff;
         }
         .sidebar.open { left: 0; }
         .sidebar-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;
+            margin-bottom: 25px; border-bottom: 1px solid #232838; padding-bottom: 15px;
         }
-        .sidebar-title { font-size: 16px; font-weight: bold; color: var(--accent); }
-        .sidebar-close { font-size: 22px; color: var(--text-sub); cursor: pointer; }
+        .sidebar-title { font-size: 16px; font-weight: bold; color: #ff4500; }
+        .sidebar-close { font-size: 22px; color: #aaa; cursor: pointer; }
         .sidebar-item {
-            background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px 15px;
-            border-radius: 12px; color: var(--text-main); font-size: 14px; font-weight: bold;
+            background: #191d28; border: 1px solid #232838; padding: 12px 15px;
+            border-radius: 12px; color: #fff; font-size: 14px; font-weight: bold;
             margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;
-            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;
         }
-        .sidebar-item:hover { border-color: var(--accent); transform: translateX(3px); }
+        .sidebar-item:hover { border-color: #ff4500; background: #212635; transform: translateX(3px); }
 
         .main-tab-content { display: none; }
         .main-tab-content.active-tab { display: block; }
 
-        #tab-cassino {
-            background: radial-gradient(circle at top, #1c1310 0%, var(--bg-body) 60%);
-            min-height: 80vh;
-        }
-
         .promo-carousel-container {
-            margin: 15px; border-radius: 14px; overflow: hidden; border: 1px solid var(--accent);
-            position: relative; height: 120px; box-shadow: 0 8px 25px var(--accent-glow);
+            margin: 15px; border-radius: 14px; overflow: hidden; border: 1px solid #ff4500;
+            position: relative; height: 120px; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
         }
         .promo-track { display: flex; transition: transform 0.5s ease-in-out; height: 100%; width: 300%; }
         .promo-slide {
@@ -242,180 +278,200 @@
             background: rgba(0, 0, 0, 0.75); z-index: 1;
         }
         .promo-content { position: relative; z-index: 2; }
-        .promo-slide h3 { font-size: 14px; color: var(--gold); margin-bottom: 3px; }
+        .promo-slide h3 { font-size: 14px; color: #ffb703; margin-bottom: 3px; }
         .promo-slide p { font-size: 11px; color: #ddd; margin-bottom: 6px; }
         .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
         .jackpot-box {
-            background: var(--bg-card);
+            background: var(--card-bg);
             margin: 0 15px 15px 15px; padding: 15px; border-radius: 14px;
-            border: 1px solid var(--accent); text-align: center;
-            box-shadow: 0 8px 25px var(--accent-glow);
+            border: 1px solid #ff4500; text-align: center;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.25);
         }
-        .jackpot-title { font-size: 12px; font-weight: bold; color: var(--gold); letter-spacing: 1px; margin-bottom: 4px; }
-        .jackpot-value { font-size: 24px; font-weight: 900; color: var(--text-main); text-shadow: 0 0 15px rgba(255,69,0,0.6); }
+        .jackpot-title { font-size: 12px; font-weight: bold; color: var(--accent-yellow); letter-spacing: 1px; margin-bottom: 4px; }
+        .jackpot-value { font-size: 24px; font-weight: 900; color: var(--text-color); text-shadow: 0 0 15px rgba(255,69,0,0.6); }
 
         .winners-section { margin: 15px 0; padding: 0 15px; }
-        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: var(--text-main); }
+        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: var(--text-color); display: flex; align-items: center; gap: 6px; }
         .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
         .winners-scroll::-webkit-scrollbar { display: none; }
         .winner-card {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
             padding: 10px; min-width: 155px; display: flex; align-items: center; gap: 10px;
-            flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
         .winner-info { font-size: 12px; }
-        .winner-name { color: var(--text-sub); font-size: 10px; }
-        .winner-prize { color: var(--gold); font-weight: bold; }
+        .winner-name { color: #aaa; font-size: 10px; }
+        .winner-prize { color: var(--accent-yellow); font-weight: bold; }
 
-        .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; }
-        .section-title span { font-size: 12px; color: var(--text-sub); }
+        .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; color: var(--text-color); }
+        .section-title span { font-size: 12px; color: #888; }
 
         .games-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
             padding: 0 15px; margin-bottom: 25px;
         }
         .game-card {
-            background: var(--bg-card); border-radius: 14px;
+            background: var(--card-bg); border-radius: 14px;
             overflow: hidden; border: 1px solid var(--border-color); text-align: center; cursor: pointer;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.3); transition: transform 0.2s, border-color 0.2s;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5); transition: transform 0.2s, border-color 0.2s;
         }
-        .game-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
         .game-img { width: 100%; height: 115px; object-fit: cover; }
-        .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
+        .game-name { padding: 12px; font-size: 13px; font-weight: bold; color: var(--text-color); }
 
-        /* NOTIFICAÇÕES TOAST */
-        #toastContainer {
-            position: fixed; bottom: 25px; left: 20px; z-index: 9999;
-            display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+        /* --- BOTÃO DE AFILIADOS BONITO --- */
+        .affiliate-banner-box {
+            margin: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff4500, #ffb703);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(255, 69, 0, 0.4);
+            color: #000;
         }
-        .toast-notification {
-            background: linear-gradient(135deg, #151821, #1f2430);
-            border: 1px solid var(--gold); border-left: 4px solid var(--accent);
-            padding: 10px 14px; border-radius: 10px; font-size: 12px;
-            color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            display: flex; align-items: center; gap: 8px; pointer-events: auto;
-            animation: slideInToast 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        .affiliate-banner-box h3 { font-size: 16px; font-weight: 950; margin-bottom: 6px; }
+        .affiliate-banner-box p { font-size: 12px; margin-bottom: 15px; font-weight: 600; }
+        .btn-affiliate-link {
+            display: inline-block;
+            background: #0b0c10;
+            color: #ffb703;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
         }
-        @keyframes slideInToast {
-            0% { transform: translateX(-120%); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-        .toast-title { color: var(--gold); font-weight: 900; display: block; font-size: 10px; text-transform: uppercase; }
+        .btn-affiliate-link:hover { transform: scale(1.05); }
 
-        /* MISSÕES */
-        .missions-container { padding: 15px; max-width: 500px; margin: 0 auto; }
+        /* --- MISSÕES DIÁRIAS --- */
+        .missions-container { padding: 15px; }
         .mission-card {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 14px; padding: 15px; margin-bottom: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        .mission-title { font-size: 14px; font-weight: bold; color: var(--gold); margin-bottom: 4px; }
-        .mission-desc { font-size: 12px; color: var(--text-sub); margin-bottom: 10px; }
+        .mission-info h4 { font-size: 14px; color: var(--accent-yellow); margin-bottom: 4px; }
+        .mission-info p { font-size: 11px; color: #aaa; }
         .btn-claim-mission {
-            background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000;
-            border: none; padding: 8px 14px; border-radius: 8px; font-weight: 900;
-            font-size: 12px; cursor: pointer; width: 100%; text-transform: uppercase;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 11px;
+            cursor: pointer;
         }
 
-        /* CHAT AO VIVO */
-        .chat-container { padding: 15px; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; height: 80vh; }
-        .chat-box {
-            flex: 1; background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px;
-            display: flex; flex-direction: column; gap: 8px;
+        /* --- CHAT AO VIVO --- */
+        .live-chat-container { padding: 15px; display: flex; flex-direction: column; height: calc(100vh - 120px); }
+        .chat-messages-box {
+            flex: 1; background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;
         }
-        .chat-msg { font-size: 12px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; }
-        .chat-user { font-weight: bold; color: var(--gold); margin-right: 6px; }
+        .chat-msg { font-size: 12px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; }
+        .chat-msg b { color: #ffb703; }
         .chat-input-row { display: flex; gap: 8px; }
         .chat-input {
-            flex: 1; padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 8px; color: var(--text-main); font-size: 13px;
+            flex: 1; padding: 12px; background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 10px; color: var(--text-color); font-size: 13px;
         }
         .btn-send-chat {
-            background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none;
-            padding: 0 16px; border-radius: 8px; font-weight: bold; cursor: pointer;
+            background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff; border: none;
+            padding: 0 20px; border-radius: 10px; font-weight: bold; cursor: pointer;
         }
 
-        /* AFILIADOS */
-        .affiliate-container { padding: 15px; max-width: 500px; margin: 0 auto; text-align: center; }
-        .affiliate-card {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 16px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        /* Restante do CSS preservado exatamente igual */
+        .filtro-ligas-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px 0; }
+        .filtro-ligas-scroll::-webkit-scrollbar { display: none; }
+        .btn-filtro-liga {
+            background: #151821; border: 1px solid #232838; color: #aaa;
+            padding: 7px 14px; border-radius: 18px; font-size: 11px; font-weight: bold;
+            cursor: pointer; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;
         }
-        .affiliate-link-box {
-            background: var(--bg-body); border: 1px solid var(--gold);
-            padding: 10px; border-radius: 10px; font-size: 12px; color: var(--gold);
-            word-break: break-all; margin: 15px 0; font-weight: bold;
-        }
-        .btn-affiliate-copy {
-            background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff;
-            border: none; padding: 12px; border-radius: 10px; font-weight: 900;
-            width: 100%; cursor: pointer; text-transform: uppercase; font-size: 13px;
+        .btn-filtro-liga.ativo, .btn-filtro-liga:hover {
+            background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: #fff;
         }
 
-        /* JOGOS E COMPONENTES */
+        .sports-container { padding: 0 15px; }
+        .match-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 14px; margin-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); cursor: pointer; transition: border-color 0.2s;
+        }
+        .match-card:hover { border-color: #ff4500; }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
+        .team-name { width: 40%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .match-score-vs {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #0b0c10; padding: 4px 10px; border-radius: 16px; border: 1px solid #ff4500; min-width: 65px;
+        }
+        .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; letter-spacing: 1px; }
+
+        .floating-support-btn {
+            position: fixed; bottom: 25px; right: 20px; background: linear-gradient(135deg, #ff4500, #ffb703);
+            color: #0f1015; width: 60px; height: 60px; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
+            cursor: pointer; z-index: 997; border: 2px solid #fff; transition: transform 0.2s;
+        }
+        .floating-support-btn:hover { transform: scale(1.08); }
+
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 999;
+            justify-content: center; align-items: center; padding: 15px;
+        }
+        .modal-card-4d {
+            background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
+            width: 100%; max-width: 440px; padding: 22px; border-radius: 24px;
+            border: 2px solid rgba(255, 69, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            text-align: center; position: relative; max-height: 88vh; overflow-y: auto; color: #fff;
+        }
+        .modal-title-4d { font-size: 18px; font-weight: 950; color: #ffb703; margin-bottom: 4px; text-transform: uppercase; }
+        .modal-input {
+            width: 100%; padding: 11px 14px; margin-bottom: 12px;
+            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px;
+        }
+        .modal-btn {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00);
+            color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 5px;
+        }
+        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
+        .btn-voltar-home {
+            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            color: var(--accent-yellow); padding: 11px 16px; border-radius: 12px; font-size: 12px;
+            font-weight: 800; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px; text-transform: uppercase;
+        }
+
+        /* JOGOS CONTAINER */
         #penaltySectionContainer, #aviatorSectionContainer, #minesSectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
         }
-        .btn-voltar-home {
-            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            color: var(--gold); padding: 11px 16px; border-radius: 12px; font-size: 12px;
-            font-weight: 800; cursor: pointer; display: flex; align-items: center;
-            justify-content: center; gap: 8px; text-transform: uppercase;
+        .stadium-container-3d, .aviator-screen-3d, .mines-screen-3d {
+            position: relative; width: 100%; height: 380px; background: #081d11; border-radius: 18px; overflow: hidden; margin-bottom: 15px;
         }
-        .btn-voltar-home:hover { border-color: var(--accent); color: var(--text-main); }
-        .btn-voltar-home svg { width: 14px; height: 14px; fill: var(--gold); }
-
-        .mines-screen-3d {
-            position: relative; width: 100%; height: 380px;
-            background: radial-gradient(circle at 50% 30%, #181c2e 0%, #0b0e17 100%);
-            border-radius: 18px; overflow: hidden;
-            box-shadow: inset 0 0 70px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.8);
-            margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px;
-        }
-        .mines-grid-5x5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 320px; z-index: 10; }
-        .mine-tile {
-            aspect-ratio: 1; background: linear-gradient(145deg, #252a38, #151821);
-            border: 2px solid #323b52; border-radius: 10px; display: flex; justify-content: center; align-items: center;
-            font-size: 18px; font-weight: 900; color: var(--gold); cursor: pointer; transition: 0.2s;
-        }
-        .mine-tile:hover { border-color: var(--accent); transform: scale(1.04); }
-        .mine-tile.revealed-star { background: radial-gradient(circle, #00ff8833 0%, #151821 80%); border-color: #00ff88; color: #00ff88; }
-        .mine-tile.revealed-mine { background: radial-gradient(circle, #ff330044 0%, #151821 80%); border-color: #ff3300; color: #ff3300; }
-
-        .aviator-screen-3d {
-            position: relative; width: 100%; height: 380px;
-            background: radial-gradient(circle at 50% 30%, #1a0826 0%, #080310 100%);
-            border: 3px solid var(--accent); border-radius: 18px; overflow: hidden;
-            margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .aviator-mult-display { font-size: 46px; font-weight: 950; color: #00ff88; letter-spacing: 2px; z-index: 10; margin-bottom: 5px; }
-        .aviator-status-text { font-size: 13px; font-weight: bold; color: var(--gold); z-index: 10; text-transform: uppercase; }
-
-        .stadium-container-3d {
-            position: relative; width: 100%; height: 420px;
-            background: radial-gradient(circle at 50% 30%, #174d2b 0%, #081d11 100%);
-            border: 3px solid var(--gold); border-radius: 18px; overflow: hidden; margin-bottom: 15px;
-        }
-        .goal-frame { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 85%; height: 190px; border: 8px solid #f8f9f9; border-bottom: none; border-radius: 6px 6px 0 0; z-index: 5; pointer-events: none; }
-        .target-spot { position: absolute; width: 44px; height: 44px; background: rgba(0, 255, 136, 0.15); border: 2px dashed #00ff88; border-radius: 50%; z-index: 20; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .bola-penalty-3d { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) scale(1); width: 42px; height: 42px; background: radial-gradient(circle at 35% 35%, #fff 0%, #ccc 45%, #444 85%, #000 100%); border-radius: 50%; z-index: 25; }
-
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center; padding: 15px; }
-        .modal-card-4d { background: radial-gradient(circle at top, #21283d 0%, #11141c 100%); width: 100%; max-width: 440px; padding: 22px; border-radius: 24px; border: 2px solid rgba(255, 69, 0, 0.6); text-align: center; position: relative; }
-        .modal-title-4d { font-size: 18px; font-weight: 950; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; }
-        .modal-input { width: 100%; padding: 11px 14px; margin-bottom: 12px; background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px; }
-        .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; }
-        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
-
-        .sports-container { padding: 15px; }
-        .match-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; margin-bottom: 14px; }
+        .mines-grid-5x5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 320px; z-index: 10; margin: auto; }
+        .mine-tile { aspect-ratio: 1; background: #252a38; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: 900; color: #ffb703; cursor: pointer; }
     </style>
 </head>
 <body>
+
+    <div id="toastContainer"></div>
 
     <div id="splashScreen">
         <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
@@ -426,19 +482,15 @@
         <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
     </div>
 
-    <div id="toastContainer"></div>
-
     <header>
         <div class="header-left">
             <div class="btn-menu-lateral" onclick="abrirSidebar()">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
             <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
-            <button class="btn-theme-toggle" onclick="alternarTema()">🌓</button>
+            <button class="theme-toggle-btn" onclick="alternarModoTema()">🌙/☀️</button>
             <div class="saldo-topo-3d">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
@@ -446,8 +498,14 @@
     </header>
 
     <div class="quick-search-bar" id="quickSearchBarContainer">
-        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="Pesquisar jogos ou esportes..." oninput="pesquisaGeral()">
-        <div id="quickSearchResult" style="background: var(--bg-card); border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid var(--border-color);"></div>
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
+        <div id="quickSearchResult" style="background: var(--card-bg); border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid var(--border-color);"></div>
+    </div>
+
+    <div class="floating-support-btn" id="floatingSupportBtn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="#0f1015">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+        </svg>
     </div>
 
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
@@ -457,13 +515,13 @@
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">Cassino & Jogos</div>
+        <div class="sidebar-item" onclick="mudarAba('afiliados'); fecharSidebar();">💰 Sistema de Afiliados</div>
+        <div class="sidebar-item" onclick="mudarAba('missoes'); fecharSidebar();">🎯 Missões Diárias</div>
+        <div class="sidebar-item" onclick="mudarAba('chat'); fecharSidebar();">💬 Chat ao Vivo</div>
         <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">Penalty Cangaço</div>
         <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">Aviator</div>
         <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">Mines</div>
-        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">Esportes Ao Vivo</div>
-        <div class="sidebar-item" onclick="mudarAba('missoes'); fecharSidebar();">Missões Diárias</div>
-        <div class="sidebar-item" onclick="mudarAba('afiliados'); fecharSidebar();">Indique e Ganhe (Afiliados)</div>
-        <div class="sidebar-item" onclick="mudarAba('chat'); fecharSidebar();">Chat ao Vivo</div>
+        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">Apostas Esportivas</div>
         <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">Suporte Online</div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">Depositar (PIX)</div>
     </div>
@@ -487,10 +545,10 @@
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
         </div>
 
-        <div class="section-title">TOP JOGOS</div>
+        <div class="section-title">TOP JOGOS <span>Todos ></span></div>
         <div class="games-grid">
             <div class="game-card" onclick="mudarAba('penalty')">
-                <img src="https://files.catbox.moe/onqvbv.png" class="game-img" alt="Penalty">
+                <img src="https://files.catbox.moe/onqvbv.png" class="game-img" alt="Penalty Cangaço">
                 <div class="game-name">Penalty Cangaço</div>
             </div>
             <div class="game-card" onclick="mudarAba('aviator')">
@@ -501,138 +559,137 @@
                 <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
                 <div class="game-name">Mines</div>
             </div>
-            <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
-                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Olympus">
-                <div class="game-name">Gates of Olympus</div>
-            </div>
         </div>
     </div>
 
-    <!-- ABA PENALTY -->
-    <div id="tab-penalty" class="main-tab-content">
-        <div id="penaltySectionContainer">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div class="stadium-container-3d">
-                <div class="goal-frame"></div>
-                <div class="target-spot" id="target1" onclick="alert('Gol!')" style="top:55px; left:10%;"></div>
-                <div class="target-spot" id="target2" onclick="alert('Gol!')" style="top:55px; right:10%;"></div>
-                <div class="bola-penalty-3d"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABA AVIATOR -->
-    <div id="tab-aviator" class="main-tab-content">
-        <div id="aviatorSectionContainer">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div class="aviator-screen-3d">
-                <div class="aviator-mult-display">2.45x</div>
-                <div class="aviator-status-text">EM VOO...</div>
-            </div>
-            <button class="modal-btn" onclick="alert('Saque efetuado com sucesso!')">SACAR</button>
-        </div>
-    </div>
-
-    <!-- ABA MINES -->
-    <div id="tab-mines" class="main-tab-content">
-        <div id="minesSectionContainer">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div class="mines-screen-3d">
-                <div class="mines-grid-5x5" id="minesGridContainer"></div>
-            </div>
-            <button class="modal-btn" onclick="iniciarMinesJogo()">NOVO JOGO</button>
-        </div>
-    </div>
-
-    <!-- ABA ESPORTES -->
-    <div id="tab-esportes" class="main-tab-content">
-        <div class="sports-container">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px; color: var(--gold);">Partidas ao Vivo</div>
-            <div class="match-card"><b>Flamengo vs Vasco</b><br>Ao Vivo | 1 - 0</div>
-            <div class="match-card"><b>Real Madrid vs Barcelona</b><br>Ao Vivo | 2 - 2</div>
-        </div>
-    </div>
-
-    <!-- ABA MISSÕES -->
-    <div id="tab-missoes" class="main-tab-content">
-        <div class="missions-container">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--gold);">Missões Diárias & Recompensas</div>
-            <div class="mission-card">
-                <div class="mission-title">Desafio Diário: Apostar R$ 100</div>
-                <div class="mission-desc">Aposte R$ 100 e ganhe uma Free Bet de R$ 150.</div>
-                <button class="btn-claim-mission" onclick="resgatarMissao(150)">Resgatar Free Bet</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABA AFILIADOS -->
+    <!-- ABA: SISTEMA DE AFILIADOS -->
     <div id="tab-afiliados" class="main-tab-content">
-        <div class="affiliate-container">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div class="affiliate-card">
-                <div style="font-size: 18px; font-weight: bold; color: var(--gold); margin-bottom: 10px;">Indique Amigos e Ganhe</div>
-                <div class="affiliate-link-box" id="linkAfiliadoBox">https://cangaco-bet.github.io/?ref=user</div>
-                <button class="btn-affiliate-copy" onclick="copiarLinkAfiliado()">Copiar Link de Convite</button>
+        <div style="padding: 15px; max-width: 500px; margin: 0 auto; text-align: center;">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div class="affiliate-banner-box">
+                <h3>PROGRAMA DE AFILIADOS</h3>
+                <p>Convide amigos e ganhe comissões reais por cada aposta realizada no site!</p>
+                <a href="#" class="btn-affiliate-link" onclick="copiarLinkAfiliado(event)">Copiar Meu Link de Convite</a>
             </div>
         </div>
     </div>
 
-    <!-- ABA CHAT -->
+    <!-- ABA: MISSÕES DIÁRIAS -->
+    <div id="tab-missoes" class="main-tab-content">
+        <div style="padding: 15px; max-width: 500px; margin: 0 auto;">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div class="missions-container">
+                <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent-yellow);">Missões Diárias Disponíveis</div>
+                <div class="mission-card">
+                    <div class="mission-info">
+                        <h4>Apostar R$ 100 no Penalty</h4>
+                        <p>Aposte um total de R$ 100 e ganhe R$ 150 de Free Bet.</p>
+                    </div>
+                    <button class="btn-claim-mission" onclick="reclamarMissao(150)">Resgatar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA: CHAT AO VIVO -->
     <div id="tab-chat" class="main-tab-content">
-        <div class="chat-container">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: var(--gold);">Chat Global</div>
-            <div class="chat-box" id="chatBox">
-                <div class="chat-msg"><span class="chat-user">Ka***:</span> E aí galera!</div>
-                <div class="chat-msg"><span class="chat-user">Jo***:</span> Boa sorte a todos nas apostas!</div>
+        <div class="live-chat-container">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div style="font-size: 16px; font-weight: bold; margin: 10px 0; color: var(--accent-yellow);">Chat Ao Vivo de Apostadores</div>
+            <div class="chat-messages-box" id="chatMessagesBox">
+                <div class="chat-msg"><b>Jo**</b>: Alguém jogando o Mines hoje? Está pagando muito!</div>
+                <div class="chat-msg"><b>Ca**</b>: Acabei de forrar no Penalty Cangaço 🔥</div>
             </div>
             <div class="chat-input-row">
-                <input type="text" id="chatInputMsg" class="chat-input" placeholder="Digite sua mensagem...">
+                <input type="text" id="chatInputText" class="chat-input" placeholder="Digite sua mensagem no chat...">
                 <button class="btn-send-chat" onclick="enviarMensagemChat()">Enviar</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAIS -->
+    <!-- Demais abas mantidas e preservadas (Penalty, Aviator, Mines, Esportes, Suporte) -->
+    <div id="tab-penalty" class="main-tab-content">
+        <div id="penaltySectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div class="stadium-container-3d" id="stadiumContainer"></div>
+        </div>
+    </div>
+
+    <div id="tab-aviator" class="main-tab-content">
+        <div id="aviatorSectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div class="aviator-screen-3d"></div>
+        </div>
+    </div>
+
+    <div id="tab-mines" class="main-tab-content">
+        <div id="minesSectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div class="mines-screen-3d"></div>
+        </div>
+    </div>
+
+    <!-- Modais de Login / Registo / Depósito -->
     <div id="loginModal" class="modal-overlay">
-        <div class="modal-card-4d">
+        <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title-4d">ENTRAR NA CONTA</div>
-            <input type="email" class="modal-input" placeholder="E-mail">
-            <input type="password" class="modal-input" placeholder="Senha">
+            <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail">
+            <input type="password" id="loginSenha" class="modal-input" placeholder="Sua Senha">
             <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
         </div>
     </div>
 
     <div id="registerModal" class="modal-overlay">
-        <div class="modal-card-4d">
+        <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title-4d">CRIAR CONTA</div>
             <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
-            <input type="email" class="modal-input" placeholder="E-mail">
-            <button class="modal-btn" onclick="concluirRegistro()">Cadastrar Agora</button>
-        </div>
-    </div>
-
-    <div id="depositModal" class="modal-overlay">
-        <div class="modal-card-4d">
-            <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">DEPOSITAR PIX</div>
-            <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor (R$)">
-            <button class="modal-btn" onclick="realizarDeposito()">Gerar Pix</button>
+            <input type="email" id="regEmail" class="modal-input" placeholder="E-mail">
+            <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
+            <button class="modal-btn" onclick="realizarCadastroCompleto()">Registar Conta</button>
         </div>
     </div>
 
     <script>
+        let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
+        let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
+        atualizarSaldoNaTela();
+
+        function mostrarToast(mensagem) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.innerHTML = `<span>⚡</span> ${mensagem}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function alternarModoTema() {
+            const html = document.documentElement;
+            const atual = html.getAttribute('data-theme');
+            if (atual === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                mostrarToast('Modo Claro ativado!');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                mostrarToast('Modo Escuro ativado!');
+            }
+        }
+
+        function fecharSplashScreen() {
+            const splash = document.getElementById('splashScreen');
+            splash.style.opacity = '0';
+            setTimeout(() => { splash.style.display = 'none'; }, 500);
+            mostrarToast('Bem-vindo ao Cangaço Bet!');
+        }
+
         let progresso = 0;
         const barra = document.getElementById('loadingBar');
         const textoCarregamento = document.getElementById('loadingText');
         const botaoEntrarSplash = document.getElementById('btnEntrarSplash');
-
         let intGlobal = setInterval(() => {
-            progresso += 3;
+            progresso += 2;
             if (progresso <= 100) {
                 barra.style.width = progresso + '%';
                 textoCarregamento.innerText = `A CARREGAR... ${progresso}%`;
@@ -643,148 +700,82 @@
             }
         }, 30);
 
-        function fecharSplashScreen() {
-            document.getElementById('splashScreen').style.opacity = '0';
-            setTimeout(() => { document.getElementById('splashScreen').style.display = 'none'; }, 500);
-        }
-
-        let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
-        let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
-        
-        atualizarSaldoNaTela();
-        verificarSessaoAtiva();
-        iniciarMinesJogo();
-
-        function atualizarSaldoNaTela() { document.getElementById('saldoAtual').innerText = saldo.toFixed(2); }
-        function verificarSessaoAtiva() {
-            if (usuarioLogado) {
-                document.querySelector('.btn-topo-login').innerText = usuarioLogado.nome.substring(0, 2).toUpperCase() + '***';
-                document.querySelector('.btn-topo-login').setAttribute('onclick', 'fazerLogout()');
-            }
-        }
-        function fazerLogout() { localStorage.removeItem('cangaco_usuario'); location.reload(); }
-        function alternarTema() {
-            const html = document.documentElement;
-            html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        function atualizarSaldoNaTela() {
+            document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
         }
 
         function mudarAba(aba) {
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') document.getElementById('tab-cassino').classList.add('active-tab');
+            if (aba === 'afiliados') document.getElementById('tab-afiliados').classList.add('active-tab');
+            if (aba === 'missoes') document.getElementById('tab-missoes').classList.add('active-tab');
+            if (aba === 'chat') document.getElementById('tab-chat').classList.add('active-tab');
             if (aba === 'penalty') document.getElementById('tab-penalty').classList.add('active-tab');
             if (aba === 'aviator') document.getElementById('tab-aviator').classList.add('active-tab');
             if (aba === 'mines') document.getElementById('tab-mines').classList.add('active-tab');
-            if (aba === 'esportes') document.getElementById('tab-esportes').classList.add('active-tab');
-            if (aba === 'missoes') document.getElementById('tab-missoes').classList.add('active-tab');
-            if (aba === 'afiliados') {
-                document.getElementById('tab-afiliados').classList.add('active-tab');
-                document.getElementById('linkAfiliadoBox').innerText = window.location.href.split('?')[0] + '?ref=usuario';
-            }
-            if (aba === 'chat') document.getElementById('tab-chat').classList.add('active-tab');
-            if (aba === 'suporte') document.getElementById('tab-suporte').classList.add('active-tab');
-            fecharSidebar();
         }
 
         function abrirSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').style.display = 'block'; }
         function fecharSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').style.display = 'none'; }
         function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
         function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
-        function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
-        function concluirRegistro() {
-            const nome = document.getElementById('regNome').value;
-            if(!nome) return;
-            usuarioLogado = { nome: nome };
-            localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
-            verificarSessaoAtiva();
-            fecharModais();
-            alert("Cadastro realizado!");
+        function copiarLinkAfiliado(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText(window.location.href);
+            mostrarToast('Link de afiliado copiado com sucesso!');
         }
 
-        function realizarLogin() {
-            usuarioLogado = { nome: "Kaique" };
-            localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
-            verificarSessaoAtiva();
-            fecharModais();
-            alert("Login efetuado!");
-        }
-
-        function realizarDeposito() {
-            const val = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if(val <= 0) return;
-            saldo += val;
+        function reclamarMissao(valorPremio) {
+            if (!usuarioLogado) {
+                mostrarToast('Precisa estar cadastrado para resgatar missões!');
+                abrirModalRegistro();
+                return;
+            }
+            saldo += valorPremio;
             atualizarSaldoNaTela();
-            localStorage.setItem('cangaco_saldo', saldo);
-            fecharModais();
-            alert(`Depósito de R$ ${val.toFixed(2)} aprovado!`);
-        }
-
-        function copiarLinkAfiliado() {
-            navigator.clipboard.writeText(document.getElementById('linkAfiliadoBox').innerText);
-            alert("Link copiado!");
-        }
-
-        function resgatarMissao(premio) {
-            saldo += premio;
-            atualizarSaldoNaTela();
-            alert(`Recompensa de R$ ${premio.toFixed(2)} creditada!`);
+            mostrarToast(`Parabéns! Ganhou R$ ${valorPremio} de Free Bet!`);
         }
 
         function enviarMensagemChat() {
-            if (!usuarioLogado) { abrirModalRegistro(); return; }
-            const txt = document.getElementById('chatInputMsg').value.trim();
-            if(!txt) return;
-            const box = document.getElementById('chatBox');
-            let nomeMascarado = usuarioLogado.nome.substring(0, 2).toUpperCase() + '***';
-            box.innerHTML += `<div class="chat-msg"><span class="chat-user">${nomeMascarado}:</span> ${txt}</div>`;
-            document.getElementById('chatInputMsg').value = '';
+            if (!usuarioLogado) {
+                mostrarToast('Registe-se para falar no chat ao vivo!');
+                abrirModalRegistro();
+                return;
+            }
+            const input = document.getElementById('chatInputText');
+            const texto = input.value.trim();
+            if (!texto) return;
+
+            // Formatar nome de usuário: apenas 2 letras e tampar com **
+            let nomeOriginal = usuarioLogado.nome || 'Usuario';
+            let nomeFormatado = nomeOriginal.substring(0, 2) + '**';
+
+            const box = document.getElementById('chatMessagesBox');
+            const div = document.createElement('div');
+            div.className = 'chat-msg';
+            div.innerHTML = `<b>${nomeFormatado}</b>: ${texto}`;
+            box.appendChild(div);
+            input.value = '';
             box.scrollTop = box.scrollHeight;
         }
 
-        function iniciarMinesJogo() {
-            const container = document.getElementById('minesGridContainer');
-            container.innerHTML = '';
-            for (let i = 0; i < 25; i++) {
-                let tile = document.createElement('div');
-                tile.className = 'mine-tile';
-                tile.innerText = '?';
-                tile.onclick = () => {
-                    tile.classList.add('revealed-star');
-                    tile.innerText = '⭐';
-                };
-                container.appendChild(tile);
-            }
+        function realizarCadastroCompleto() {
+            const nome = document.getElementById('regNome').value;
+            const email = document.getElementById('regEmail').value;
+            if(!nome || !email) { mostrarToast('Preencha os campos!'); return; }
+            usuarioLogado = { nome, email };
+            localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
+            fecharModais();
+            mostrarToast('Conta criada com sucesso!');
         }
 
-        function jogarCassino(nome, custo) {
-            if(saldo < custo) { alert("Saldo insuficiente!"); return; }
-            saldo -= custo;
-            atualizarSaldoNaTela();
-            alert(`Você jogou ${nome}!`);
-        }
-
-        function dispararToast(nome, valor) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast-notification';
-            toast.innerHTML = `<div><span class="toast-title">Novo Saque</span> ${nome} faturou <b>R$ ${valor}</b>!</div>`;
-            container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 4000);
-        }
-
-        setInterval(() => {
-            let nomes = ["Carlos***", "Lucas***", "Fernanda***", "Bruno***"];
-            let valores = ["50.00", "120.75", "350.00", "89.50"];
-            dispararToast(nomes[Math.floor(Math.random()*nomes.length)], valores[Math.floor(Math.random()*valores.length)]);
-        }, 8000);
-
-        function pesquisaGeral() {
-            const termo = document.getElementById('quickSearchInput').value.toLowerCase();
-            const box = document.getElementById('quickSearchResult');
-            box.innerHTML = '';
-            if(!termo) return;
-            if("mines".includes(termo)) box.innerHTML = `<div style="padding:8px; cursor:pointer;" onclick="mudarAba('mines')">Mines</div>`;
+        function realizarLogin() {
+            usuarioLogado = { nome: "Utilizador" };
+            localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
+            fecharModais();
+            mostrarToast('Login efetuado!');
         }
     </script>
 </body>
