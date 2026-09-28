@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet - Fortune Tiger Vivo</title>
+    <title>Cangaço Bet - Cassino e Esportes Reais</title>
     <style>
         * {
             margin: 0;
@@ -42,6 +42,14 @@
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        /* Abas de Conteúdo Principal (Cassino vs Esportes) */
+        .main-tab-content {
+            display: none;
+        }
+        .main-tab-content.active-tab {
+            display: block;
         }
 
         /* Banner Promocional */
@@ -244,6 +252,127 @@
             font-weight: 500;
         }
 
+        /* --- ESTILOS DA SECCÃO DE ESPORTES (JOGOS REAIS) --- */
+        .sports-container {
+            padding: 15px;
+        }
+        .match-card {
+            background: #1a1c23;
+            border: 1px solid #2a2d3d;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #ffb703;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .team-name {
+            width: 40%;
+            text-align: center;
+        }
+        .match-vs {
+            font-size: 11px;
+            color: #888;
+            background: #13141b;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        .odds-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .odd-btn {
+            background: #252836;
+            border: 1px solid #363a4f;
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .odd-btn:hover, .odd-btn.selected {
+            background: #ff4500;
+            border-color: #ffb703;
+            color: white;
+        }
+        .odd-label {
+            font-size: 10px;
+            color: #aaa;
+            display: block;
+        }
+        .odd-value {
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Boletim de Apostas Flutuante */
+        .bet-slip {
+            position: fixed;
+            bottom: 65px;
+            left: 15px;
+            right: 15px;
+            background: #1e2029;
+            border: 2px solid #ff4500;
+            border-radius: 12px;
+            padding: 12px;
+            display: none;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
+            z-index: 998;
+        }
+        .bet-slip-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .bet-slip-info {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+        .bet-slip-input {
+            width: 100%;
+            padding: 8px;
+            background: #13141b;
+            border: 1px solid #363a4f;
+            color: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .btn-place-bet {
+            width: 100%;
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
         /* Modais */
         .modal-overlay {
             display: none;
@@ -325,7 +454,7 @@
             color: #ff4500;
         }
 
-        /* --- TELA DO FORTUNE TIGER EM 3D CORRIGIDA E EM ECRÃ INTEIRO --- */
+        /* --- TELA DO FORTUNE TIGER EM ECRÃ INTEIRO REAL --- */
         #tiger-game-screen {
             display: none;
             position: fixed;
@@ -368,7 +497,6 @@
             z-index: 50;
         }
 
-        /* Animação 3D do Tigre no Topo */
         .tiger-roof-section {
             width: 100%;
             text-align: center;
@@ -402,7 +530,6 @@
             animation: spin3DActive 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
         }
 
-        /* Estrutura Dourada da Grelha */
         .machine-frame-img {
             background: linear-gradient(135deg, #b8860b, #ffd700, #b8860b);
             margin: 0 auto;
@@ -458,7 +585,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Painel Inferior Fixo */
         .bottom-panel-img {
             background: linear-gradient(180deg, #600202 0%, #200000 100%);
             width: 100%;
@@ -548,7 +674,8 @@
 
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
-    <div id="main-content">
+    <!-- ABA 1: CASSINO (HOME) -->
+    <div id="tab-cassino" class="main-tab-content active-tab">
         <header>
             <div class="logo" onclick="abrirModalDeposito()">🔥 CANGAÇO BET</div>
             <button class="btn-entrar" onclick="abrirModalRegistro()">REGISTRAR</button>
@@ -647,15 +774,112 @@
                 <div class="game-name">Gates of Olympus</div>
             </div>
         </div>
-
-        <nav>
-            <a class="nav-item" onclick="abrirModalRegistro()">📁<br>Registrar</a>
-            <a class="nav-item" onclick="abrirModalCategorias()">📂<br>Categorias</a>
-            <a class="nav-item active" onclick="abrirModalDeposito()">💰<br>Depositar</a>
-            <a class="nav-item" onclick="alert('Transmissões Ao Vivo em breve!')">📺<br>Ao Vivo</a>
-            <a class="nav-item" onclick="abrirModalPesquisa()">🔍<br>Pesquisar</a>
-        </nav>
     </div>
+
+    <!-- ABA 2: ESPORTES (JOGOS REAIS) -->
+    <div id="tab-esportes" class="main-tab-content">
+        <header>
+            <div class="logo">⚽ CANGAÇO ESPORTES</div>
+            <div style="font-size: 13px; font-weight: bold; color: #ffcc00;">Saldo: R$ <span id="saldoEsporteUI">9.250,00</span></div>
+        </header>
+
+        <div class="sports-container">
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">🔥 Partidas Ao Vivo / Hoje</div>
+
+            <!-- Jogo 1 -->
+            <div class="match-card">
+                <div class="match-header"><span>Brasileirão Série A • Ao Vivo</span> <span style="color: #00ff88;">● 78'</span></div>
+                <div class="match-teams">
+                    <span class="team-name">Flamengo</span>
+                    <span class="match-vs">2 - 1</span>
+                    <span class="team-name">Palmeiras</span>
+                </div>
+                <div class="odds-grid">
+                    <div class="odd-btn" onclick="selecionarAposta('Flamengo x Palmeiras (Casa)', 1.45, this)">
+                        <span class="odd-label">1 (Casa)</span>
+                        <span class="odd-value">1.45</span>
+                    </div>
+                    <div class="odd-btn" onclick="selecionarAposta('Flamengo x Palmeiras (Empate)', 4.20, this)">
+                        <span class="odd-label">X (Empate)</span>
+                        <span class="odd-value">4.20</span>
+                    </div>
+                    <div class="odd-btn" onclick="selecionarAposta('Flamengo x Palmeiras (Fora)', 6.50, this)">
+                        <span class="odd-label">2 (Fora)</span>
+                        <span class="odd-value">6.50</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jogo 2 -->
+            <div class="match-card">
+                <div class="match-header"><span>UEFA Champions League • Hoje 16:00</span></div>
+                <div class="match-teams">
+                    <span class="team-name">Real Madrid</span>
+                    <span class="match-vs">VS</span>
+                    <span class="team-name">Manchester City</span>
+                </div>
+                <div class="odds-grid">
+                    <div class="odd-btn" onclick="selecionarAposta('Real Madrid x Man. City (Casa)', 2.30, this)">
+                        <span class="odd-label">1 (Casa)</span>
+                        <span class="odd-value">2.30</span>
+                    </div>
+                    <div class="odd-btn" onclick="selecionarAposta('Real Madrid x Man. City (Empate)', 3.40, this)">
+                        <span class="odd-label">X (Empate)</span>
+                        <span class="odd-value">3.40</span>
+                    </div>
+                    <div class="odd-btn" onclick="selecionarAposta('Real Madrid x Man. City (Fora)', 2.90, this)">
+                        <span class="odd-label">2 (Fora)</span>
+                        <span class="odd-value">2.90</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jogo 3 -->
+            <div class="match-card">
+                <div class="match-header"><span>Premier League • Hoje 18:30</span></div>
+                <div class="match-teams">
+                    <span class="team-name">Arsenal</span>
+                    <span class="match-vs">VS</span>
+                    <span class="team-name">Chelsea</span>
+                </div>
+                <div class="odds-grid">
+                    <div class="odd-btn" onclick="selecionarAposta('Arsenal x Chelsea (Casa)', 1.75, this)">
+                        <span class="odd-label">1 (Casa)</span>
+                        <span class="odd-value">1.75</span>
+                    </div>
+                    <div class="odd-btn" onclick="selecionarAposta('Arsenal x Chelsea (Empate)', 3.80, this)">
+                        <span class="odd-label">X (Empate)</span>
+                        <span class="odd-value">3.80</span>
+                    </div>
+                    <div class="odd-btn" onclick="selecionarAposta('Arsenal x Chelsea (Fora)', 4.50, this)">
+                        <span class="odd-label">2 (Fora)</span>
+                        <span class="odd-value">4.50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boletim de Apostas Esportivas (Slip) -->
+    <div class="bet-slip" id="betSlip">
+        <div class="bet-slip-title">
+            <span>🎟️ BILHETE DE APOSTA</span>
+            <span style="cursor:pointer;" onclick="fecharBilhete()">&times;</span>
+        </div>
+        <div class="bet-slip-info" id="betSelectionInfo">Seleção: -</div>
+        <input type="number" id="betValorInput" class="bet-slip-input" placeholder="Valor da Aposta (R$)" value="50">
+        <div style="font-size: 11px; color: #00ff88; margin-bottom: 6px;" id="retornoPotencial">Retorno potencial: R$ 0,00</div>
+        <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
+    </div>
+
+    <!-- MENU DE NAVEGAÇÃO INFERIOR -->
+    <nav>
+        <a class="nav-item active" id="navHome" onclick="mudarAba('cassino')">🎰<br>Cassino</a>
+        <a class="nav-item" id="navEsportes" onclick="mudarAba('esportes')">⚽<br>Esportes</a>
+        <a class="nav-item" onclick="abrirModalDeposito()">💰<br>Depositar</a>
+        <a class="nav-item" onclick="abrirModalPesquisa()">🔍<br>Pesquisar</a>
+        <a class="nav-item" onclick="abrirModalRegistro()">👤<br>Conta</a>
+    </nav>
 
     <!-- TELA DO FORTUNE TIGER 3D EM ECRÃ INTEIRO REAL -->
     <div id="tiger-game-screen">
@@ -663,7 +887,6 @@
 
         <div class="tiger-app-container">
             <div class="tiger-roof-section">
-                <!-- Tigre 3D animado a flutuar e a girar no clique -->
                 <img src="https://files.catbox.moe/gys1kk.png" alt="Tigre 3D" class="tiger-img-3d" id="tigerImage" onclick="acionarGirar()">
             </div>
 
@@ -729,7 +952,7 @@
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title">📂 SELECIONAR CATEGORIA</div>
             <button class="modal-btn" onclick="alert('A entrar na categoria Cassino...')">🎰 Cassinos</button>
-            <button class="modal-btn" style="background-color: #2a2d3d; margin-top: 10px;" onclick="alert('A entrar na categoria Esportes...')">⚽ Esportes</button>
+            <button class="modal-btn" style="background-color: #2a2d3d; margin-top: 10px;" onclick="mudarAba('esportes'); fecharModais();">⚽ Esportes</button>
         </div>
     </div>
 
@@ -755,9 +978,26 @@
 
     <script>
         const audio = document.getElementById('audioPlayer');
+        let saldo = 9250.00;
+        let apostaSelecionada = null;
+        let oddAtual = 0;
 
         function tocarAudioInicio() {
             audio.play().catch(e => console.log(e));
+        }
+
+        function mudarAba(aba) {
+            tocarAudioInicio();
+            document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
+            document.querySelectorAll('nav .nav-item').forEach(el => el.classList.remove('active'));
+
+            if (aba === 'cassino') {
+                document.getElementById('tab-cassino').classList.add('active-tab');
+                document.getElementById('navHome').classList.add('active');
+            } else if (aba === 'esportes') {
+                document.getElementById('tab-esportes').classList.add('active-tab');
+                document.getElementById('navEsportes').classList.add('active');
+            }
         }
 
         function abrirModalPesquisa() { tocarAudioInicio(); document.getElementById('searchModal').style.display = 'flex'; }
@@ -781,19 +1021,61 @@
         function entrarFortuneTiger() {
             audio.pause();
             audio.currentTime = 0;
-            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('tab-cassino').style.display = 'none';
             document.getElementById('tiger-game-screen').style.display = 'flex';
         }
 
         function sairFortuneTiger() {
             document.getElementById('tiger-game-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('tab-cassino').style.display = 'block';
         }
 
-        let saldo = 9250.00;
-
         function atualizarUI() {
-            document.getElementById('saldoJogo').innerText = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            const formatado = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById('saldoJogo').innerText = formatado;
+            document.getElementById('saldoEsporteUI').innerText = formatado;
+        }
+
+        function selecionarAposta(jogoOdd, odd, elemento) {
+            document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
+            elemento.classList.add('selected');
+
+            apostaSelecionada = jogoOdd;
+            oddAtual = odd;
+
+            document.getElementById('betSelectionInfo').innerText = `Seleção: ${jogoOdd} (Odd: ${odd})`;
+            document.getElementById('betSlip').style.display = 'block';
+            atualizarRetornoPotencial();
+        }
+
+        function fecharBilhete() {
+            document.getElementById('betSlip').style.display = 'none';
+            document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
+        }
+
+        document.getElementById('betValorInput').addEventListener('input', atualizarRetornoPotencial);
+
+        function atualizarRetornoPotencial() {
+            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
+            let retorno = valor * oddAtual;
+            document.getElementById('retornoPotencial').innerText = `Retorno potencial: R$ ${retorno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+        }
+
+        function confirmarApostaEsportiva() {
+            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
+            if (valor <= 0) {
+                alert('Insira um valor válido para a aposta!');
+                return;
+            }
+            if (saldo < valor) {
+                alert('Saldo insuficiente para realizar esta aposta!');
+                return;
+            }
+
+            saldo -= valor;
+            atualizarUI();
+            fecharBilhete();
+            alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}! Boa sorte!`);
         }
 
         function acionarGirar() {
@@ -809,7 +1091,6 @@
             saldo -= 250.00;
             atualizarUI();
 
-            // Ativa animação 3D de rotação no tigre e tremor nos rolos
             tigerImg.classList.add('girando-ativo');
             status.innerText = "Girando...";
             ganhoEl.innerText = "0,00";
@@ -849,10 +1130,10 @@
             if (termo.trim() === '') return;
 
             const jogos = [
-                { nome: 'Fortune Tiger', img: 'https://files.catbox.moe/75mifn.jpeg' },
-                { nome: 'Aviator', img: 'https://files.catbox.moe/f5zgx9.webp' },
-                { nome: 'Mines', img: 'https://files.catbox.moe/9k06uq.jpeg' },
-                { nome: 'Gates of Olympus', img: 'https://files.catbox.moe/7dkz4q.jpeg' }
+                { nome: 'Fortune Tiger' },
+                { nome: 'Aviator' },
+                { nome: 'Mines' },
+                { nome: 'Gates of Olympus' }
             ];
 
             const encontrados = jogos.filter(j => j.nome.toLowerCase().includes(termo));
