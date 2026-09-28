@@ -387,16 +387,10 @@
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">
-            🎰 Cassino (Jogos da tela inicial)
+            🎰 Cassino
         </div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">
-            ⚽ Apostas Esportivas (Futebol e Odds)
-        </div>
-        <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
-            💰 Depositar (PIX)
-        </div>
-        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">
-            📝 Registrar Conta
+            ⚽ Apostas Esportivas
         </div>
     </div>
 
@@ -491,9 +485,9 @@
 
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas de Hoje)</div>
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Disponíveis)</div>
             <div id="lista-partidas-api">
-                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas oficiais da API...</p>
+                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas oficiais...</p>
             </div>
         </div>
     </div>
@@ -542,8 +536,8 @@
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title">📂 CATEGORIAS</div>
-            <button class="modal-btn" onclick="mudarAba('cassino'); fecharModais();">🎰 Cassinos</button>
-            <button class="modal-btn" style="background-color: #2a2d3d; margin-top: 10px;" onclick="mudarAba('esportes'); fecharModais();">⚽ Esportes</button>
+            <button class="modal-btn" onclick="mudarAba('cassino'); fecharModais();">🎰 Cassino</button>
+            <button class="modal-btn" style="background-color: #2a2d3d; margin-top: 10px;" onclick="mudarAba('esportes'); fecharModais();">⚽ Apostas Esportivas</button>
         </div>
     </div>
 
@@ -566,7 +560,6 @@
             audio.play().catch(e => console.log(e));
         }
 
-        // Sidebar / Menu da Engrenagem
         function abrirSidebar() {
             tocarAudioInicio();
             document.getElementById('sidebar').classList.add('open');
@@ -577,7 +570,6 @@
             document.getElementById('sidebarOverlay').style.display = 'none';
         }
 
-        // Sistema de Abas
         function mudarAba(aba) {
             tocarAudioInicio();
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
@@ -590,7 +582,6 @@
             }
         }
 
-        // Cadastro Completo com Nome, Gmail, Telefone e CPF
         function realizarCadastro() {
             const nome = document.getElementById('nomeCompleto').value;
             const email = document.getElementById('emailGmail').value;
@@ -605,7 +596,6 @@
             alert(`✅ Conta criada com sucesso para ${nome}! Bem-vindo ao Cangaço Bet.`);
         }
 
-        // Pesquisa Geral (Esportes e Cassinos)
         function pesquisaGeral() {
             const termo = document.getElementById('quickSearchInput').value.toLowerCase();
             const box = document.getElementById('quickSearchResult');
@@ -617,7 +607,7 @@
                 { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
                 { nome: '🎰 Cassino: Mines', tipo: 'cassino' },
                 { nome: '🎰 Cassino: Gates of Olympus', tipo: 'cassino' },
-                { nome: '⚽ Apostas Esportivas (Futebol)', tipo: 'esportes' }
+                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' }
             ];
 
             const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
@@ -638,15 +628,11 @@
         }
 
         function pesquisaGeralModal() {
-            const termo = document.getElementById('modalSearchInput').value.toLowerCase();
             const box = document.getElementById('modalSearchResult');
-            box.innerHTML = '';
-            if (!termo.trim()) return;
-            box.innerHTML = `<div style="padding: 8px; cursor: pointer;" onclick="mudarAba('cassino'); fecharModais();">🎰 Ver Jogos de Cassino</div>
-                             <div style="padding: 8px; cursor: pointer;" onclick="mudarAba('esportes'); fecharModais();">⚽ Ver Apostas Esportivas</div>`;
+            box.innerHTML = `<div style="padding: 8px; cursor: pointer;" onclick="mudarAba('cassino'); fecharModais();">🎰 Cassino</div>
+                             <div style="padding: 8px; cursor: pointer;" onclick="mudarAba('esportes'); fecharModais();">⚽ Apostas Esportivas</div>`;
         }
 
-        // Puxar Jogos Reais API
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             try {
@@ -728,7 +714,6 @@
             alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}!`);
         }
 
-        // Modais gerais
         function abrirModalPesquisa() { tocarAudioInicio(); document.getElementById('searchModal').style.display = 'flex'; }
         function abrirModalCategorias() { tocarAudioInicio(); document.getElementById('categoryModal').style.display = 'flex'; }
         function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
@@ -741,7 +726,6 @@
             alert('A entrar em ' + nomeJogo + '...');
         }
 
-        // Carrossel de vencedores
         const scrollContainer = document.getElementById('winnersScroll');
         setInterval(() => {
             if (scrollContainer) {
@@ -753,7 +737,6 @@
             }
         }, 3000);
 
-        // Carrossel de promoções
         const promoTrack = document.getElementById('promoTrack');
         let currentSlide = 0;
         setInterval(() => {
