@@ -450,7 +450,7 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
-        /* ESTILOS DO JOGO FORTUNE TIGER 4D */
+        /* ESTILOS DO JOGO FORTUNE TIGER 4D COM SÍMBOLOS REAIS */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -520,17 +520,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+        .slot-cell img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
             transition: transform 0.1s;
         }
-        .slot-cell.spinning {
-            animation: cellSpin 0.1s linear infinite;
+        .slot-cell.spinning img {
+            animation: cellSpinImg 0.1s linear infinite;
         }
-        @keyframes cellSpin {
-            0% { transform: translateY(-3px); filter: blur(1px); }
-            50% { transform: translateY(3px); filter: blur(1px); }
-            100% { transform: translateY(-3px); filter: blur(1px); }
+        @keyframes cellSpinImg {
+            0% { transform: translateY(-4px) scale(0.9); filter: blur(1px); }
+            50% { transform: translateY(4px) scale(1.1); filter: blur(1px); }
+            100% { transform: translateY(-4px) scale(0.9); filter: blur(1px); }
         }
 
         .slot-controls {
@@ -591,22 +597,27 @@
             font-weight: bold;
         }
 
-        .btn-spin-grande {
+        /* BOTÃO VERDE TRADICIONAL DO TIGRES */
+        .btn-spin-tigrinho {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
-            color: #0b0c10;
-            border: none;
-            border-radius: 12px;
+            padding: 15px;
+            background: linear-gradient(180deg, #2ecc71 0%, #27ae60 50%, #1e8449 100%);
+            color: #ffffff;
+            border: 2px solid #a9dfbf;
+            border-radius: 50px;
             font-weight: 950;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,255,136,0.5);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.7), inset 0 2px 4px rgba(255,255,255,0.4);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.1s;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            transition: transform 0.1s, box-shadow 0.1s;
         }
-        .btn-spin-grande:active { transform: scale(0.97); }
+        .btn-spin-tigrinho:active {
+            transform: scale(0.96);
+            box-shadow: 0 3px 10px rgba(39, 174, 96, 0.7), inset 0 2px 2px rgba(0,0,0,0.6);
+        }
 
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
@@ -810,30 +821,30 @@
         </div>
     </div>
 
-    <!-- MODAL DO JOGO FORTUNE TIGER 4D -->
+    <!-- MODAL DO JOGO FORTUNE TIGER 4D COM SÍMBOLOS REAIS -->
     <div id="fortuneModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 390px;">
             <span class="close-modal" onclick="fecharFortuneTiger()">&times;</span>
             <div class="modal-title-4d">🐯 Fortune Tiger 4D</div>
             <div class="modal-subtitle-4d" id="tigerModoSub">Modo Normal (Valendo Saldo)</div>
             
-            <!-- TIGRE 4D BALANÇANDO EM CIMA DO CAÇA-NÍQUEIS -->
+            <!-- TIGRE 4D FLUTUANDO EM CIMA DO CAÇA-NÍQUEIS -->
             <div class="tiger-wrapper-4d">
                 <img src="https://files.catbox.moe/75mifn.jpeg" class="tiger-avatar-4d" alt="Tigre 4D">
             </div>
 
-            <!-- MÁQUINA DE CAÇA-NÍQUEIS 3X3 -->
+            <!-- MÁQUINA DE CAÇA-NÍQUEIS 3X3 COM ÍCONES REAIS -->
             <div class="slot-machine-container">
                 <div class="slot-grid-3x3" id="slotGrid">
-                    <div class="slot-cell" id="c0">🍊</div>
-                    <div class="slot-cell" id="c1">🪙</div>
-                    <div class="slot-cell" id="c2">📜</div>
-                    <div class="slot-cell" id="c3">🐅</div>
-                    <div class="slot-cell" id="c4">🍊</div>
-                    <div class="slot-cell" id="c5">🪙</div>
-                    <div class="slot-cell" id="c6">📜</div>
-                    <div class="slot-cell" id="c7">🐅</div>
-                    <div class="slot-cell" id="c8">🍊</div>
+                    <div class="slot-cell" id="c0"><img src="https://images.emojiterra.com/google/android-12l/512px/1f34a.png" alt="Laranja"></div>
+                    <div class="slot-cell" id="c1"><img src="https://images.emojiterra.com/google/android-12l/512px/1fa99.png" alt="Moeda"></div>
+                    <div class="slot-cell" id="c2"><img src="https://images.emojiterra.com/google/android-12l/512px/1f4dc.png" alt="Envelope"></div>
+                    <div class="slot-cell" id="c3"><img src="https://images.emojiterra.com/google/android-12l/512px/1f405.png" alt="Tigre"></div>
+                    <div class="slot-cell" id="c4"><img src="https://images.emojiterra.com/google/android-12l/512px/1f31f.png" alt="Estrela"></div>
+                    <div class="slot-cell" id="c5"><img src="https://images.emojiterra.com/google/android-12l/512px/1fa99.png" alt="Moeda"></div>
+                    <div class="slot-cell" id="c6"><img src="https://images.emojiterra.com/google/android-12l/512px/1f4dc.png" alt="Envelope"></div>
+                    <div class="slot-cell" id="c7"><img src="https://images.emojiterra.com/google/android-12l/512px/1f405.png" alt="Tigre"></div>
+                    <div class="slot-cell" id="c8"><img src="https://images.emojiterra.com/google/android-12l/512px/1f34a.png" alt="Laranja"></div>
                 </div>
 
                 <div class="slot-controls">
@@ -857,8 +868,8 @@
                         </label>
                     </div>
 
-                    <!-- Botão Verde Grande para Girar ou Parar -->
-                    <button class="btn-spin-grande" id="btnSpinTiger" onclick="clicarGirarOuParar()">GIRAR 🎰</button>
+                    <!-- Botão Verde Tradicional do Tigrinho para Girar ou Parar -->
+                    <button class="btn-spin-tigrinho" id="btnSpinTiger" onclick="clicarGirarOuParar()">GIRAR 🐅</button>
                 </div>
             </div>
             <div id="tigerResultadoMsg" style="font-size: 13px; font-weight: bold; color: #ffb703; min-height: 20px;">Boa sorte!</div>
@@ -1186,10 +1197,18 @@
             }
         }
 
-        // --- LÓGICA DO FORTUNE TIGER 4D ---
+        // --- LÓGICA DO FORTUNE TIGER 4D COM SÍMBOLOS REAIS ---
         let tigerRodando = false;
         let intervaloTiger = null;
-        let symbols = ['🐅', '🪙', '🍊', '📜', '⭐'];
+        
+        // Links reais das imagens dos símbolos 3D do Fortune Tiger
+        let symbolsReal = [
+            'https://images.emojiterra.com/google/android-12l/512px/1f405.png', // Tigre
+            'https://images.emojiterra.com/google/android-12l/512px/1fa99.png', // Moeda
+            'https://images.emojiterra.com/google/android-12l/512px/1f34a.png', // Laranja
+            'https://images.emojiterra.com/google/android-12l/512px/1f4dc.png', // Envelope
+            'https://images.emojiterra.com/google/android-12l/512px/1f31f.png'  // Estrela
+        ];
 
         function abrirFortuneTiger() {
             tocarAudioInicio();
@@ -1204,7 +1223,7 @@
             if (tigerRodando) return;
             let input = document.getElementById('tigerBetInput');
             let atual = parseFloat(input.value) + valorDelta;
-            if (atual < 2.00) atual = 2.00; // Aposta mínima de 2 reais para cima
+            if (atual < 2.00) atual = 2.00; // Mínimo de R$ 2,00 para cima
             input.value = atual.toFixed(2);
         }
 
@@ -1221,7 +1240,6 @@
         }
 
         function clicarGirarOuParar() {
-            let btn = document.getElementById('btnSpinTiger');
             if (!tigerRodando) {
                 iniciarGiroTiger();
             } else {
@@ -1247,7 +1265,6 @@
             tigerRodando = true;
             let btn = document.getElementById('btnSpinTiger');
             btn.innerText = "PARAR 🛑";
-            btn.style.background = "linear-gradient(135deg, #ff4500, #cc3500)";
             document.getElementById('tigerResultadoMsg').innerText = "A girar...";
 
             let cells = document.querySelectorAll('.slot-cell');
@@ -1258,11 +1275,11 @@
 
             intervaloTiger = setInterval(() => {
                 cells.forEach(cell => {
-                    cell.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                    let randImg = symbolsReal[Math.floor(Math.random() * symbolsReal.length)];
+                    cell.innerHTML = `<img src="${randImg}" alt="Símbolo">`;
                 });
             }, velocidade);
 
-            // Se for turbo, para sozinho rapidamente se o usuário não clicar
             if (isTurbo) {
                 setTimeout(() => {
                     if (tigerRodando) pararGiroTiger();
@@ -1278,21 +1295,18 @@
             let cells = document.querySelectorAll('.slot-cell');
             cells.forEach(c => c.classList.remove('spinning'));
 
-            // Definir resultado final aleatório
             let resFinal = [];
             for(let i=0; i<9; i++) {
-                let sym = symbols[Math.floor(Math.random() * symbols.length)];
+                let sym = symbolsReal[Math.floor(Math.random() * symbolsReal.length)];
                 resFinal.push(sym);
-                document.getElementById(`c${i}`).innerText = sym;
+                document.getElementById(`c${i}`).innerHTML = `<img src="${sym}" alt="Símbolo">`;
             }
 
             let apostaVal = parseFloat(document.getElementById('tigerBetInput').value);
             let isDemo = document.getElementById('checkDemo').checked;
             let btn = document.getElementById('btnSpinTiger');
-            btn.innerText = "GIRAR 🎰";
-            btn.style.background = "linear-gradient(135deg, #00ff88, #00cc6a)";
+            btn.innerText = "GIRAR 🐅";
 
-            // Checar vitória simples (linha central ou tigres)
             let ganhou = (resFinal[3] === resFinal[4] && resFinal[4] === resFinal[5]) || (Math.random() > 0.6);
             if (ganhou) {
                 let premio = apostaVal * 5;
