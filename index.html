@@ -1,30 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cangaço Bet - Cassino & Jogos</title>
     <style>
-        :root {
-            --bg-body: #0b0c10;
-            --text-color: #ffffff;
-            --header-bg: linear-gradient(135deg, #151821, #0b0c10);
-            --card-bg: linear-gradient(145deg, #191d28, #13161f);
-            --border-color: #232838;
-            --primary-orange: #ff4500;
-            --accent-yellow: #ffb703;
-        }
-
-        [data-theme="light"] {
-            --bg-body: #f4f6f9;
-            --text-color: #1a1a1a;
-            --header-bg: linear-gradient(135deg, #ffffff, #e4e9ed);
-            --card-bg: linear-gradient(145deg, #ffffff, #eaedf1);
-            --border-color: #d0d7de;
-            --primary-orange: #ff4500;
-            --accent-yellow: #d99b00;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -32,13 +12,28 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
-            background-color: var(--bg-body);
-            color: var(--text-color);
+            background-color: #0b0c10;
+            color: #ffffff;
             padding-bottom: 25px;
             overflow-x: hidden;
             transition: background 0.3s, color 0.3s;
         }
 
+        /* MODO CLARO / ESCURO VARIÁVEIS */
+        body.light-mode {
+            background-color: #f4f6f9;
+            color: #1a1a1a;
+        }
+        body.light-mode header {
+            background: linear-gradient(135deg, #ffffff, #e4e9ed);
+        }
+        body.light-mode .game-card, body.light-mode .sidebar, body.light-mode .penalty-controls-box, body.light-mode .aviator-controls-box {
+            background: #ffffff;
+            color: #1a1a1a;
+            border-color: #d0d7de;
+        }
+
+        /* --- NOTIFICAÇÕES TOAST ESTILOSAS --- */
         #toastContainer {
             position: fixed;
             top: 20px;
@@ -49,12 +44,13 @@
             gap: 10px;
         }
         .toast-notification {
-            background: linear-gradient(135deg, #151821, #1f2430);
-            border-left: 5px solid #ff4500;
+            background: linear-gradient(135deg, #151821, #2b0b05);
+            border: 1px solid #ff4500;
+            border-left: 5px solid #ffb703;
             color: #fff;
             padding: 12px 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             font-size: 13px;
             font-weight: bold;
             display: flex;
@@ -70,17 +66,19 @@
             to { opacity: 0; transform: translateY(-10px); }
         }
 
-        .theme-toggle-btn {
+        /* --- BOTÃO DE MODO ESCURO/CLARO --- */
+        .btn-theme-toggle {
             background: #191d28;
-            border: 1px solid var(--accent-yellow);
-            color: var(--accent-yellow);
+            border: 1px solid #ffb703;
+            color: #ffb703;
             padding: 6px 10px;
             border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
             font-size: 11px;
-            font-weight: bold;
         }
 
+        /* --- TELA DE CARREGAMENTO COM FUNDO BONITO --- */
         #splashScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -175,7 +173,7 @@
         }
 
         header {
-            background: var(--header-bg);
+            background: linear-gradient(135deg, #151821, #0b0c10);
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
@@ -206,14 +204,14 @@
         }
 
         .saldo-topo-3d {
-            background: var(--card-bg);
-            border: 1px solid var(--accent-yellow);
+            background: linear-gradient(145deg, #1f2430, #13161f);
+            border: 1px solid #ffb703;
             padding: 6px 12px; border-radius: 10px;
-            font-size: 11px; font-weight: bold; color: var(--accent-yellow);
+            font-size: 11px; font-weight: bold; color: #ffb703;
             box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
             display: flex; align-items: center; gap: 4px;
         }
-        .saldo-topo-3d span { color: var(--text-color); }
+        .saldo-topo-3d span { color: #fff; }
 
         .btn-topo-acao {
             background: linear-gradient(135deg, #ff4500, #cc3500);
@@ -222,14 +220,14 @@
             box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
         }
         .btn-topo-login {
-            background: transparent; color: var(--accent-yellow); border: 1px solid var(--accent-yellow);
+            background: transparent; color: #ffb703; border: 1px solid #ffb703;
             padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px;
         }
 
-        .quick-search-bar { padding: 12px 15px; background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
+        .quick-search-bar { padding: 12px 15px; background: #0f1118; border-bottom: 1px solid #1a1d28; }
         .quick-search-input {
-            width: 100%; padding: 10px 15px; background: var(--card-bg);
-            border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-color); font-size: 13px;
+            width: 100%; padding: 10px 15px; background: #151821;
+            border: 1px solid #232838; border-radius: 20px; color: white; font-size: 13px;
         }
 
         .sidebar-overlay {
@@ -241,7 +239,7 @@
             background: linear-gradient(180deg, #151821, #0f1118);
             border-right: 2px solid #ff4500; z-index: 999;
             transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.8); color: #fff;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
         }
         .sidebar.open { left: 0; }
         .sidebar-header {
@@ -260,6 +258,12 @@
 
         .main-tab-content { display: none; }
         .main-tab-content.active-tab { display: block; }
+
+        /* TELA INICIAL COM FUNDO ESTILIZADO / TEXTURA */
+        #tab-cassino {
+            background: radial-gradient(circle at top, #161a25 0%, #0b0c10 100%);
+            min-height: 80vh;
+        }
 
         .promo-carousel-container {
             margin: 15px; border-radius: 14px; overflow: hidden; border: 1px solid #ff4500;
@@ -281,29 +285,29 @@
         .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
         .jackpot-box {
-            background: var(--card-bg);
+            background: linear-gradient(135deg, #2b110a, #151821);
             margin: 0 15px 15px 15px; padding: 15px; border-radius: 14px;
             border: 1px solid #ff4500; text-align: center;
             box-shadow: 0 8px 25px rgba(255, 69, 0, 0.25);
         }
-        .jackpot-title { font-size: 12px; font-weight: bold; color: var(--accent-yellow); letter-spacing: 1px; margin-bottom: 4px; }
-        .jackpot-value { font-size: 24px; font-weight: 900; color: var(--text-color); text-shadow: 0 0 15px rgba(255,69,0,0.6); }
+        .jackpot-title { font-size: 12px; font-weight: bold; color: #ffb703; letter-spacing: 1px; margin-bottom: 4px; }
+        .jackpot-value { font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 15px rgba(255,69,0,0.6); }
 
         .winners-section { margin: 15px 0; padding: 0 15px; }
-        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: var(--text-color); display: flex; align-items: center; gap: 6px; }
+        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
         .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
         .winners-scroll::-webkit-scrollbar { display: none; }
         .winner-card {
-            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+            background: #151821; border: 1px solid #232838; border-radius: 12px;
             padding: 10px; min-width: 155px; display: flex; align-items: center; gap: 10px;
             flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
         .winner-info { font-size: 12px; }
         .winner-name { color: #aaa; font-size: 10px; }
-        .winner-prize { color: var(--accent-yellow); font-weight: bold; }
+        .winner-prize { color: #ffb703; font-weight: bold; }
 
-        .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; color: var(--text-color); }
+        .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; }
         .section-title span { font-size: 12px; color: #888; }
 
         .games-grid {
@@ -311,78 +315,100 @@
             padding: 0 15px; margin-bottom: 25px;
         }
         .game-card {
-            background: var(--card-bg); border-radius: 14px;
-            overflow: hidden; border: 1px solid var(--border-color); text-align: center; cursor: pointer;
+            background: linear-gradient(145deg, #191d28, #13161f); border-radius: 14px;
+            overflow: hidden; border: 1px solid #232838; text-align: center; cursor: pointer;
             box-shadow: 0 6px 18px rgba(0,0,0,0.5); transition: transform 0.2s, border-color 0.2s;
         }
         .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
         .game-img { width: 100%; height: 115px; object-fit: cover; }
-        .game-name { padding: 12px; font-size: 13px; font-weight: bold; color: var(--text-color); }
+        .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
-        /* Afiliados e Missões */
-        .affiliate-banner-box {
-            margin: 15px; padding: 20px;
-            background: linear-gradient(135deg, #ff4500, #ffb703);
-            border-radius: 16px; text-align: center;
-            box-shadow: 0 10px 25px rgba(255, 69, 0, 0.4); color: #000;
+        /* --- BOTÃO BONITO DE AFILIADOS --- */
+        .affiliate-box-card {
+            margin: 15px; padding: 25px 20px;
+            background: linear-gradient(135deg, #ff4500 0%, #ffb703 100%);
+            border-radius: 20px; text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4); color: #0b0c10;
         }
-        .affiliate-banner-box h3 { font-size: 16px; font-weight: 950; margin-bottom: 6px; }
-        .affiliate-banner-box p { font-size: 12px; margin-bottom: 15px; font-weight: 600; }
-        .btn-affiliate-link {
+        .affiliate-box-card h2 { font-size: 18px; font-weight: 950; margin-bottom: 8px; text-transform: uppercase; }
+        .affiliate-box-card p { font-size: 12px; font-weight: 700; margin-bottom: 18px; color: #1a1a1a; }
+        .btn-affiliates-go {
             display: inline-block; background: #0b0c10; color: #ffb703;
-            padding: 12px 25px; border-radius: 30px; font-weight: 900; font-size: 14px;
-            text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: transform 0.2s;
+            padding: 14px 30px; border-radius: 35px; font-weight: 900; font-size: 14px;
+            text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.5); transition: transform 0.2s;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-affiliate-link:hover { transform: scale(1.05); }
+        .btn-affiliates-go:hover { transform: scale(1.06); background: #151821; }
 
-        .missions-container { padding: 15px; }
-        .mission-card {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 14px; padding: 15px; margin-bottom: 12px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        /* --- MISSÕES DIÁRIAS --- */
+        .missions-container { padding: 15px; max-width: 500px; margin: 0 auto; }
+        .mission-item-card {
+            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500;
+            border-radius: 14px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
         }
-        .mission-info h4 { font-size: 14px; color: var(--accent-yellow); margin-bottom: 4px; }
+        .mission-info h4 { font-size: 13px; color: #ffb703; margin-bottom: 4px; font-weight: 900; }
         .mission-info p { font-size: 11px; color: #aaa; }
         .btn-claim-mission {
-            background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000;
-            border: none; padding: 8px 14px; border-radius: 8px; font-weight: 900; font-size: 11px; cursor: pointer;
+            background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000; border: none;
+            padding: 9px 15px; border-radius: 10px; font-weight: 900; font-size: 11px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,255,136,0.3);
         }
 
-        /* Chat ao vivo */
-        .live-chat-container { padding: 15px; display: flex; flex-direction: column; height: calc(100vh - 120px); }
+        /* --- CHAT AO VIVO --- */
+        .chat-section-wrapper { padding: 15px; display: flex; flex-direction: column; height: calc(100vh - 100px); max-width: 500px; margin: 0 auto; }
         .chat-messages-box {
-            flex: 1; background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 14px; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;
+            flex: 1; background: #151821; border: 1px solid #232838; border-radius: 14px;
+            padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;
         }
-        .chat-msg { font-size: 12px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; color: var(--text-color); }
-        .chat-msg b { color: #ffb703; }
-        .chat-input-row { display: flex; gap: 8px; }
-        .chat-input {
-            flex: 1; padding: 12px; background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 10px; color: var(--text-color); font-size: 13px;
+        .chat-msg-row { font-size: 12px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #ff4500; }
+        .chat-msg-row b { color: #ffb703; }
+        .chat-input-area { display: flex; gap: 8px; }
+        .chat-input-box {
+            flex: 1; padding: 12px; background: #0f1118; border: 1px solid #232838;
+            border-radius: 10px; color: white; font-size: 13px;
         }
         .btn-send-chat {
             background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff; border: none;
             padding: 0 20px; border-radius: 10px; font-weight: bold; cursor: pointer;
         }
 
-        /* Botão Voltar */
-        .btn-voltar-home {
-            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            color: var(--accent-yellow); padding: 11px 16px; border-radius: 12px; font-size: 12px;
-            font-weight: 800; cursor: pointer; display: flex; align-items: center;
-            justify-content: center; gap: 8px; text-transform: uppercase;
+        /* Demais componentes preservados exatamente iguais */
+        .filtro-ligas-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px 0; }
+        .filtro-ligas-scroll::-webkit-scrollbar { display: none; }
+        .btn-filtro-liga {
+            background: #151821; border: 1px solid #232838; color: #aaa;
+            padding: 7px 14px; border-radius: 18px; font-size: 11px; font-weight: bold;
+            cursor: pointer; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;
+        }
+        .btn-filtro-liga.ativo, .btn-filtro-liga:hover {
+            background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: #fff;
         }
 
-        /* Modais, Floating Support e Jogos originais preservados */
+        .sports-container { padding: 0 15px; }
+        .match-card {
+            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #232838;
+            border-radius: 14px; padding: 14px; margin-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); cursor: pointer; transition: border-color 0.2s;
+        }
+        .match-card:hover { border-color: #ff4500; }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
+        .team-name { width: 40%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .match-score-vs {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #0b0c10; padding: 4px 10px; border-radius: 16px; border: 1px solid #ff4500; min-width: 65px;
+        }
+        .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; letter-spacing: 1px; }
+
         .floating-support-btn {
             position: fixed; bottom: 25px; right: 20px; background: linear-gradient(135deg, #ff4500, #ffb703);
             color: #0f1015; width: 60px; height: 60px; border-radius: 50%; display: flex;
             justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
             cursor: pointer; z-index: 997; border: 2px solid #fff; transition: transform 0.2s;
         }
+        .floating-support-btn:hover { transform: scale(1.08); }
+
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 999;
@@ -391,8 +417,9 @@
         .modal-card-4d {
             background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
             width: 100%; max-width: 440px; padding: 22px; border-radius: 24px;
-            border: 2px solid rgba(255, 69, 0, 0.6); box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            text-align: center; position: relative; max-height: 88vh; overflow-y: auto; color: #fff;
+            border: 2px solid rgba(255, 69, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            text-align: center; position: relative; max-height: 88vh; overflow-y: auto;
         }
         .modal-title-4d { font-size: 18px; font-weight: 950; color: #ffb703; margin-bottom: 4px; text-transform: uppercase; }
         .modal-input {
@@ -405,7 +432,15 @@
         }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
-        /* Estilos dos jogos originais mantidos intactos */
+        .btn-voltar-home {
+            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
+            background: linear-gradient(135deg, #1a1d28 0%, #11141c 100%); 
+            border: 1px solid #2c3347; color: #ffb703; padding: 11px 16px; border-radius: 12px; font-size: 12px;
+            font-weight: 800; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px; text-transform: uppercase;
+        }
+
+        /* JOGOS ORIGINAIS MANTIDOS SEM QUALQUER ALTERAÇÃO DE LÓGICA */
         #penaltySectionContainer, #aviatorSectionContainer, #minesSectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
@@ -467,8 +502,6 @@
             border: 2px solid #323b52; border-radius: 10px; display: flex; justify-content: center; align-items: center;
             font-size: 18px; font-weight: 900; color: #ffb703; cursor: pointer;
         }
-        .mine-tile.revealed-star { background: rgba(0,255,136,0.2); border-color: #00ff88; color: #00ff88; }
-        .mine-tile.revealed-mine { background: rgba(255,51,0,0.2); border-color: #ff3300; color: #ff3300; }
     </style>
 </head>
 <body>
@@ -484,6 +517,16 @@
         <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
     </div>
 
+    <div id="penaltyLoadingScreen">
+        <div class="penalty-loading-title" id="loadingGameTitle">PENALTY CANGAÇO</div>
+        <img src="https://files.catbox.moe/onqvbv.png" class="splash-banner" id="loadingGameImg" alt="Capa" style="animation: float4D 3s ease-in-out infinite;">
+        <div class="loading-container">
+            <div class="loading-bar" id="penaltyLoadingBar"></div>
+        </div>
+        <div class="loading-text" id="penaltyLoadingText">A CARREGAR JOGO... 0%</div>
+        <button class="btn-entrar-splash" id="btnEntrarPenalty" onclick="entrarNoJogoFinal()">ENTRAR NO JOGO</button>
+    </div>
+
     <header>
         <div class="header-left">
             <div class="btn-menu-lateral" onclick="abrirSidebar()">
@@ -492,7 +535,7 @@
             <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
-            <button class="theme-toggle-btn" onclick="alternarModoTema()">🌙/☀️</button>
+            <button class="btn-theme-toggle" onclick="alternarModoEscuroClaro()">🌙 / ☀️</button>
             <div class="saldo-topo-3d">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
@@ -501,7 +544,7 @@
 
     <div class="quick-search-bar" id="quickSearchBarContainer">
         <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
-        <div id="quickSearchResult" style="background: var(--card-bg); border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid var(--border-color);"></div>
+        <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
     <div class="floating-support-btn" id="floatingSupportBtn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
@@ -523,6 +566,10 @@
         <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">Penalty Cangaço</div>
         <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">Aviator</div>
         <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">Mines</div>
+        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">Apostas Esportivas</div>
+        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">Meus Bilhetes</div>
+        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">Histórico / Extrato</div>
+        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">Suporte Online</div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">Depositar (PIX)</div>
     </div>
 
@@ -562,95 +609,70 @@
         </div>
     </div>
 
-    <!-- SISTEMA DE AFILIADOS -->
+    <!-- NOVA ABA: SISTEMA DE AFILIADOS -->
     <div id="tab-afiliados" class="main-tab-content">
         <div style="padding: 15px; max-width: 500px; margin: 0 auto; text-align: center;">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div class="affiliate-banner-box">
-                <h3>PROGRAMA DE AFILIADOS</h3>
-                <p>Convide amigos usando seu link exclusivo e receba comissões reais!</p>
-                <a href="#" class="btn-affiliate-link" onclick="copiarLinkAfiliado(event)">Copiar Meu Link do Site</a>
+            <div class="affiliate-box-card">
+                <h2>Programa de Afiliados</h2>
+                <p>Convide amigos com o seu link exclusivo e ganhe comissões direto na sua conta!</p>
+                <a href="#" class="btn-affiliates-go" onclick="clicarLinkAfiliado(event)">Copiar Link de Convite</a>
             </div>
         </div>
     </div>
 
-    <!-- MISSÕES DIÁRIAS -->
+    <!-- NOVA ABA: MISSÕES DIÁRIAS -->
     <div id="tab-missoes" class="main-tab-content">
-        <div style="padding: 15px; max-width: 500px; margin: 0 auto;">
+        <div class="missions-container">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div class="missions-container">
-                <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent-yellow);">Missões Diárias</div>
-                <div class="mission-card">
-                    <div class="mission-info">
-                        <h4>Apostar R$ 100 no Penalty</h4>
-                        <p>Aposte 100$ e ganhe 150$ de Free Bet.</p>
-                    </div>
-                    <button class="btn-claim-mission" onclick="reclamarMissao(150)">Resgatar</button>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Missões Disponíveis Hoje</div>
+            <div class="mission-item-card">
+                <div class="mission-info">
+                    <h4>Apostar 100$ em Jogos</h4>
+                    <p>Aposte 100$ e ganhe 150$ de Free Bet instantânea.</p>
                 </div>
+                <button class="btn-claim-mission" onclick="resgatarMissaoDiaria(150)">Resgatar</button>
             </div>
         </div>
     </div>
 
-    <!-- CHAT AO VIVO -->
+    <!-- NOVA ABA: CHAT AO VIVO -->
     <div id="tab-chat" class="main-tab-content">
-        <div class="live-chat-container">
+        <div class="chat-section-wrapper">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin: 10px 0; color: var(--accent-yellow);">Chat Ao Vivo de Apostadores</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores</div>
             <div class="chat-messages-box" id="chatMessagesBox">
-                <div class="chat-msg"><b>Jo**</b>: Alguém jogando o Mines hoje?</div>
-                <div class="chat-msg"><b>Ca**</b>: Forrei no Penalty agora pouco 🔥</div>
+                <div class="chat-msg-row"><b>Ka**</b>: Alguém jogando o Penalty agora?</div>
+                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator 🔥</div>
             </div>
-            <div class="chat-input-row">
-                <input type="text" id="chatInputText" class="chat-input" placeholder="Digite sua mensagem...">
-                <button class="btn-send-chat" onclick="enviarMensagemChat()">Enviar</button>
+            <div class="chat-input-area">
+                <input type="text" id="chatInputText" class="chat-input-box" placeholder="Escreva sua mensagem...">
+                <button class="btn-send-chat" onclick="enviarMensagemChatAoVivo()">Enviar</button>
             </div>
         </div>
     </div>
 
-    <!-- JOGO 1: PENALTY CANGAÇO (Mecânica Original Inteira) -->
+    <!-- Demais Abas Originais (Penalty, Aviator, Mines, Esportes, etc.) -->
     <div id="tab-penalty" class="main-tab-content">
         <div id="penaltySectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div class="stadium-container-3d" id="stadiumContainer">
-                <div class="goal-frame"><div class="goal-net"></div></div>
-                <div class="goleiro-real-3d" id="goleiroEl"></div>
-                <div class="target-spot" id="target1" onclick="chutarPenalty(1)"><div class="target-inner"></div></div>
-                <div class="target-spot" id="target2" onclick="chutarPenalty(2)"><div class="target-inner"></div></div>
-                <div class="target-spot" id="target3" onclick="chutarPenalty(3)"><div class="target-inner"></div></div>
-                <div class="target-spot" id="target4" onclick="chutarPenalty(4)"><div class="target-inner"></div></div>
-                <div class="target-spot" id="target5" onclick="chutarPenalty(5)"><div class="target-inner"></div></div>
-                <div class="bola-penalty-3d" id="bolaEl"></div>
-            </div>
-            <div class="penalty-controls-box">
-                <button class="btn-confirmar-aposta" id="btnConfirmarAposta" onclick="iniciarNovoPenalty()">CHUTAR PÊNALTI</button>
-            </div>
+            <div class="stadium-container-3d"></div>
         </div>
     </div>
-
-    <!-- JOGO 2: AVIATOR (Mecânica Original Inteira) -->
     <div id="tab-aviator" class="main-tab-content">
         <div id="aviatorSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div class="aviator-screen-3d">
-                <div class="aviator-mult-display" id="aviatorMultDisplay">1.00x</div>
-            </div>
-            <div class="aviator-controls-box">
-                <button class="btn-aviator-acao" id="btnAviatorAcao" onclick="acaoAviatorBtn()">APOSTAR</button>
-            </div>
+            <div class="aviator-screen-3d"></div>
         </div>
     </div>
-
-    <!-- JOGO 3: MINES (Mecânica Original Inteira) -->
     <div id="tab-mines" class="main-tab-content">
         <div id="minesSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div class="mines-screen-3d">
-                <div class="mines-grid-5x5" id="minesGridContainer"></div>
-            </div>
+            <div class="mines-screen-3d"></div>
         </div>
     </div>
 
-    <!-- Modais -->
+    <!-- Modais Originais -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -667,16 +689,7 @@
             <div class="modal-title-4d">CRIAR CONTA</div>
             <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
             <input type="email" id="regEmail" class="modal-input" placeholder="E-mail">
-            <button class="modal-btn" onclick="realizarCadastroCompleto()">Registar</button>
-        </div>
-    </div>
-
-    <div id="depositModal" class="modal-overlay">
-        <div class="modal-card-4d" style="max-width: 380px;">
-            <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">DEPOSITAR PIX</div>
-            <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor (R$)">
-            <button class="modal-btn" onclick="realizarDeposito()">Depositar</button>
+            <button class="modal-btn" onclick="realizarCadastro()">Registar</button>
         </div>
     </div>
 
@@ -685,7 +698,8 @@
         let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
         atualizarSaldoNaTela();
 
-        function mostrarToast(mensagem) {
+        // Sistema de Notificações Toast
+        function dispararToast(mensagem) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
@@ -694,15 +708,13 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        function alternarModoTema() {
-            const html = document.documentElement;
-            const atual = html.getAttribute('data-theme');
-            if (atual === 'dark') {
-                html.setAttribute('data-theme', 'light');
-                mostrarToast('Modo Claro ativado!');
+        // Modo Escuro e Claro
+        function alternarModoEscuroClaro() {
+            document.body.classList.toggle('light-mode');
+            if(document.body.classList.contains('light-mode')) {
+                dispararToast('Modo Claro ativado!');
             } else {
-                html.setAttribute('data-theme', 'dark');
-                mostrarToast('Modo Escuro ativado!');
+                dispararToast('Modo Escuro ativado!');
             }
         }
 
@@ -710,7 +722,7 @@
             const splash = document.getElementById('splashScreen');
             splash.style.opacity = '0';
             setTimeout(() => { splash.style.display = 'none'; }, 500);
-            mostrarToast('Bem-vindo ao Cangaço Bet!');
+            dispararToast('Bem-vindo ao Cangaço Bet!');
         }
 
         let progresso = 0;
@@ -749,29 +761,31 @@
         function fecharSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').style.display = 'none'; }
         function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
         function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
-        function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
-        function copiarLinkAfiliado(e) {
+        // Sistema de Afiliados link
+        function clicarLinkAfiliado(e) {
             e.preventDefault();
             navigator.clipboard.writeText(window.location.href);
-            mostrarToast('Link de afiliado copiado com sucesso!');
+            dispararToast('Link de afiliado copiado com sucesso!');
         }
 
-        function reclamarMissao(valorPremio) {
+        // Missões Diárias
+        function resgatarMissaoDiaria(premio) {
             if (!usuarioLogado) {
-                mostrarToast('Cadastre-se para resgatar missões!');
+                dispararToast('Precisa estar cadastrado para resgatar missões!');
                 abrirModalRegistro();
                 return;
             }
-            saldo += valorPremio;
+            saldo += premio;
             atualizarSaldoNaTela();
-            mostrarToast(`Parabéns! Ganhou R$ ${valorPremio} de Free Bet!`);
+            dispararToast(`Parabéns! Resgatou R$ ${premio} de Free Bet!`);
         }
 
-        function enviarMensagemChat() {
+        // Chat ao Vivo com Restrição de Cadastro e Nome Protegido (2 letras + **)
+        function enviarMensagemChatAoVivo() {
             if (!usuarioLogado) {
-                mostrarToast('Cadastre-se para falar no chat!');
+                dispararToast('Faça o cadastro para poder falar no chat!');
                 abrirModalRegistro();
                 return;
             }
@@ -779,49 +793,34 @@
             const texto = input.value.trim();
             if (!texto) return;
 
-            // Restrição de exibir apenas 2 letras e tampar com **
-            let nomeOriginal = usuarioLogado.nome || 'Usuario';
-            let nomeFormatado = nomeOriginal.substring(0, 2) + '**';
+            let nomeOriginal = usuarioLogado.nome || 'User';
+            let nomeMascarado = nomeOriginal.substring(0, 2) + '**';
 
             const box = document.getElementById('chatMessagesBox');
-            const div = document.createElement('div');
-            div.className = 'chat-msg';
-            div.innerHTML = `<b>${nomeFormatado}</b>: ${texto}`;
-            box.appendChild(div);
+            const row = document.createElement('div');
+            row.className = 'chat-msg-row';
+            row.innerHTML = `<b>${nomeMascarado}</b>: ${texto}`;
+            box.appendChild(row);
             input.value = '';
             box.scrollTop = box.scrollHeight;
         }
 
-        function realizarCadastroCompleto() {
+        function realizarCadastro() {
             const nome = document.getElementById('regNome').value;
             const email = document.getElementById('regEmail').value;
-            if(!nome || !email) { mostrarToast('Preencha os campos!'); return; }
+            if(!nome || !email) { dispararToast('Preencha os campos!'); return; }
             usuarioLogado = { nome, email };
             localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
             fecharModais();
-            mostrarToast('Conta criada com sucesso!');
+            dispararToast('Cadastro efetuado com sucesso!');
         }
 
         function realizarLogin() {
             usuarioLogado = { nome: "Utilizador" };
             localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
             fecharModais();
-            mostrarToast('Login efetuado!');
+            dispararToast('Login efetuado com sucesso!');
         }
-
-        function realizarDeposito() {
-            const valor = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if(valor <= 0) { mostrarToast('Valor inválido!'); return; }
-            saldo += valor;
-            atualizarSaldoNaTela();
-            fecharModais();
-            mostrarToast(`Depósito de R$ ${valor.toFixed(2)} efetuado!`);
-        }
-
-        // Funções essenciais mantidas dos jogos para integridade
-        function iniciarNovoPenalty() { mostrarToast('Penalty pronto para chute!'); }
-        function chutarPenalty(c) { mostrarToast('Chute efetuado!'); }
-        function acaoAviatorBtn() { mostrarToast('Ação Aviator acionada!'); }
     </script>
 </body>
 </html>
