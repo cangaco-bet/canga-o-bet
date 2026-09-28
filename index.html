@@ -31,18 +31,18 @@
             transition: opacity 0.5s ease;
         }
         .splash-banner {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #ff4500;
-            box-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
+            box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
             animation: float4D 3s ease-in-out infinite;
             margin-bottom: 25px;
         }
         @keyframes float4D {
             0% { transform: translateY(0px) rotate(0deg) scale(1); }
-            50% { transform: translateY(-12px) rotate(3deg) scale(1.05); filter: drop-shadow(0 15px 25px rgba(255,183,3,0.5)); }
+            50% { transform: translateY(-15px) rotate(4deg) scale(1.06); filter: drop-shadow(0 20px 30px rgba(255,183,3,0.6)); }
             100% { transform: translateY(0px) rotate(0deg) scale(1); }
         }
         .loading-container {
@@ -131,15 +131,15 @@
             border-radius: 2px;
         }
 
-        /* Logotipo Pequeno com a Imagem Fornecida */
+        /* Logotipo Pequeno com o Banner Solicitado */
         .logo-img-pequena {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             object-fit: cover;
             border: 1.5px solid #ffb703;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 183, 3, 0.5);
+            box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
         }
 
         .saldo-topo-3d {
@@ -461,9 +461,9 @@
 </head>
 <body>
 
-    <!-- 🌟 TELA DE CARREGAMENTO / SPLASH 4D -->
+    <!-- 🌟 TELA DE CARREGAMENTO / SPLASH 4D COM O NOVO BANNER -->
     <div id="splashScreen">
-        <img src="https://files.catbox.moe/75mifn.jpeg" class="splash-banner" alt="Banner 4D">
+        <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
         <div class="loading-container">
             <div class="loading-bar" id="loadingBar"></div>
         </div>
@@ -480,8 +480,8 @@
                 <span></span>
                 <span></span>
             </div>
-            <!-- Logotipo substituído pelo banner fornecido pequeno (sem texto Cangaço Bet e sem emoji de fogo)[span_1](start_span)[span_1](end_span) -->
-            <img src="https://files.catbox.moe/75mifn.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
+            <!-- Logotipo pequeno com o banner fornecido[span_1](start_span)[span_1](end_span) -->
+            <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
             <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
