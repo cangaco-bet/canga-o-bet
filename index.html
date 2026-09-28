@@ -261,6 +261,32 @@
         .game-img { width: 100%; height: 110px; object-fit: cover; }
         .game-name { padding: 10px; font-size: 14px; font-weight: 500; }
 
+        /* Filtro de Ligas */
+        .filtro-ligas-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 5px 0 15px 0;
+        }
+        .filtro-ligas-scroll::-webkit-scrollbar { display: none; }
+        .btn-filtro-liga {
+            background: #1e2029;
+            border: 1px solid #2a2d3d;
+            color: #aaa;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .btn-filtro-liga.ativo, .btn-filtro-liga:hover {
+            background: #ff4500;
+            border-color: #ffb703;
+            color: #fff;
+        }
+
         .sports-container { padding: 0 15px; }
         .match-card { background: #1a1c23; border: 1px solid #2a2d3d; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
         .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
@@ -280,8 +306,8 @@
         .bet-slip-input { width: 100%; padding: 8px; background: #13141b; border: 1px solid #363a4f; color: white; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
         .btn-place-bet { width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: 900; font-size: 13px; cursor: pointer; }
 
-        .bilhetes-container { padding: 15px; }
-        .bilhete-impresso {
+        .bilhetes-container, .extrato-container { padding: 15px; }
+        .bilhete-impresso, .extrato-item {
             background: #161821;
             border: 1px solid #ff4500;
             border-radius: 10px;
@@ -299,7 +325,7 @@
             padding-bottom: 6px;
             margin-bottom: 8px;
         }
-        .bilhete-detalhes {
+        .bilhete-detalhes, .extrato-detalhes {
             font-size: 13px;
             color: #ddd;
             line-height: 1.5;
@@ -399,6 +425,9 @@
         <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">
             📋 Meus Bilhetes
         </div>
+        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">
+            📜 Histórico / Extrato
+        </div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
             💰 Depositar (PIX)
         </div>
@@ -491,10 +520,16 @@
         </div>
     </div>
 
-    <!-- ABA 2: ESPORTES -->
+    <!-- ABA 2: ESPORTES COM FILTRO DE LIGAS -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Ativas / Futuras)</div>
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Apostas Esportivas</div>
+            
+            <!-- Barra de Filtros de Ligas da API -->
+            <div class="filtro-ligas-scroll" id="filtroLigasContainer">
+                <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
+            </div>
+
             <div id="lista-partidas-api">
                 <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas válidas...</p>
             </div>
@@ -507,6 +542,16 @@
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes</div>
             <div id="listaMeusBilhetesImpressos">
                 <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES (EXTRATO) -->
+    <div id="tab-extrato" class="main-tab-content">
+        <div class="extrato-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📜 Histórico de Transações</div>
+            <div id="listaExtratoTransacoes">
+                <p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>
             </div>
         </div>
     </div>
@@ -552,65 +597,48 @@
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
+        
         let apostaSelecionada = null;
         let oddAtual = 0;
         let horaPartidaSelecionada = "";
+        let ligaPartidaSelecionada = "";
         let saldo = 1000.00;
         
         let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
+        let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
+        let listaGlobalPartidas = [];
+        let ligaFiltroAtual = 'TODAS';
 
-        function salvarBilhetesNoStorage() {
+        function salvarDadosStorage() {
             localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
+            localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
         }
 
         function atualizarSaldoNaTela() {
             document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
         }
 
+        function registarTransacao(tipo, descricao, valor) {
+            const dataHora = new Date().toLocaleString('pt-BR');
+            historicoTransacoes.unshift({
+                tipo: tipo, // 'deposito', 'aposta', 'premio', 'cassino_perca', 'cassino_ganho'
+                descricao: descricao,
+                valor: valor.toFixed(2),
+                data: dataHora
+            });
+            salvarDadosStorage();
+        }
+
         const traducoesTimes = {
             "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Nápoles", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
         };
 
-        // Mapeamento oficial com emblemas e bandeiras precisas
         const bandeirasTimes = {
-            "Singapore": "https://flagcdn.com/w40/sg.png",
-            "Bangladesh": "https://flagcdn.com/w40/bd.png",
-            "Japan": "https://flagcdn.com/w40/jp.png",
-            "Venezuela": "https://flagcdn.com/w40/ve.png",
-            "South Korea": "https://flagcdn.com/w40/kr.png",
-            "Uruguay": "https://flagcdn.com/w40/uy.png",
-            "Tajikistan": "https://flagcdn.com/w40/tj.png",
-            "Palestine": "https://flagcdn.com/w40/ps.png",
-            "Tensung": "https://upload.wikimedia.org/wikipedia/commons/8/84/Default_free_icon.png",
-            "RTC": "https://upload.wikimedia.org/wikipedia/commons/8/84/Default_free_icon.png",
-            "Polissya II": "https://upload.wikimedia.org/wikipedia/commons/9/91/FC_Polissya_Zhytomyr_Logo.svg",
-            "Kolos Kovalivka II": "https://upload.wikimedia.org/wikipedia/commons/9/98/FC_Kolos_Kovalivka_logo.svg",
-            "Brasil": "https://flagcdn.com/w40/br.png",
-            "Flamengo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/CR_Flamengo_shield.svg",
-            "Palmeiras": "https://upload.wikimedia.org/wikipedia/commons/1/10/SE_Palmeiras_logo_2020.svg",
-            "São Paulo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sao_Paulo_Futebol_Clube_%281930%29.svg",
-            "Corinthians": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Sport_Club_Corinthians_Paulista.svg",
-            "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
-            "Barcelona": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-            "Manchester City": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
-            "Manchester United": "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
-            "Arsenal": "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
-            "Chelsea": "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg",
-            "Liverpool": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
-            "Tottenham": "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg",
-            "Juventus": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg",
-            "Milan": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg",
-            "Inter de Milão": "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg",
-            "Bayern de Munique": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282002%29.svg",
-            "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg",
-            "Benfica": "https://upload.wikimedia.org/wikipedia/en/a/a2/SL_Benfica_logo.svg",
-            "Porto": "https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto_%28shield%29.svg",
-            "Sporting": "https://upload.wikimedia.org/wikipedia/en/e/e1/Sporting_CP_restyling_2024.svg"
+            "Singapore": "https://flagcdn.com/w40/sg.png", "Bangladesh": "https://flagcdn.com/w40/bd.png", "Japan": "https://flagcdn.com/w40/jp.png", "Venezuela": "https://flagcdn.com/w40/ve.png", "South Korea": "https://flagcdn.com/w40/kr.png", "Uruguay": "https://flagcdn.com/w40/uy.png", "Tajikistan": "https://flagcdn.com/w40/tj.png", "Palestine": "https://flagcdn.com/w40/ps.png",
+            "Flamengo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/CR_Flamengo_shield.svg", "Palmeiras": "https://upload.wikimedia.org/wikipedia/commons/1/10/SE_Palmeiras_logo_2020.svg", "São Paulo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sao_Paulo_Futebol_Clube_%281930%29.svg", "Corinthians": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Sport_Club_Corinthians_Paulista.svg", "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg", "Barcelona": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg", "Manchester City": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg", "Manchester United": "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg", "Arsenal": "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg", "Chelsea": "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg", "Liverpool": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg", "Tottenham": "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg", "Juventus": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", "Milan": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", "Inter de Milão": "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg", "Bayern de Munique": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282002%29.svg", "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg", "Benfica": "https://upload.wikimedia.org/wikipedia/en/a/a2/SL_Benfica_logo.svg", "Porto": "https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto_%28shield%29.svg", "Sporting": "https://upload.wikimedia.org/wikipedia/en/e/e1/Sporting_CP_restyling_2024.svg"
         };
 
-        function obterBandeira(nomeTime) {
-            return bandeirasTimes[nomeTime] || "https://flagcdn.com/w40/un.png";
-        }
+        function obterBandeira(nomeTime) { return bandeirasTimes[nomeTime] || "https://flagcdn.com/w40/un.png"; }
 
         const traducoesLigas = {
             "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A", "FIFA ASEAN CUP": "FIFA ASEAN CUP", "FRIENDLIES": "AMISTOSOS INTERNACIONAIS", "PERSHA LIGA": "PERSHA LIGA"
@@ -623,18 +651,13 @@
             if (!utcString) return "";
             try {
                 let isoFormat = utcString;
-                if (!isoFormat.endsWith('Z') && !isoFormat.includes('+') && !isoFormat.includes('-')) {
-                    isoFormat += 'Z';
-                }
+                if (!isoFormat.endsWith('Z') && !isoFormat.includes('+') && !isoFormat.includes('-')) { isoFormat += 'Z'; }
                 let data = new Date(isoFormat);
                 if (isNaN(data.getTime())) { return utcString.substring(0, 5); }
                 return data.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
-            } catch (e) {
-                return utcString.substring(11, 16) || "";
-            }
+            } catch (e) { return utcString.substring(11, 16) || ""; }
         }
 
-        // Gera odds reais dinâmicas e balanceadas com base no nome das equipas
         function gerarOddsReais(casa, fora) {
             let seed = (casa.length + fora.length) * 7;
             let odd1 = (1.45 + (seed % 17) / 10).toFixed(2);
@@ -666,30 +689,29 @@
             } else if (aba === 'bilhetes') {
                 document.getElementById('tab-bilhetes').classList.add('active-tab');
                 renderizarBilhetesNaTela();
+            } else if (aba === 'extrato') {
+                document.getElementById('tab-extrato').classList.add('active-tab');
+                renderizarExtratoNaTela();
             }
         }
 
         function jogarCassino(nomeJogo, custoAposta) {
-            audio.pause(); 
-            audio.currentTime = 0; 
-            if (saldo < custoAposta) {
-                alert("Saldo insuficiente para jogar! Faça um depósito.");
-                return;
-            }
+            audio.pause(); audio.currentTime = 0; 
+            if (saldo < custoAposta) { alert("Saldo insuficiente para jogar! Faça um depósito."); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
             
             let ganhou = Math.random() >= 0.5;
-            let mensagem = "";
             if (ganhou) {
                 let premio = custoAposta * 2;
                 saldo += premio;
                 atualizarSaldoNaTela();
-                mensagem = `🎉 Parabéns! Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`;
+                registarTransacao('cassino_ganho', `Prêmio no Cassino (${nomeJogo})`, premio);
+                alert(`🎉 Parabéns! Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
             } else {
-                mensagem = `❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`;
+                registarTransacao('cassino_perca', `Aposta no Cassino (${nomeJogo})`, -custoAposta);
+                alert(`❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`);
             }
-            alert(mensagem);
         }
 
         function realizarRegistro() {
@@ -700,24 +722,19 @@
             const nascimento = document.getElementById('regNascimento').value;
             const senha = document.getElementById('regSenha').value;
 
-            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
-                alert('Por favor, preencha todos os campos do registo!');
-                return;
-            }
+            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) { alert('Por favor, preencha todos os campos!'); return; }
             fecharModais();
-            alert(`✅ Conta criada com sucesso para ${nome} (${email})! Bem-vindo ao Cangaço Bet.`);
+            alert(`✅ Conta criada com sucesso para ${nome}! Bem-vindo ao Cangaço Bet.`);
         }
 
         function realizarDeposito() {
             const valorDep = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if (valorDep <= 0) {
-                alert("Insira um valor de depósito válido!");
-                return;
-            }
+            if (valorDep <= 0) { alert("Insira um valor válido!"); return; }
             saldo += valorDep;
             atualizarSaldoNaTela();
+            registarTransacao('deposito', 'Depósito via Pix', valorDep);
             fecharModais();
-            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado com sucesso via Pix!`);
+            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado com sucesso!`);
         }
 
         function pesquisaGeral() {
@@ -729,59 +746,82 @@
             const itens = [
                 { nome: '🎰 Cassino: Fortune Tiger', tipo: 'cassino' },
                 { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
-                { nome: '🎰 Cassino: Mines', tipo: 'cassino' },
-                { nome: '🎰 Cassino: Gates of Olympus', tipo: 'cassino' },
                 { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
-                { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' }
+                { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' },
+                { nome: '📜 Histórico / Extrato', tipo: 'extrato' }
             ];
 
             const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
             res.forEach(r => {
                 const div = document.createElement('div');
-                div.style.padding = '8px';
-                div.style.cursor = 'pointer';
-                div.style.borderBottom = '1px solid #2a2d3d';
+                div.style.padding = '8px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #2a2d3d';
                 div.innerText = r.nome;
-                div.onclick = () => {
-                    mudarAba(r.tipo);
-                    box.innerHTML = '';
-                    document.getElementById('quickSearchInput').value = '';
-                };
+                div.onclick = () => { mudarAba(r.tipo); box.innerHTML = ''; document.getElementById('quickSearchInput').value = ''; };
                 box.appendChild(div);
             });
         }
 
-        function renderizarPartidasNaTela(listaPartidas, container) {
+        function atualizarBotoesFiltroLigas(partidas) {
+            const containerFiltro = document.getElementById('filtroLigasContainer');
+            let ligasUnicas = ['TODAS'];
+            partidas.forEach(p => { if (!ligasUnicas.includes(p.liga)) ligasUnicas.push(p.liga); });
+
+            let html = `<button class="btn-filtro-liga ${ligaFiltroAtual === 'TODAS' ? 'ativo' : ''}" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>`;
+            ligasUnicas.forEach(l => {
+                if (l !== 'TODAS') {
+                    html += `<button class="btn-filtro-liga ${ligaFiltroAtual === l ? 'ativo' : ''}" onclick="filtrarLiga('${l}', this)">${l}</button>`;
+                }
+            });
+            containerFiltro.innerHTML = html;
+        }
+
+        function filtrarLiga(nomeLiga, elemento) {
+            ligaFiltroAtual = nomeLiga;
+            document.querySelectorAll('.btn-filtro-liga').forEach(b => b.classList.remove('ativo'));
+            elemento.classList.add('ativo');
+            renderizarPartidasNaTela(listaGlobalPartidas);
+        }
+
+        function renderizarPartidasNaTela(partidas) {
+            const container = document.getElementById('lista-partidas-api');
             container.innerHTML = '';
-            listaPartidas.slice(0, 15).forEach(match => {
+
+            let partidasFiltradas = partidas;
+            if (ligaFiltroAtual !== 'TODAS') {
+                partidasFiltradas = partidas.filter(p => p.liga === ligaFiltroAtual);
+            }
+
+            if (partidasFiltradas.length === 0) {
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida encontrada para esta liga.</p>`;
+                return;
+            }
+
+            partidasFiltradas.slice(0, 15).forEach(match => {
                 const casa = match.casa;
                 const fora = match.fora;
                 const liga = match.liga;
                 const statusHora = match.statusHora;
                 const odds = gerarOddsReais(casa, fora);
 
-                const bandeiraCasa = obterBandeira(casa);
-                const bandeiraFora = obterBandeira(fora);
-
                 const card = document.createElement('div');
                 card.className = 'match-card';
                 card.innerHTML = `
                     <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
                     <div class="match-teams">
-                        <span class="team-name"><img src="${bandeiraCasa}" alt=""> ${casa}</span>
+                        <span class="team-name"><img src="${obterBandeira(casa)}" alt=""> ${casa}</span>
                         <span class="match-vs">VS</span>
-                        <span class="team-name"><img src="${bandeiraFora}" alt=""> ${fora}</span>
+                        <span class="team-name"><img src="${obterBandeira(fora)}" alt=""> ${fora}</span>
                     </div>
                     <div class="odds-grid">
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', ${odds.casa}, '${statusHora}', this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', ${odds.casa}, '${statusHora}', '${liga}', this)">
                             <span class="odd-label">1 (Casa)</span>
                             <span class="odd-value">${odds.casa}</span>
                         </div>
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', ${odds.empate}, '${statusHora}', this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', ${odds.empate}, '${statusHora}', '${liga}', this)">
                             <span class="odd-label">X (Empate)</span>
                             <span class="odd-value">${odds.empate}</span>
                         </div>
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', ${odds.fora}, '${statusHora}', this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', ${odds.fora}, '${statusHora}', '${liga}', this)">
                             <span class="odd-label">2 (Fora)</span>
                             <span class="odd-value">${odds.fora}</span>
                         </div>
@@ -794,7 +834,7 @@
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas válidas...</p>`;
-            let listaFormatada = [];
+            listaGlobalPartidas = [];
 
             try {
                 const hoje = new Date().toISOString().split('T')[0];
@@ -805,68 +845,42 @@
 
                 if (dados.response && dados.response.length > 0) {
                     const statusExcluidos = ['FT', 'AET', 'PEN', 'PST', 'CANC', 'ABD', 'AWD', 'WO'];
-                    const partidasAtivas = dados.response.filter(match => !statusExcluidos.includes(match.fixture.status.short));
-
-                    partidasAtivas.forEach(match => {
-                        const statusCurto = match.fixture.status.short;
-                        let statusHora = "";
-                        if (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H' || statusCurto === 'HT') {
-                            statusHora = `AO VIVO (${match.fixture.status.elapsed || 0}')`;
-                        } else {
-                            statusHora = converterParaHorarioBrasilia(match.fixture.date);
-                        }
-
-                        listaFormatada.push({
-                            casa: traduzirTime(match.teams.home.name),
-                            fora: traduzirTime(match.teams.away.name),
-                            liga: traduzirLiga(match.league.name),
-                            statusHora: statusHora
-                        });
+                    dados.response.filter(m => !statusExcluidos.includes(m.fixture.status.short)).forEach(match => {
+                        const s = match.fixture.status.short;
+                        let statusHora = (s === 'LIVE' || s === '1H' || s === '2H' || s === 'HT') ? `AO VIVO (${match.fixture.status.elapsed || 0}')` : converterParaHorarioBrasilia(match.fixture.date);
+                        listaGlobalPartidas.push({ casa: traduzirTime(match.teams.home.name), fora: traduzirTime(match.teams.away.name), liga: traduzirLiga(match.league.name), statusHora: statusHora });
                     });
                 }
-            } catch (erro) { console.log("Erro API 1"); }
+            } catch (e) { console.log("Erro API 1"); }
 
             try {
-                const resposta2 = await fetch(`https://api.football-data.org/v4/matches`, {
-                    headers: { "X-Auth-Token": footballDataApiKey }
-                });
+                const resposta2 = await fetch(`https://api.football-data.org/v4/matches`, { headers: { "X-Auth-Token": footballDataApiKey } });
                 const dados2 = await resposta2.json();
 
                 if (dados2.matches && dados2.matches.length > 0) {
                     const statusExcluidosFd = ['FINISHED', 'POSTPONED', 'CANCELED', 'SUSPENDED', 'AWARDED'];
-                    const partidasAtivasFd = dados2.matches.filter(match => !statusExcluidosFd.includes(match.status));
-
-                    partidasAtivasFd.forEach(match => {
-                        let statusHora = "";
-                        if (match.status === 'IN_PLAY' || match.status === 'PAUSED') {
-                            statusHora = `AO VIVO`;
-                        } else {
-                            statusHora = converterParaHorarioBrasilia(match.utcDate);
-                        }
-
-                        listaFormatada.push({
-                            casa: traduzirTime(match.homeTeam.name),
-                            fora: traduzirTime(match.awayTeam.name),
-                            liga: traduzirLiga(match.competition.name),
-                            statusHora: statusHora
-                        });
+                    dados2.matches.filter(m => !statusExcluidosFd.includes(m.status)).forEach(match => {
+                        let statusHora = (match.status === 'IN_PLAY' || match.status === 'PAUSED') ? `AO VIVO` : converterParaHorarioBrasilia(match.utcDate);
+                        listaGlobalPartidas.push({ casa: traduzirTime(match.homeTeam.name), fora: traduzirTime(match.awayTeam.name), liga: traduzirLiga(match.competition.name), statusHora: statusHora });
                     });
                 }
-            } catch (erro) { console.log("Erro API 2"); }
+            } catch (e) { console.log("Erro API 2"); }
 
-            if (listaFormatada.length > 0) {
-                renderizarPartidasNaTela(listaFormatada, container);
+            if (listaGlobalPartidas.length > 0) {
+                atualizarBotoesFiltroLigas(listaGlobalPartidas);
+                renderizarPartidasNaTela(listaGlobalPartidas);
             } else {
                 container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento.</p>`;
             }
         }
 
-        function selecionarAposta(jogoOdd, odd, horaMatch, elemento) {
+        function selecionarAposta(jogoOdd, odd, horaMatch, ligaMatch, elemento) {
             document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
             elemento.classList.add('selected');
             apostaSelecionada = jogoOdd;
             oddAtual = odd;
             horaPartidaSelecionada = horaMatch;
+            ligaPartidaSelecionada = ligaMatch;
             document.getElementById('betSelectionInfo').innerText = `Seleção: ${jogoOdd} (Odd: ${odd})`;
             document.getElementById('betSlip').style.display = 'block';
             atualizarRetornoPotencial();
@@ -888,28 +902,21 @@
         function confirmarApostaEsportiva() {
             let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
             if (valor <= 0) { alert('Insira um valor válido!'); return; }
-            if (saldo < valor) { alert('Saldo insuficiente para realizar esta aposta!'); return; }
+            if (saldo < valor) { alert('Saldo insuficiente!'); return; }
 
             saldo -= valor;
             atualizarSaldoNaTela();
+            registarTransacao('aposta', `Aposta Esportiva (${apostaSelecionada})`, -valor);
 
             let retorno = (valor * oddAtual).toFixed(2);
-            
-            let novoBilhete = {
-                selecao: apostaSelecionada,
-                valor: valor.toFixed(2),
-                retorno: retorno,
-                hora: horaPartidaSelecionada,
-                status: "⏳ Aguardando Resultado / Em Andamento",
-                cor: "#ffb703"
-            };
+            let novoBilhete = { selecao: apostaSelecionada, valor: valor.toFixed(2), retorno: retorno, hora: horaPartidaSelecionada, liga: ligaPartidaSelecionada, status: "⏳ Aguardando Resultado", cor: "#ffb703" };
 
             meusBilhetesSalvos.push(novoBilhete);
-            salvarBilhetesNoStorage();
+            salvarDadosStorage();
             let indexBilhete = meusBilhetesSalvos.length - 1;
 
             fecharBilhete();
-            alert(`✅ Aposta confirmada! Valor: R$ ${valor.toFixed(2)} | Retorno Previsto: R$ ${retorno}. O bilhete foi guardado na aba "Meus Bilhetes".`);
+            alert(`✅ Aposta confirmada! Valor: R$ ${valor.toFixed(2)} | Retorno: R$ ${retorno}.`);
 
             setTimeout(() => {
                 let venceu = Math.random() >= 0.5;
@@ -918,37 +925,51 @@
                     meusBilhetesSalvos[indexBilhete].cor = "#00ff88";
                     saldo += parseFloat(retorno);
                     atualizarSaldoNaTela();
+                    registarTransacao('premio', `Prêmio Aposta Esportiva (${apostaSelecionada})`, parseFloat(retorno));
                 } else {
                     meusBilhetesSalvos[indexBilhete].status = "Perdeu ❌";
                     meusBilhetesSalvos[indexBilhete].cor = "#ff4500";
                 }
-                salvarBilhetesNoStorage();
+                salvarDadosStorage();
             }, 15000);
         }
 
         function renderizarBilhetesNaTela() {
             const container = document.getElementById('listaMeusBilhetesImpressos');
-            if (meusBilhetesSalvos.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`;
-                return;
-            }
+            if (meusBilhetesSalvos.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`; return; }
 
             let html = '';
             meusBilhetesSalvos.forEach((b, idx) => {
                 html += `
                     <div class="bilhete-impresso">
-                        <div class="bilhete-header">
-                            <span>COMPROVATIVO DE APOSTA #${idx + 1}</span>
-                            <span>Cangaço Bet</span>
-                        </div>
+                        <div class="bilhete-header"><span>COMPROVATIVO DE APOSTA #${idx + 1}</span><span>${b.liga || 'Cangaço Bet'}</span></div>
                         <div class="bilhete-detalhes">
                             <div><b>Seleção:</b> ${b.selecao}</div>
-                            <div><b>Horário da Partida:</b> ${b.hora}</div>
-                            <div><b>Valor Apostado:</b> R$ ${b.valor}</div>
-                            <div><b>Retorno Possível:</b> R$ ${b.retorno}</div>
+                            <div><b>Horário:</b> ${b.hora}</div>
+                            <div><b>Apostado:</b> R$ ${b.valor} | <b>Retorno:</b> R$ ${b.retorno}</div>
                         </div>
-                        <div class="bilhete-status" style="color: ${b.cor};">
-                            Estado: ${b.status}
+                        <div class="bilhete-status" style="color: ${b.cor};">Estado: ${b.status}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderizarExtratoNaTela() {
+            const container = document.getElementById('listaExtratoTransacoes');
+            if (historicoTransacoes.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>`; return; }
+
+            let html = '';
+            historicoTransacoes.forEach(t => {
+                let corValor = (t.tipo === 'deposito' || t.tipo === 'premio' || t.tipo === 'cassino_ganho') ? '#00ff88' : '#ff4500';
+                let sinal = (t.tipo === 'deposito' || t.tipo === 'premio' || t.tipo === 'cassino_ganho') ? '+' : '-';
+                html += `
+                    <div class="extrato-item">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #ffb703; margin-bottom: 4px;">
+                            <span>${t.descricao}</span><span>${t.data}</span>
+                        </div>
+                        <div style="font-size: 14px; font-weight: bold; color: ${corValor};">
+                            ${sinal} R$ ${Math.abs(t.valor).toFixed(2)}
                         </div>
                     </div>
                 `;
