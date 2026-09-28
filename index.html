@@ -365,7 +365,7 @@
             transition: border-color 0.2s;
         }
         .match-card:hover { border-color: #ff4500; }
-        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; align-items: center; }
         .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
         .team-name { width: 40%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .team-name img { width: 22px; height: 16px; object-fit: contain; border-radius: 2px; }
@@ -863,59 +863,102 @@
             salvarDadosStorage();
         }
 
+        // Mapeamento em português para times e seleções nacionais
         const traducoesTimes = {
-            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Nápoles", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
+            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro",
+            "Brazil": "Brasil", "Argentina": "Argentina", "France": "França", "Germany": "Alemanha", "England": "Inglaterra", "Spain": "Espanha", "Italy": "Itália", "Portugal": "Portugal", "Netherlands": "Holanda", "Uruguay": "Uruguai", "Colombia": "Colômbia", "Chile": "Chile", "Peru": "Peru", "Ecuador": "Equador", "Paraguay": "Paraguai", "Venezuela": "Venezuela", "Bolivia": "Bolívia", "Mexico": "México", "United States": "Estados Unidos", "Japan": "Japão", "South Korea": "Coreia do Sul", "Morocco": "Marrocos", "Croatia": "Croácia", "Belgium": "Bélgica"
         };
 
+        // Escudos oficiais de clubes e bandeiras de seleções nacionais
         const bandeirasTimes = {
-            "Flamengo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/CR_Flamengo_shield.svg",
-            "Palmeiras": "https://upload.wikimedia.org/wikipedia/commons/1/10/SE_Palmeiras_logo_2020.svg",
-            "São Paulo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sao_Paulo_Futebol_Clube_%281930%29.svg",
-            "Corinthians": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Sport_Club_Corinthians_Paulista.svg",
-            "Fluminense": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Fluminense_FC_escudo.svg",
-            "Botafogo": "https://upload.wikimedia.org/wikipedia/commons/5/52/Botafogo_FR_%28logo%29.svg",
-            "Vasco da Gama": "https://upload.wikimedia.org/wikipedia/commons/a/ac/CRVascodaGama.svg",
-            "Grêmio": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Gremio_logo.svg",
-            "Internacional": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Sport_Club_Internacional_logo.svg",
-            "Atlético Mineiro": "https://upload.wikimedia.org/wikipedia/commons/2/27/Atletico_mineiro_galo.svg",
-            "Cruzeiro": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Cruzeiro_Esporte_Clube_%28logo%29.svg",
-            "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
-            "Barcelona": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-            "Atlético de Madrid": "https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2024_logo.svg",
-            "Manchester City": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
-            "Manchester United": "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
-            "Arsenal": "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
-            "Chelsea": "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg",
-            "Liverpool": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
-            "Tottenham": "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg",
-            "Juventus": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg",
-            "Milan": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg",
-            "Inter de Milão": "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg",
-            "Roma": "https://upload.wikimedia.org/wikipedia/commons/f/f7/AS_Roma_Logo_2017.svg",
-            "Napoli": "https://upload.wikimedia.org/wikipedia/commons/2/2d/SSC_Napoli_Logo_%282022%29.svg",
-            "Bayern de Munique": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282002%29.svg",
-            "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg",
-            "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg",
-            "Benfica": "https://upload.wikimedia.org/wikipedia/commons/3/3a/SL_Benfica_logo.svg",
-            "Porto": "https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto_%28shield%29.svg",
-            "Sporting": "https://upload.wikimedia.org/wikipedia/en/e/e1/Sporting_CP_restyling_2024.svg",
-            "Brazil": "https://flagcdn.com/w40/br.png", "Brasil": "https://flagcdn.com/w40/br.png",
+            "Flamengo": "https://media.api-sports.io/football/teams/127.png",
+            "Palmeiras": "https://media.api-sports.io/football/teams/121.png",
+            "São Paulo": "https://media.api-sports.io/football/teams/126.png",
+            "Corinthians": "https://media.api-sports.io/football/teams/131.png",
+            "Fluminense": "https://media.api-sports.io/football/teams/124.png",
+            "Botafogo": "https://media.api-sports.io/football/teams/120.png",
+            "Vasco da Gama": "https://media.api-sports.io/football/teams/133.png",
+            "Grêmio": "https://media.api-sports.io/football/teams/130.png",
+            "Internacional": "https://media.api-sports.io/football/teams/119.png",
+            "Atlético Mineiro": "https://media.api-sports.io/football/teams/1062.png",
+            "Cruzeiro": "https://media.api-sports.io/football/teams/135.png",
+            "Real Madrid": "https://media.api-sports.io/football/teams/541.png",
+            "Barcelona": "https://media.api-sports.io/football/teams/529.png",
+            "Atlético de Madrid": "https://media.api-sports.io/football/teams/530.png",
+            "Manchester City": "https://media.api-sports.io/football/teams/50.png",
+            "Manchester United": "https://media.api-sports.io/football/teams/33.png",
+            "Arsenal": "https://media.api-sports.io/football/teams/42.png",
+            "Chelsea": "https://media.api-sports.io/football/teams/49.png",
+            "Liverpool": "https://media.api-sports.io/football/teams/40.png",
+            "Tottenham": "https://media.api-sports.io/football/teams/47.png",
+            "Juventus": "https://media.api-sports.io/football/teams/496.png",
+            "Milan": "https://media.api-sports.io/football/teams/489.png",
+            "Inter de Milão": "https://media.api-sports.io/football/teams/505.png",
+            "Roma": "https://media.api-sports.io/football/teams/497.png",
+            "Napoli": "https://media.api-sports.io/football/teams/492.png",
+            "Lazio": "https://media.api-sports.io/football/teams/499.png",
+            "Bayern de Munique": "https://media.api-sports.io/football/teams/157.png",
+            "Borussia Dortmund": "https://media.api-sports.io/football/teams/165.png",
+            "Bayer Leverkusen": "https://media.api-sports.io/football/teams/168.png",
+            "RB Leipzig": "https://media.api-sports.io/football/teams/173.png",
+            "Paris Saint-Germain": "https://media.api-sports.io/football/teams/85.png",
+            "Olympique de Marselha": "https://media.api-sports.io/football/teams/81.png",
+            "Lyon": "https://media.api-sports.io/football/teams/80.png",
+            "Monaco": "https://media.api-sports.io/football/teams/79.png",
+            "Ajax": "https://media.api-sports.io/football/teams/194.png",
+            "PSV": "https://media.api-sports.io/football/teams/197.png",
+            "Benfica": "https://media.api-sports.io/football/teams/211.png",
+            "Porto": "https://media.api-sports.io/football/teams/212.png",
+            "Sporting": "https://media.api-sports.io/football/teams/228.png",
+            "Brasil": "https://flagcdn.com/w40/br.png",
             "Argentina": "https://flagcdn.com/w40/ar.png",
-            "France": "https://flagcdn.com/w40/fr.png", "França": "https://flagcdn.com/w40/fr.png",
-            "England": "https://flagcdn.com/w40/gb-eng.png", "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
-            "Germany": "https://flagcdn.com/w40/de.png", "Alemanha": "https://flagcdn.com/w40/de.png",
+            "França": "https://flagcdn.com/w40/fr.png",
+            "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
+            "Alemanha": "https://flagcdn.com/w40/de.png",
             "Portugal": "https://flagcdn.com/w40/pt.png",
-            "Spain": "https://flagcdn.com/w40/es.png", "Espanha": "https://flagcdn.com/w40/es.png",
-            "Italy": "https://flagcdn.com/w40/it.png", "Itália": "https://flagcdn.com/w40/it.png"
+            "Espanha": "https://flagcdn.com/w40/es.png",
+            "Itália": "https://flagcdn.com/w40/it.png",
+            "Holanda": "https://flagcdn.com/w40/nl.png",
+            "Uruguai": "https://flagcdn.com/w40/uy.png",
+            "Colômbia": "https://flagcdn.com/w40/co.png",
+            "Chile": "https://flagcdn.com/w40/cl.png",
+            "Croácia": "https://flagcdn.com/w40/hr.png",
+            "Bélgica": "https://flagcdn.com/w40/be.png"
         };
 
-        function obterBandeira(nomeTime) { 
+        function obterBandeira(nomeTime, logoApi) { 
+            if (logoApi) return logoApi;
             if (bandeirasTimes[nomeTime]) return bandeirasTimes[nomeTime];
             return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
         }
 
+        // Mapeamento traduzido para ligas, torneios de seleções, eliminatórias e amistosos
         const traducoesLigas = {
-            "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A", "FRIENDLIES": "AMISTOSOS INTERNACIONAIS"
+            "UEFA Champions League": "Liga dos Campeões da UEFA",
+            "UEFA Europa League": "Liga Europa da UEFA",
+            "UEFA Conference League": "Liga Conferência da UEFA",
+            "Premier League": "Campeonato Inglês",
+            "Primera Division": "Campeonato Espanhol",
+            "La Liga": "Campeonato Espanhol",
+            "Serie A": "Campeonato Italiano",
+            "Bundesliga": "Campeonato Alemão",
+            "Ligue 1": "Campeonato Francês",
+            "Eredivisie": "Campeonato Holandês",
+            "Primeira Liga": "Campeonato Português",
+            "UEFA Nations League": "Liga das Nações da UEFA",
+            "Copa Libertadores": "Copa Libertadores",
+            "Copa Sudamericana": "Copa Sul-Americana",
+            "Campeonato Brasileiro Série A": "Brasileirão Série A",
+            "Serie B": "Brasileirão Série B",
+            "Copa do Brasil": "Copa do Brasil",
+            "FRIENDLIES": "Amistosos Internacionais",
+            "Friendlies": "Amistosos Internacionais",
+            "World Cup - Qualification South America": "Eliminatórias da Copa - América do Sul",
+            "World Cup - Qualification Europe": "Eliminatórias da Copa - Europa",
+            "World Cup - Qualification CONCACAF": "Eliminatórias da Copa - CONCACAF",
+            "World Cup - Qualification Asia": "Eliminatórias da Copa - Ásia",
+            "World Cup - Qualification Africa": "Eliminatórias da Copa - África",
+            "Euro Championship - Qualification": "Eliminatórias da Eurocopa"
         };
 
         function traduzirTime(nome) { return traducoesTimes[nome] || nome; }
@@ -1119,7 +1162,7 @@
             }
 
             if (partidasFiltradas.length === 0) {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento. Aguarde novos jogos.</p>`;
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento via API. Aguarde novos jogos.</p>`;
                 return;
             }
 
@@ -1135,14 +1178,17 @@
                 let selFora = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Fora)')) ? 'selected' : '';
 
                 card.innerHTML = `
-                    <div class="match-header"><span>🔴 ${match.liga}</span> <span id="time-${match.id}">${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s</span></div>
+                    <div class="match-header">
+                        <span>${match.bandeiraLiga ? `<img src="${match.bandeiraLiga}" alt="" style="width:16px; height:12px; margin-right:4px; vertical-align:middle; border-radius:2px;">` : ''}🔴 ${match.liga}</span> 
+                        <span id="time-${match.id}">${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s</span>
+                    </div>
                     <div class="match-teams">
-                        <span class="team-name"><img src="${obterBandeira(match.casa)}" alt=""> ${match.casa}</span>
+                        <span class="team-name"><img src="${obterBandeira(match.casa, match.logoCasa)}" alt=""> ${match.casa}</span>
                         <div class="match-score-vs">
                             <span class="match-vs-text">AO VIVO</span>
                             <span class="match-real-score" id="score-${match.id}">${match.golsCasa} - ${match.golsFora}</span>
                         </div>
-                        <span class="team-name"><img src="${obterBandeira(match.fora)}" alt=""> ${match.fora}</span>
+                        <span class="team-name"><img src="${obterBandeira(match.fora, match.logoFora)}" alt=""> ${match.fora}</span>
                     </div>
                     <div class="odds-grid">
                         <div class="odd-btn ${selCasa}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, this)">
@@ -1165,7 +1211,7 @@
 
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo...</p>`;
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo da API...</p>`;
             listaGlobalPartidas = [];
 
             try {
@@ -1180,11 +1226,18 @@
                     
                     dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
                         const odds = gerarOddsReais(match.teams.home.name, match.teams.away.name);
+                        const casaNome = traduzirTime(match.teams.home.name);
+                        const foraNome = traduzirTime(match.teams.away.name);
+                        const ligaNome = traduzirLiga(match.league.name);
+
                         listaGlobalPartidas.push({
                             id: `api1-${index}`,
-                            casa: traduzirTime(match.teams.home.name),
-                            fora: traduzirTime(match.teams.away.name),
-                            liga: traduzirLiga(match.league.name),
+                            casa: casaNome,
+                            fora: foraNome,
+                            logoCasa: match.teams.home.logo,
+                            logoFora: match.teams.away.logo,
+                            liga: ligaNome,
+                            bandeiraLiga: match.league.flag || '',
                             golsCasa: match.goals.home !== null ? match.goals.home : 0,
                             golsFora: match.goals.away !== null ? match.goals.away : 0,
                             minuto: match.fixture.status.elapsed || Math.floor(Math.random() * 75) + 10,
@@ -1196,14 +1249,7 @@
                 }
             } catch (e) { console.log("Erro API Ao Vivo"); }
 
-            if (listaGlobalPartidas.length === 0) {
-                listaGlobalPartidas = [
-                    { id: 'sim-1', casa: 'Flamengo', fora: 'Palmeiras', liga: 'Brasileirão Série A', golsCasa: 1, golsFora: 0, minuto: 34, segundo: 12, isAoVivo: true, odds: gerarOddsReais('Flamengo', 'Palmeiras') },
-                    { id: 'sim-2', casa: 'Real Madrid', fora: 'Barcelona', liga: 'Campeonato Espanhol', golsCasa: 2, golsFora: 2, minuto: 78, segundo: 45, isAoVivo: true, odds: gerarOddsReais('Real Madrid', 'Barcelona') },
-                    { id: 'sim-3', casa: 'Manchester City', fora: 'Arsenal', liga: 'Campeonato Inglês', golsCasa: 0, golsFora: 1, minuto: 22, segundo: 5, isAoVivo: true, odds: gerarOddsReais('Manchester City', 'Arsenal') },
-                    { id: 'sim-4', casa: 'Milan', fora: 'Inter de Milão', liga: 'Campeonato Italiano', golsCasa: 1, golsFora: 1, minuto: 60, segundo: 30, isAoVivo: true, odds: gerarOddsReais('Milan', 'Inter de Milão') }
-                ];
-            }
+            // Removido qualquer uso de partidas simuladas por solicitação direta
 
             atualizarBotoesFiltroLigas(listaGlobalPartidas);
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
