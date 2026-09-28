@@ -2,206 +2,205 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cangaceiro Bet</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        body {
-            background-color: #0b0c10;
-            color: #ffffff;
-            padding-bottom: 25px;
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #f39c12;
+            --text-color: #ffffff;
+            --text-secondary: #aaaaaa;
         }
 
-        /* TELA DE ABERTURA (SPLASH SCREEN 4D) */
-        #splashScreen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1a101f 0%, #0b0c10 100%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            transition: opacity 0.5s ease;
-        }
-        .splash-banner {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ff4500;
-            box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
-            animation: float4D 3s ease-in-out infinite;
-            margin-bottom: 25px;
-        }
-        @keyframes float4D {
-            0% { transform: translateY(0px) rotate(0deg) scale(1); }
-            50% { transform: translateY(-15px) rotate(4deg) scale(1.06); filter: drop-shadow(0 20px 30px rgba(255,183,3,0.6)); }
-            100% { transform: translateY(0px) rotate(0deg) scale(1); }
-        }
-        .loading-container {
-            width: 260px;
-            background: #151821;
-            border: 1px solid #2c3347;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 14px;
-            margin-bottom: 15px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
-        }
-        .loading-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff4500, #ffb703);
-            border-radius: 20px;
-            transition: width 0.1s linear;
-        }
-        .loading-text {
-            font-size: 13px;
-            font-weight: bold;
-            color: #ffb703;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-        .btn-entrar-splash {
-            display: none;
-            background: linear-gradient(135deg, #ff4500, #ff6a00);
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
-            animation: pulseBtn 1.5s infinite;
-        }
-        @keyframes pulseBtn {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
         }
 
         header {
-            background: linear-gradient(135deg, #151821, #0b0c10);
-            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #ff4500;
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            background-color: #1a1a1a;
+            padding: 10px 15px;
+            border-bottom: 2px solid var(--accent-color);
         }
-        .header-left {
+
+        .logo-saldo {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-menu-lateral {
-            background: #191d28;
-            border: 1px solid #ff4500;
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
-        }
-        .btn-menu-lateral span {
-            width: 18px;
-            height: 2px;
-            background-color: #ff4500;
-            border-radius: 2px;
-        }
 
-        .logo-img-pequena {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid #ffb703;
-            cursor: pointer;
-            box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
-        }
-
-        .saldo-topo-3d {
-            background: linear-gradient(145deg, #1f2430, #13161f);
-            border: 1px solid #ffb703;
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-size: 11px;
+        .saldo-box {
+            background: #2a2a2a;
+            border: 1px solid var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
             font-weight: bold;
-            color: #ffb703;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            color: var(--accent-color);
         }
-        .saldo-topo-3d span { color: #fff; }
 
-        .btn-topo-acao {
-            background: linear-gradient(135deg, #ff4500, #cc3500);
-            color: white;
+        .btn {
+            background-color: var(--accent-color);
+            color: #000;
             border: none;
-            padding: 7px 10px;
-            border-radius: 8px;
+            padding: 8px 15px;
             font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 11px;
-            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
-        }
-        .btn-topo-login {
-            background: transparent;
-            color: #ffb703;
-            border: 1px solid #ffb703;
-            padding: 7px 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 11px;
         }
 
-        .quick-search-bar {
-            padding: 12px 15px;
-            background: #0f1118;
-            border-bottom: 1px solid #1a1d28;
-        }
-        .quick-search-input {
-            width: 100%;
-            padding: 10px 15px;
-            background: #151821;
-            border: 1px solid #232838;
-            border-radius: 20px;
-            color: white;
-            font-size: 13px;
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(3px);
-            z-index: 998;
+        .match-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #2a2a2a;
         }
-        .sidebar {
-            position: fixed;
-            top: 0; left: -280px; width: 280px; height: 100%;
-            background: linear-gradient(180deg, #151821
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .placar-tempo {
+            background: #111;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #00ffcc;
+        }
+
+        .odds-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        .odd-btn {
+            background-color: #2b2b2b;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            color: var(--text-color);
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .odd-btn span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-saldo">
+            <span style="font-size: 20px; font-weight: bold; color: var(--accent-color);">🐺 CANGACEIRO BET</span>
+        </div>
+        <div class="logo-saldo">
+            <div class="saldo-box">Saldo: R$ <span id="saldo-atual">1000.00</span></div>
+            <button class="btn">REGISTRAR</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <h3 style="color: var(--text-secondary); font-size: 14px;">APOSTAS AO VIVO</h3>
+
+        <div class="match-card">
+            <div class="match-header">
+                <span>SUPER LEAGUE 2</span>
+                <span id="tempo-1" class="placar-tempo">AO VIVO (90')</span>
+            </div>
+            <div class="match-teams">
+                <span>Marko</span>
+                <span id="placar-1">2 - 1</span>
+                <span>Panthrakikos</span>
+            </div>
+            <div class="odds-container">
+                <button class="odd-btn"><span>1 (Casa)</span> 1.45</button>
+                <button class="odd-btn"><span>X (Empate)</span> 3.80</button>
+                <button class="odd-btn"><span>2 (Fora)</span> 4.05</button>
+            </div>
+        </div>
+
+        <div class="match-card">
+            <div class="match-header">
+                <span>AZADEGAN LEAGUE</span>
+                <span id="tempo-2" class="placar-tempo">AO VIVO (53')</span>
+            </div>
+            <div class="match-teams">
+                <span>Ario Eslamshahr</span>
+                <span id="placar-2">0 - 0</span>
+                <span>Havadar</span>
+            </div>
+            <div class="odds-container">
+                <button class="odd-btn"><span>1 (Casa)</span> 1.55</button>
+                <button class="odd-btn"><span>X (Empate)</span> 3.90</button>
+                <button class="odd-btn"><span>2 (Fora)</span> 3.15</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Simulando o cronômetro em tempo real e placares dinâmicos
+        let partida1 = { minutos: 90, segundos: 12, golsCasa: 2, golsFora: 1 };
+        let partida2 = { minutos: 53, segundos: 40, golsCasa: 0, golsFora: 0 };
+
+        function iniciarTempoReal() {
+            setInterval(() => {
+                // Atualiza Jogo 1
+                partida1.segundos++;
+                if (partida1.segundos >= 60) {
+                    partida1.segundos = 0;
+                    partida1.minutos++;
+                }
+                document.getElementById('tempo-1').innerText = `AO VIVO (${partida1.minutos}'${String(partida1.segundos).padStart(2, '0')}s)`;
+
+                // Atualiza Jogo 2
+                partida2.segundos++;
+                if (partida2.segundos >= 60) {
+                    partida2.segundos = 0;
+                    partida2.minutos++;
+                }
+                document.getElementById('tempo-2').innerText = `AO VIVO (${partida2.minutos}'${String(partida2.segundos).padStart(2, '0')}s)`;
+
+            }, 1000); // Roda a cada 1 segundo real
+        }
+
+        // Inicia a função assim que carregar a página
+        window.onload = iniciarTempoReal;
+    </script>
+</body>
+</html>
