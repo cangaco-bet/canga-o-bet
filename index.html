@@ -450,7 +450,7 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
-        /* ESTILOS DO JOGO FORTUNE TIGER 4D COM SÍMBOLOS REAIS */
+        /* ESTILOS DO JOGO FORTUNE TIGER 4D */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -470,28 +470,57 @@
         .modal-subtitle-4d { font-size: 11px; color: #00ff88; font-weight: bold; margin-bottom: 15px; }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
-        /* TIGRE 4D FLUTUANTE EM CIMA DO CAÇA-NÍQUEIS */
+        /* TIGRE 4D ANIMADO EM CSS (SEM IMAGEM ESTÁTICA) */
         .tiger-wrapper-4d {
             position: relative;
-            margin-top: 10px;
-            margin-bottom: -15px;
+            margin-top: 5px;
+            margin-bottom: -10px;
             z-index: 10;
             display: flex;
             justify-content: center;
         }
-        .tiger-avatar-4d {
-            width: 90px;
-            height: 90px;
+        .tiger-avatar-4d-css {
+            width: 85px;
+            height: 85px;
+            background: radial-gradient(circle, #ff9900 0%, #cc5500 70%, #882200 100%);
             border-radius: 50%;
-            object-fit: cover;
             border: 3px solid #ffb703;
-            box-shadow: 0 0 25px rgba(255, 183, 3, 0.8), 0 10px 20px rgba(0,0,0,0.7);
-            animation: tigerBalanco4D 2.5s ease-in-out infinite;
+            box-shadow: 0 0 25px rgba(255, 183, 3, 0.9), 0 10px 20px rgba(0,0,0,0.8);
+            position: relative;
+            animation: tigerAnim4D 2s ease-in-out infinite;
         }
-        @keyframes tigerBalanco4D {
-            0% { transform: translateY(0px) rotate(-4deg) scale(1); }
-            50% { transform: translateY(-10px) rotate(4deg) scale(1.06); filter: drop-shadow(0 15px 20px rgba(255,69,0,0.7)); }
-            100% { transform: translateY(0px) rotate(-4deg) scale(1); }
+        @keyframes tigerAnim4D {
+            0% { transform: translateY(0px) rotate(-3deg) scale(1); filter: brightness(1); }
+            50% { transform: translateY(-8px) rotate(3deg) scale(1.05); filter: brightness(1.15) drop-shadow(0 15px 25px rgba(255,69,0,0.8)); }
+            100% { transform: translateY(0px) rotate(-3deg) scale(1); filter: brightness(1); }
+        }
+        /* Orelhas e rosto do tigre em CSS 4D */
+        .tiger-ear-left, .tiger-ear-right {
+            position: absolute; top: -8px; width: 22px; height: 25px;
+            background: #cc5500; border: 2px solid #ffb703; border-radius: 50% 50% 20% 20%;
+        }
+        .tiger-ear-left { left: 10px; transform: rotate(-15deg); }
+        .tiger-ear-right { right: 10px; transform: rotate(15deg); }
+        
+        .tiger-eyes {
+            position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 16px;
+        }
+        .tiger-eye {
+            width: 10px; height: 14px; background: #fff; border-radius: 50%;
+            position: relative; animation: piscarTiger 4s infinite;
+        }
+        .tiger-eye::after {
+            content: ''; position: absolute; bottom: 2px; left: 2px; width: 6px; height: 8px;
+            background: #000; border-radius: 50%;
+        }
+        @keyframes piscarTiger {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        .tiger-nose {
+            position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 8px; background: #331100; border-radius: 40%;
         }
 
         .slot-machine-container {
@@ -524,11 +553,8 @@
             overflow: hidden;
         }
         .slot-cell img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
+            width: 48px; height: 48px; object-fit: contain;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-            transition: transform 0.1s;
         }
         .slot-cell.spinning img {
             animation: cellSpinImg 0.1s linear infinite;
@@ -544,11 +570,15 @@
             padding: 12px;
             border-radius: 12px;
             border: 1px solid rgba(255,183,3,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .bet-control-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
             margin-bottom: 10px;
             font-size: 13px;
         }
@@ -558,65 +588,49 @@
             gap: 6px;
         }
         .btn-bet-step {
-            background: #ff4500;
-            color: #fff;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
+            background: #ff4500; color: #fff; border: none; width: 30px; height: 30px;
+            border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer;
             box-shadow: 0 3px 8px rgba(255,69,0,0.5);
         }
         .bet-input-display {
-            background: #0f1118;
-            border: 1px solid #ffb703;
-            color: #ffb703;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-weight: 900;
-            font-size: 14px;
-            width: 75px;
-            text-align: center;
+            background: #0f1118; border: 1px solid #ffb703; color: #ffb703;
+            padding: 5px 10px; border-radius: 6px; font-weight: 900; font-size: 14px;
+            width: 75px; text-align: center;
         }
 
         .turbo-demo-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; margin-bottom: 15px; font-size: 12px;
         }
         .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            color: #ffb703;
-            font-weight: bold;
+            display: flex; align-items: center; gap: 5px; cursor: pointer;
+            color: #ffb703; font-weight: bold;
         }
 
-        /* BOTÃO VERDE TRADICIONAL DO TIGRES */
-        .btn-spin-tigrinho {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(180deg, #2ecc71 0%, #27ae60 50%, #1e8449 100%);
-            color: #ffffff;
-            border: 2px solid #a9dfbf;
-            border-radius: 50px;
-            font-weight: 950;
-            font-size: 18px;
+        /* BOTÃO REDONDO ESTILO FORTUNE TIGER REAL */
+        .btn-spin-redondo {
+            width: 75px; height: 75px;
+            background: linear-gradient(145deg, #2ecc71, #27ae60, #145a32);
+            border: 4px solid #a9dfbf;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.7), inset 0 2px 4px rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.8), inset 0 3px 5px rgba(255,255,255,0.6);
             transition: transform 0.1s, box-shadow 0.1s;
+            margin: 5px auto;
         }
-        .btn-spin-tigrinho:active {
-            transform: scale(0.96);
-            box-shadow: 0 3px 10px rgba(39, 174, 96, 0.7), inset 0 2px 2px rgba(0,0,0,0.6);
+        .btn-spin-redondo:active {
+            transform: scale(0.92);
+            box-shadow: 0 3px 10px rgba(46, 204, 113, 0.8), inset 0 2px 3px rgba(0,0,0,0.5);
+        }
+        .btn-spin-redondo svg {
+            width: 38px; height: 38px; fill: #ffffff;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+            animation: rotacionarSeta 4s linear infinite;
+        }
+        @keyframes rotacionarSeta {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .modal-input {
@@ -644,6 +658,8 @@
     </div>
 
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
+    <!-- ÁUDIO CLÁSSICO DO FORTUNE TIGER PARA OS GIROS -->
+    <audio id="tigerAudioPlayer" src="https://files.catbox.moe/xz8qbc.mp3" preload="auto" loop></audio>
 
     <header>
         <div class="header-left">
@@ -821,19 +837,27 @@
         </div>
     </div>
 
-    <!-- MODAL DO JOGO FORTUNE TIGER 4D COM SÍMBOLOS REAIS -->
+    <!-- MODAL DO JOGO FORTUNE TIGER 4D -->
     <div id="fortuneModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 390px;">
             <span class="close-modal" onclick="fecharFortuneTiger()">&times;</span>
             <div class="modal-title-4d">🐯 Fortune Tiger 4D</div>
             <div class="modal-subtitle-4d" id="tigerModoSub">Modo Normal (Valendo Saldo)</div>
             
-            <!-- TIGRE 4D FLUTUANDO EM CIMA DO CAÇA-NÍQUEIS -->
+            <!-- TIGRE 4D ANIMADO EM CSS (SE MEXENDO DE VERDADE) -->
             <div class="tiger-wrapper-4d">
-                <img src="https://files.catbox.moe/75mifn.jpeg" class="tiger-avatar-4d" alt="Tigre 4D">
+                <div class="tiger-avatar-4d-css">
+                    <div class="tiger-ear-left"></div>
+                    <div class="tiger-ear-right"></div>
+                    <div class="tiger-eyes">
+                        <div class="tiger-eye"></div>
+                        <div class="tiger-eye"></div>
+                    </div>
+                    <div class="tiger-nose"></div>
+                </div>
             </div>
 
-            <!-- MÁQUINA DE CAÇA-NÍQUEIS 3X3 COM ÍCONES REAIS -->
+            <!-- MÁQUINA DE CAÇA-NÍQUEIS 3X3 -->
             <div class="slot-machine-container">
                 <div class="slot-grid-3x3" id="slotGrid">
                     <div class="slot-cell" id="c0"><img src="https://images.emojiterra.com/google/android-12l/512px/1f34a.png" alt="Laranja"></div>
@@ -868,8 +892,12 @@
                         </label>
                     </div>
 
-                    <!-- Botão Verde Tradicional do Tigrinho para Girar ou Parar -->
-                    <button class="btn-spin-tigrinho" id="btnSpinTiger" onclick="clicarGirarOuParar()">GIRAR 🐅</button>
+                    <!-- BOTÃO REDONDO ESTILO FORTUNE TIGER REAL COM ÍCONE DE GIRO -->
+                    <div class="btn-spin-redondo" id="btnSpinTiger" onclick="clicarGirarOuParar()" title="Girar">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.4 13.3,20 11,19.8V17.8C12.8,18 14.7,17.4 16.1,16C18.4,13.7 18.4,10 16.1,7.7C15,6.6 13.5,6 12,6V9L8,5L12,1V4M6.4,7.8C4.1,10.1 4.1,13.8 6.4,16.1C7.5,17.2 9,17.8 10.5,17.8V19.8C8.2,20 5.7,19.4 3.9,17.6C0.8,14.5 0.8,9.4 3.9,6.3C5.3,4.9 7.3,4.2 9.2,4V6C7.9,6.2 6.6,6.8 5.6,7.8L6.4,7.8Z"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
             <div id="tigerResultadoMsg" style="font-size: 13px; font-weight: bold; color: #ffb703; min-height: 20px;">Boa sorte!</div>
@@ -984,6 +1012,7 @@
         }
 
         const audio = document.getElementById('audioPlayer');
+        const tigerAudio = document.getElementById('tigerAudioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
         let apostasSelecionadas = [];
@@ -1197,11 +1226,10 @@
             }
         }
 
-        // --- LÓGICA DO FORTUNE TIGER 4D COM SÍMBOLOS REAIS ---
+        // --- LÓGICA DO FORTUNE TIGER 4D ---
         let tigerRodando = false;
         let intervaloTiger = null;
         
-        // Links reais das imagens dos símbolos 3D do Fortune Tiger
         let symbolsReal = [
             'https://images.emojiterra.com/google/android-12l/512px/1f405.png', // Tigre
             'https://images.emojiterra.com/google/android-12l/512px/1fa99.png', // Moeda
@@ -1216,6 +1244,7 @@
         }
         function fecharFortuneTiger() {
             if (tigerRodando) pararGiroTigerImediato();
+            tigerAudio.pause(); tigerAudio.currentTime = 0;
             document.getElementById('fortuneModal').style.display = 'none';
         }
 
@@ -1223,7 +1252,7 @@
             if (tigerRodando) return;
             let input = document.getElementById('tigerBetInput');
             let atual = parseFloat(input.value) + valorDelta;
-            if (atual < 2.00) atual = 2.00; // Mínimo de R$ 2,00 para cima
+            if (atual < 2.00) atual = 2.00; // Mínimo R$ 2,00
             input.value = atual.toFixed(2);
         }
 
@@ -1263,8 +1292,10 @@
             }
 
             tigerRodando = true;
-            let btn = document.getElementById('btnSpinTiger');
-            btn.innerText = "PARAR 🛑";
+            audio.pause();
+            tigerAudio.currentTime = 0;
+            tigerAudio.play().catch(e => console.log(e)); // Toca a música clássica do tigrinho
+
             document.getElementById('tigerResultadoMsg').innerText = "A girar...";
 
             let cells = document.querySelectorAll('.slot-cell');
@@ -1291,6 +1322,8 @@
             if (!tigerRodando) return;
             clearInterval(intervaloTiger);
             tigerRodando = false;
+            tigerAudio.pause();
+            tigerAudio.currentTime = 0;
 
             let cells = document.querySelectorAll('.slot-cell');
             cells.forEach(c => c.classList.remove('spinning'));
@@ -1304,8 +1337,6 @@
 
             let apostaVal = parseFloat(document.getElementById('tigerBetInput').value);
             let isDemo = document.getElementById('checkDemo').checked;
-            let btn = document.getElementById('btnSpinTiger');
-            btn.innerText = "GIRAR 🐅";
 
             let ganhou = (resFinal[3] === resFinal[4] && resFinal[4] === resFinal[5]) || (Math.random() > 0.6);
             if (ganhou) {
@@ -1324,6 +1355,8 @@
         function pararGiroTigerImediato() {
             clearInterval(intervaloTiger);
             tigerRodando = false;
+            tigerAudio.pause();
+            tigerAudio.currentTime = 0;
         }
         // --- FIM DA LÓGICA DO TIGER ---
 
