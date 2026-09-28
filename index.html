@@ -17,11 +17,11 @@
             padding-bottom: 25px;
         }
 
-        /* TELA DE ABERTURA (SPLASH SCREEN 4D) */
+        /* TELA DE ABERTURA (SPLASH SCREEN COM MOVIMENTO) */
         #splashScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1a101f 0%, #0b0c10 100%);
+            background: radial-gradient(circle, #2b0b05 0%, #0b0c10 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -450,7 +450,6 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
-        /* Estilo 4D Avançado para os Modais de Mercados */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -632,7 +631,7 @@
 
         <div class="games-grid">
             <div class="game-card" onclick="jogarCassino('Fortune Tiger', 15)">
-                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
+                <img src="https://files.catbox.moe/onqvbv.png" class="game-img" alt="Fortune Tiger">
                 <div class="game-name">Fortune Tiger</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Aviator', 20)">
@@ -699,7 +698,7 @@
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante (Criar Bilhete Rápido - Suporta Apostas Múltiplas) -->
+    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
@@ -712,7 +711,7 @@
         <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
     </div>
 
-    <!-- Modal 4D Avançado de Opções e Mercados Tradicionais da Partida -->
+    <!-- Modal 4D de Mercados -->
     <div id="matchModal" class="modal-overlay">
         <div class="modal-card-4d">
             <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
@@ -809,7 +808,7 @@
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
-        let apostasSelecionadas = []; // Lista para apostas múltiplas
+        let apostasSelecionadas = [];
         let partidaAtivaId = null;
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
@@ -864,7 +863,8 @@
         }
 
         const traducoesTimes = {
-            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
+            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro",
+            "Brazil": "Brasil", "Argentina": "Argentina", "France": "França", "Germany": "Alemanha", "England": "Inglaterra", "Spain": "Espanha", "Italy": "Itália", "Portugal": "Portugal", "Netherlands": "Holanda", "Uruguay": "Uruguai", "Colombia": "Colômbia", "Chile": "Chile", "Peru": "Peru", "Ecuador": "Equador", "Paraguay": "Paraguai", "Venezuela": "Venezuela", "Bolivia": "Bolívia", "Mexico": "México", "United States": "Estados Unidos", "Japan": "Japão", "South Korea": "Coreia do Sul", "Morocco": "Marrocos", "Croatia": "Croácia", "Belgium": "Bélgica"
         };
 
         const bandeirasTimes = {
@@ -907,23 +907,54 @@
             "Benfica": "https://media.api-sports.io/football/teams/211.png",
             "Porto": "https://media.api-sports.io/football/teams/212.png",
             "Sporting": "https://media.api-sports.io/football/teams/228.png",
-            "Brazil": "https://flagcdn.com/w40/br.png", "Brasil": "https://flagcdn.com/w40/br.png",
+            "Brasil": "https://flagcdn.com/w40/br.png",
             "Argentina": "https://flagcdn.com/w40/ar.png",
-            "France": "https://flagcdn.com/w40/fr.png", "França": "https://flagcdn.com/w40/fr.png",
-            "England": "https://flagcdn.com/w40/gb-eng.png", "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
-            "Germany": "https://flagcdn.com/w40/de.png", "Alemanha": "https://flagcdn.com/w40/de.png",
+            "França": "https://flagcdn.com/w40/fr.png",
+            "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
+            "Alemanha": "https://flagcdn.com/w40/de.png",
             "Portugal": "https://flagcdn.com/w40/pt.png",
-            "Spain": "https://flagcdn.com/w40/es.png", "Espanha": "https://flagcdn.com/w40/es.png",
-            "Italy": "https://flagcdn.com/w40/it.png", "Itália": "https://flagcdn.com/w40/it.png"
+            "Espanha": "https://flagcdn.com/w40/es.png",
+            "Itália": "https://flagcdn.com/w40/it.png",
+            "Holanda": "https://flagcdn.com/w40/nl.png",
+            "Uruguai": "https://flagcdn.com/w40/uy.png",
+            "Colômbia": "https://flagcdn.com/w40/co.png",
+            "Chile": "https://flagcdn.com/w40/cl.png",
+            "Croácia": "https://flagcdn.com/w40/hr.png",
+            "Bélgica": "https://flagcdn.com/w40/be.png"
         };
 
-        function obterBandeira(nomeTime) { 
+        function obterBandeira(nomeTime, logoApi) { 
+            if (logoApi) return logoApi;
             if (bandeirasTimes[nomeTime]) return bandeirasTimes[nomeTime];
             return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
         }
 
         const traducoesLigas = {
-            "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A", "FRIENDLIES": "AMISTOSOS INTERNACIONAIS"
+            "UEFA Champions League": "Liga dos Campeões da UEFA",
+            "UEFA Europa League": "Liga Europa da UEFA",
+            "UEFA Conference League": "Liga Conferência da UEFA",
+            "Premier League": "Campeonato Inglês",
+            "Primera Division": "Campeonato Espanhol",
+            "La Liga": "Campeonato Espanhol",
+            "Serie A": "Campeonato Italiano",
+            "Bundesliga": "Campeonato Alemão",
+            "Ligue 1": "Campeonato Francês",
+            "Eredivisie": "Campeonato Holandês",
+            "Primeira Liga": "Campeonato Português",
+            "UEFA Nations League": "Liga das Nações da UEFA",
+            "Copa Libertadores": "Copa Libertadores",
+            "Copa Sudamericana": "Copa Sul-Americana",
+            "Campeonato Brasileiro Série A": "Brasileirão Série A",
+            "Serie B": "Brasileirão Série B",
+            "Copa do Brasil": "Copa do Brasil",
+            "FRIENDLIES": "Amistosos Internacionais",
+            "Friendlies": "Amistosos Internacionais",
+            "World Cup - Qualification South America": "Eliminatórias da Copa - América do Sul",
+            "World Cup - Qualification Europe": "Eliminatórias da Copa - Europa",
+            "World Cup - Qualification CONCACAF": "Eliminatórias da Copa - CONCACAF",
+            "World Cup - Qualification Asia": "Eliminatórias da Copa - Ásia",
+            "World Cup - Qualification Africa": "Eliminatórias da Copa - África",
+            "Euro Championship - Qualification": "Eliminatórias da Eurocopa"
         };
 
         function traduzirTime(nome) { return traducoesTimes[nome] || nome; }
@@ -1127,7 +1158,7 @@
             }
 
             if (partidasFiltradas.length === 0) {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento. Aguarde novos jogos.</p>`;
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento via API. Aguarde novos jogos.</p>`;
                 return;
             }
 
@@ -1137,20 +1168,22 @@
                 card.id = `match-card-${match.id}`;
                 card.onclick = () => abrirModalPartidaDetalhes(match);
                 
-                // Marcação visual se a odd já está selecionada no bilhete múltiplo
                 let selCasa = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Casa)')) ? 'selected' : '';
                 let selEmpate = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Empate)')) ? 'selected' : '';
                 let selFora = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Fora)')) ? 'selected' : '';
 
                 card.innerHTML = `
-                    <div class="match-header"><span>🔴 ${match.liga}</span> <span id="time-${match.id}">${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s</span></div>
+                    <div class="match-header">
+                        <span>${match.bandeiraLiga ? `<img src="${match.bandeiraLiga}" alt="" style="width:16px; height:12px; margin-right:4px; vertical-align:middle; border-radius:2px;">` : ''}🔴 ${match.liga}</span> 
+                        <span id="time-${match.id}">${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s</span>
+                    </div>
                     <div class="match-teams">
-                        <span class="team-name"><img src="${obterBandeira(match.casa)}" alt=""> ${match.casa}</span>
+                        <span class="team-name"><img src="${obterBandeira(match.casa, match.logoCasa)}" alt=""> ${match.casa}</span>
                         <div class="match-score-vs">
                             <span class="match-vs-text">AO VIVO</span>
                             <span class="match-real-score" id="score-${match.id}">${match.golsCasa} - ${match.golsFora}</span>
                         </div>
-                        <span class="team-name"><img src="${obterBandeira(match.fora)}" alt=""> ${match.fora}</span>
+                        <span class="team-name"><img src="${obterBandeira(match.fora, match.logoFora)}" alt=""> ${match.fora}</span>
                     </div>
                     <div class="odds-grid">
                         <div class="odd-btn ${selCasa}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, this)">
@@ -1173,7 +1206,7 @@
 
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo...</p>`;
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo da API...</p>`;
             listaGlobalPartidas = [];
 
             try {
@@ -1188,11 +1221,18 @@
                     
                     dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
                         const odds = gerarOddsReais(match.teams.home.name, match.teams.away.name);
+                        const casaNome = traduzirTime(match.teams.home.name);
+                        const foraNome = traduzirTime(match.teams.away.name);
+                        const ligaNome = traduzirLiga(match.league.name);
+
                         listaGlobalPartidas.push({
                             id: `api1-${index}`,
-                            casa: traduzirTime(match.teams.home.name),
-                            fora: traduzirTime(match.teams.away.name),
-                            liga: traduzirLiga(match.league.name),
+                            casa: casaNome,
+                            fora: foraNome,
+                            logoCasa: match.teams.home.logo,
+                            logoFora: match.teams.away.logo,
+                            liga: ligaNome,
+                            bandeiraLiga: match.league.flag || '',
                             golsCasa: match.goals.home !== null ? match.goals.home : 0,
                             golsFora: match.goals.away !== null ? match.goals.away : 0,
                             minuto: match.fixture.status.elapsed || Math.floor(Math.random() * 75) + 10,
@@ -1203,16 +1243,6 @@
                     });
                 }
             } catch (e) { console.log("Erro API Ao Vivo"); }
-
-            if (listaGlobalPartidas.length === 0) {
-                listaGlobalPartidas = [
-                    { id: 'sim-1', casa: 'Flamengo', fora: 'Palmeiras', liga: 'Brasileirão Série A', golsCasa: 1, golsFora: 0, minuto: 34, segundo: 12, isAoVivo: true, odds: gerarOddsReais('Flamengo', 'Palmeiras') },
-                    { id: 'sim-2', casa: 'Real Madrid', fora: 'Barcelona', liga: 'Campeonato Espanhol', golsCasa: 2, golsFora: 2, minuto: 78, segundo: 45, isAoVivo: true, odds: gerarOddsReais('Real Madrid', 'Barcelona') },
-                    { id: 'sim-3', casa: 'Manchester City', fora: 'Arsenal', liga: 'Campeonato Inglês', golsCasa: 0, golsFora: 1, minuto: 22, segundo: 5, isAoVivo: true, odds: gerarOddsReais('Manchester City', 'Arsenal') },
-                    { id: 'sim-4', casa: 'Milan', fora: 'Inter de Milão', liga: 'Campeonato Italiano', golsCasa: 1, golsFora: 1, minuto: 60, segundo: 30, isAoVivo: true, odds: gerarOddsReais('Milan', 'Inter de Milão') },
-                    { id: 'sim-5', casa: 'Bayern de Munique', fora: 'Paris Saint-Germain', liga: 'Liga dos Campeões da UEFA', golsCasa: 3, golsFora: 1, minuto: 85, segundo: 10, isAoVivo: true, odds: gerarOddsReais('Bayern de Munique', 'Paris Saint-Germain') }
-                ];
-            }
 
             atualizarBotoesFiltroLigas(listaGlobalPartidas);
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
@@ -1252,14 +1282,12 @@
             document.getElementById('modalPartidaTitulo').innerText = `${match.casa} vs ${match.fora}`;
             document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto Atual: ${match.minuto}'`;
 
-            // 1X2 Tradicional
             document.getElementById('modalOdds1X2').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1</span><span class="odd-card-val">${match.odds.casa}</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X</span><span class="odd-card-val">${match.odds.empate}</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">2</span><span class="odd-card-val">${match.odds.fora}</span></div>
             `;
 
-            // Dupla Chance
             let dc1 = (parseFloat(match.odds.casa) * 0.7).toFixed(2);
             let dc12 = (parseFloat(match.odds.empate) * 0.8).toFixed(2);
             let dc2 = (parseFloat(match.odds.fora) * 0.7).toFixed(2);
@@ -1269,7 +1297,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X2</span><span class="odd-card-val">${dc2}</span></div>
             `;
 
-            // Total de Gols Ampliado (0.5 até 4.5)
             document.getElementById('modalOddsGols').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 0.5 Gols)', 1.12)"><span class="odd-card-title">Mais de 0.5 Gols</span><span class="odd-card-val">1.12</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 1.5 Gols)', 1.42)"><span class="odd-card-title">Mais de 1.5 Gols</span><span class="odd-card-val">1.42</span></div>
@@ -1278,7 +1305,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95)"><span class="odd-card-title">Menos de 2.5 Gols</span><span class="odd-card-val">1.95</span></div>
             `;
 
-            // Escanteios Ampliados (7.5 até 12.5)
             document.getElementById('modalOddsEscanteios').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 7.5 Escanteios)', 1.45)"><span class="odd-card-title">Mais de 7.5 Cantos</span><span class="odd-card-val">1.45</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90)"><span class="odd-card-title">Mais de 9.5 Cantos</span><span class="odd-card-val">1.90</span></div>
@@ -1286,7 +1312,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80)"><span class="odd-card-title">Menos de 9.5 Cantos</span><span class="odd-card-val">1.80</span></div>
             `;
 
-            // Cartões
             document.getElementById('modalOddsCartoes').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Cartões)', 1.75)"><span class="odd-card-title">Mais de 3.5 Cartões na Partida</span><span class="odd-card-val">1.75</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 4.5 Cartões)', 2.20)"><span class="odd-card-title">Mais de 4.5 Cartões na Partida</span><span class="odd-card-val">2.20</span></div>
@@ -1299,13 +1324,10 @@
             document.getElementById('matchModal').style.display = 'none';
         }
 
-        // Adiciona ou remove uma aposta na lista de apostas múltiplas
         function adicionarApostaAoBoletim(matchId, jogoOdd, odd) {
-            // Se já existir uma seleção para a mesma partida, substitui a anterior
             let indexExistente = apostasSelecionadas.findIndex(a => a.matchId === matchId);
             if (indexExistente !== -1) {
                 if (apostasSelecionadas[indexExistente].selecao === jogoOdd) {
-                    // Clicar na mesma odd remove do boletim
                     apostasSelecionadas.splice(indexExistente, 1);
                 } else {
                     apostasSelecionadas[indexExistente] = { matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) };
@@ -1408,7 +1430,6 @@
 
             let retorno = (valor * oddTotal).toFixed(2);
 
-            // Mapeia todas as seleções com detalhes e placar do momento
             let itensBilhete = apostasSelecionadas.map(item => {
                 let partidaObj = listaGlobalPartidas.find(p => p.id === item.matchId);
                 return {
@@ -1436,12 +1457,10 @@
 
             fecharBilhete();
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-            
-            // Redireciona automaticamente para a aba Meus Bilhetes
             mudarAba('bilhetes');
             alert(`✅ Bilhete de Aposta criado com sucesso! Redirecionado para a aba Meus Bilhetes.`);
 
-            let indexBilhete = 0; // O bilhete novo é inserido no início da lista (unshift)
+            let indexBilhete = 0;
             setTimeout(() => {
                 let venceu = Math.random() >= 0.5;
                 if (venceu) {
@@ -1471,8 +1490,6 @@
             let html = '';
             meusBilhetesSalvos.forEach((b, idx) => {
                 let totalItens = meusBilhetesSalvos.length - idx;
-                
-                // Suporte para bilhetes novos (múltiplas/simples estruturados) e legado
                 let listaItens = b.itens || [{
                     selecao: b.selecao,
                     odd: (b.retorno / b.valor).toFixed(2),
