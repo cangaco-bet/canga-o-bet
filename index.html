@@ -236,7 +236,7 @@
             font-weight: 500;
         }
 
-        /* TELA DO JOGO FORTUNE TIGER EXATAMENTE COMO NO VÍDEO */
+        /* --- TELA DO JOGO FORTUNE TIGER IDÊNTICA AO VÍDEO --- */
         #game-screen {
             display: none;
             position: fixed;
@@ -265,7 +265,6 @@
             font-weight: bold;
         }
         
-        /* Caixa Estilo Vídeo Catbox */
         .tiger-machine {
             background: linear-gradient(180deg, #181922, #0d0e13);
             border: 2px solid #ff4500;
@@ -287,10 +286,14 @@
             justify-content: center;
             gap: 12px;
             margin-bottom: 15px;
+            background: #111217;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #222;
         }
         .reel {
-            font-size: 28px;
-            background: #13141b;
+            font-size: 30px;
+            background: #1c1d26;
             width: 75px;
             height: 85px;
             display: flex;
@@ -403,6 +406,7 @@
 
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
+    <!-- Conteúdo Principal -->
     <div id="main-content">
         <header>
             <div class="logo" onclick="abrirModalDeposito()">🔥 CANGAÇO BET</div>
@@ -486,6 +490,7 @@
         </nav>
     </div>
 
+    <!-- TELA DO JOGO FORTUNE TIGER EXATAMENTE COMO NO VÍDEO -->
     <div id="game-screen">
         <div class="game-screen-header">
             <button class="btn-voltar-home" onclick="sairDoJogo()">⬅ Voltar</button>
@@ -506,6 +511,7 @@
         <div style="font-size: 11px; color: #666;">Modo Oficial Cangaço Bet</div>
     </div>
 
+    <!-- Modais -->
     <div id="searchModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -563,7 +569,7 @@
             alert('Entrando em ' + jogo + '...');
         }
 
-        // --- LÓGICA DO FORTUNE TIGER CUSTOMIZADA (Chances baixas de ganho / Perdas frequentes) ---
+        // --- LÓGICA EXATA DO FORTUNE TIGER (Chances baixas de ganho, prêmios baixos e muitas perdas) ---
         let saldoVirtual = 99.50;
 
         function entrarFortuneTiger() {
@@ -589,7 +595,7 @@
                 return;
             }
 
-            saldoVirtual -= 2.00;
+            saldoVirtual -= 2.00; // Custo da aposta
             atualizarSaldoUI();
 
             const r1 = document.getElementById('reel1');
@@ -605,21 +611,26 @@
                 const icones = ["💰", "🍊", "🍋", "🍒", "⭐", "📜"];
                 let rand = Math.random();
                 
-                // Configuração rigorosa: 92% de chance de perder e apenas 8% de chance de prêmio baixo
+                // Configuração de probabilidades solicitada:
+                // 92% de chance de derrota (itens diferentes) e apenas 8% de chance de ganho (com prêmio baixo de R$ 1.50)
                 if (rand < 0.92) {
                     // Derrota
                     r1.innerText = icones[Math.floor(Math.random() * icones.length)];
                     r2.innerText = icones[Math.floor(Math.random() * icones.length)];
                     r3.innerText = icones[Math.floor(Math.random() * icones.length)];
+                    
+                    // Garante que não fiquem iguais por coincidência na derrota
                     if(r1.innerText === r2.innerText && r2.innerText === r3.innerText) {
                         r3.innerText = "🍒";
                     }
+
                     status.style.color = "#ff4444";
                     status.innerText = "Não foi dessa vez! Tente novamente.";
                 } else {
-                    // Vitória com prêmio baixo (R$ 0.50 a R$ 1.50)
+                    // Vitória com prêmio baixo fixo de R$ 1.50
                     let premioBaixo = 1.50;
                     r1.innerText = "💰"; r2.innerText = "💰"; r3.innerText = "💰";
+                    
                     saldoVirtual += premioBaixo;
                     status.style.color = "#00ff88";
                     status.innerText = `Você ganhou um prêmio baixo: R$ ${premioBaixo.toFixed(2)}`;
