@@ -604,8 +604,6 @@
         <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
     </div>
 
-    <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
-
     <header>
         <div class="header-left">
             <div class="btn-menu-lateral" onclick="abrirSidebar()">
@@ -977,11 +975,9 @@
             splash.style.opacity = '0';
             setTimeout(() => {
                 splash.style.display = 'none';
-                tocarAudioInicio();
             }, 500);
         }
 
-        const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
         let apostasSelecionadas = [];
@@ -1038,10 +1034,7 @@
             salvarDadosStorage();
         }
 
-        function tocarAudioInicio() { audio.play().catch(e => console.log(e)); }
-
         function abrirSidebar() {
-            tocarAudioInicio();
             document.getElementById('sidebar').classList.add('open');
             document.getElementById('sidebarOverlay').style.display = 'block';
         }
@@ -1051,7 +1044,6 @@
         }
 
         function mudarAba(aba) {
-            tocarAudioInicio();
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') {
                 document.getElementById('tab-cassino').classList.add('active-tab');
@@ -1073,7 +1065,6 @@
         }
 
         function jogarCassino(nomeJogo, custoAposta) {
-            audio.pause(); audio.currentTime = 0; 
             if (saldo < custoAposta) { alert("Saldo insuficiente para jogar! Faça um depósito."); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
@@ -1269,7 +1260,6 @@
             let goleiroPulaMesmoCanto = Math.random() < 0.70;
             let cantoGoleiro = goleiroPulaMesmoCanto ? cantoEscolhido : (Math.floor(Math.random() * 5) + 1);
             if (cantoGoleiro === cantoEscolhido && !goleiroPulaMesmoCanto) {
-                // Ajusta caso caia acidentalmente no mesmo
                 cantoGoleiro = cantoEscolhido === 1 ? 2 : 1;
             }
 
@@ -1305,7 +1295,6 @@
                 }
 
                 setTimeout(() => {
-                    // É gol apenas se o goleiro NÃO pulou no mesmo canto
                     let foiGol = (cantoGoleiro !== cantoEscolhido);
                     let banner = document.getElementById('winBanner');
 
@@ -1336,7 +1325,6 @@
                         jogadaEmAndamento = false;
 
                     } else {
-                        // Defesa / Perdido
                         document.getElementById('winValorVermelho').innerText = "DEFESA!";
                         document.getElementById('winValorVermelho').style.color = "#ff2a2a";
                         document.getElementById('winValorBranco').innerText = "Tente de novo";
@@ -1451,9 +1439,9 @@
             container.innerHTML = html;
         }
 
-        function abrirModalLogin() { tocarAudioInicio(); document.getElementById('loginModal').style.display = 'flex'; }
-        function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
-        function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
+        function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+        function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
+        function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
         function fecharBilhete() { document.getElementById('betSlip').style.display = 'none'; apostasSelecionadas = []; }
 
