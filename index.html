@@ -370,7 +370,6 @@
         .team-name { width: 40%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .team-name img { width: 22px; height: 16px; object-fit: contain; border-radius: 2px; }
         
-        /* Placar em Tempo Real com Minuto/Segundo */
         .match-score-vs {
             display: flex;
             flex-direction: column;
@@ -449,18 +448,52 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
+        /* Estilo 4D Avançado para os Modais de Mercados */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
-            z-index: 999; justify-content: center; align-items: center; padding: 20px;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            z-index: 999; justify-content: center; align-items: center; padding: 15px;
         }
-        .modal-card {
-            background: linear-gradient(145deg, #191d28, #11141c);
-            width: 100%; max-width: 380px; padding: 25px; border-radius: 18px;
-            border: 1px solid #ff4500; box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-            text-align: center; position: relative; max-height: 90vh; overflow-y: auto;
+        .modal-card-4d {
+            background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
+            width: 100%; max-width: 440px; padding: 22px; border-radius: 24px;
+            border: 2px solid rgba(255, 69, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 2px 5px rgba(255,255,255,0.1);
+            text-align: center; position: relative; max-height: 88vh; overflow-y: auto;
         }
-        .modal-title { font-size: 18px; font-weight: 900; color: #ff4500; margin-bottom: 15px; }
+        .modal-card-4d::-webkit-scrollbar { width: 4px; }
+        .modal-card-4d::-webkit-scrollbar-thumb { background: #ff4500; border-radius: 4px; }
+        
+        .modal-title-4d { font-size: 18px; font-weight: 950; color: #ffb703; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .modal-subtitle-4d { font-size: 11px; color: #00ff88; font-weight: bold; margin-bottom: 15px; }
+        
+        .market-section-title {
+            text-align: left; font-size: 11px; font-weight: 900; color: #ff4500;
+            margin: 14px 0 6px 2px; text-transform: uppercase; letter-spacing: 0.5px;
+            border-left: 3px solid #ff4500; padding-left: 6px;
+        }
+        
+        .odds-grid-4d { display: grid; gap: 6px; }
+        .odd-card-4d {
+            background: linear-gradient(145deg, #1a202c, #0f1219);
+            border: 1px solid #2d3748;
+            padding: 8px 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+        }
+        .odd-card-4d:hover {
+            border-color: #ff4500;
+            background: linear-gradient(135deg, #ff450022, #1a202c);
+            transform: scale(1.01);
+        }
+        .odd-card-title { font-size: 11px; color: #ccc; font-weight: bold; text-align: left; }
+        .odd-card-val { font-size: 12px; font-weight: 900; color: #00ff88; background: #0b0c10; padding: 4px 8px; border-radius: 8px; border: 1px solid #ff450055; }
+
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
             background: #0f1118; border: 1px solid #2c3347; border-radius: 10px;
@@ -472,7 +505,7 @@
             border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
             cursor: pointer; margin-top: 5px;
         }
-        .close-modal { position: absolute; top: 12px; right: 16px; color: #aaa; font-size: 22px; cursor: pointer; }
+        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -633,7 +666,7 @@
     <!-- ABA 3: MEUS BILHETES -->
     <div id="tab-bilhetes" class="main-tab-content">
         <div class="bilhetes-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes ao Vivo</div>
             <div id="listaMeusBilhetesImpressos">
                 <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>
             </div>
@@ -664,44 +697,47 @@
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante -->
+    <!-- Boletim de Apostas Flutuante (Criar Bilhete Rápido) -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
-            <span>🎟️ BILHETE DE APOSTA</span>
+            <span>🎟️ CRIAR BILHETE DE APOSTA</span>
             <span style="cursor:pointer;" onclick="fecharBilhete()">&times;</span>
         </div>
         <div class="bet-slip-info" id="betSelectionInfo">Seleção: -</div>
         <input type="number" id="betValorInput" class="bet-slip-input" placeholder="Valor da Aposta (R$)" value="50">
         <div style="font-size: 11px; color: #00ff88; margin-bottom: 6px;" id="retornoPotencial">Retorno potencial: R$ 0,00</div>
-        <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
+        <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
     </div>
 
-    <!-- Modal de Opções de Apostas Tradicionais da Partida -->
+    <!-- Modal 4D Avançado de Opções e Mercados Tradicionais da Partida -->
     <div id="matchModal" class="modal-overlay">
-        <div class="modal-card" style="max-width: 420px;">
+        <div class="modal-card-4d">
             <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
-            <div class="modal-title" id="modalPartidaTitulo">Opções da Partida</div>
-            <div style="font-size: 12px; color: #ffb703; margin-bottom: 15px;" id="modalPartidaInfoSub">Mercados ao Vivo</div>
+            <div class="modal-title-4d" id="modalPartidaTitulo">Mercados da Partida</div>
+            <div class="modal-subtitle-4d" id="modalPartidaInfoSub">Ao Vivo | Relógio Ativo</div>
             
-            <div style="text-align: left; font-size: 12px; font-weight: bold; color: #aaa; margin-bottom: 6px;">1X2 Tradicional</div>
-            <div class="odds-grid" id="modalOdds1X2" style="margin-bottom: 15px;"></div>
+            <div class="market-section-title">1X2 Tradicional (Vencedor)</div>
+            <div class="odds-grid-4d" id="modalOdds1X2" style="grid-template-columns: repeat(3, 1fr);"></div>
 
-            <div style="text-align: left; font-size: 12px; font-weight: bold; color: #aaa; margin-bottom: 6px;">Dupla Chance (1X, 12, X2)</div>
-            <div class="odds-grid" id="modalOddsDuplaChance" style="margin-bottom: 15px; grid-template-columns: repeat(3, 1fr);"></div>
+            <div class="market-section-title">Dupla Chance</div>
+            <div class="odds-grid-4d" id="modalOddsDuplaChance" style="grid-template-columns: repeat(3, 1fr);"></div>
 
-            <div style="text-align: left; font-size: 12px; font-weight: bold; color: #aaa; margin-bottom: 6px;">Total de Gols (Mais / Menos de 2.5)</div>
-            <div class="odds-grid" id="modalOddsGols" style="margin-bottom: 15px; grid-template-columns: repeat(2, 1fr);"></div>
+            <div class="market-section-title">Total de Gols (Mais / Menos)</div>
+            <div class="odds-grid-4d" id="modalOddsGols"></div>
 
-            <div style="text-align: left; font-size: 12px; font-weight: bold; color: #aaa; margin-bottom: 6px;">Total de Escanteios (+9.5)</div>
-            <div class="odds-grid" id="modalOddsEscanteios" style="margin-bottom: 5px; grid-template-columns: repeat(2, 1fr);"></div>
+            <div class="market-section-title">Total de Escanteios</div>
+            <div class="odds-grid-4d" id="modalOddsEscanteios"></div>
+
+            <div class="market-section-title">Cartões (Amarelos / Vermelhos)</div>
+            <div class="odds-grid-4d" id="modalOddsCartoes" style="margin-bottom: 5px;"></div>
         </div>
     </div>
 
     <!-- Modal de Login -->
     <div id="loginModal" class="modal-overlay">
-        <div class="modal-card">
+        <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title">🔐 ENTRAR NA CONTA</div>
+            <div class="modal-title-4d">🔐 ENTRAR NA CONTA</div>
             <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail (Gmail cadastrado)">
             <input type="password" id="loginSenha" class="modal-input" placeholder="Sua Senha">
             <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
@@ -710,9 +746,9 @@
 
     <!-- Modal de Registro -->
     <div id="registerModal" class="modal-overlay">
-        <div class="modal-card">
+        <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title">📝 CRIAR CONTA</div>
+            <div class="modal-title-4d">📝 CRIAR CONTA</div>
             <div id="etapaCadastro1">
                 <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
                 <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
@@ -732,9 +768,9 @@
 
     <!-- Modal de Depósito -->
     <div id="depositModal" class="modal-overlay">
-        <div class="modal-card">
+        <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title">💰 DEPOSITAR (PIX)</div>
+            <div class="modal-title-4d">💰 DEPOSITAR (PIX)</div>
             <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor do depósito (R$)">
             <button class="modal-btn" onclick="realizarDeposito()">Gerar Pix e Depositar</button>
         </div>
@@ -769,12 +805,10 @@
 
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
-        const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
         
         let apostaSelecionada = null;
         let oddAtual = 0;
-        let horaPartidaSelecionada = "";
-        let ligaPartidaSelecionada = "";
+        let partidaAtivaId = null;
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
         let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
@@ -1103,15 +1137,15 @@
                         <span class="team-name"><img src="${obterBandeira(match.fora)}" alt=""> ${match.fora}</span>
                     </div>
                     <div class="odds-grid">
-                        <div class="odd-btn" onclick="event.stopPropagation(); selecionarAposta('${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, '${match.minuto}\'', '${match.liga}', this)">
+                        <div class="odd-btn" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, this)">
                             <span class="odd-label">1 (Casa)</span>
                             <span class="odd-value">${match.odds.casa}</span>
                         </div>
-                        <div class="odd-btn" onclick="event.stopPropagation(); selecionarAposta('${match.casa} x ${match.fora} (Empate)', ${match.odds.empate}, '${match.minuto}\'', '${match.liga}', this)">
+                        <div class="odd-btn" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate}, this)">
                             <span class="odd-label">X (Empate)</span>
                             <span class="odd-value">${match.odds.empate}</span>
                         </div>
-                        <div class="odd-btn" onclick="event.stopPropagation(); selecionarAposta('${match.casa} x ${match.fora} (Fora)', ${match.odds.fora}, '${match.minuto}\'', '${match.liga}', this)">
+                        <div class="odd-btn" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora}, this)">
                             <span class="odd-label">2 (Fora)</span>
                             <span class="odd-value">${match.odds.fora}</span>
                         </div>
@@ -1134,7 +1168,6 @@
                 const dados = await resposta.json();
 
                 if (dados.response && dados.response.length > 0) {
-                    // Filtrar EXCLUSIVAMENTE partidas que estejam AO VIVO (LIVE, 1H, 2H, HT)
                     const statusAoVivo = ['LIVE', '1H', '2H', 'HT', 'ET', 'P'];
                     
                     dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
@@ -1153,14 +1186,13 @@
                         });
                     });
                 }
-            } catch (e) { console.log("Erro API 1 Ao Vivo"); }
+            } catch (e) { console.log("Erro API Ao Vivo"); }
 
-            // Fallback ou suplemento simulado de partidas dinâmicas caso a API retorne vazio para testes em tempo real contínuo
             if (listaGlobalPartidas.length === 0) {
                 listaGlobalPartidas = [
                     { id: 'sim-1', casa: 'Flamengo', fora: 'Palmeiras', liga: 'Brasileirão Série A', golsCasa: 1, golsFora: 0, minuto: 34, segundo: 12, isAoVivo: true, odds: gerarOddsReais('Flamengo', 'Palmeiras') },
                     { id: 'sim-2', casa: 'Real Madrid', fora: 'Barcelona', liga: 'Campeonato Espanhol', golsCasa: 2, golsFora: 2, minuto: 78, segundo: 45, isAoVivo: true, odds: gerarOddsReais('Real Madrid', 'Barcelona') },
-                    { id: 'sim-3', casa: 'Manchester City', fora: 'Arsenal', liga: 'Campeonato Inglês', golsCasa: 0, golsFora: 1, minuto: 22, sign: 30, segundo: 5, isAoVivo: true, odds: gerarOddsReais('Manchester City', 'Arsenal') },
+                    { id: 'sim-3', casa: 'Manchester City', fora: 'Arsenal', liga: 'Campeonato Inglês', golsCasa: 0, golsFora: 1, minuto: 22, segundo: 5, isAoVivo: true, odds: gerarOddsReais('Manchester City', 'Arsenal') },
                     { id: 'sim-4', casa: 'Milan', fora: 'Inter de Milão', liga: 'Campeonato Italiano', golsCasa: 1, golsFora: 1, minuto: 60, segundo: 30, isAoVivo: true, odds: gerarOddsReais('Milan', 'Inter de Milão') }
                 ];
             }
@@ -1170,7 +1202,6 @@
             iniciarRelogioTempoReal();
         }
 
-        // Atualização em tempo real dos segundos, minutos e simulação dinâmica de gols sem precisar atualizar a página
         function iniciarRelogioTempoReal() {
             if (intervaloAtualizacaoAoVivo) clearInterval(intervaloAtualizacaoAoVivo);
 
@@ -1181,16 +1212,14 @@
                         if (match.segundo >= 60) {
                             match.segundo = 0;
                             match.minuto++;
-                            if (match.minuto > 95) match.minuto = 90; // Mantém no tempo regulamentar/acréscimos
+                            if (match.minuto > 95) match.minuto = 90;
 
-                            // 5% de chance de sair um gol em tempo real para simular atualização dinâmica
                             if (Math.random() < 0.04) {
                                 if (Math.random() > 0.5) match.golsCasa++;
                                 else match.golsFora++;
                             }
                         }
 
-                        // Atualiza elementos na tela se existirem
                         const elTempo = document.getElementById(`time-${match.id}`);
                         const elScore = document.getElementById(`score-${match.id}`);
                         if (elTempo) elTempo.innerText = `${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s`;
@@ -1202,14 +1231,15 @@
 
         function abrirModalPartidaDetalhes(match) {
             tocarAudioInicio();
+            partidaAtivaId = match.id;
             document.getElementById('modalPartidaTitulo').innerText = `${match.casa} vs ${match.fora}`;
-            document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto: ${match.minuto}'`;
+            document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto Atual: ${match.minuto}'`;
 
-            // 1X2
+            // 1X2 Tradicional
             document.getElementById('modalOdds1X2').innerHTML = `
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">1</span><span class="odd-value">${match.odds.casa}</span></div>
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Empate)', ${match.odds.empate}, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">X</span><span class="odd-value">${match.odds.empate}</span></div>
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Fora)', ${match.odds.fora}, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">2</span><span class="odd-value">${match.odds.fora}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1</span><span class="odd-card-val">${match.odds.casa}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X</span><span class="odd-card-val">${match.odds.empate}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">2</span><span class="odd-card-val">${match.odds.fora}</span></div>
             `;
 
             // Dupla Chance
@@ -1217,21 +1247,32 @@
             let dc12 = (parseFloat(match.odds.empate) * 0.8).toFixed(2);
             let dc2 = (parseFloat(match.odds.fora) * 0.7).toFixed(2);
             document.getElementById('modalOddsDuplaChance').innerHTML = `
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Dupla Chance 1X)', ${dc1}, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">1X</span><span class="odd-value">${dc1}</span></div>
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Dupla Chance 12)', ${dc12}, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">12</span><span class="odd-value">${dc12}</span></div>
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2}, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">X2</span><span class="odd-value">${dc2}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance 1X)', ${dc1})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1X</span><span class="odd-card-val">${dc1}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance 12)', ${dc12})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">12</span><span class="odd-card-val">${dc12}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X2</span><span class="odd-card-val">${dc2}</span></div>
             `;
 
-            // Gols (+2.5 / -2.5)
+            // Total de Gols Ampliado (0.5 até 4.5)
             document.getElementById('modalOddsGols').innerHTML = `
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Mais de 2.5 Gols)', 1.85, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">Mais 2.5</span><span class="odd-value">1.85</span></div>
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">Menos 2.5</span><span class="odd-value">1.95</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 0.5 Gols)', 1.12)"><span class="odd-card-title">Mais de 0.5 Gols</span><span class="odd-card-val">1.12</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 1.5 Gols)', 1.42)"><span class="odd-card-title">Mais de 1.5 Gols</span><span class="odd-card-val">1.42</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 2.5 Gols)', 1.85)"><span class="odd-card-title">Mais de 2.5 Gols</span><span class="odd-card-val">1.85</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Gols)', 2.75)"><span class="odd-card-title">Mais de 3.5 Gols</span><span class="odd-card-val">2.75</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95)"><span class="odd-card-title">Menos de 2.5 Gols</span><span class="odd-card-val">1.95</span></div>
             `;
 
-            // Escanteios (+9.5)
+            // Escanteios Ampliados (7.5 até 12.5)
             document.getElementById('modalOddsEscanteios').innerHTML = `
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">Mais 9.5 Escanteios</span><span class="odd-value">1.90</span></div>
-                <div class="odd-btn" onclick="selecionarApostaModal('${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80, '${match.minuto}\'', '${match.liga}')"><span class="odd-label">Menos 9.5 Escanteios</span><span class="odd-value">1.80</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 7.5 Escanteios)', 1.45)"><span class="odd-card-title">Mais de 7.5 Cantos</span><span class="odd-card-val">1.45</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90)"><span class="odd-card-title">Mais de 9.5 Cantos</span><span class="odd-card-val">1.90</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 11.5 Escanteios)', 2.60)"><span class="odd-card-title">Mais de 11.5 Cantos</span><span class="odd-card-val">2.60</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80)"><span class="odd-card-title">Menos de 9.5 Cantos</span><span class="odd-card-val">1.80</span></div>
+            `;
+
+            // Cartões
+            document.getElementById('modalOddsCartoes').innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Cartões)', 1.75)"><span class="odd-card-title">Mais de 3.5 Cartões na Partida</span><span class="odd-card-val">1.75</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 4.5 Cartões)', 2.20)"><span class="odd-card-title">Mais de 4.5 Cartões na Partida</span><span class="odd-card-val">2.20</span></div>
             `;
 
             document.getElementById('matchModal').style.display = 'flex';
@@ -1241,21 +1282,25 @@
             document.getElementById('matchModal').style.display = 'none';
         }
 
-        function selecionarAposta(jogoOdd, odd, horaMatch, ligaMatch, elemento) {
+        function selecionarAposta(matchId, jogoOdd, odd, elemento) {
             document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
             if(elemento) elemento.classList.add('selected');
+            partidaAtivaId = matchId;
             apostaSelecionada = jogoOdd;
             oddAtual = odd;
-            horaPartidaSelecionada = horaMatch;
-            ligaPartidaSelecionada = ligaMatch;
             document.getElementById('betSelectionInfo').innerText = `Seleção: ${jogoOdd} (Odd: ${odd})`;
             document.getElementById('betSlip').style.display = 'block';
             atualizarRetornoPotencial();
         }
 
-        function selecionarApostaModal(jogoOdd, odd, horaMatch, ligaMatch) {
+        function selecionarApostaModal(matchId, jogoOdd, odd) {
             fecharModalPartida();
-            selecionarAposta(jogoOdd, odd, horaMatch, ligaMatch, null);
+            partidaAtivaId = matchId;
+            apostaSelecionada = jogoOdd;
+            oddAtual = odd;
+            document.getElementById('betSelectionInfo').innerText = `Seleção: ${jogoOdd} (Odd: ${odd})`;
+            document.getElementById('betSlip').style.display = 'block';
+            atualizarRetornoPotencial();
         }
 
         function fecharBilhete() {
@@ -1271,7 +1316,7 @@
             document.getElementById('retornoPotencial').innerText = `Retorno potencial: R$ ${retorno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
         }
 
-        function confirmarApostaEsportiva() {
+        function confirmarEEnviarParaBilhetes() {
             let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
             if (valor <= 0) { alert('Insira um valor válido!'); return; }
             if (saldo < valor) { alert('Saldo insuficiente!'); return; }
@@ -1281,14 +1326,34 @@
             registarTransacao('aposta', `Aposta Esportiva (${apostaSelecionada})`, -valor);
 
             let retorno = (valor * oddAtual).toFixed(2);
-            let novoBilhete = { selecao: apostaSelecionada, valor: valor.toFixed(2), retorno: retorno, hora: horaPartidaSelecionada, liga: ligaPartidaSelecionada, status: "⏳ Aguardando Resultado", cor: "#ffb703" };
+            
+            // Busca a partida atual para capturar placar e minuto exatos ao vivo
+            let partidaObj = listaGlobalPartidas.find(p => p.id === partidaAtivaId);
+            let placarAoVivoStr = partidaObj ? `${partidaObj.golsCasa} - ${partidaObj.golsFora}` : "0 - 0";
+            let minutoAoVivoStr = partidaObj ? `${partidaObj.minuto}'` : "Ao Vivo";
+            let ligaNomeStr = partidaObj ? partidaObj.liga : "Cangaço Bet";
+
+            let novoBilhete = { 
+                selecao: apostaSelecionada, 
+                valor: valor.toFixed(2), 
+                retorno: retorno, 
+                hora: minutoAoVivoStr, 
+                placar: placarAoVivoStr,
+                liga: ligaNomeStr, 
+                matchId: partidaAtivaId,
+                status: "⏳ Aguardando Resultado", 
+                cor: "#ffb703" 
+            };
 
             meusBilhetesSalvos.push(novoBilhete);
             salvarDadosStorage();
             let indexBilhete = meusBilhetesSalvos.length - 1;
 
             fecharBilhete();
-            alert(`✅ Aposta confirmada! Valor: R$ ${valor.toFixed(2)} | Retorno: R$ ${retorno}.`);
+            
+            // Redireciona automaticamente para a aba Meus Bilhetes como solicitado
+            mudarAba('bilhetes');
+            alert(`✅ Bilhete criado com sucesso! Redirecionado para a aba Meus Bilhetes.`);
 
             setTimeout(() => {
                 let venceu = Math.random() >= 0.5;
@@ -1303,21 +1368,33 @@
                     meusBilhetesSalvos[indexBilhete].cor = "#ff4500";
                 }
                 salvarDadosStorage();
-            }, 15000);
+                if (document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
+                    renderizarBilhetesNaTela();
+                }
+            }, 12000);
         }
 
         function renderizarBilhetesNaTela() {
             const container = document.getElementById('listaMeusBilhetesImpressos');
-            if (meusBilhetesSalvos.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`; return; }
+            if (meusBilhetesSalvos.length === 0) { 
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`; 
+                return; 
+            }
 
             let html = '';
             meusBilhetesSalvos.forEach((b, idx) => {
+                // Atualiza o placar ao vivo dinamicamente se a partida ainda estiver ativa na memória
+                let matchAtual = listaGlobalPartidas.find(p => p.id === b.matchId);
+                let placarExatoVivo = matchAtual ? `${matchAtual.golsCasa} - ${matchAtual.golsFora}` : (b.placar || "0 - 0");
+                let minutoExatoVivo = matchAtual ? `${matchAtual.minuto}'` : (b.hora || "Ao Vivo");
+
                 html += `
                     <div class="bilhete-impresso">
-                        <div class="bilhete-header"><span>COMPROVATIVO DE APOSTA #${idx + 1}</span><span>${b.liga || 'Cangaço Bet'}</span></div>
+                        <div class="bilhete-header"><span>COMPROVATIVO DE APOSTA #${idx + 1}</span><span>${b.liga}</span></div>
                         <div class="bilhete-detalhes">
                             <div><b>Seleção:</b> ${b.selecao}</div>
-                            <div><b>Horário:</b> ${b.hora}</div>
+                            <div><b>Minuto Atual:</b> ${minutoExatoVivo}</div>
+                            <div><b>Placar Exato ao Vivo:</b> <span style="color: #00ff88; font-weight: bold;">${placarExatoVivo}</span></div>
                             <div><b>Apostado:</b> R$ ${b.valor} | <b>Retorno:</b> R$ ${b.retorno}</div>
                         </div>
                         <div class="bilhete-status" style="color: ${b.cor};">Estado: ${b.status}</div>
