@@ -136,7 +136,7 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* --- JOGO PENALTY 3D EXATAMENTE IGUAL AO SEU PRINT/VÍDEO --- */
+        /* --- JOGO PENALTY SHOOT-OUT 3D LIMPO E PROFISSIONAL --- */
         #footballModal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: radial-gradient(circle, #092015 0%, #020804 100%);
@@ -150,7 +150,7 @@
         .modal-title-football { font-size: 15px; font-weight: 950; color: #00ff88; text-transform: uppercase; }
         .close-fullscreen { color: #fff; font-size: 24px; cursor: pointer; font-weight: bold; }
 
-        /* CAMPO / ESTÁDIO 3D */
+        /* ESTÁDIO 3D */
         .stadium-container-3d {
             position: relative; width: 100%; max-width: 480px; flex-grow: 1;
             background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=80') center/cover no-repeat;
@@ -160,18 +160,17 @@
         }
         .stadium-overlay-dark {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 15, 8, 0.45); z-index: 1;
+            background: rgba(3, 15, 8, 0.4); z-index: 1;
         }
 
-        /* MULTIPLICADORES NO TOPO (EXATAMENTE COMO NO VÍDEO: 1.92x, 3.84x, 7.68x...) */
+        /* MULTIPLICADORES NO TOPO */
         .multipliers-bar {
             position: absolute; top: 10px; left: 0; width: 100%; display: flex; justify-content: space-around;
             padding: 0 15px; z-index: 15; pointer-events: none;
         }
         .mult-badge {
-            background: rgba(0, 0, 0, 0.7); border: 1px solid #00ff88; color: #00ff88;
+            background: rgba(0, 0, 0, 0.75); border: 1px solid #00ff88; color: #00ff88;
             padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: 900;
-            box-shadow: 0 2px 8px rgba(0,255,136,0.4);
         }
         .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); }
 
@@ -185,22 +184,22 @@
         .target-spot img { width: 28px; height: 28px; object-fit: contain; }
         @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; } }
 
-        /* POSIÇÕES DOS 5 ALVOS NA BALIZA (EXATAMENTE COMO O PENALTY SHOOT-OUT) */
         #target1 { top: 32%; left: 15%; }
         #target2 { top: 32%; right: 15%; }
         #target3 { top: 52%; left: 45%; transform: translateX(-50%); }
         #target4 { top: 42%; left: 28%; }
         #target5 { top: 42%; right: 28%; }
 
-        /* GOLEIRO 3D REALISTA NO CENTRO */
+        /* GOLEIRO 3D PROFISSIONAL SEM MOLDURA NEM FUNDO BRANCO */
         .goleiro-3d-img {
-            position: absolute; top: 28%; left: 50%; transform: translateX(-50%);
-            width: 110px; height: 130px; object-fit: contain; z-index: 10;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.9));
+            position: absolute; top: 24%; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 140px; object-fit: contain; z-index: 10;
+            background: transparent; border: none; outline: none; box-shadow: none;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.95));
             transition: all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
-        /* BOLA E JOGADOR */
+        /* BOLA */
         .bola-penalty-3d {
             position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%);
             width: 36px; height: 36px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
@@ -208,10 +207,10 @@
             z-index: 15; transition: all 0.5s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
-        /* MENSAGEM DE GANHO GIGANTE EM VERMELHO/DOURADO (IGUAL AO PRINT) */
+        /* TELA DE VITÓRIA / GOL */
         .win-display-banner {
             position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 30; display: none; text-align: center; width: 100%;
+            z-index: 30; display: none; text-align: center; width: 100%; pointer-events: none;
         }
         .win-red-amount {
             font-size: 32px; font-weight: 950; color: #ff2a2a;
@@ -268,7 +267,7 @@
         <div class="header-right">
             <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
-            <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTAR</button>
+            <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
         </div>
     </header>
 
@@ -331,7 +330,7 @@
         </div>
     </div>
 
-    <!-- JOGO PENALTY SHOOT-OUT 3D (TELA CHEIA IDÊNTICA AO PRINT/VÍDEO) -->
+    <!-- JOGO PENALTY SHOOT-OUT 3D (TELA CHEIA PROFISSIONAL) -->
     <div id="footballModal">
         <div class="penalty-header-top">
             <div>
@@ -345,7 +344,7 @@
         <div class="stadium-container-3d" id="stadiumContainer">
             <div class="stadium-overlay-dark"></div>
 
-            <!-- MULTIPLICADORES NO TOPO (EXATAMENTE COMO NO SEU VÍDEO) -->
+            <!-- MULTIPLICADORES NO TOPO -->
             <div class="multipliers-bar">
                 <div class="mult-badge" id="m1">1.92x</div>
                 <div class="mult-badge" id="m2">3.84x</div>
@@ -354,7 +353,7 @@
                 <div class="mult-badge" id="m5">30.72x</div>
             </div>
 
-            <!-- GOLEIRO 3D REALISTA NO CENTRO -->
+            <!-- GOLEIRO 3D 100% LIMPO E SEM MOLDURA -->
             <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=300&auto=format&fit=crop&q=80" class="goleiro-3d-img" id="goleiroEl" alt="Goleiro">
 
             <!-- 5 ALVOS DE BOLA NOS CANTOS DA BALIZA -->
@@ -367,10 +366,10 @@
             <!-- BOLA -->
             <div class="bola-penalty-3d" id="bolaEl"></div>
 
-            <!-- TELA DE VITÓRIA / GOL (EXATAMENTE COM A ESTÉTICA DO PRINT R$ 20,00 VIROU R$ 614,40) -->
+            <!-- TELA DE VITÓRIA / GOL -->
             <div class="win-display-banner" id="winBanner">
                 <div class="win-red-amount" id="winValorVermelho">R$ 20,00 virou</div>
-                <div class="win-white-text" id="winValorBranco">R$ 614,40</div>
+                <div class="win-white-text" id="winValorBranco">R$ 38,40</div>
             </div>
         </div>
 
@@ -473,26 +472,22 @@
             let bola = document.getElementById('bolaEl');
             let goleiro = document.getElementById('goleiroEl');
 
-            // Simula a direção do chute baseada no alvo escolhido
             let offsetX = (cantoEscolhido === 1 || cantoEscolhido === 4) ? -90 : (cantoEscolhido === 2 || cantoEscolhido === 5 ? 90 : 0);
             let offsetY = -170;
 
             setTimeout(() => {
                 bola.style.transform = `translateX(calc(-50% + ${offsetX}px)) translateY(${offsetY}px) scale(0.75)`;
                 
-                // O goleiro pula para tentar defender
                 let puloGoleiroX = offsetX * 0.9;
-                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-35px) scale(1.15) rotate(${offsetX > 0 ? 25 : -25}deg)`;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-30px) scale(1.12) rotate(${offsetX > 0 ? 22 : -22}deg)`;
 
                 setTimeout(() => {
-                    // Chance de gol baseada no nível (estilo jogo de crash/penalty real)
                     let goleiroDefendeu = Math.random() < 0.25 && nivelAtual > 1;
 
                     if (!goleiroDefendeu) {
                         let mult = multiplicadores[nivelAtual];
                         let premioTotal = apostaVal * mult;
                         
-                        // Exibe a tela de vitória idêntica ao seu print do vídeo
                         document.getElementById('winValorVermelho').innerText = `R$ ${apostaVal.toFixed(2)} virou`;
                         document.getElementById('winValorBranco').innerText = `R$ ${premioTotal.toFixed(2)}`;
                         document.getElementById('winBanner').style.display = 'block';
