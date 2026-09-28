@@ -130,6 +130,7 @@
     </div>
 
     <script>
+        // Lógica e script ajustados conforme solicitado (probabilidade de ganho baixa e valores reduzidos)
         let saldo = 99.50;
         const custoAposta = 2.00;
 
@@ -139,7 +140,7 @@
                 return;
             }
 
-            // Deduz o valor da aposta
+            // Desconta o valor da aposta
             saldo -= custoAposta;
             document.getElementById("saldo-val").innerText = saldo.toFixed(2);
 
@@ -157,19 +158,17 @@
             s3.innerText = "🔄";
 
             setTimeout(() => {
-                // PROBABILIDADES AJUSTADAS:
-                // 85% de chance de perder (itens diferentes)
-                // 15% de chance de ganhar um prêmio baixo
+                // Configuração das probabilidades: 
+                // 90% de chance de derrota (itens diferentes) e apenas 10% de chance de prêmio baixo.
                 let rand = Math.random();
                 let icones = ["💰", "🍊", "🍋", "🍒", "⭐"];
 
-                if (rand < 0.85) {
-                    // Derrota (itens desalinhados)
+                if (rand < 0.90) {
+                    // Derrota
                     s1.innerText = icones[Math.floor(Math.random() * icones.length)];
                     s2.innerText = icones[Math.floor(Math.random() * icones.length)];
                     s3.innerText = icones[Math.floor(Math.random() * icones.length)];
                     
-                    // Garante que não fiquem iguais por acidente
                     if(s1.innerText === s2.innerText && s2.innerText === s3.innerText) {
                         s3.innerText = "❌";
                     }
@@ -177,9 +176,9 @@
                     msg.style.color = "#ff4444";
                     msg.innerText = "Não foi dessa vez! Tente novamente.";
                 } else {
-                    // Vitória com prêmio baixo (ex: R$ 0.50 a R$ 1.50)
-                    let premioBaixo = (Math.random() * 1.0 + 0.5).toFixed(2);
-                    let iconeSorteado = "💰"; // Ícone de ganho baixo
+                    // Vitória com prêmio muito baixo (entre R$ 0.20 e R$ 1.00)
+                    let premioBaixo = (Math.random() * 0.8 + 0.2).toFixed(2);
+                    let iconeSorteado = "💰";
                     
                     s1.innerText = iconeSorteado;
                     s2.innerText = iconeSorteado;
