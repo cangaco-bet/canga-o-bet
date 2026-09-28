@@ -306,6 +306,8 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             text-align: center;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-title { font-size: 18px; font-weight: bold; color: #ff4500; margin-bottom: 15px; }
         .modal-input {
@@ -346,7 +348,7 @@
             </div>
             <div class="logo" onclick="mudarAba('cassino')">🔥 CANGAÇO BET</div>
         </div>
-        <button class="btn-entrar-topo" onclick="abrirModalEntrar()">ENTRAR</button>
+        <button class="btn-entrar-topo" onclick="abrirModalRegistro()">REGISTRAR</button>
     </header>
 
     <div class="quick-search-bar">
@@ -354,7 +356,6 @@
         <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
     </div>
 
-    <!-- Menu Lateral (Engrenagem atualizada) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -370,12 +371,11 @@
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
             💰 Depositar (PIX)
         </div>
-        <div class="sidebar-item" onclick="abrirModalEntrar(); fecharSidebar();">
-            🔑 Entrar
+        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">
+            📝 Registrar Conta
         </div>
     </div>
 
-    <!-- ABA 1: CASSINO -->
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
             <div class="promo-track" id="promoTrack">
@@ -383,21 +383,21 @@
                     <div class="promo-content">
                         <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
                         <p>Receba até R$1.000 + 50 Giros Grátis!</p>
-                        <button class="btn-cadastre" onclick="abrirModalEntrar()">Resgatar</button>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
                     </div>
                 </div>
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
                     <div class="promo-content">
                         <h3>⚡ CASHBACK DIÁRIO</h3>
                         <p>Até 12% de retorno em todas as apostas!</p>
-                        <button class="btn-cadastre" onclick="abrirModalEntrar()">Aproveitar</button>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
                     </div>
                 </div>
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
                     <div class="promo-content">
                         <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
                         <p>Participe e concorra a prêmios em dinheiro!</p>
-                        <button class="btn-cadastre" onclick="abrirModalEntrar()">Participar</button>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Participar</button>
                     </div>
                 </div>
             </div>
@@ -465,7 +465,6 @@
         </div>
     </div>
 
-    <!-- ABA 2: ESPORTES -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
             <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Disponíveis)</div>
@@ -475,7 +474,6 @@
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span>🎟️ BILHETE DE APOSTA</span>
@@ -487,18 +485,20 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
-    <!-- Modal de Entrar (Gmail e Senha) -->
-    <div id="loginModal" class="modal-overlay">
+    <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title">🔑 ENTRAR NA CONTA</div>
-            <input type="email" id="loginEmail" class="modal-input" placeholder="Seu E-mail (Gmail)">
-            <input type="password" id="loginSenha" class="modal-input" placeholder="Senha da Conta">
-            <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
+            <div class="modal-title">📝 CRIAR CONTA</div>
+            <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
+            <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
+            <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone">
+            <input type="text" id="regCpf" class="modal-input" placeholder="CPF">
+            <input type="date" id="regNascimento" class="modal-input" placeholder="Data de Nascimento">
+            <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
+            <button class="modal-btn" onclick="realizarRegistro()">Registar Conta</button>
         </div>
     </div>
 
-    <!-- Modal de Depósito -->
     <div id="depositModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -540,16 +540,20 @@
             }
         }
 
-        function realizarLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const senha = document.getElementById('loginSenha').value;
+        function realizarRegistro() {
+            const nome = document.getElementById('regNome').value;
+            const email = document.getElementById('regEmail').value;
+            const telefone = document.getElementById('regTelefone').value;
+            const cpf = document.getElementById('regCpf').value;
+            const nascimento = document.getElementById('regNascimento').value;
+            const senha = document.getElementById('regSenha').value;
 
-            if (!email || !senha) {
-                alert('Por favor, preencha o e-mail e a senha!');
+            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
+                alert('Por favor, preencha todos os campos do registo!');
                 return;
             }
             fecharModais();
-            alert(`✅ Login efetuado com sucesso para ${email}! Bem-vindo de volta ao Cangaço Bet.`);
+            alert(`✅ Conta criada com sucesso para ${nome} (${email})! Bem-vindo ao Cangaço Bet.`);
         }
 
         function pesquisaGeral() {
@@ -664,7 +668,7 @@
             alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}!`);
         }
 
-        function abrirModalEntrar() { tocarAudioInicio(); document.getElementById('loginModal').style.display = 'flex'; }
+        function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
