@@ -536,6 +536,37 @@
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
         }
+        
+        /* NOVO BOTÃO BONITO PARA SAIR PARA A TELA INICIAL */
+        .btn-voltar-home {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 12px auto;
+            background: linear-gradient(135deg, #1f2430, #13161f);
+            border: 2px solid #ff4500;
+            color: #ffb703;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+            transition: 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-voltar-home:hover {
+            background: linear-gradient(135deg, #ff4500, #cc3500);
+            color: #fff;
+            border-color: #ffb703;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
+        }
+
         .stadium-container-3d {
             position: relative; width: 100%; height: 420px;
             background: radial-gradient(circle at 50% 30%, #174d2b 0%, #081d11 100%);
@@ -767,8 +798,12 @@
 
     <!-- ABA PENALTY CANGAÇO -->
     <div id="tab-penalty" class="main-tab-content">
-        <div class="section-title">🏆 PENALTY CANGAÇO</div>
         <div id="penaltySectionContainer">
+            <!-- NOVO BOTÃO BONITO PARA VOLTAR À TELA INICIAL -->
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">
+                🏠 Voltar para a Tela Inicial
+            </button>
+
             <div class="stadium-container-3d" id="stadiumContainer">
                 <div class="goal-frame"><div class="goal-net"></div></div>
 
@@ -912,8 +947,8 @@
         </div>
     </div>
 
-    <!-- Áudio do Penalty que toca APENAS ao chutar/começar a aposta -->
-    <audio id="penaltyAudio" src="https://files.catbox.moe/q0a2z0.mp3" preload="auto"></audio>
+    <!-- Áudio do Penalty -->
+    <audio id="penaltyAudio" src="https://files.catbox.moe/q0a2z0.mp3" preload="auto" loop></audio>
 
     <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
@@ -1088,7 +1123,7 @@
         }
 
         function mudarAba(aba) {
-            // Se sair da aba penalty para qualquer outra, para imediatamente a música
+            // Se sair da aba penalty para qualquer outra aba, a música para imediatamente
             if(aba !== 'penalty') {
                 pararMusicaPenalty();
             }
@@ -1143,6 +1178,14 @@
             setTimeout(() => {
                 penaltyLoadingScreen.style.display = 'none';
                 document.getElementById('tab-penalty').classList.add('active-tab');
+                
+                // Toca a música exatamente ao clicar em entrar no jogo após 100%
+                const penaltyAudio = document.getElementById('penaltyAudio');
+                if(penaltyAudio) {
+                    penaltyAudio.currentTime = 0;
+                    penaltyAudio.play().catch(e => console.log(e));
+                }
+
                 iniciarNovoPenalty();
             }, 500);
         }
@@ -1334,10 +1377,9 @@
             mostrarAlvos(false);
             let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
 
-            // Tocar áudio apenas no momento de clicar e iniciar a cobrança do pênalti
+            // Garante que a música continua tocando ao chutar o pênalti
             const penaltyAudio = document.getElementById('penaltyAudio');
-            if(penaltyAudio) {
-                penaltyAudio.currentTime = 0;
+            if(penaltyAudio && penaltyAudio.paused) {
                 penaltyAudio.play().catch(e => console.log(e));
             }
 
