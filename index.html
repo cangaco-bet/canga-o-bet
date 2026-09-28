@@ -629,7 +629,7 @@
     <!-- TELA DE CARREGAMENTO DO PENALTY CANGAÇO -->
     <div id="penaltyLoadingScreen">
         <div class="penalty-loading-title">PENALTY CANGAÇO</div>
-        <img src="https://files.catbox.moe/onqvbv.png" class="splash-banner" alt="Penalty Cangaço Capa">
+        <img src="https://files.catbox.moe/onqvbv.png" class="splash-banner" alt="Penalty Cangaço Capa" style="animation: float4D 3s ease-in-out infinite;">
         <div class="loading-container">
             <div class="loading-bar" id="penaltyLoadingBar"></div>
         </div>
@@ -912,7 +912,7 @@
         </div>
     </div>
 
-    <!-- Áudio do Penalty solicitado -->
+    <!-- Áudio do Penalty que toca APENAS ao chutar/começar a aposta -->
     <audio id="penaltyAudio" src="https://files.catbox.moe/q0a2z0.mp3" preload="auto"></audio>
 
     <!-- Boletim de Apostas Flutuante -->
@@ -994,13 +994,13 @@
         const textoCarregamento = document.getElementById('loadingText');
         const botaoEntrarSplash = document.getElementById('btnEntrarSplash');
 
-        let intervaloCarregamento = setInterval(() => {
+        let intGlobal = setInterval(() => {
             progresso += 2;
             if (progresso <= 100) {
                 barra.style.width = progresso + '%';
                 textoCarregamento.innerText = `A CARREGAR... ${progresso}%`;
             } else {
-                clearInterval(intervaloCarregamento);
+                clearInterval(intGlobal);
                 textoCarregamento.innerText = "PRONTO!";
                 botaoEntrarSplash.style.display = 'block';
             }
@@ -1070,6 +1070,14 @@
             salvarDadosStorage();
         }
 
+        function pararMusicaPenalty() {
+            const audio = document.getElementById('penaltyAudio');
+            if(audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        }
+
         function abrirSidebar() {
             document.getElementById('sidebar').classList.add('open');
             document.getElementById('sidebarOverlay').style.display = 'block';
@@ -1080,6 +1088,11 @@
         }
 
         function mudarAba(aba) {
+            // Se sair da aba penalty para qualquer outra, para imediatamente a música
+            if(aba !== 'penalty') {
+                pararMusicaPenalty();
+            }
+
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') {
                 document.getElementById('tab-cassino').classList.add('active-tab');
@@ -1321,7 +1334,7 @@
             mostrarAlvos(false);
             let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
 
-            // Tocar áudio apenas no início da jogada/aposta
+            // Tocar áudio apenas no momento de clicar e iniciar a cobrança do pênalti
             const penaltyAudio = document.getElementById('penaltyAudio');
             if(penaltyAudio) {
                 penaltyAudio.currentTime = 0;
