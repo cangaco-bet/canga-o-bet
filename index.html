@@ -222,31 +222,31 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* --- TELA CHEIA IMERSIVA PARA O CANGAÇO FOOTBALL 4D HD --- */
+        /* --- JOGO EM TELA CHEIA TOTALMENTE PROFISSIONAL E IMERSIVO --- */
         #footballModal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle, #163622 0%, #050d08 100%);
+            background: radial-gradient(circle, #102a1b 0%, #030805 100%);
             z-index: 99999; flex-direction: column; justify-content: space-between; align-items: center;
-            padding: 15px; overflow-y: auto;
+            padding: 12px; overflow: hidden;
         }
         .football-fullscreen-header {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 15px; background: rgba(0,0,0,0.6); border-radius: 12px; border: 1px solid #00ff88;
+            padding: 10px 16px; background: rgba(0,0,0,0.7); border-radius: 14px; border: 1px solid #00ff88;
         }
-        .modal-title-football { font-size: 18px; font-weight: 950; color: #00ff88; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-title-football { font-size: 16px; font-weight: 950; color: #00ff88; text-transform: uppercase; letter-spacing: 1px; }
         .close-fullscreen { color: #fff; font-size: 26px; cursor: pointer; font-weight: bold; }
 
-        /* ESTÁDIO EM TELA CHEIA HD COM AVATARES REAIS TEXTURIZADOS */
+        /* ESTÁDIO EM TELA CHEIA COM IMAGENS HD REAIS */
         .stadium-container-fullscreen {
-            position: relative; width: 100%; max-width: 500px; flex-grow: 1; min-height: 380px;
+            position: relative; width: 100%; max-width: 480px; flex-grow: 1;
             background: linear-gradient(180deg, #1b5e3b 0%, #0a2618 100%);
             border: 4px solid #ffb703; border-radius: 20px; overflow: hidden;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.85), 0 10px 30px rgba(0,255,136,0.5);
-            margin: 10px 0; cursor: crosshair; touch-action: none;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9), 0 10px 35px rgba(0,255,136,0.5);
+            margin: 8px 0; cursor: crosshair; touch-action: none; display: flex; justify-content: center; align-items: center;
         }
         .goal-post-fs {
-            position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
-            width: 78%; height: 130px; border: 6px solid #ffffff; border-bottom: none;
+            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+            width: 82%; height: 125px; border: 6px solid #ffffff; border-bottom: none;
             border-radius: 12px 12px 0 0; box-shadow: 0 0 25px rgba(255,255,255,0.8);
         }
         .goal-net-fs {
@@ -255,72 +255,23 @@
                         repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.2) 12px, rgba(255,255,255,0.2) 14px);
         }
 
-        /* --- BONECO GOLEIRO 4D HD REAL (COM CABEÇA, BRAÇOS, LUVAS E CORPO) --- */
-        .goleiro-avatar-hd {
-            position: absolute; top: 35px; left: 50%; transform: translateX(-50%);
-            width: 70px; height: 80px; z-index: 10;
+        /* --- GOLEIRO HD 4D (IMAGEM REAL EM ALTA DEFINIÇÃO PULANDO) --- */
+        .goleiro-img-hd {
+            position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+            width: 95px; height: 95px; object-fit: contain; z-index: 10;
+            filter: drop-shadow(0 0 12px rgba(0,255,136,0.8));
             transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
-        .goleiro-cabeca {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 24px; height: 24px; background: radial-gradient(circle at 30% 30%, #ffdfc4, #b56536);
-            border-radius: 50%; border: 2px solid #222; box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-        }
-        .goleiro-tronco {
-            position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
-            width: 44px; height: 32px; background: linear-gradient(135deg, #e74c3c, #900c3f);
-            border-radius: 8px; border: 2px solid #ffb703; box-shadow: 0 4px 8px rgba(0,0,0,0.7);
-        }
-        .goleiro-braco-esq, .goleiro-braco-dir {
-            position: absolute; top: 24px; width: 14px; height: 26px; background: #e74c3c;
-            border-radius: 6px; border: 1px solid #ffb703;
-        }
-        .goleiro-braco-esq { left: -10px; transform: rotate(15deg); }
-        .goleiro-braco-dir { right: -10px; transform: rotate(-15deg); }
-        .goleiro-luva-esq, .goleiro-luva-dir {
-            position: absolute; bottom: -4px; width: 16px; height: 16px; background: #00ff88;
-            border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 10px #00ff88;
-        }
-        .goleiro-luva-esq { left: -14px; }
-        .goleiro-luva-dir { right: -14px; }
-        .goleiro-pernas {
-            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 36px; height: 26px; background: #111; border-radius: 6px;
-        }
 
-        /* --- BONECO JOGADOR 4D HD REAL (COM CORPO, CABEÇA, PERNAS E ANIMAÇÃO DE CHUTE) --- */
-        .jogador-avatar-hd {
-            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-            width: 60px; height: 85px; z-index: 12;
-            transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+        /* --- JOGADOR HD 4D (IMAGEM REAL COM ANIMAÇÃO DE CHUTE) --- */
+        .jogador-img-hd {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 120px; object-fit: contain; z-index: 12;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+            transition: transform 0.4s ease-in-out;
         }
-        .jogador-cabeca {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 24px; height: 24px; background: radial-gradient(circle at 30% 30%, #ffdfc4, #b56536);
-            border-radius: 50%; border: 2px solid #222; box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-        }
-        .jogador-tronco {
-            position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
-            width: 38px; height: 34px; background: linear-gradient(135deg, #ffffff, #95a5a6);
-            border-radius: 8px; border: 2px solid #2980b9; box-shadow: 0 4px 8px rgba(0,0,0,0.6);
-        }
-        .jogador-bracos {
-            position: absolute; top: 25px; width: 12px; height: 26px; background: #ffffff; border-radius: 6px;
-        }
-        .jogador-bracos.esq { left: -6px; transform: rotate(20deg); }
-        .jogador-bracos.dir { right: -6px; transform: rotate(-20deg); }
-        .jogador-perna-apoio {
-            position: absolute; bottom: 0; left: 14px; width: 10px; height: 30px;
-            background: #222; border-radius: 5px;
-        }
-        .jogador-perna-chute {
-            position: absolute; bottom: 0; right: 14px; width: 10px; height: 30px;
-            background: #222; border-radius: 5px; transform-origin: top center;
-            transition: transform 0.3s ease;
-        }
-        /* Animação da perna do jogador ao chutar */
-        .jogador-avatar-hd.chutando .jogador-perna-chute {
-            transform: rotate(-55deg) translateY(-8px);
+        .jogador-img-hd.chutando {
+            transform: translateX(-50%) translateY(-25px) scale(1.1) rotate(-8deg);
         }
 
         /* BOLA 4D E MIRA DE TOQUE */
@@ -331,7 +282,7 @@
             z-index: 15; transition: all 0.55s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .alvo-toque {
-            position: absolute; width: 32px; height: 32px; border: 3px dashed #00ff88;
+            position: absolute; width: 34px; height: 34px; border: 3px dashed #00ff88;
             border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none;
             z-index: 20; display: none; box-shadow: 0 0 15px #00ff88; animation: pulseAlvo 0.8s infinite alternate;
         }
@@ -341,7 +292,7 @@
         .anuncio-resultado-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 30; display: none; backdrop-filter: blur(3px); background: rgba(0,0,0,0.4);
+            z-index: 30; display: none; backdrop-filter: blur(3px); background: rgba(0,0,0,0.45);
         }
         .texto-gol-gigante {
             font-size: 42px; font-weight: 950; color: #ffb703;
@@ -361,8 +312,8 @@
         }
 
         .football-controls-fs {
-            width: 100%; max-width: 500px; background: rgba(0,0,0,0.8);
-            padding: 15px; border-radius: 16px; border: 1px solid rgba(0,255,136,0.4);
+            width: 100%; max-width: 480px; background: rgba(0,0,0,0.85);
+            padding: 14px; border-radius: 16px; border: 1px solid rgba(0,255,136,0.4);
         }
         .bet-control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; }
         .bet-adjust-box { display: flex; align-items: center; gap: 8px; }
@@ -375,8 +326,8 @@
             padding: 6px 12px; border-radius: 8px; font-weight: 900; font-size: 16px; width: 85px; text-align: center;
         }
         .btn-confirmar-aposta {
-            width: 100%; padding: 16px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%);
-            color: #000; border: 2px solid #a9dfbf; border-radius: 50px; font-weight: 950; font-size: 18px;
+            width: 100%; padding: 15px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%);
+            color: #000; border: 2px solid #a9dfbf; border-radius: 50px; font-weight: 950; font-size: 17px;
             cursor: pointer; box-shadow: 0 6px 25px rgba(0, 255, 136, 0.8); text-transform: uppercase; letter-spacing: 1px;
             transition: transform 0.1s;
         }
@@ -550,7 +501,7 @@
         </div>
     </div>
 
-    <!-- JOGO CANGAÇO FOOTBALL 4D HD - TELA CHEIA IMERSIVA -->
+    <!-- JOGO CANGAÇO FOOTBALL 4D HD - TELA CHEIA IMERSIVA COM AVATARES HD REAIS -->
     <div id="footballModal">
         <div class="football-fullscreen-header">
             <div>
@@ -564,19 +515,8 @@
         <div class="stadium-container-fullscreen" id="stadiumContainer" onclick="definirAlvoToque(event)">
             <div class="goal-post-fs"><div class="goal-net-fs"></div></div>
             
-            <!-- Goleiro 4D HD Real texturizado com cabeça, braços e luvas -->
-            <div class="goleiro-avatar-hd" id="goleiroEl">
-                <div class="goleiro-cabeca"></div>
-                <div class="goleiro-tronco"></div>
-                <div class="goleiro-braco-esq"></div>
-                <div class="goleiro-braco-dir">
-                    <div class="goleiro-luva-dir"></div>
-                </div>
-                <div class="goleiro-braco-esq">
-                    <div class="goleiro-luva-esq"></div>
-                </div>
-                <div class="goleiro-pernas"></div>
-            </div>
+            <!-- Goleiro HD 4D (Imagem Real em Alta Definição) -->
+            <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=300&auto=format&fit=crop&q=80" class="goleiro-img-hd" id="goleiroEl" alt="Goleiro 4D">
 
             <!-- Mira do Toque -->
             <div class="alvo-toque" id="alvoToque"></div>
@@ -587,15 +527,8 @@
                 <div class="premio-badge" id="premioBadgeEl"></div>
             </div>
 
-            <!-- Jogador 4D HD Real texturizado com animação de chute -->
-            <div class="jogador-avatar-hd" id="jogadorEl">
-                <div class="jogador-cabeca"></div>
-                <div class="jogador-tronco"></div>
-                <div class="jogador-bracos esq"></div>
-                <div class="jogador-bracos dir"></div>
-                <div class="jogador-perna-apoio"></div>
-                <div class="jogador-perna-chute"></div>
-            </div>
+            <!-- Jogador HD 4D (Imagem Real com Animação de Chute) -->
+            <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=300&auto=format&fit=crop&q=80" class="jogador-img-hd" id="jogadorEl" alt="Jogador 4D">
             <div class="bola-hd" id="bolaEl"></div>
         </div>
 
@@ -721,9 +654,8 @@
             
             document.getElementById('subStatusJogo').innerText = "A chutar...";
             
-            // Ativa a animação da perna do boneco chutando
+            // Animação de chute real do avatar HD
             jogador.classList.add('chutando');
-            jogador.style.transform = "translateX(-50%) translateY(-30px) scale(1.08)";
 
             let deslocamentoX = (alvoX - 50) * 3.2;
             let deslocamentoY = -180;
@@ -731,9 +663,9 @@
             setTimeout(() => {
                 bola.style.transform = `translateX(calc(-50% + ${deslocamentoX}px)) translateY(${deslocamentoY}px) scale(0.75)`;
                 
-                // Animação de pulo do goleiro 4D HD na direção da bola
+                // Pulo do goleiro HD em direção à bola
                 let puloGoleiroX = deslocamentoX * 0.85;
-                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-45px) scale(1.2) rotate(${deslocamentoX > 0 ? 22 : -22}deg)`;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-45px) scale(1.15) rotate(${deslocamentoX > 0 ? 20 : -20}deg)`;
 
                 setTimeout(() => {
                     let anuncio = document.getElementById('anuncioResultado');
