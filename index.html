@@ -17,7 +17,7 @@
             padding-bottom: 80px;
         }
         
-        /* Tela Inicial de Carregamento (Splash Screen) */
+        /* 1. Tela Inicial de Carregamento (Splash Screen) */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -44,14 +44,6 @@
             margin-bottom: 20px;
         }
 
-        .splash-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff4500;
-            margin-bottom: 15px;
-        }
-
-        /* Estilo da Barra de Carregamento */
         .loader-container {
             width: 80%;
             max-width: 300px;
@@ -78,7 +70,6 @@
             margin-bottom: 20px;
         }
 
-        /* Botão Inicial (Oculto até 100%) */
         .btn-entrar-cassino {
             display: none;
             background-color: #ff4500;
@@ -99,11 +90,64 @@
             100% { transform: scale(1); }
         }
 
-        .btn-entrar-cassino:active {
-            transform: scale(0.95);
+        /* 2. Tela de Cadastro Obrigatório */
+        #auth-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 16, 21, 0.95);
+            z-index: 998;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
-        /* Conteúdo do Site (Oculto até clicar) */
+        .auth-card {
+            background: #1a1c23;
+            width: 100%;
+            max-width: 380px;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #2a2d3d;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .auth-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #13141b;
+            border: 1px solid #2a2d3d;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        /* Conteúdo Principal do Site */
         #main-content {
             display: none;
         }
@@ -133,12 +177,44 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        /* Banner de Bônus idêntico ao vídeo */
+        .bonus-banner {
+            background: linear-gradient(135deg, #2a1510, #1a1c23);
+            margin: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ff4500;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+        .bonus-banner h3 {
+            font-size: 16px;
+            color: #ffb703;
+        }
+        .bonus-banner p {
+            font-size: 12px;
+            color: #ccc;
+        }
+        .btn-cadastre {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
         .categories {
             display: flex;
             gap: 10px;
-            padding: 15px;
+            padding: 0 15px;
             overflow-x: auto;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .category-pill {
             background: #1e2029;
@@ -165,6 +241,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             padding: 0 15px;
+            margin-bottom: 25px;
         }
         .game-card {
             background: #1e2029;
@@ -212,7 +289,6 @@
 </head>
 <body>
 
-    <!-- Tela Inicial com a sua Imagem e Carregamento -->
     <div id="splash-screen">
         <img src="https://files.catbox.moe/r34gpm.png" alt="Cangaço Bet" class="splash-banner">
         
@@ -221,18 +297,32 @@
         </div>
         <div class="loader-text" id="loaderText">A carregar recursos... 0%</div>
 
-        <button class="btn-entrar-cassino" id="btnEntrar" onclick="entrarNoCassino()">🎲 ENTRAR NO CASSINO</button>
+        <button class="btn-entrar-cassino" id="btnEntrar" onclick="irParaCadastro()">🎲 ENTRAR NO CASSINO</button>
     </div>
 
-    <!-- Elemento de áudio com a música -->
+    <div id="auth-screen">
+        <div class="auth-card">
+            <div class="auth-title">🔥 CRIAR CONTA - CANGAÇO BET</div>
+            <input type="text" id="usuario" class="auth-input" placeholder="Nome de Utilizador">
+            <input type="email" id="email" class="auth-input" placeholder="O seu E-mail">
+            <input type="password" id="senha" class="auth-input" placeholder="Crie uma Senha">
+            <button class="auth-btn" onclick="realizarCadastro()">Concluir Cadastro</button>
+        </div>
+    </div>
+
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
-    <!-- Conteúdo Principal do Site -->
     <div id="main-content">
         <header>
             <div class="logo">🔥 CANGAÇO BET</div>
-            <button class="btn-entrar">ENTRAR</button>
+            <button class="btn-entrar" onclick="alert('Já tem sessão iniciada!')">CONTA</button>
         </header>
+
+        <div class="bonus-banner">
+            <h3>🎁 BÔNUS DE BOAS-VINDAS!</h3>
+            <p>Registe-se no Cangaço e receba até R$1.000 + 50 Giros Grátis!</p>
+            <button class="btn-cadastre">Ativo na Conta</button>
+        </div>
 
         <div class="categories">
             <div class="category-pill">🤠 Cangaço torneios</div>
@@ -251,13 +341,26 @@
                 <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=300" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Big Bass Bonanza')">
-                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300" class="game-img" alt="Big Bass">
-                <div class="game-name">Big Bass Bonanza</div>
+            <div class="game-card" onclick="pararMusicaEEntrar('Mines')">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300" class="game-img" alt="Mines">
+                <div class="game-name">Mines</div>
             </div>
             <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
                 <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300" class="game-img" alt="Gates of Olympus">
                 <div class="game-name">Gates of Olympus</div>
+            </div>
+        </div>
+
+        <div class="section-title">⚡ MAIS JOGADOS</div>
+
+        <div class="games-grid">
+            <div class="game-card" onclick="pararMusicaEEntrar('Master Joker')">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300" class="game-img" alt="Master Joker">
+                <div class="game-name">Master Joker</div>
+            </div>
+            <div class="game-card" onclick="pararMusicaEEntrar('Super Flip')">
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300" class="game-img" alt="Super Flip">
+                <div class="game-name">Super Flip</div>
             </div>
         </div>
 
@@ -273,6 +376,7 @@
     <script>
         const audio = document.getElementById('audioPlayer');
         const splashScreen = document.getElementById('splash-screen');
+        const authScreen = document.getElementById('auth-screen');
         const mainContent = document.getElementById('main-content');
         const loaderBar = document.getElementById('loaderBar');
         const loaderText = document.getElementById('loaderText');
@@ -280,7 +384,7 @@
 
         let progresso = 0;
 
-        // Simula a barra de carregamento de 0 a 100%
+        // Barra de carregamento até 100%
         const intervalo = setInterval(() => {
             progresso += 2;
             if (progresso <= 100) {
@@ -290,17 +394,33 @@
                 clearInterval(intervalo);
                 loaderText.style.display = 'none';
                 loaderBar.parentElement.style.display = 'none';
-                btnEntrar.style.display = 'block'; // Mostra o botão ao chegar a 100%
+                btnEntrar.style.display = 'block'; 
             }
-        }, 40); // Velocidade do carregamento
+        }, 40);
 
-        function entrarNoCassino() {
-            // Toca a música e limpa restrições de autoplay
+        function irParaCadastro() {
+            // Toca a música após o primeiro clique
             audio.play().catch(e => console.log(e));
             
-            // Esconde a tela de carregamento e mostra o site principal
+            // Oculta a tela inicial e mostra o painel de cadastro obrigatório
             splashScreen.style.display = 'none';
+            authScreen.style.display = 'flex';
+        }
+
+        function realizarCadastro() {
+            const usuario = document.getElementById('usuario').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            if (usuario.trim() === '' || email.trim() === '' || senha.trim() === '') {
+                alert('Por favor, preencha todos os campos para se cadastrar!');
+                return;
+            }
+
+            // Esconde o cadastro e entra no site principal do cassino
+            authScreen.style.display = 'none';
             mainContent.style.display = 'block';
+            alert('Cadastro efetuado com sucesso! Bem-vindo ao Cangaço Bet, ' + usuario + '!');
         }
 
         function pararMusicaEEntrar(nomeJogo) {
