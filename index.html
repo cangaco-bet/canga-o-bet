@@ -494,6 +494,76 @@
         let apostaSelecionada = null;
         let oddAtual = 0;
 
+        // Dicionário básico para tradução de nomes de times e ligas comuns para o português
+        const traducoesTimes = {
+            "Manchester City FC": "Manchester City",
+            "Manchester United FC": "Manchester United",
+            "Arsenal FC": "Arsenal",
+            "Chelsea FC": "Chelsea",
+            "Liverpool FC": "Liverpool",
+            "Tottenham Hotspur FC": "Tottenham",
+            "Real Madrid CF": "Real Madrid",
+            "FC Barcelona": "Barcelona",
+            "Atletico Madrid": "Atlético de Madrid",
+            "Villarreal CF": "Villarreal",
+            "Valencia CF": "Valência",
+            "Sevilla FC": "Sevilla",
+            "Juventus FC": "Juventus",
+            "AC Milan": "Milan",
+            "Inter Milan": "Inter de Milão",
+            "AS Roma": "Roma",
+            "SSC Napoli": "Nápoles",
+            "SS Lazio": "Lazio",
+            "FC Bayern München": "Bayern de Munique",
+            "Borussia Dortmund": "Borussia Dortmund",
+            "Bayer 04 Leverkusen": "Bayer Leverkusen",
+            "RB Leipzig": "RB Leipzig",
+            "Paris Saint-Germain FC": "Paris Saint-Germain",
+            "AS Monaco FC": "Monaco",
+            "Olympique de Marseille": "Olympique de Marselha",
+            "Olympique Lyonnais": "Lyon",
+            "AFC Ajax": "Ajax",
+            "PSV Eindhoven": "PSV",
+            "SL Benfica": "Benfica",
+            "FC Porto": "Porto",
+            "Sporting CP": "Sporting"
+        };
+
+        const traducoesLigas = {
+            "UEFA Champions League": "Liga dos Campeões da UEFA",
+            "Premier League": "Campeonato Inglês",
+            "Primera Division": "Campeonato Espanhol",
+            "Serie A": "Campeonato Italiano",
+            "Bundesliga": "Campeonato Alemão",
+            "Ligue 1": "Campeonato Francês",
+            "Eredivisie": "Campeonato Holandês",
+            "Primeira Liga": "Campeonato Português",
+            "UEFA Nations League": "Liga das Nações da UEFA"
+        };
+
+        function traduzirTime(nome) {
+            return traducoesTimes[nome] || nome;
+        }
+
+        function traduzirLiga(nome) {
+            return traducoesLigas[nome] || nome;
+        }
+
+        function converterParaHorarioBrasilia(utcString) {
+            if (!utcString) return "";
+            try {
+                // Se a string já vier formatada apenas com hora (ex: HH:mm) ou UTC do football-data
+                let data = new Date(utcString);
+                if (isNaN(data.getTime())) {
+                    return utcString.substring(0, 5);
+                }
+                // Ajusta para o fuso de Brasília (UTC-3)
+                return data.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
+            } catch (e) {
+                return utcString.substring(11, 16) || "";
+            }
+        }
+
         function tocarAudioInicio() {
             audio.play().catch(e => console.log(e));
         }
@@ -625,14 +695,18 @@
 
                     partidasAtivas.forEach(match => {
                         const statusCurto = match.fixture.status.short;
-                        const statusHora = (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H') 
-                            ? `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>` 
-                            : match.fixture.date.split('T')[1].substring(0,5);
+                        let statusHora = "";
+
+                        if (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H') {
+                            statusHora = `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>`;
+                        } else {
+                            statusHora = converterParaHorarioBrasilia(match.fixture.date);
+                        }
 
                         listaFormatada.push({
-                            casa: match.teams.home.name,
-                            fora: match.teams.away.name,
-                            liga: match.league.name,
+                            casa: traduzirTime(match.teams.home.name),
+                            fora: traduzirTime(match.teams.away.name),
+                            liga: traduzirLiga(match.league.name),
                             statusHora: statusHora
                         });
                     });
@@ -653,14 +727,17 @@
                     const partidasAtivasFd = dados2.matches.filter(match => !statusExcluidosFd.includes(match.status));
 
                     partidasAtivasFd.forEach(match => {
-                        const statusHora = (match.status === 'IN_PLAY' || match.status === 'PAUSED')
-                            ? `<span style="color: #00ff88;">● AO VIVO</span>`
-                            : match.utcDate.split('T')[1].substring(0,5);
+                        let statusHora = "";
+                        if (match.status === 'IN_PLAY' || match.status === 'PAUSED') {
+                            statusHora = `<span style="color: #00ff88;">● AO VIVO</span>`;
+                        } else {
+                            statusHora = converterParaHorarioBrasilia(match.utcDate);
+                        }
 
                         listaFormatada.push({
-                            casa: match.homeTeam.name,
-                            fora: match.awayTeam.name,
-                            liga: match.competition.name,
+                            casa: traduzirTime(match.homeTeam.name),
+                            fora: traduzirTime(match.awayTeam.name),
+                            liga: traduzirLiga(match.competition.name),
                             statusHora: statusHora
                         });
                     });
