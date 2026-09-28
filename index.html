@@ -265,7 +265,8 @@
         .match-card { background: #1a1c23; border: 1px solid #2a2d3d; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
         .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
         .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold; margin-bottom: 12px; }
-        .team-name { width: 40%; text-align: center; }
+        .team-name { width: 42%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .team-name img { width: 20px; height: 15px; object-fit: cover; border-radius: 2px; }
         .match-vs { font-size: 11px; color: #888; background: #13141b; padding: 4px 8px; border-radius: 20px; }
         .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .odd-btn { background: #252836; border: 1px solid #363a4f; padding: 8px 4px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
@@ -279,10 +280,7 @@
         .bet-slip-input { width: 100%; padding: 8px; background: #13141b; border: 1px solid #363a4f; color: white; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
         .btn-place-bet { width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: 900; font-size: 13px; cursor: pointer; }
 
-        /* Estilo da aba Meus Bilhetes (integrada no conteúdo principal) */
-        .bilhetes-container {
-            padding: 15px;
-        }
+        .bilhetes-container { padding: 15px; }
         .bilhete-impresso {
             background: #161821;
             border: 1px solid #ff4500;
@@ -312,7 +310,6 @@
             font-size: 12px;
         }
 
-        /* Modais */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -386,6 +383,7 @@
         <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
     </div>
 
+    <!-- Menu Lateral -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -409,6 +407,7 @@
         </div>
     </div>
 
+    <!-- ABA 1: CASSINO -->
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
             <div class="promo-track" id="promoTrack">
@@ -492,6 +491,7 @@
         </div>
     </div>
 
+    <!-- ABA 2: ESPORTES -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
             <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Ativas / Futuras)</div>
@@ -501,6 +501,7 @@
         </div>
     </div>
 
+    <!-- ABA 3: MEUS BILHETES -->
     <div id="tab-bilhetes" class="main-tab-content">
         <div class="bilhetes-container">
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes</div>
@@ -510,6 +511,7 @@
         </div>
     </div>
 
+    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span>🎟️ BILHETE DE APOSTA</span>
@@ -521,6 +523,7 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
+    <!-- Modal de Registro Completo -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -535,6 +538,7 @@
         </div>
     </div>
 
+    <!-- Modal de Depósito -->
     <div id="depositModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -552,7 +556,13 @@
         let oddAtual = 0;
         let horaPartidaSelecionada = "";
         let saldo = 1000.00;
-        let meusBilhetesSalvos = [];
+        
+        // Carrega bilhetes salvos do navegador (localStorage) para não sumirem ao atualizar o site
+        let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
+
+        function salvarBilhetesNoStorage() {
+            localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
+        }
 
         function atualizarSaldoNaTela() {
             document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
@@ -561,6 +571,37 @@
         const traducoesTimes = {
             "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Nápoles", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
         };
+
+        const bandeirasTimes = {
+            "Brasil": "https://flagcdn.com/w40/br.png",
+            "Flamengo": "https://flagcdn.com/w40/br.png",
+            "Palmeiras": "https://flagcdn.com/w40/br.png",
+            "São Paulo": "https://flagcdn.com/w40/br.png",
+            "Corinthians": "https://flagcdn.com/w40/br.png",
+            "Real Madrid": "https://flagcdn.com/w40/es.png",
+            "Barcelona": "https://flagcdn.com/w40/es.png",
+            "Manchester City": "https://flagcdn.com/w40/gb-eng.png",
+            "Manchester United": "https://flagcdn.com/w40/gb-eng.png",
+            "Arsenal": "https://flagcdn.com/w40/gb-eng.png",
+            "Chelsea": "https://flagcdn.com/w40/gb-eng.png",
+            "Liverpool": "https://flagcdn.com/w40/gb-eng.png",
+            "Tottenham": "https://flagcdn.com/w40/gb-eng.png",
+            "Juventus": "https://flagcdn.com/w40/it.png",
+            "Milan": "https://flagcdn.com/w40/it.png",
+            "Inter de Milão": "https://flagcdn.com/w40/it.png",
+            "Bayern de Munique": "https://flagcdn.com/w40/de.png",
+            "Borussia Dortmund": "https://flagcdn.com/w40/de.png",
+            "Paris Saint-Germain": "https://flagcdn.com/w40/fr.png",
+            "Benfica": "https://flagcdn.com/w40/pt.png",
+            "Porto": "https://flagcdn.com/w40/pt.png",
+            "Sporting": "https://flagcdn.com/w40/pt.png",
+            "Uruguay": "https://flagcdn.com/w40/uy.png",
+            "South Korea": "https://flagcdn.com/w40/kr.png"
+        };
+
+        function obterBandeira(nomeTime) {
+            return bandeirasTimes[nomeTime] || "https://flagcdn.com/w40/un.png";
+        }
 
         const traducoesLigas = {
             "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A"
@@ -582,6 +623,15 @@
             } catch (e) {
                 return utcString.substring(11, 16) || "";
             }
+        }
+
+        // Gera odds reais pseudo-aleatórias consistentes baseadas nos nomes das equipas
+        function gerarOddsReais(casa, fora) {
+            let seed = (casa.length + fora.length) * 7;
+            let odd1 = (1.50 + (seed % 15) / 10).toFixed(2);
+            let oddX = (3.10 + ((seed * 3) % 12) / 10).toFixed(2);
+            let odd2 = (2.10 + ((seed * 5) % 25) / 10).toFixed(2);
+            return { casa: odd1, empate: oddX, fora: odd2 };
         }
 
         function tocarAudioInicio() { audio.play().catch(e => console.log(e)); }
@@ -699,28 +749,32 @@
                 const fora = match.fora;
                 const liga = match.liga;
                 const statusHora = match.statusHora;
+                const odds = gerarOddsReais(casa, fora);
+
+                const bandeiraCasa = obterBandeira(casa);
+                const bandeiraFora = obterBandeira(fora);
 
                 const card = document.createElement('div');
                 card.className = 'match-card';
                 card.innerHTML = `
                     <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
                     <div class="match-teams">
-                        <span class="team-name">${casa}</span>
+                        <span class="team-name"><img src="${bandeiraCasa}" alt=""> ${casa}</span>
                         <span class="match-vs">VS</span>
-                        <span class="team-name">${fora}</span>
+                        <span class="team-name"><img src="${bandeiraFora}" alt=""> ${fora}</span>
                     </div>
                     <div class="odds-grid">
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, '${statusHora}', this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', ${odds.casa}, '${statusHora}', this)">
                             <span class="odd-label">1 (Casa)</span>
-                            <span class="odd-value">1.85</span>
+                            <span class="odd-value">${odds.casa}</span>
                         </div>
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, '${statusHora}', this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', ${odds.empate}, '${statusHora}', this)">
                             <span class="odd-label">X (Empate)</span>
-                            <span class="odd-value">3.40</span>
+                            <span class="odd-value">${odds.empate}</span>
                         </div>
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, '${statusHora}', this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', ${odds.fora}, '${statusHora}', this)">
                             <span class="odd-label">2 (Fora)</span>
-                            <span class="odd-value">3.90</span>
+                            <span class="odd-value">${odds.fora}</span>
                         </div>
                     </div>
                 `;
@@ -842,12 +896,12 @@
             };
 
             meusBilhetesSalvos.push(novoBilhete);
+            salvarBilhetesNoStorage();
             let indexBilhete = meusBilhetesSalvos.length - 1;
 
             fecharBilhete();
             alert(`✅ Aposta confirmada! Valor: R$ ${valor.toFixed(2)} | Retorno Previsto: R$ ${retorno}. O bilhete foi guardado na aba "Meus Bilhetes".`);
 
-            // Simula o término da partida após 15 segundos para atualizar o resultado (ganhou ou perdeu)
             setTimeout(() => {
                 let venceu = Math.random() >= 0.5;
                 if (venceu) {
@@ -859,6 +913,7 @@
                     meusBilhetesSalvos[indexBilhete].status = "Perdeu ❌";
                     meusBilhetesSalvos[indexBilhete].cor = "#ff4500";
                 }
+                salvarBilhetesNoStorage();
             }, 15000);
         }
 
