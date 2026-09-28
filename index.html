@@ -1265,6 +1265,14 @@
             let armL = document.getElementById('gk-arm-left');
             let armR = document.getElementById('gk-arm-right');
 
+            // 70% de chance do goleiro pular no mesmo canto (defender), 20% de chance de gol (pular em canto diferente)
+            let goleiroPulaMesmoCanto = Math.random() < 0.70;
+            let cantoGoleiro = goleiroPulaMesmoCanto ? cantoEscolhido : (Math.floor(Math.random() * 5) + 1);
+            if (cantoGoleiro === cantoEscolhido && !goleiroPulaMesmoCanto) {
+                // Ajusta caso caia acidentalmente no mesmo
+                cantoGoleiro = cantoEscolhido === 1 ? 2 : 1;
+            }
+
             let bolaMovimentos = {
                 1: 'translate(calc(-50% - 115px), -250px) scale(0.4)',
                 2: 'translate(calc(-50% + 115px), -250px) scale(0.4)',
@@ -1283,12 +1291,12 @@
 
             setTimeout(() => {
                 bola.style.transform = bolaMovimentos[cantoEscolhido];
-                goleiro.style.transform = goleiroMovimentos[cantoEscolhido];
+                goleiro.style.transform = goleiroMovimentos[cantoGoleiro];
 
-                if (cantoEscolhido === 1 || cantoEscolhido === 4) {
+                if (cantoGoleiro === 1 || cantoGoleiro === 4) {
                     armL.style.transform = 'rotate(-20deg)';
                     armR.style.transform = 'rotate(-80deg)';
-                } else if (cantoEscolhido === 2 || cantoEscolhido === 5) {
+                } else if (cantoGoleiro === 2 || cantoGoleiro === 5) {
                     armR.style.transform = 'rotate(20deg)';
                     armL.style.transform = 'rotate(80deg)';
                 } else {
@@ -1297,10 +1305,11 @@
                 }
 
                 setTimeout(() => {
-                    let goleiroDefendeu = Math.random() < 0.25 && nivelAtual > 0;
+                    // É gol apenas se o goleiro NÃO pulou no mesmo canto
+                    let foiGol = (cantoGoleiro !== cantoEscolhido);
                     let banner = document.getElementById('winBanner');
 
-                    if (!goleiroDefendeu) {
+                    if (foiGol) {
                         let mult = multiplicadores[nivelAtual];
                         let premioTotal = apostaVal * mult;
                         
@@ -1327,6 +1336,7 @@
                         jogadaEmAndamento = false;
 
                     } else {
+                        // Defesa / Perdido
                         document.getElementById('winValorVermelho').innerText = "DEFESA!";
                         document.getElementById('winValorVermelho').style.color = "#ff2a2a";
                         document.getElementById('winValorBranco').innerText = "Tente de novo";
@@ -1340,7 +1350,7 @@
                         btn.style.boxShadow = "0 6px 20px rgba(255, 69, 0, 0.5)";
                         btn.innerText = "NOVO PÊNALTI";
                         
-                        registarTransacao('perca', 'Aposta Penalty Cangaço', -apostaVal);
+                        registarTransacao('perca', 'Aposta Penalty Cangaço (Defesa)', -apostaVal);
                         nivelAtual = 0;
                         jogadaEmAndamento = false;
                     }
