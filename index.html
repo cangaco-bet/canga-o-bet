@@ -175,6 +175,19 @@
         .jackpot-title { font-size: 12px; font-weight: bold; color: #ffb703; letter-spacing: 1px; margin-bottom: 4px; }
         .jackpot-value { font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 15px rgba(255,69,0,0.6); }
 
+        .winners-section { margin: 15px 0; padding: 0 15px; }
+        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
+        .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
+        .winners-scroll::-webkit-scrollbar { display: none; }
+        .winner-card {
+            background: #151821; border: 1px solid #232838; border-radius: 12px; padding: 10px; min-width: 155px;
+            display: flex; align-items: center; gap: 10px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
+        .winner-info { font-size: 12px; }
+        .winner-name { color: #aaa; font-size: 10px; }
+        .winner-prize { color: #ffb703; font-weight: bold; }
+
         .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; }
         .section-title span { font-size: 12px; color: #888; }
 
@@ -188,6 +201,20 @@
         .game-img { width: 100%; height: 115px; object-fit: cover; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
+        .sports-container { padding: 0 15px; }
+        .match-card {
+            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #232838;
+            border-radius: 14px; padding: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
+        .match-score-vs { background: #0b0c10; padding: 4px 10px; border-radius: 16px; border: 1px solid #ff4500; }
+        .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; }
+        .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .odd-btn { background: #1c212f; border: 1px solid #2c3347; padding: 8px; border-radius: 8px; text-align: center; cursor: pointer; }
+        .odd-label { font-size: 10px; color: #aaa; display: block; }
+        .odd-value { font-size: 12px; font-weight: bold; color: #fff; display: block; }
+
         .floating-support-btn {
             position: fixed; bottom: 25px; right: 20px; background: linear-gradient(135deg, #ff4500, #ffb703);
             color: #0f1015; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center;
@@ -195,7 +222,7 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* MODAL DO JOGO CANGAÇO FOOTBALL 4D REALISTA (SEM EMOJIS) */
+        /* MODAL DO JOGO CANGAÇO FOOTBALL 4D HD */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
@@ -211,7 +238,7 @@
         .modal-subtitle-football { font-size: 11px; color: #ffb703; font-weight: bold; margin-bottom: 12px; }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
-        /* ESTÁDIO 4D REALISTA COM TOQUE INTERATIVO */
+        /* ESTÁDIO 4D REALISTA */
         .stadium-container-4d {
             position: relative; width: 100%; height: 230px;
             background: linear-gradient(180deg, #1f5c46 0%, #0d2b20 100%);
@@ -230,59 +257,59 @@
                         repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.18) 10px, rgba(255,255,255,0.18) 12px);
         }
 
-        /* GUARDA-REDES 4D EM CSS PURO (SEM EMOJIS) */
-        .goleiro-4d-real {
-            position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
-            width: 36px; height: 44px; background: #e74c3c; border-radius: 12px;
-            border: 2px solid #ffb703; box-shadow: 0 0 15px rgba(231,76,60,0.9);
-            transition: all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); z-index: 10;
+        /* GUARDA-REDES 4D HD EM CSS PURO (PULANDO NA BOLA) */
+        .goleiro-4d-hd {
+            position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+            width: 44px; height: 50px; background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-radius: 14px; border: 2px solid #ffb703; box-shadow: 0 0 18px rgba(231,76,60,0.9);
+            transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1); z-index: 10;
         }
         .goleiro-cabeca {
-            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-            width: 16px; height: 16px; background: #f5cd79; border-radius: 50%; border: 1px solid #c8d6e5;
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            width: 18px; height: 18px; background: #f5cd79; border-radius: 50%; border: 1px solid #333;
         }
-        .goleiro-luvas {
-            position: absolute; top: 14px; width: 12px; height: 12px; background: #00ff88; border-radius: 50%;
+        .goleiro-luva {
+            position: absolute; top: 14px; width: 14px; height: 14px; background: #00ff88; border-radius: 50%; border: 1px solid #fff;
         }
-        .goleiro-luvas.esq { left: -6px; }
-        .goleiro-luvas.dir { right: -6px; }
+        .goleiro-luva.esq { left: -8px; }
+        .goleiro-luva.dir { right: -8px; }
 
-        /* BONECO JOGADOR 4D EM CSS PURO (ANIMAÇÃO DE CORRIDA) */
-        .jogador-4d-real {
+        /* JOGADOR 4D HD CORRENDO PARA CHUTAR */
+        .jogador-4d-hd {
             position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-            width: 28px; height: 42px; z-index: 5; transition: all 0.5s ease;
+            width: 32px; height: 48px; z-index: 5; transition: all 0.5s ease-in-out;
         }
         .jogador-cabeca {
             position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 14px; height: 14px; background: #f5cd79; border-radius: 50%;
+            width: 16px; height: 16px; background: #f5cd79; border-radius: 50%;
         }
-        .jogador-corpo {
-            position: absolute; top: 13px; left: 50%; transform: translateX(-50%);
-            width: 16px; height: 18px; background: #ffffff; border-radius: 4px;
+        .jogador-tronco {
+            position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 20px; background: #ffffff; border-radius: 4px;
         }
         .jogador-pernas {
             position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 12px; height: 12px; background: #222; border-radius: 2px;
-            animation: correrJogador 0.2s infinite alternate;
+            width: 14px; height: 14px; background: #111; border-radius: 2px;
+            animation: animarCorrida 0.15s infinite alternate;
         }
-        @keyframes correrJogador {
-            0% { transform: translateX(-50%) rotate(-10deg); }
-            100% { transform: translateX(-50%) rotate(10deg); }
+        @keyframes animarCorrida {
+            0% { transform: translateX(-50%) rotate(-15px) scaleY(0.9); }
+            100% { transform: translateX(-50%) rotate(15px) scaleY(1.1); }
         }
 
-        /* BOLA 4D E MIRA DE TOQUE */
-        .bola-4d-real {
+        /* BOLA 4D E MIRA */
+        .bola-4d-hd {
             position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 24px; height: 24px; background: #fff; border-radius: 50%;
-            border: 2px solid #000; box-shadow: 0 4px 12px rgba(0,0,0,0.9);
-            z-index: 15; transition: all 0.6s cubic-bezier(0.1, 0.9, 0.2, 1);
+            width: 26px; height: 26px; background: radial-gradient(circle at 30% 30%, #fff 0%, #ccc 60%, #333 100%);
+            border-radius: 50%; border: 2px solid #000; box-shadow: 0 4px 15px rgba(0,0,0,0.9);
+            z-index: 15; transition: all 0.55s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .alvo-toque {
-            position: absolute; width: 24px; height: 24px; border: 2px dashed #00ff88;
+            position: absolute; width: 26px; height: 26px; border: 2px dashed #00ff88;
             border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none;
-            z-index: 20; display: none; box-shadow: 0 0 10px #00ff88; animation: pulseAlvo 0.8s infinite alternate;
+            z-index: 20; display: none; box-shadow: 0 0 12px #00ff88; animation: pulseAlvo 0.8s infinite alternate;
         }
-        @keyframes pulseAlvo { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.3); } }
+        @keyframes pulseAlvo { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.35); } }
 
         /* TELA DE ANIMAÇÃO DE GOL / DEFENDEU */
         .anuncio-resultado-overlay {
@@ -314,6 +341,10 @@
             background: #ff4500; color: #fff; border: none; width: 30px; height: 30px;
             border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 3px 8px rgba(255,69,0,0.5);
         }
+        .bet-input-display {
+            background: #0f1118; border: 1px solid #00ff88; color: #00ff88;
+            padding: 5px 10px; border-radius: 6px; font-weight: 900; font-size: 14px; width: 75px; text-align: center;
+        }
         .btn-confirmar-aposta {
             width: 100%; padding: 15px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%);
             color: #000; border: 2px solid #a9dfbf; border-radius: 50px; font-weight: 950; font-size: 16px;
@@ -322,6 +353,11 @@
         }
         .btn-confirmar-aposta:active { transform: scale(0.95); }
 
+        .bilhetes-container, .extrato-container, .suporte-container { padding: 15px; }
+        .bilhete-impresso, .extrato-item {
+            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500;
+            border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
             background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px;
@@ -357,7 +393,7 @@
     </header>
 
     <div class="quick-search-bar">
-        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos..." oninput="pesquisaGeral()">
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos ou esportes..." oninput="pesquisaGeral()">
         <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
@@ -377,6 +413,8 @@
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
         <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">💬 Suporte Online</div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">💰 Depositar (PIX)</div>
+        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">🔐 Entrar na Conta</div>
+        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">📝 Registrar Conta</div>
     </div>
 
     <!-- ABA 1: CASSINO E JOGOS -->
@@ -390,12 +428,27 @@
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
                     </div>
                 </div>
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
+                    <div class="promo-content">
+                        <h3>⚡ CASHBACK DIÁRIO</h3>
+                        <p>Até 12% de retorno em todas as apostas!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="jackpot-box">
             <div class="jackpot-title">🔥 JACKPOT GLOBAL 3D</div>
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
+        </div>
+
+        <div class="winners-section">
+            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
+            <div class="winners-scroll">
+                <div class="winner-card"><img src="https://files.catbox.moe/75mifn.jpeg" alt=""><div class="winner-info"><div class="winner-name">Kaiq***</div><div class="winner-prize">R$ 45.00 BRL</div></div></div>
+                <div class="winner-card"><img src="https://files.catbox.moe/f5zgx9.webp" alt=""><div class="winner-info"><div class="winner-name">Ebe***</div><div class="winner-prize">R$ 35.75 BRL</div></div></div>
+            </div>
         </div>
 
         <div class="section-title">🏆 TOP JOGOS 4D <span>Todos ></span></div>
@@ -409,31 +462,81 @@
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
+            <div class="game-card" onclick="jogarCassino('Mines', 10)">
+                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
+                <div class="game-name">Mines</div>
+            </div>
+            <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
+                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
+                <div class="game-name">Gates of Olympus</div>
+            </div>
         </div>
     </div>
 
-    <!-- OUTRAS ABAS -->
-    <div id="tab-esportes" class="main-tab-content"><div class="sports-container" style="padding: 15px;"><div id="lista-partidas-api"><p style="text-align:center; color:#888;">Carregando...</p></div></div></div>
-    <div id="tab-bilhetes" class="main-tab-content"><div class="bilhetes-container" style="padding: 15px;"><p style="text-align:center; color:#777;">Nenhum bilhete.</p></div></div>
-    <div id="tab-extrato" class="main-tab-content"><div class="extrato-container" style="padding: 15px;"><p style="text-align:center; color:#777;">Nenhuma transação.</p></div></div>
-    <div id="tab-suporte" class="main-tab-content"><div class="suporte-container" style="padding: 15px;"><input type="text" class="modal-input" placeholder="Assunto"><textarea class="modal-input" style="height:100px;" placeholder="Mensagem..."></textarea><button class="modal-btn" onclick="alert('Enviado!')">Enviar</button></div></div>
+    <!-- ABA 2: ESPORTES -->
+    <div id="tab-esportes" class="main-tab-content">
+        <div class="sports-container" style="padding-top: 15px;">
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Partidas em Tempo Real (Ao Vivo)</div>
+            <div id="lista-partidas-api">
+                <div class="match-card">
+                    <div class="match-header"><span>🔴 Flamengo x Palmeiras</span> <span>34'</span></div>
+                    <div class="match-teams">
+                        <span>Flamengo</span>
+                        <div class="match-score-vs"><span class="match-real-score">1 - 0</span></div>
+                        <span>Palmeiras</span>
+                    </div>
+                    <div class="odds-grid">
+                        <div class="odd-btn"><span class="odd-label">1</span><span class="odd-value">1.80</span></div>
+                        <div class="odd-btn"><span class="odd-label">X</span><span class="odd-value">3.40</span></div>
+                        <div class="odd-btn"><span class="odd-label">2</span><span class="odd-value">4.20</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- MODAL DO JOGO CANGAÇO FOOTBALL 4D -->
+    <!-- ABA 3: BILHETES -->
+    <div id="tab-bilhetes" class="main-tab-content">
+        <div class="bilhetes-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Meus Bilhetes</div>
+            <div id="listaMeusBilhetesImpressos"><p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete registado.</p></div>
+        </div>
+    </div>
+
+    <!-- ABA 4: EXTRATO -->
+    <div id="tab-extrato" class="main-tab-content">
+        <div class="extrato-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📜 Histórico de Transações</div>
+            <div id="listaExtratoTransacoes"><p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada.</p></div>
+        </div>
+    </div>
+
+    <!-- ABA 5: SUPORTE -->
+    <div id="tab-suporte" class="main-tab-content">
+        <div class="suporte-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Suporte Online 24h</div>
+            <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Erro no saldo)">
+            <textarea id="suporteMensagem" class="modal-input" placeholder="Descreva sua dúvida..." style="height: 100px; resize: none;"></textarea>
+            <button class="modal-btn" onclick="enviarMensagemSuporte()">Enviar Mensagem</button>
+        </div>
+    </div>
+
+    <!-- MODAL DO JOGO CANGAÇO FOOTBALL 4D HD -->
     <div id="footballModal" class="modal-overlay">
         <div class="modal-card-football">
             <span class="close-modal" onclick="fecharCangaçoFootball()">&times;</span>
-            <div class="modal-title-football">⚽ CANGAÇO FOOTBALL 4D</div>
+            <div class="modal-title-football">⚽ CANGAÇO FOOTBALL 4D HD</div>
             <div class="modal-subtitle-football" id="subStatusJogo">Confirme a aposta e toque na baliza para direcionar o chute!</div>
             
-            <!-- ESTÁDIO 4D -->
+            <!-- ESTÁDIO 4D HD -->
             <div class="stadium-container-4d" id="stadiumContainer" onclick="definirAlvoToque(event)">
                 <div class="goal-post-4d"><div class="goal-net-4d"></div></div>
                 
-                <!-- Goleiro 4D em CSS -->
-                <div class="goleiro-4d-real" id="goleiroEl">
+                <!-- Goleiro 4D HD Pulando -->
+                <div class="goleiro-4d-hd" id="goleiroEl">
                     <div class="goleiro-cabeca"></div>
-                    <div class="goleiro-luvas esq"></div>
-                    <div class="goleiro-luvas dir"></div>
+                    <div class="goleiro-luva esq"></div>
+                    <div class="goleiro-luva dir"></div>
                 </div>
 
                 <!-- Mira do Toque -->
@@ -445,13 +548,13 @@
                     <div class="premio-badge" id="premioBadgeEl"></div>
                 </div>
 
-                <!-- Jogador 4D Correndo em CSS -->
-                <div class="jogador-4d-real" id="jogadorEl">
+                <!-- Jogador 4D HD Correndo -->
+                <div class="jogador-4d-hd" id="jogadorEl">
                     <div class="jogador-cabeca"></div>
-                    <div class="jogador-corpo"></div>
+                    <div class="jogador-tronco"></div>
                     <div class="jogador-pernas"></div>
                 </div>
-                <div class="bola-4d-real" id="bolaEl"></div>
+                <div class="bola-4d-hd" id="bolaEl"></div>
             </div>
 
             <div class="football-controls">
@@ -468,7 +571,7 @@
         </div>
     </div>
 
-    <!-- Modais Gerais -->
+    <!-- Modais Gerais (Login, Registro, Depósito) -->
     <div id="loginModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">🔐 ENTRAR</div><input type="email" id="loginEmail" class="modal-input" placeholder="E-mail"><input type="password" id="loginSenha" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="realizarLogin()">Entrar</button></div></div>
     <div id="registerModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">📝 REGISTAR</div><input type="text" id="regNome" class="modal-input" placeholder="Nome"><input type="email" id="regEmail" class="modal-input" placeholder="E-mail"><input type="password" id="regSenha" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="realizarRegistro()">Registar</button></div></div>
     <div id="depositModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">💰 DEPOSITAR (PIX)</div><input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor (R$)"><button class="modal-btn" onclick="realizarDeposito()">Depositar</button></div></div>
@@ -506,6 +609,7 @@
         function registarTransacao(tipo, descricao, valor) {
             historicoTransacoes.unshift({ tipo, descricao, valor: valor.toFixed(2), data: new Date().toLocaleString('pt-BR') });
             localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
+            renderizarExtratoNaTela();
         }
 
         function abrirCangacoFootball() { document.getElementById('footballModal').style.display = 'flex'; resetarRodadaFootball(); }
@@ -537,8 +641,7 @@
             alvoEl.style.top = y + 'px';
             alvoEl.style.display = 'block';
 
-            // Após direcionar com o dedo, executa a animação do chute imediatamente
-            executarChuteRealista();
+            executarChuteRealistaHD();
         }
 
         function resetarRodadaFootball() {
@@ -568,13 +671,13 @@
             document.getElementById('btnConfirmarAposta').style.opacity = '0.5';
         }
 
-        function executarChuteRealista() {
+        function executarChuteRealistaHD() {
             let bola = document.getElementById('bolaEl');
             let goleiro = document.getElementById('goleiroEl');
             let jogador = document.getElementById('jogadorEl');
             
             document.getElementById('subStatusJogo').innerText = "A chutar...";
-            jogador.style.transform = "translateX(-50%) translateY(-25px) scale(1.05)";
+            jogador.style.transform = "translateX(-50%) translateY(-28px) scale(1.08)";
 
             let deslocamentoX = (alvoX - 50) * 2.2;
             let deslocamentoY = -140;
@@ -582,15 +685,16 @@
             setTimeout(() => {
                 bola.style.transform = `translateX(calc(-50% + ${deslocamentoX}px)) translateY(${deslocamentoY}px) scale(0.75)`;
                 
-                let goleiroDesvio = (Math.random() - 0.5) * 80;
-                goleiro.style.transform = `translateX(calc(-50% + ${goleiroDesvio}px)) translateY(-25px)`;
+                // Animação de pulo do goleiro 4D HD na direção da bola
+                let puloGoleiroX = deslocamentoX * 0.85;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-35px) scale(1.15) rotate(${deslocamentoX > 0 ? 15 : -15}deg)`;
 
                 setTimeout(() => {
                     let anuncio = document.getElementById('anuncioResultado');
                     let textoRes = document.getElementById('textoResultadoGigante');
                     let badge = document.getElementById('premioBadgeEl');
                     
-                    let goleiroConseguiuDefender = Math.abs(goleiroDesvio - deslocamentoX) < 45;
+                    let goleiroConseguiuDefender = Math.abs(puloGoleiroX - deslocamentoX) < 42;
                     let apostaVal = parseFloat(document.getElementById('footballBetInput').value);
 
                     if (!goleiroConseguiuDefender) {
@@ -613,12 +717,54 @@
                         badge.style.display = 'none';
                         anuncio.style.display = 'flex';
 
-                        document.getElementById('subStatusJogo').innerText = "🧤 Defesa do goleiro! Tente novamente.";
+                        document.getElementById('subStatusJogo').innerText = "🧤 Defesa incrível do guarda-redes! Tente novamente.";
                     }
                     apostaConfirmada = false;
                     document.getElementById('btnConfirmarAposta').style.opacity = '1';
                 }, 400);
             }, 300);
+        }
+
+        function jogarCassino(nome, custo) {
+            if (saldo < custo) { alert("Saldo insuficiente!"); return; }
+            saldo -= custo; atualizarSaldoNaTela();
+            if (Math.random() > 0.5) {
+                let p = custo * 2; saldo += p; atualizarSaldoNaTela();
+                alert(`🎉 Ganhou R$ ${p.toFixed(2)} em ${nome}!`);
+                registarTransacao('cassino_ganho', `Prêmio ${nome}`, p);
+            } else {
+                alert(`❌ Perdeu R$ ${custo.toFixed(2)} em ${nome}.`);
+                registarTransacao('cassino_perca', `Aposta ${nome}`, -custo);
+            }
+        }
+
+        function renderizarExtratoNaTela() {
+            const container = document.getElementById('listaExtratoTransacoes');
+            if (historicoTransacoes.length === 0) return;
+            container.innerHTML = historicoTransacoes.map(t => `
+                <div class="extrato-item">
+                    <div style="font-size:12px; color:#ffb703;">${t.descricao} - ${t.data}</div>
+                    <div style="font-size:14px; font-weight:bold; color:${t.tipo.includes('ganho')||t.tipo=='deposito'?'#00ff88':'#ff4500'};">R$ ${t.valor}</div>
+                </div>
+            `).join('');
+        }
+
+        function enviarMensagemSuporte() {
+            alert("✅ Mensagem enviada com sucesso ao suporte!");
+            document.getElementById('suporteAssunto').value = "";
+            document.getElementById('suporteMensagem').value = "";
+        }
+
+        function abrirSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').style.display = 'block'; }
+        function fecharSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').style.display = 'none'; }
+        function mudarAba(aba) {
+            fecharSidebar();
+            document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
+            if (aba === 'cassino') document.getElementById('tab-cassino').classList.add('active-tab');
+            else if (aba === 'esportes') document.getElementById('tab-esportes').classList.add('active-tab');
+            else if (aba === 'bilhetes') document.getElementById('tab-bilhetes').classList.add('active-tab');
+            else if (aba === 'extrato') document.getElementById('tab-extrato').classList.add('active-tab');
+            else if (aba === 'suporte') document.getElementById('tab-suporte').classList.add('active-tab');
         }
 
         function realizarRegistro() {
@@ -630,29 +776,29 @@
             baseDadosUtilizadores.push(usuarioLogado);
             localStorage.setItem('cangaco_db_usuarios', JSON.stringify(baseDadosUtilizadores));
             localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
-            fecharModais(); alert("Registado!"); location.reload();
+            fecharModais(); alert("Registado com sucesso!"); location.reload();
         }
 
         function realizarLogin() {
             let email = document.getElementById('loginEmail').value;
             let senha = document.getElementById('loginSenha').value;
             let u = baseDadosUtilizadores.find(x => x.email === email && x.senha === senha);
-            if(u) { usuarioLogado = u; localStorage.setItem('cangaco_usuario', JSON.stringify(u)); fecharModais(); alert("Entrou!"); location.reload(); }
-            else { alert("Incorreto."); }
+            if(u) { usuarioLogado = u; localStorage.setItem('cangaco_usuario', JSON.stringify(u)); fecharModais(); alert("Sessão iniciada!"); location.reload(); }
+            else { alert("Dados incorretos."); }
         }
 
         function realizarDeposito() {
             let v = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if(v <= 0) { alert("Inválido"); return; }
+            if(v <= 0) { alert("Valor inválido"); return; }
             saldo += v; atualizarSaldoNaTela(); registarTransacao('deposito', 'Depósito Pix', v);
-            fecharModais(); alert("Depositado!");
+            fecharModais(); alert("Depósito realizado com sucesso!");
         }
 
         function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
         function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-        function jogarCassino(n, c) { alert(`Apostou R$ ${c} em ${n}`); }
+        function pesquisaGeral() {}
     </script>
 </body>
 </html>
