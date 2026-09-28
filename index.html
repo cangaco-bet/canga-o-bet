@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet - Penalty Shoot-Out 3D</title>
+    <title>Cangaço Bet</title>
     <style>
         * {
             margin: 0;
@@ -15,457 +15,1589 @@
             background-color: #0b0c10;
             color: #ffffff;
             padding-bottom: 25px;
-            overflow-x: hidden;
+        }
+
+        /* TELA DE ABERTURA (SPLASH SCREEN 4D) */
+        #splashScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #1a101f 0%, #0b0c10 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
+        .splash-banner {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff4500;
+            box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
+            animation: float4D 3s ease-in-out infinite;
+            margin-bottom: 25px;
+        }
+        @keyframes float4D {
+            0% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-15px) rotate(4deg) scale(1.06); filter: drop-shadow(0 20px 30px rgba(255,183,3,0.6)); }
+            100% { transform: translateY(0px) rotate(0deg) scale(1); }
+        }
+        .loading-container {
+            width: 260px;
+            background: #151821;
+            border: 1px solid #2c3347;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 14px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+        }
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff4500, #ffb703);
+            border-radius: 20px;
+            transition: width 0.1s linear;
+        }
+        .loading-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .btn-entrar-splash {
+            display: none;
+            background: linear-gradient(135deg, #ff4500, #ff6a00);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
+            animation: pulseBtn 1.5s infinite;
+        }
+        @keyframes pulseBtn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         header {
-            background: linear-gradient(135deg, #151821, #0b0c10); padding: 12px 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #ff4500; position: sticky; top: 0; z-index: 90;
+            background: linear-gradient(135deg, #151821, #0b0c10);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff4500;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
-        .header-left { display: flex; align-items: center; gap: 10px; }
-        .logo-img-pequena { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1.5px solid #ffb703; }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-menu-lateral {
+            background: #191d28;
+            border: 1px solid #ff4500;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
+        }
+        .btn-menu-lateral span {
+            width: 18px;
+            height: 2px;
+            background-color: #ff4500;
+            border-radius: 2px;
+        }
+
+        .logo-img-pequena {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #ffb703;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
+        }
+
         .saldo-topo-3d {
-            background: linear-gradient(145deg, #1f2430, #13161f); border: 1px solid #ffb703;
-            padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #ffb703;
+            background: linear-gradient(145deg, #1f2430, #13161f);
+            border: 1px solid #ffb703;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #ffb703;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         .saldo-topo-3d span { color: #fff; }
 
-        .section-title { padding: 0 15px; font-size: 16px; margin: 15px 0; font-weight: bold; color: #fff; text-transform: uppercase; }
+        .btn-topo-acao {
+            background: linear-gradient(135deg, #ff4500, #cc3500);
+            color: white;
+            border: none;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
+        }
+        .btn-topo-login {
+            background: transparent;
+            color: #ffb703;
+            border: 1px solid #ffb703;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
+        }
 
-        /* --- PENALTY SHOOT-OUT 3D EXCLUSIVO --- */
-        #footballModal {
-            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
-            padding: 10px; width: 100vw; height: calc(100vh - 65px); max-width: 500px; margin: 0 auto;
+        .quick-search-bar {
+            padding: 12px 15px;
+            background: #0f1118;
+            border-bottom: 1px solid #1a1d28;
+        }
+        .quick-search-input {
+            width: 100%;
+            padding: 10px 15px;
+            background: #151821;
+            border: 1px solid #232838;
+            border-radius: 20px;
+            color: white;
+            font-size: 13px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(3px);
+            z-index: 998;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0; left: -280px; width: 280px; height: 100%;
+            background: linear-gradient(180deg, #151821, #0f1118);
+            border-right: 2px solid #ff4500;
+            z-index: 999;
+            transition: left 0.3s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+        }
+        .sidebar.open { left: 0; }
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #232838;
+            padding-bottom: 15px;
+        }
+        .sidebar-title { font-size: 16px; font-weight: bold; color: #ff4500; }
+        .sidebar-close { font-size: 22px; color: #aaa; cursor: pointer; }
+        .sidebar-item {
+            background: #191d28;
+            border: 1px solid #232838;
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+        .sidebar-item:hover { border-color: #ff4500; background: #212635; transform: translateX(3px); }
+
+        .main-tab-content { display: none; }
+        .main-tab-content.active-tab { display: block; }
+
+        .promo-carousel-container {
+            margin: 15px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #ff4500;
+            position: relative;
+            height: 120px;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
+        }
+        .promo-track { display: flex; transition: transform 0.5s ease-in-out; height: 100%; width: 300%; }
+        .promo-slide {
+            width: 33.333%; height: 100%;
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 10px; position: relative;
+        }
+        .promo-slide::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); z-index: 1;
+        }
+        .promo-content { position: relative; z-index: 2; }
+        .promo-slide h3 { font-size: 14px; color: #ffb703; margin-bottom: 3px; }
+        .promo-slide p { font-size: 11px; color: #ddd; margin-bottom: 6px; }
+        .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
+
+        .jackpot-box {
+            background: linear-gradient(135deg, #2b110a, #151821);
+            margin: 0 15px 15px 15px;
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid #ff4500;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.25);
+        }
+        .jackpot-title { font-size: 12px; font-weight: bold; color: #ffb703; letter-spacing: 1px; margin-bottom: 4px; }
+        .jackpot-value { font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 15px rgba(255,69,0,0.6); }
+
+        .winners-section { margin: 15px 0; padding: 0 15px; }
+        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
+        .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
+        .winners-scroll::-webkit-scrollbar { display: none; }
+        .winner-card {
+            background: #151821;
+            border: 1px solid #232838;
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 155px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
+        .winner-info { font-size: 12px; }
+        .winner-name { color: #aaa; font-size: 10px; }
+        .winner-prize { color: #ffb703; font-weight: bold; }
+
+        .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; }
+        .section-title span { font-size: 12px; color: #888; }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 15px;
+            margin-bottom: 25px;
+        }
+        .game-card {
+            background: linear-gradient(145deg, #191d28, #13161f);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #232838;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
+        .game-img { width: 100%; height: 115px; object-fit: cover; }
+        .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
+
+        .filtro-ligas-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 5px 0 15px 0;
+        }
+        .filtro-ligas-scroll::-webkit-scrollbar { display: none; }
+        .btn-filtro-liga {
+            background: #151821;
+            border: 1px solid #232838;
+            color: #aaa;
+            padding: 7px 14px;
+            border-radius: 18px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+        .btn-filtro-liga.ativo, .btn-filtro-liga:hover {
+            background: linear-gradient(135deg, #ff4500, #ff6a00);
+            border-color: #ffb703;
+            color: #fff;
+        }
+
+        .sports-container { padding: 0 15px; }
+        .match-card {
+            background: linear-gradient(145deg, #151821, #11141c);
+            border: 1px solid #232838;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .match-card:hover { border-color: #ff4500; }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; align-items: center; }
+        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
+        .team-name { width: 40%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .team-name img { width: 22px; height: 16px; object-fit: contain; border-radius: 2px; }
+        
+        .match-score-vs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0b0c10;
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: 1px solid #ff4500;
+            min-width: 65px;
+        }
+        .match-vs-text { font-size: 9px; color: #00ff88; font-weight: bold; }
+        .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; letter-spacing: 1px; }
+
+        .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .odd-btn {
+            background: #1c212f;
+            border: 1px solid #2c3347;
+            padding: 9px 4px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .odd-btn:hover, .odd-btn.selected { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: white; }
+        .odd-label { font-size: 10px; color: #aaa; display: block; }
+        .odd-value { font-size: 13px; font-weight: bold; color: #fff; display: block; margin-top: 2px; }
+
+        .bet-slip {
+            position: fixed; bottom: 20px; left: 15px; right: 15px;
+            background: linear-gradient(145deg, #191d28, #13161f);
+            border: 2px solid #ff4500; border-radius: 14px; padding: 15px; display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9); z-index: 998;
+            max-height: 80vh; overflow-y: auto;
+        }
+        .bet-slip-title { font-size: 12px; font-weight: bold; color: #ffb703; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .bet-slip-info { font-size: 13px; margin-bottom: 8px; color: #ddd; max-height: 180px; overflow-y: auto; }
+        .bet-slip-item { background: #0b0c10; border: 1px solid #232838; padding: 8px; border-radius: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+        .bet-slip-input { width: 100%; padding: 10px; background: #0f1118; border: 1px solid #2c3347; color: white; border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
+        .btn-place-bet { width: 100%; background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; cursor: pointer; }
+
+        .suporte-container { padding: 15px; }
+        .suporte-card-3d {
+            background: linear-gradient(145deg, #171b26, #10121a);
+            border: 1px solid #ff4500; border-radius: 16px; padding: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); text-align: center;
+        }
+        .suporte-badge-online {
+            background: rgba(0, 255, 136, 0.1); border: 1px dashed #00ff88;
+            padding: 10px; border-radius: 10px; margin-bottom: 18px;
+            font-size: 12px; color: #00ff88; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+
+        .floating-support-btn {
+            position: fixed; bottom: 25px; right: 20px;
+            background: linear-gradient(135deg, #ff4500, #ffb703);
+            color: #0f1015; width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
+            cursor: pointer; z-index: 997; border: 2px solid #fff;
+            transition: transform 0.2s;
+        }
+        .floating-support-btn:hover { transform: scale(1.08); }
+        .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
+
+        .bilhetes-container, .extrato-container { padding: 15px; }
+        .bilhete-impresso, .extrato-item {
+            background: linear-gradient(145deg, #151821, #11141c);
+            border: 1px solid #ff4500; border-radius: 12px; padding: 15px;
+            margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
+        .bilhete-header {
+            display: flex; justify-content: space-between; font-size: 12px;
+            color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
+            padding-bottom: 6px; margin-bottom: 8px;
+        }
+        .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
+        .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
+
+        /* Estilo 4D Avançado para os Modais de Mercados */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            z-index: 999; justify-content: center; align-items: center; padding: 15px;
+        }
+        .modal-card-4d {
+            background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
+            width: 100%; max-width: 440px; padding: 22px; border-radius: 24px;
+            border: 2px solid rgba(255, 69, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 2px 5px rgba(255,255,255,0.1);
+            text-align: center; position: relative; max-height: 88vh; overflow-y: auto;
+        }
+        .modal-card-4d::-webkit-scrollbar { width: 4px; }
+        .modal-card-4d::-webkit-scrollbar-thumb { background: #ff4500; border-radius: 4px; }
+        
+        .modal-title-4d { font-size: 18px; font-weight: 950; color: #ffb703; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .modal-subtitle-4d { font-size: 11px; color: #00ff88; font-weight: bold; margin-bottom: 15px; }
+        
+        .market-section-title {
+            text-align: left; font-size: 11px; font-weight: 900; color: #ff4500;
+            margin: 14px 0 6px 2px; text-transform: uppercase; letter-spacing: 0.5px;
+            border-left: 3px solid #ff4500; padding-left: 6px;
         }
         
-        /* ESTÁDIO E BALIZA */
-        .stadium-container-3d {
-            position: relative; width: 100%; flex-grow: 1; max-height: 500px;
-            background: linear-gradient(180deg, #103822 0%, #0a2414 100%);
-            border: 3px solid #ffb703; border-radius: 18px; overflow: hidden;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
-            touch-action: none; margin-bottom: 15px;
+        .odds-grid-4d { display: grid; gap: 6px; }
+        .odd-card-4d {
+            background: linear-gradient(145deg, #1a202c, #0f1219);
+            border: 1px solid #2d3748;
+            padding: 8px 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
         }
+        .odd-card-4d:hover {
+            border-color: #ff4500;
+            background: linear-gradient(135deg, #ff450022, #1a202c);
+            transform: scale(1.01);
+        }
+        .odd-card-title { font-size: 11px; color: #ccc; font-weight: bold; text-align: left; }
+        .odd-card-val { font-size: 12px; font-weight: 900; color: #00ff88; background: #0b0c10; padding: 4px 8px; border-radius: 8px; border: 1px solid #ff450055; }
 
-        .goal-frame {
-            position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
-            width: 85%; height: 190px; border: 8px solid #ffffff; border-bottom: none;
-            border-radius: 5px 5px 0 0; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            z-index: 5; pointer-events: none;
+        .modal-input {
+            width: 100%; padding: 11px 14px; margin-bottom: 12px;
+            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px;
+            color: white; font-size: 13px;
         }
-        .goal-net {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
-            background-size: 18px 18px;
-            z-index: 4;
+        .modal-btn {
+            width: 100%; padding: 12px;
+            background: linear-gradient(135deg, #ff4500, #ff6a00); color: white;
+            border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
+            cursor: pointer; margin-top: 5px;
         }
-
-        /* MULTIPLICADORES */
-        .multipliers-bar {
-            position: absolute; top: 12px; left: 0; width: 100%; display: flex; justify-content: space-evenly;
-            padding: 0 10px; z-index: 15; pointer-events: none;
-        }
-        .mult-badge {
-            background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff88; color: #00ff88;
-            padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 900;
-            transition: all 0.3s ease;
-        }
-        .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); box-shadow: 0 0 12px #00ff88; }
-
-        /* GOLEIRO COM BRAÇOS ARTICULADOS E SALTO REALISTA */
-        .goleiro-real-3d {
-            position: absolute; top: 105px; left: 50%; transform: translateX(-50%);
-            width: 140px; height: 180px; z-index: 10;
-            /* Eixo central para que o corpo inteiro salte e gire livremente pelo ar */
-            transform-origin: center center;
-            transition: transform 0.45s cubic-bezier(0.1, 0.9, 0.2, 1);
-        }
-
-        /* ALVOS NOS CANTOS DA BALIZA */
-        .target-spot {
-            position: absolute; width: 44px; height: 44px; 
-            background: rgba(0, 255, 136, 0.1); border: 2px dashed #00ff88;
-            border-radius: 50%; z-index: 20; cursor: pointer;
-            display: flex; justify-content: center; align-items: center; 
-            box-shadow: 0 0 12px rgba(0,255,136,0.6);
-            animation: pulseTarget 1s infinite alternate;
-        }
-        .target-inner {
-            width: 16px; height: 16px; background: #00ff88;
-            border-radius: 50%; box-shadow: 0 0 8px #fff;
-        }
-        @keyframes pulseTarget { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.1); opacity: 1; } }
-
-        /* Posições Perfeitas dentro da baliza */
-        #target1 { top: 55px; left: 10%; }
-        #target2 { top: 55px; right: 10%; }
-        #target3 { top: 50px; left: 50%; transform: translateX(-50%); }
-        #target4 { top: 170px; left: 15%; }
-        #target5 { top: 170px; right: 15%; }
-
-        /* FÍSICA DA BOLA */
-        .bola-penalty-3d {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) scale(1);
-            width: 42px; height: 42px;
-            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d5d5d5 40%, #555 85%, #111 100%);
-            border-radius: 50%; box-shadow: 8px 12px 20px rgba(0,0,0,0.8);
-            z-index: 25; transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-        }
-
-        /* RESULTADO ANIMADO */
-        .win-display-banner {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5);
-            z-index: 30; display: none; text-align: center; width: 100%; opacity: 0;
-            transition: all 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.28); pointer-events: none;
-        }
-        .win-display-banner.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .win-red-amount { font-size: 32px; font-weight: 950; color: #ff2a2a; text-shadow: 0 0 20px #ff0000, 0 3px 5px #000; text-transform: uppercase; }
-        .win-white-text { font-size: 36px; font-weight: 950; color: #ffffff; text-shadow: 0 0 15px #ffffff, 0 3px 5px #000; margin-top: 5px; }
-
-        /* CONTROLOS */
-        .penalty-controls-box {
-            width: 100%; background: #151821; padding: 15px; border-radius: 16px; 
-            border: 1px solid rgba(0,255,136,0.3); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-        }
-        .bet-control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: bold; }
-        .bet-adjust-box { display: flex; align-items: center; gap: 8px; }
-        .btn-bet-step { background: #ff4500; color: #fff; border: none; width: 36px; height: 36px; border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer; }
-        .bet-input-display { background: #0f1118; border: 1px solid #00ff88; color: #00ff88; padding: 8px 10px; border-radius: 8px; font-weight: 900; font-size: 16px; width: 90px; text-align: center; }
-        .btn-confirmar-aposta { width: 100%; padding: 16px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%); color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5); text-transform: uppercase; }
-        .btn-confirmar-aposta:active { transform: scale(0.98); }
+        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <div id="splashScreen">
+        <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
+        <div class="loading-container">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <div class="loading-text" id="loadingText">A CARREGAR... 0%</div>
+        <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
+    </div>
+
+    <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
+
     <header>
         <div class="header-left">
-            <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo">
+            <div class="btn-menu-lateral" onclick="abrirSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
             <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
+            <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
+            <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
         </div>
     </header>
 
-    <div class="section-title">🏆 PENALTY SHOOT-OUT 3D</div>
+    <div class="quick-search-bar">
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
+        <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
+    </div>
 
-    <div id="footballModal">
-        <div class="stadium-container-3d" id="stadiumContainer">
-            <div class="goal-frame"><div class="goal-net"></div></div>
+    <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
+        <svg viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+        </svg>
+    </div>
 
-            <div class="multipliers-bar">
-                <div class="mult-badge" id="m1">1.92x</div>
-                <div class="mult-badge" id="m2">3.84x</div>
-                <div class="mult-badge" id="m3">7.68x</div>
-                <div class="mult-badge" id="m4">15.36x</div>
-                <div class="mult-badge" id="m5">30.72x</div>
-            </div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">🤠 MENU PRINCIPAL</div>
+            <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
+        </div>
+        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino</div>
+        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Esportivas</div>
+        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
+        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
+        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">💬 Suporte Online</div>
+        <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">💰 Depositar (PIX)</div>
+        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">🔐 Entrar na Conta</div>
+        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">📝 Registrar Conta</div>
+    </div>
 
-            <!-- GOLEIRO REALISTA COM ROSTO, CABELO E LUVAS REAIS -->
-            <div class="goleiro-real-3d" id="goleiroEl">
-                <svg viewBox="0 0 200 220" width="100%" height="100%" style="overflow: visible;">
-                    <defs>
-                        <!-- Gradiente de Pele Realista -->
-                        <radialGradient id="skinBase" cx="40%" cy="40%" r="60%">
-                            <stop offset="0%" stop-color="#ffcdb2"/>
-                            <stop offset="60%" stop-color="#e29578"/>
-                            <stop offset="100%" stop-color="#9d4a2a"/>
-                        </radialGradient>
-                        <!-- Cabelo 3D -->
-                        <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="#3e2723"/>
-                            <stop offset="100%" stop-color="#140b08"/>
-                        </linearGradient>
-                        <!-- Uniforme Pro -->
-                        <linearGradient id="jerseyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#2980b9"/>
-                            <stop offset="50%" stop-color="#1b4f72"/>
-                            <stop offset="100%" stop-color="#0a1d2a"/>
-                        </linearGradient>
-                        <!-- Luvas Brancas -->
-                        <linearGradient id="gloveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#ffffff"/>
-                            <stop offset="70%" stop-color="#bdc3c7"/>
-                            <stop offset="100%" stop-color="#7f8c8d"/>
-                        </linearGradient>
-                        <!-- Sombras -->
-                        <filter id="gkShadow">
-                            <feDropShadow dx="0" dy="12" stdDeviation="6" flood-opacity="0.65"/>
-                        </filter>
-                    </defs>
-
-                    <g filter="url(#gkShadow)">
-                        <!-- PERNAS & CHUTEIRAS -->
-                        <path d="M82 120 L96 120 L90 160 L78 160 Z" fill="url(#skinBase)"/>
-                        <path d="M118 120 L104 120 L110 160 L122 160 Z" fill="url(#skinBase)"/>
-                        <!-- Calções Pretos -->
-                        <path d="M72 110 L128 110 L124 135 L105 130 L100 120 L95 130 L76 135 Z" fill="#111"/>
-                        <!-- Meias -->
-                        <path d="M78 160 L90 160 L87 190 L75 190 Z" fill="#fff"/>
-                        <path d="M122 160 L110 160 L113 190 L125 190 Z" fill="#fff"/>
-                        <path d="M77 170 L89 170 M76 175 L88 175" stroke="#2980b9" stroke-width="2"/>
-                        <path d="M123 170 L111 170 M124 175 L112 175" stroke="#2980b9" stroke-width="2"/>
-                        <!-- Chuteiras Neon -->
-                        <path d="M75 190 L87 190 L90 205 L70 205 Z" fill="#ccff00"/>
-                        <path d="M125 190 L113 190 L110 205 L130 205 Z" fill="#ccff00"/>
-
-                        <!-- BRAÇO ESQUERDO (Articulado no Ombro) -->
-                        <g id="gk-arm-left" style="transform-origin: 80px 65px; transform: rotate(60deg); transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);">
-                            <!-- Manga e Braço -->
-                            <path d="M85 55 L35 60 L35 72 L85 75 Z" fill="url(#jerseyGrad)"/>
-                            <path d="M36 62 L18 62 L18 70 L36 70 Z" fill="url(#skinBase)"/>
-                            <!-- Luva de Goleiro Detalhada -->
-                            <path d="M22 53 Q -2 53 3 66 Q -2 79 22 79 Z" fill="url(#gloveGrad)"/>
-                            <rect x="20" y="52" width="6" height="28" fill="#111" rx="2"/>
-                            <!-- Dedos da Luva -->
-                            <path d="M10 56 L 2 58 M 8 61 L -2 63 M 8 66 L -2 66 M 10 71 L 2 73 M 15 75 L 8 80" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-                        </g>
-
-                        <!-- BRAÇO DIREITO (Articulado no Ombro) -->
-                        <g id="gk-arm-right" style="transform-origin: 120px 65px; transform: rotate(-60deg); transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);">
-                            <path d="M115 55 L165 60 L165 72 L115 75 Z" fill="url(#jerseyGrad)"/>
-                            <path d="M164 62 L182 62 L182 70 L164 70 Z" fill="url(#skinBase)"/>
-                            <!-- Luva -->
-                            <path d="M178 53 Q 202 53 197 66 Q 202 79 178 79 Z" fill="url(#gloveGrad)"/>
-                            <rect x="174" y="52" width="6" height="28" fill="#111" rx="2"/>
-                            <!-- Dedos da Luva -->
-                            <path d="M190 56 L 198 58 M 192 61 L 202 63 M 192 66 L 202 66 M 190 71 L 198 73 M 185 75 L 192 80" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-                        </g>
-
-                        <!-- TRONCO (Com detalhes e sombras) -->
-                        <path d="M70 55 Q 60 55 65 115 L 135 115 Q 140 55 130 55 Z" fill="url(#jerseyGrad)"/>
-                        <path d="M70 55 Q 60 55 65 115 L 135 115 Q 140 55 130 55 Z" fill="rgba(0,0,0,0.15)"/>
-                        <path d="M90 55 L 100 70 L 110 55 Z" fill="#111"/> <!-- Gola -->
-                        <path d="M90 75 L 110 75 L 105 95 L 95 95 Z" fill="rgba(255,255,255,0.1)"/> <!-- Sombra do peito -->
-
-                        <!-- CABEÇA & ROSTO HUMANO -->
-                        <!-- Pescoço -->
-                        <rect x="93" y="42" width="14" height="15" fill="url(#skinBase)"/>
-                        <!-- Orelhas -->
-                        <circle cx="81" cy="27" r="5" fill="url(#skinBase)"/>
-                        <circle cx="119" cy="27" r="5" fill="url(#skinBase)"/>
-                        <!-- Base do Rosto -->
-                        <path d="M81 24 C 81 2, 119 2, 119 24 C 119 46, 110 50, 100 50 C 90 50, 81 46, 81 24 Z" fill="url(#skinBase)"/>
-                        
-                        <!-- Cabelo Moderno 3D -->
-                        <path d="M79 18 C 85 -8, 115 -8, 121 18 C 120 10, 100 5, 79 18 Z" fill="url(#hairGrad)"/>
-                        <path d="M79 18 Q 82 13 80 26 M121 18 Q 118 13 120 26" stroke="url(#hairGrad)" stroke-width="2" fill="none"/>
-
-                        <!-- Sobrancelhas -->
-                        <path d="M86 21 Q 91 18 95 22" stroke="#2c1a11" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                        <path d="M114 21 Q 109 18 105 22" stroke="#2c1a11" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                        
-                        <!-- Olhos -->
-                        <circle cx="91" cy="26" r="2.5" fill="#fff"/>
-                        <circle cx="91.5" cy="26" r="1.2" fill="#111"/>
-                        <circle cx="109" cy="26" r="2.5" fill="#fff"/>
-                        <circle cx="108.5" cy="26" r="1.2" fill="#111"/>
-                        
-                        <!-- Nariz -->
-                        <path d="M100 27 L 98 34 L 101 35" stroke="#9d4a2a" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-                        
-                        <!-- Boca e Expressão Focada -->
-                        <path d="M93 41 Q 100 44 107 41" stroke="#6e2d18" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                        <path d="M96 41 Q 100 45 104 41" fill="#fff" opacity="0.7"/> <!-- Dentes/Boca levemente aberta -->
-                        <path d="M86 36 Q 100 52 114 36" stroke="#2c1a11" stroke-width="2" fill="none" opacity="0.25"/> <!-- Sombra do queixo -->
-                    </g>
-                </svg>
-            </div>
-
-            <!-- ALVOS -->
-            <div class="target-spot" id="target1" onclick="chutarPenalty(1)"><div class="target-inner"></div></div>
-            <div class="target-spot" id="target2" onclick="chutarPenalty(2)"><div class="target-inner"></div></div>
-            <div class="target-spot" id="target3" onclick="chutarPenalty(3)"><div class="target-inner"></div></div>
-            <div class="target-spot" id="target4" onclick="chutarPenalty(4)"><div class="target-inner"></div></div>
-            <div class="target-spot" id="target5" onclick="chutarPenalty(5)"><div class="target-inner"></div></div>
-
-            <!-- BOLA -->
-            <div class="bola-penalty-3d" id="bolaEl"></div>
-
-            <!-- RESULTADO -->
-            <div class="win-display-banner" id="winBanner">
-                <div class="win-red-amount" id="winValorVermelho">R$ 20.00 virou</div>
-                <div class="win-white-text" id="winValorBranco">R$ 38.40</div>
+    <!-- ABA 1: CASSINO -->
+    <div id="tab-cassino" class="main-tab-content active-tab">
+        <div class="promo-carousel-container">
+            <div class="promo-track" id="promoTrack">
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/75mifn.jpeg');">
+                    <div class="promo-content">
+                        <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
+                        <p>Receba até R$1.000 + 50 Giros Grátis!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
+                    </div>
+                </div>
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
+                    <div class="promo-content">
+                        <h3>⚡ CASHBACK DIÁRIO</h3>
+                        <p>Até 12% de retorno em todas as apostas!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
+                    </div>
+                </div>
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
+                    <div class="promo-content">
+                        <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
+                        <p>Participe e concorra a prêmios em dinheiro!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Participar</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="penalty-controls-box">
-            <div class="bet-control-row">
-                <span>Valor da Aposta:</span>
-                <div class="bet-adjust-box">
-                    <button class="btn-bet-step" onclick="alterarAposta(-1)">-</button>
-                    <input type="text" id="penaltyBetInput" class="bet-input-display" value="20.00" readonly>
-                    <button class="btn-bet-step" onclick="alterarAposta(1)">+</button>
+        <div class="jackpot-box">
+            <div class="jackpot-title">🔥 JACKPOT GLOBAL 3D</div>
+            <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
+        </div>
+
+        <div class="winners-section">
+            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
+            <div class="winners-scroll" id="winnersScroll">
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
+                    <div class="winner-info">
+                        <div class="winner-name">Kaiq***</div>
+                        <div class="winner-prize">R$ 45.00 BRL</div>
+                    </div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
+                    <div class="winner-info">
+                        <div class="winner-name">Ebe***</div>
+                        <div class="winner-prize">R$ 35.75 BRL</div>
+                    </div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/9k06uq.jpeg" alt="Mines">
+                    <div class="winner-info">
+                        <div class="winner-name">Lucas***</div>
+                        <div class="winner-prize">R$ 120.00 BRL</div>
+                    </div>
                 </div>
             </div>
-            <button class="btn-confirmar-aposta" id="btnConfirmarAposta" onclick="iniciarNovoPenalty()">CHUTAR PÊNALTI</button>
+        </div>
+
+        <div class="section-title">
+            🏆 TOP JOGOS <span>Todos ></span>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card" onclick="jogarCassino('Fortune Tiger', 15)">
+                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
+                <div class="game-name">Fortune Tiger</div>
+            </div>
+            <div class="game-card" onclick="jogarCassino('Aviator', 20)">
+                <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
+                <div class="game-name">Aviator</div>
+            </div>
+            <div class="game-card" onclick="jogarCassino('Mines', 10)">
+                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
+                <div class="game-name">Mines</div>
+            </div>
+            <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
+                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
+                <div class="game-name">Gates of Olympus</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 2: ESPORTES AO VIVO -->
+    <div id="tab-esportes" class="main-tab-content">
+        <div class="sports-container" style="padding-top: 15px;">
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Partidas em Tempo Real (Ao Vivo)</div>
+            
+            <div class="filtro-ligas-scroll" id="filtroLigasContainer">
+                <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
+            </div>
+
+            <div id="lista-partidas-api">
+                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas em direto...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 3: MEUS BILHETES -->
+    <div id="tab-bilhetes" class="main-tab-content">
+        <div class="bilhetes-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes ao Vivo</div>
+            <div id="listaMeusBilhetesImpressos">
+                <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES (EXTRATO) -->
+    <div id="tab-extrato" class="main-tab-content">
+        <div class="extrato-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📜 Histórico de Transações</div>
+            <div id="listaExtratoTransacoes">
+                <p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA 5: SUPORTE ONLINE -->
+    <div id="tab-suporte" class="main-tab-content">
+        <div class="suporte-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Central de Atendimento 3D</div>
+            <div class="suporte-card-3d">
+                <div class="suporte-badge-online">🟢 Operador Humano Online (Suporte 24h)</div>
+                <p style="font-size: 13px; margin-bottom: 18px; color: #ccc; line-height: 1.5;">Perdeu o acesso à conta, precisa recuperar login ou tem dúvidas sobre pagamentos Pix? Envie sua mensagem diretamente para nossa equipe.</p>
+                <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Recuperar Senha / Erro no Saldo)">
+                <textarea id="suporteMensagem" class="modal-input" placeholder="Escreva detalhadamente a sua dúvida ou informe seu e-mail de cadastro..." style="height: 100px; resize: none;"></textarea>
+                <button class="modal-btn" onclick="enviarMensagemSuporte()">Enviar Mensagem ao Suporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boletim de Apostas Flutuante (Criar Bilhete Rápido - Suporta Apostas Múltiplas) -->
+    <div class="bet-slip" id="betSlip">
+        <div class="bet-slip-title">
+            <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
+            <span style="cursor:pointer;" onclick="fecharBilhete()">&times;</span>
+        </div>
+        <div class="bet-slip-info" id="betSelectionInfo">Nenhuma seleção feita.</div>
+        <div style="font-size: 11px; color: #ffb703; margin-bottom: 6px;" id="oddTotalInfo">Odd Total: 0.00</div>
+        <input type="number" id="betValorInput" class="bet-slip-input" placeholder="Valor da Aposta (R$)" value="50">
+        <div style="font-size: 11px; color: #00ff88; margin-bottom: 6px;" id="retornoPotencial">Retorno potencial: R$ 0,00</div>
+        <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
+    </div>
+
+    <!-- Modal 4D Avançado de Opções e Mercados Tradicionais da Partida -->
+    <div id="matchModal" class="modal-overlay">
+        <div class="modal-card-4d">
+            <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
+            <div class="modal-title-4d" id="modalPartidaTitulo">Mercados da Partida</div>
+            <div class="modal-subtitle-4d" id="modalPartidaInfoSub">Ao Vivo | Relógio Ativo</div>
+            
+            <div class="market-section-title">1X2 Tradicional (Vencedor)</div>
+            <div class="odds-grid-4d" id="modalOdds1X2" style="grid-template-columns: repeat(3, 1fr);"></div>
+
+            <div class="market-section-title">Dupla Chance</div>
+            <div class="odds-grid-4d" id="modalOddsDuplaChance" style="grid-template-columns: repeat(3, 1fr);"></div>
+
+            <div class="market-section-title">Total de Gols (Mais / Menos)</div>
+            <div class="odds-grid-4d" id="modalOddsGols"></div>
+
+            <div class="market-section-title">Total de Escanteios</div>
+            <div class="odds-grid-4d" id="modalOddsEscanteios"></div>
+
+            <div class="market-section-title">Cartões (Amarelos / Vermelhos)</div>
+            <div class="odds-grid-4d" id="modalOddsCartoes" style="margin-bottom: 5px;"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card-4d" style="max-width: 380px;">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title-4d">🔐 ENTRAR NA CONTA</div>
+            <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail (Gmail cadastrado)">
+            <input type="password" id="loginSenha" class="modal-input" placeholder="Sua Senha">
+            <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div id="registerModal" class="modal-overlay">
+        <div class="modal-card-4d" style="max-width: 380px;">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title-4d">📝 CRIAR CONTA</div>
+            <div id="etapaCadastro1">
+                <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
+                <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
+                <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone / WhatsApp">
+                <input type="text" id="regCpf" class="modal-input" placeholder="CPF">
+                <input type="date" id="regNascimento" class="modal-input" placeholder="Data de Nascimento">
+                <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
+                <button class="modal-btn" onclick="solicitarCodigoConfirmacao()">Avançar e Enviar Código</button>
+            </div>
+            <div id="etapaCadastro2" style="display: none;">
+                <p style="font-size: 12px; color: #bbb; margin-bottom: 12px;">Enviámos um código de confirmação de 4 dígitos para o seu E-mail / Telefone.</p>
+                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código (ex: 4821)" maxlength="4" style="text-align: center; letter-spacing: 5px; font-size: 18px;">
+                <button class="modal-btn" onclick="validarCodigoEConcluir()">Confirmar Código e Registar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Depósito -->
+    <div id="depositModal" class="modal-overlay">
+        <div class="modal-card-4d" style="max-width: 380px;">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title-4d">💰 DEPOSITAR (PIX)</div>
+            <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor do depósito (R$)">
+            <button class="modal-btn" onclick="realizarDeposito()">Gerar Pix e Depositar</button>
         </div>
     </div>
 
     <script>
-        let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
-        let nivelAtual = 0;
-        let jogadaEmAndamento = false;
-        const multiplicadores = [1.92, 3.84, 7.68, 15.36, 30.72];
+        let progresso = 0;
+        const barra = document.getElementById('loadingBar');
+        const textoCarregamento = document.getElementById('loadingText');
+        const botaoEntrarSplash = document.getElementById('btnEntrarSplash');
 
-        function atualizarSaldoNaTela() { 
-            document.getElementById('saldoAtual').innerText = saldo.toFixed(2); 
-            localStorage.setItem('cangaco_saldo', saldo); 
-        }
-        atualizarSaldoNaTela();
-
-        function alterarAposta(delta) {
-            if(jogadaEmAndamento) return;
-            let input = document.getElementById('penaltyBetInput');
-            let val = parseFloat(input.value) + (delta * 10);
-            if (val < 10) val = 10;
-            input.value = val.toFixed(2);
-        }
-
-        function iniciarNovoPenalty() {
-            if(jogadaEmAndamento) return;
-            let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
-            
-            if (nivelAtual === 0) {
-                if (saldo < apostaVal) { alert("Saldo insuficiente!"); return; }
-                saldo -= apostaVal; 
-                atualizarSaldoNaTela();
+        let intervaloCarregamento = setInterval(() => {
+            progresso += 2;
+            if (progresso <= 100) {
+                barra.style.width = progresso + '%';
+                textoCarregamento.innerText = `A CARREGAR... ${progresso}%`;
+            } else {
+                clearInterval(intervaloCarregamento);
+                textoCarregamento.innerText = "PRONTO!";
+                botaoEntrarSplash.style.display = 'block';
             }
+        }, 30);
 
-            // Reseta a interface, a bola e o corpo do goleiro
-            document.getElementById('winBanner').classList.remove('show');
-            setTimeout(() => { document.getElementById('winBanner').style.display = 'none'; }, 300);
-            
-            document.getElementById('bolaEl').style.transform = 'translateX(-50%) scale(1)';
-            document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0) rotate(0deg)';
-            
-            // Retorna os braços do goleiro realista à posição de repouso
-            document.getElementById('gk-arm-left').style.transform = 'rotate(60deg)';
-            document.getElementById('gk-arm-right').style.transform = 'rotate(-60deg)';
-            
-            atualizarMultiplicadoresUI();
-            mostrarAlvos(true);
-            
-            let btn = document.getElementById('btnConfirmarAposta');
-            btn.innerText = "ESCOLHA O ALVO";
-            btn.style.background = "#555";
-            btn.style.color = "#aaa";
-            btn.style.boxShadow = "none";
-        }
-
-        function atualizarMultiplicadoresUI() {
-            for (let i = 1; i <= 5; i++) {
-                let badge = document.getElementById('m' + i);
-                badge.classList.remove('active');
-                if (i - 1 === nivelAtual) badge.classList.add('active');
-            }
-        }
-
-        function mostrarAlvos(status) {
-            let displayVal = status ? 'flex' : 'none';
-            for (let i = 1; i <= 5; i++) { document.getElementById('target' + i).style.display = displayVal; }
-        }
-
-        function chutarPenalty(cantoEscolhido) {
-            jogadaEmAndamento = true;
-            mostrarAlvos(false);
-            let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
-
-            let bola = document.getElementById('bolaEl');
-            let goleiro = document.getElementById('goleiroEl');
-            let armL = document.getElementById('gk-arm-left');
-            let armR = document.getElementById('gk-arm-right');
-
-            // BOLA (Física 3D para o fundo da baliza)
-            let bolaMovimentos = {
-                1: 'translate(calc(-50% - 115px), -250px) scale(0.4)',
-                2: 'translate(calc(-50% + 115px), -250px) scale(0.4)',
-                3: 'translate(-50%, -250px) scale(0.4)',
-                4: 'translate(calc(-50% - 90px), -135px) scale(0.55)',
-                5: 'translate(calc(-50% + 90px), -135px) scale(0.55)'
-            };
-            
-            // CORPO DO GOLEIRO (Salto acrobático)
-            let goleiroMovimentos = {
-                1: 'translate(calc(-50% - 85px), -70px) rotate(-65deg)',
-                2: 'translate(calc(-50% + 85px), -70px) rotate(65deg)',
-                3: 'translate(-50%, -85px) rotate(0deg)',
-                4: 'translate(calc(-50% - 100px), 10px) rotate(-85deg)',
-                5: 'translate(calc(-50% + 100px), 10px) rotate(85deg)'
-            };
-
+        function fecharSplashScreen() {
+            const splash = document.getElementById('splashScreen');
+            splash.style.opacity = '0';
             setTimeout(() => {
-                bola.style.transform = bolaMovimentos[cantoEscolhido];
-                goleiro.style.transform = goleiroMovimentos[cantoEscolhido];
-
-                // BRAÇOS DO GOLEIRO (Eles apontam/esticam perfeitamente para a bola)
-                if (cantoEscolhido === 1 || cantoEscolhido === 4) {
-                    armL.style.transform = 'rotate(-20deg)'; // Braço esquerdo estica em direção à bola
-                    armR.style.transform = 'rotate(-80deg)'; // Braço direito acompanha o movimento do corpo
-                } else if (cantoEscolhido === 2 || cantoEscolhido === 5) {
-                    armR.style.transform = 'rotate(20deg)'; // Braço direito estica em direção à bola
-                    armL.style.transform = 'rotate(80deg)';  // Braço esquerdo acompanha o corpo
-                } else {
-                    armL.style.transform = 'rotate(-80deg)'; // Levanta os dois braços para tentar defender o meio
-                    armR.style.transform = 'rotate(80deg)';
-                }
-
-                setTimeout(() => {
-                    let goleiroDefendeu = Math.random() < 0.25 && nivelAtual > 0;
-                    let banner = document.getElementById('winBanner');
-
-                    if (!goleiroDefendeu) {
-                        let mult = multiplicadores[nivelAtual];
-                        let premioTotal = apostaVal * mult;
-                        
-                        document.getElementById('winValorVermelho').innerText = `R$ ${apostaVal.toFixed(2)} viro`;
-                        document.getElementById('winValorBranco').innerText = `R$ ${premioTotal.toFixed(2)}`;
-                        
-                        banner.style.display = 'block';
-                        setTimeout(() => banner.classList.add('show'), 50);
-
-                        nivelAtual++;
-                        let btn = document.getElementById('btnConfirmarAposta');
-                        btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
-                        btn.style.color = "#000";
-                        btn.style.boxShadow = "0 6px 20px rgba(0, 255, 136, 0.5)";
-
-                        if (nivelAtual >= 5) {
-                            saldo += premioTotal; atualizarSaldoNaTela();
-                            btn.innerText = "SACAR E REINICIAR";
-                            nivelAtual = 0;
-                        } else {
-                            btn.innerText = "CONTINUAR CHUTANDO";
-                        }
-                        jogadaEmAndamento = false;
-
-                    } else {
-                        document.getElementById('winValorVermelho').innerText = "DEFESA!";
-                        document.getElementById('winValorVermelho').style.color = "#ff2a2a";
-                        document.getElementById('winValorBranco').innerText = "Tente de novo";
-                        
-                        banner.style.display = 'block';
-                        setTimeout(() => banner.classList.add('show'), 50);
-                        
-                        let btn = document.getElementById('btnConfirmarAposta');
-                        btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
-                        btn.style.color = "#fff";
-                        btn.style.boxShadow = "0 6px 20px rgba(255, 69, 0, 0.5)";
-                        btn.innerText = "NOVO PÊNALTI";
-                        
-                        nivelAtual = 0;
-                        jogadaEmAndamento = false;
-                    }
-                }, 450);
-            }, 50);
+                splash.style.display = 'none';
+                tocarAudioInicio();
+            }, 500);
         }
+
+        const audio = document.getElementById('audioPlayer');
+        const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
-        document.getElementById('btnConfirmarAposta').innerText = "ESCOLHA O ALVO";
-        document.getElementById('btnConfirmarAposta').style.background = "#555";
-        document.getElementById('btnConfirmarAposta').style.color = "#aaa";
-        atualizarMultiplicadoresUI();
+        let apostasSelecionadas = []; // Lista para apostas múltiplas
+        let partidaAtivaId = null;
+        let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
+        
+        let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
+        let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
+        let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
+        let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
+        
+        let listaGlobalPartidas = [];
+        let ligaFiltroAtual = 'TODAS';
+        let codigoGeradoTemp = "";
+        let dadosTempRegistro = {};
+        let intervaloAtualizacaoAoVivo = null;
+
+        atualizarSaldoNaTela();
+        verificarSessaoAtiva();
+
+        function salvarDadosStorage() {
+            localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
+            localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
+            localStorage.setItem('cangaco_saldo', saldo);
+            localStorage.setItem('cangaco_db_usuarios', JSON.stringify(baseDadosUtilizadores));
+            if (usuarioLogado) {
+                localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
+            }
+        }
+
+        function atualizarSaldoNaTela() {
+            document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
+        }
+
+        function verificarSessaoAtiva() {
+            if (usuarioLogado) {
+                document.querySelector('.btn-topo-login').innerText = usuarioLogado.nome.split(' ')[0];
+                document.querySelector('.btn-topo-login').setAttribute('onclick', 'fazerLogout()');
+                document.querySelector('.btn-topo-login').title = "Clique para sair da conta";
+            }
+        }
+
+        function fazerLogout() {
+            if (confirm("Deseja sair da sua conta?")) {
+                localStorage.removeItem('cangaco_usuario');
+                usuarioLogado = null;
+                location.reload();
+            }
+        }
+
+        function registarTransacao(tipo, descricao, valor) {
+            const dataHora = new Date().toLocaleString('pt-BR');
+            historicoTransacoes.unshift({ tipo: tipo, descricao: descricao, valor: valor.toFixed(2), data: dataHora });
+            salvarDadosStorage();
+        }
+
+        // Mapeamento em português para times e seleções nacionais
+        const traducoesTimes = {
+            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro",
+            "Brazil": "Brasil", "Argentina": "Argentina", "France": "França", "Germany": "Alemanha", "England": "Inglaterra", "Spain": "Espanha", "Italy": "Itália", "Portugal": "Portugal", "Netherlands": "Holanda", "Uruguay": "Uruguai", "Colombia": "Colômbia", "Chile": "Chile", "Peru": "Peru", "Ecuador": "Equador", "Paraguay": "Paraguai", "Venezuela": "Venezuela", "Bolivia": "Bolívia", "Mexico": "México", "United States": "Estados Unidos", "Japan": "Japão", "South Korea": "Coreia do Sul", "Morocco": "Marrocos", "Croatia": "Croácia", "Belgium": "Bélgica"
+        };
+
+        // Escudos oficiais de clubes e bandeiras de seleções nacionais
+        const bandeirasTimes = {
+            "Flamengo": "https://media.api-sports.io/football/teams/127.png",
+            "Palmeiras": "https://media.api-sports.io/football/teams/121.png",
+            "São Paulo": "https://media.api-sports.io/football/teams/126.png",
+            "Corinthians": "https://media.api-sports.io/football/teams/131.png",
+            "Fluminense": "https://media.api-sports.io/football/teams/124.png",
+            "Botafogo": "https://media.api-sports.io/football/teams/120.png",
+            "Vasco da Gama": "https://media.api-sports.io/football/teams/133.png",
+            "Grêmio": "https://media.api-sports.io/football/teams/130.png",
+            "Internacional": "https://media.api-sports.io/football/teams/119.png",
+            "Atlético Mineiro": "https://media.api-sports.io/football/teams/1062.png",
+            "Cruzeiro": "https://media.api-sports.io/football/teams/135.png",
+            "Real Madrid": "https://media.api-sports.io/football/teams/541.png",
+            "Barcelona": "https://media.api-sports.io/football/teams/529.png",
+            "Atlético de Madrid": "https://media.api-sports.io/football/teams/530.png",
+            "Manchester City": "https://media.api-sports.io/football/teams/50.png",
+            "Manchester United": "https://media.api-sports.io/football/teams/33.png",
+            "Arsenal": "https://media.api-sports.io/football/teams/42.png",
+            "Chelsea": "https://media.api-sports.io/football/teams/49.png",
+            "Liverpool": "https://media.api-sports.io/football/teams/40.png",
+            "Tottenham": "https://media.api-sports.io/football/teams/47.png",
+            "Juventus": "https://media.api-sports.io/football/teams/496.png",
+            "Milan": "https://media.api-sports.io/football/teams/489.png",
+            "Inter de Milão": "https://media.api-sports.io/football/teams/505.png",
+            "Roma": "https://media.api-sports.io/football/teams/497.png",
+            "Napoli": "https://media.api-sports.io/football/teams/492.png",
+            "Lazio": "https://media.api-sports.io/football/teams/499.png",
+            "Bayern de Munique": "https://media.api-sports.io/football/teams/157.png",
+            "Borussia Dortmund": "https://media.api-sports.io/football/teams/165.png",
+            "Bayer Leverkusen": "https://media.api-sports.io/football/teams/168.png",
+            "RB Leipzig": "https://media.api-sports.io/football/teams/173.png",
+            "Paris Saint-Germain": "https://media.api-sports.io/football/teams/85.png",
+            "Olympique de Marselha": "https://media.api-sports.io/football/teams/81.png",
+            "Lyon": "https://media.api-sports.io/football/teams/80.png",
+            "Monaco": "https://media.api-sports.io/football/teams/79.png",
+            "Ajax": "https://media.api-sports.io/football/teams/194.png",
+            "PSV": "https://media.api-sports.io/football/teams/197.png",
+            "Benfica": "https://media.api-sports.io/football/teams/211.png",
+            "Porto": "https://media.api-sports.io/football/teams/212.png",
+            "Sporting": "https://media.api-sports.io/football/teams/228.png",
+            "Brasil": "https://flagcdn.com/w40/br.png",
+            "Argentina": "https://flagcdn.com/w40/ar.png",
+            "França": "https://flagcdn.com/w40/fr.png",
+            "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
+            "Alemanha": "https://flagcdn.com/w40/de.png",
+            "Portugal": "https://flagcdn.com/w40/pt.png",
+            "Espanha": "https://flagcdn.com/w40/es.png",
+            "Itália": "https://flagcdn.com/w40/it.png",
+            "Holanda": "https://flagcdn.com/w40/nl.png",
+            "Uruguai": "https://flagcdn.com/w40/uy.png",
+            "Colômbia": "https://flagcdn.com/w40/co.png",
+            "Chile": "https://flagcdn.com/w40/cl.png",
+            "Croácia": "https://flagcdn.com/w40/hr.png",
+            "Bélgica": "https://flagcdn.com/w40/be.png"
+        };
+
+        function obterBandeira(nomeTime, logoApi) { 
+            if (logoApi) return logoApi;
+            if (bandeirasTimes[nomeTime]) return bandeirasTimes[nomeTime];
+            return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
+        }
+
+        // Mapeamento traduzido para ligas, torneios de seleções, eliminatórias e amistosos
+        const traducoesLigas = {
+            "UEFA Champions League": "Liga dos Campeões da UEFA",
+            "UEFA Europa League": "Liga Europa da UEFA",
+            "UEFA Conference League": "Liga Conferência da UEFA",
+            "Premier League": "Campeonato Inglês",
+            "Primera Division": "Campeonato Espanhol",
+            "La Liga": "Campeonato Espanhol",
+            "Serie A": "Campeonato Italiano",
+            "Bundesliga": "Campeonato Alemão",
+            "Ligue 1": "Campeonato Francês",
+            "Eredivisie": "Campeonato Holandês",
+            "Primeira Liga": "Campeonato Português",
+            "UEFA Nations League": "Liga das Nações da UEFA",
+            "Copa Libertadores": "Copa Libertadores",
+            "Copa Sudamericana": "Copa Sul-Americana",
+            "Campeonato Brasileiro Série A": "Brasileirão Série A",
+            "Serie B": "Brasileirão Série B",
+            "Copa do Brasil": "Copa do Brasil",
+            "FRIENDLIES": "Amistosos Internacionais",
+            "Friendlies": "Amistosos Internacionais",
+            "World Cup - Qualification South America": "Eliminatórias da Copa - América do Sul",
+            "World Cup - Qualification Europe": "Eliminatórias da Copa - Europa",
+            "World Cup - Qualification CONCACAF": "Eliminatórias da Copa - CONCACAF",
+            "World Cup - Qualification Asia": "Eliminatórias da Copa - Ásia",
+            "World Cup - Qualification Africa": "Eliminatórias da Copa - África",
+            "Euro Championship - Qualification": "Eliminatórias da Eurocopa"
+        };
+
+        function traduzirTime(nome) { return traducoesTimes[nome] || nome; }
+        function traduzirLiga(nome) { return traducoesLigas[nome] || nome; }
+
+        function gerarOddsReais(casa, fora) {
+            let seed = (casa.length + fora.length) * 7;
+            let odd1 = (1.45 + (seed % 17) / 10).toFixed(2);
+            let oddX = (3.20 + ((seed * 3) % 13) / 10).toFixed(2);
+            let odd2 = (2.05 + ((seed * 5) % 23) / 10).toFixed(2);
+            return { casa: odd1, empate: oddX, fora: odd2 };
+        }
+
+        function tocarAudioInicio() { audio.play().catch(e => console.log(e)); }
+
+        function abrirSidebar() {
+            tocarAudioInicio();
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('sidebarOverlay').style.display = 'block';
+        }
+        function fecharSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').style.display = 'none';
+        }
+
+        function mudarAba(aba) {
+            tocarAudioInicio();
+            document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
+            if (aba === 'cassino') {
+                document.getElementById('tab-cassino').classList.add('active-tab');
+            } else if (aba === 'esportes') {
+                document.getElementById('tab-esportes').classList.add('active-tab');
+                carregarJogosReais();
+            } else if (aba === 'bilhetes') {
+                document.getElementById('tab-bilhetes').classList.add('active-tab');
+                renderizarBilhetesNaTela();
+            } else if (aba === 'extrato') {
+                document.getElementById('tab-extrato').classList.add('active-tab');
+                renderizarExtratoNaTela();
+            } else if (aba === 'suporte') {
+                document.getElementById('tab-suporte').classList.add('active-tab');
+            }
+        }
+
+        function jogarCassino(nomeJogo, custoAposta) {
+            audio.pause(); audio.currentTime = 0; 
+            if (saldo < custoAposta) { alert("Saldo insuficiente para jogar! Faça um depósito."); return; }
+            saldo -= custoAposta;
+            atualizarSaldoNaTela();
+            salvarDadosStorage();
+            
+            let ganhou = Math.random() >= 0.5;
+            if (ganhou) {
+                let premio = custoAposta * 2;
+                saldo += premio;
+                atualizarSaldoNaTela();
+                registarTransacao('cassino_ganho', `Prêmio no Cassino (${nomeJogo})`, premio);
+                alert(`🎉 Parabéns! Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
+            } else {
+                registarTransacao('cassino_perca', `Aposta no Cassino (${nomeJogo})`, -custoAposta);
+                alert(`❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`);
+            }
+        }
+
+        function solicitarCodigoConfirmacao() {
+            const nome = document.getElementById('regNome').value;
+            const email = document.getElementById('regEmail').value;
+            const telefone = document.getElementById('regTelefone').value;
+            const cpf = document.getElementById('regCpf').value;
+            const nascimento = document.getElementById('regNascimento').value;
+            const senha = document.getElementById('regSenha').value;
+
+            if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
+                alert('Por favor, preencha todos os campos do registo!');
+                return;
+            }
+
+            let existe = baseDadosUtilizadores.find(u => u.email === email);
+            if (existe) { alert('❌ Este e-mail já possui uma conta registada!'); return; }
+
+            dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
+            codigoGeradoTemp = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            alert(`📲 [SIMULAÇÃO SMS/GMAIL]: O seu código de confirmação Cangaço Bet é: ${codigoGeradoTemp}`);
+            
+            document.getElementById('etapaCadastro1').style.display = 'none';
+            document.getElementById('etapaCadastro2').style.display = 'block';
+        }
+
+        function validarCodigoEConcluir() {
+            const codigoDigitado = document.getElementById('codigoDigitado').value;
+            if (codigoDigitado !== codigoGeradoTemp) {
+                alert('❌ Código incorreto! Verifique o código enviado.');
+                return;
+            }
+
+            baseDadosUtilizadores.push(dadosTempRegistro);
+            usuarioLogado = dadosTempRegistro;
+            salvarDadosStorage();
+            
+            verificarSessaoAtiva();
+            fecharModais();
+            
+            document.getElementById('etapaCadastro1').style.display = 'block';
+            document.getElementById('etapaCadastro2').style.display = 'none';
+            
+            alert(`✅ Conta verificada e criada com sucesso para ${usuarioLogado.nome}! Sessão iniciada.`);
+        }
+
+        function realizarLogin() {
+            const emailInput = document.getElementById('loginEmail').value.trim();
+            const senhaInput = document.getElementById('loginSenha').value.trim();
+
+            if (!emailInput || !senhaInput) { alert("Preencha o E-mail e a Senha!"); return; }
+
+            let utilizadorEncontrado = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
+
+            if (utilizadorEncontrado) {
+                usuarioLogado = utilizadorEncontrado;
+                salvarDadosStorage();
+                verificarSessaoAtiva();
+                fecharModais();
+                alert(`✅ Bem-vindo de volta, ${usuarioLogado.nome}! Login efetuado com sucesso.`);
+            } else {
+                alert("❌ Senha ou utilizador incorreto! Verifique os dados ou utilize o Suporte para recuperar a conta.");
+            }
+        }
+
+        function realizarDeposito() {
+            const valorDep = parseFloat(document.getElementById('depositoValorInput').value) || 0;
+            if (valorDep <= 0) { alert("Insira um valor válido!"); return; }
+            saldo += valorDep;
+            atualizarSaldoNaTela();
+            registarTransacao('deposito', 'Depósito via Pix', valorDep);
+            fecharModais();
+            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado com sucesso!`);
+        }
+
+        function enviarMensagemSuporte() {
+            const assunto = document.getElementById('suporteAssunto').value;
+            const msg = document.getElementById('suporteMensagem').value;
+            if (!assunto || !msg) { alert("Preencha o assunto e a mensagem para o suporte."); return; }
+            alert("✅ Mensagem enviada com sucesso ao suporte! Um atendente responderá em breve via E-mail ou WhatsApp.");
+            document.getElementById('suporteAssunto').value = "";
+            document.getElementById('suporteMensagem').value = "";
+        }
+
+        function pesquisaGeral() {
+            const termo = document.getElementById('quickSearchInput').value.toLowerCase();
+            const box = document.getElementById('quickSearchResult');
+            box.innerHTML = '';
+            if (!termo.trim()) return;
+
+            const itens = [
+                { nome: '🎰 Cassino: Fortune Tiger', tipo: 'cassino' },
+                { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
+                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
+                { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' },
+                { nome: '📜 Histórico / Extrato', tipo: 'extrato' },
+                { nome: '💬 Suporte Online', tipo: 'suporte' }
+            ];
+
+            const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
+            res.forEach(r => {
+                const div = document.createElement('div');
+                div.style.padding = '8px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #232838';
+                div.innerText = r.nome;
+                div.onclick = () => { mudarAba(r.tipo); box.innerHTML = ''; document.getElementById('quickSearchInput').value = ''; };
+                box.appendChild(div);
+            });
+        }
+
+        function atualizarBotoesFiltroLigas(partidas) {
+            const containerFiltro = document.getElementById('filtroLigasContainer');
+            let ligasUnicas = ['TODAS'];
+            partidas.forEach(p => { if (!ligasUnicas.includes(p.liga)) ligasUnicas.push(p.liga); });
+
+            let html = `<button class="btn-filtro-liga ${ligaFiltroAtual === 'TODAS' ? 'ativo' : ''}" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>`;
+            ligasUnicas.forEach(l => {
+                if (l !== 'TODAS') {
+                    html += `<button class="btn-filtro-liga ${ligaFiltroAtual === l ? 'ativo' : ''}" onclick="filtrarLiga('${l}', this)">${l}</button>`;
+                }
+            });
+            containerFiltro.innerHTML = html;
+        }
+
+        function filtrarLiga(nomeLiga, elemento) {
+            ligaFiltroAtual = nomeLiga;
+            document.querySelectorAll('.btn-filtro-liga').forEach(b => b.classList.remove('ativo'));
+            elemento.classList.add('ativo');
+            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
+        }
+
+        function renderizarPartidasAoVivoNaTela(partidas) {
+            const container = document.getElementById('lista-partidas-api');
+            container.innerHTML = '';
+
+            let partidasFiltradas = partidas.filter(p => p.isAoVivo);
+            if (ligaFiltroAtual !== 'TODAS') {
+                partidasFiltradas = partidasFiltradas.filter(p => p.liga === ligaFiltroAtual);
+            }
+
+            if (partidasFiltradas.length === 0) {
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento via API. Aguarde novos jogos.</p>`;
+                return;
+            }
+
+            partidasFiltradas.forEach(match => {
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.id = `match-card-${match.id}`;
+                card.onclick = () => abrirModalPartidaDetalhes(match);
+                
+                // Marcação visual se a odd já está selecionada no bilhete múltiplo
+                let selCasa = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Casa)')) ? 'selected' : '';
+                let selEmpate = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Empate)')) ? 'selected' : '';
+                let selFora = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Fora)')) ? 'selected' : '';
+
+                card.innerHTML = `
+                    <div class="match-header">
+                        <span>${match.bandeiraLiga ? `<img src="${match.bandeiraLiga}" alt="" style="width:16px; height:12px; margin-right:4px; vertical-align:middle; border-radius:2px;">` : ''}🔴 ${match.liga}</span> 
+                        <span id="time-${match.id}">${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s</span>
+                    </div>
+                    <div class="match-teams">
+                        <span class="team-name"><img src="${obterBandeira(match.casa, match.logoCasa)}" alt=""> ${match.casa}</span>
+                        <div class="match-score-vs">
+                            <span class="match-vs-text">AO VIVO</span>
+                            <span class="match-real-score" id="score-${match.id}">${match.golsCasa} - ${match.golsFora}</span>
+                        </div>
+                        <span class="team-name"><img src="${obterBandeira(match.fora, match.logoFora)}" alt=""> ${match.fora}</span>
+                    </div>
+                    <div class="odds-grid">
+                        <div class="odd-btn ${selCasa}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa}, this)">
+                            <span class="odd-label">1 (Casa)</span>
+                            <span class="odd-value">${match.odds.casa}</span>
+                        </div>
+                        <div class="odd-btn ${selEmpate}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate}, this)">
+                            <span class="odd-label">X (Empate)</span>
+                            <span class="odd-value">${match.odds.empate}</span>
+                        </div>
+                        <div class="odd-btn ${selFora}" onclick="event.stopPropagation(); selecionarAposta('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora}, this)">
+                            <span class="odd-label">2 (Fora)</span>
+                            <span class="odd-value">${match.odds.fora}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function carregarJogosReais() {
+            const container = document.getElementById('lista-partidas-api');
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo da API...</p>`;
+            listaGlobalPartidas = [];
+
+            try {
+                const hoje = new Date().toISOString().split('T')[0];
+                const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
+                    headers: { "x-apisports-key": apiKey }
+                });
+                const dados = await resposta.json();
+
+                if (dados.response && dados.response.length > 0) {
+                    const statusAoVivo = ['LIVE', '1H', '2H', 'HT', 'ET', 'P'];
+                    
+                    dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
+                        const odds = gerarOddsReais(match.teams.home.name, match.teams.away.name);
+                        const casaNome = traduzirTime(match.teams.home.name);
+                        const foraNome = traduzirTime(match.teams.away.name);
+                        const ligaNome = traduzirLiga(match.league.name);
+
+                        listaGlobalPartidas.push({
+                            id: `api1-${index}`,
+                            casa: casaNome,
+                            fora: foraNome,
+                            logoCasa: match.teams.home.logo,
+                            logoFora: match.teams.away.logo,
+                            liga: ligaNome,
+                            bandeiraLiga: match.league.flag || '',
+                            golsCasa: match.goals.home !== null ? match.goals.home : 0,
+                            golsFora: match.goals.away !== null ? match.goals.away : 0,
+                            minuto: match.fixture.status.elapsed || Math.floor(Math.random() * 75) + 10,
+                            segundo: Math.floor(Math.random() * 59),
+                            isAoVivo: true,
+                            odds: odds
+                        });
+                    });
+                }
+            } catch (e) { console.log("Erro API Ao Vivo"); }
+
+            // Removido qualquer uso de partidas simuladas por solicitação direta
+
+            atualizarBotoesFiltroLigas(listaGlobalPartidas);
+            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
+            iniciarRelogioTempoReal();
+        }
+
+        function iniciarRelogioTempoReal() {
+            if (intervaloAtualizacaoAoVivo) clearInterval(intervaloAtualizacaoAoVivo);
+
+            intervaloAtualizacaoAoVivo = setInterval(() => {
+                listaGlobalPartidas.forEach(match => {
+                    if (match.isAoVivo) {
+                        match.segundo++;
+                        if (match.segundo >= 60) {
+                            match.segundo = 0;
+                            match.minuto++;
+                            if (match.minuto > 95) match.minuto = 90;
+
+                            if (Math.random() < 0.04) {
+                                if (Math.random() > 0.5) match.golsCasa++;
+                                else match.golsFora++;
+                            }
+                        }
+
+                        const elTempo = document.getElementById(`time-${match.id}`);
+                        const elScore = document.getElementById(`score-${match.id}`);
+                        if (elTempo) elTempo.innerText = `${match.minuto}' ${match.segundo < 10 ? '0':''}${match.segundo}s`;
+                        if (elScore) elScore.innerText = `${match.golsCasa} - ${match.golsFora}`;
+                    }
+                });
+            }, 1000);
+        }
+
+        function abrirModalPartidaDetalhes(match) {
+            tocarAudioInicio();
+            partidaAtivaId = match.id;
+            document.getElementById('modalPartidaTitulo').innerText = `${match.casa} vs ${match.fora}`;
+            document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto Atual: ${match.minuto}'`;
+
+            // 1X2 Tradicional
+            document.getElementById('modalOdds1X2').innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1</span><span class="odd-card-val">${match.odds.casa}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X</span><span class="odd-card-val">${match.odds.empate}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">2</span><span class="odd-card-val">${match.odds.fora}</span></div>
+            `;
+
+            // Dupla Chance
+            let dc1 = (parseFloat(match.odds.casa) * 0.7).toFixed(2);
+            let dc12 = (parseFloat(match.odds.empate) * 0.8).toFixed(2);
+            let dc2 = (parseFloat(match.odds.fora) * 0.7).toFixed(2);
+            document.getElementById('modalOddsDuplaChance').innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance 1X)', ${dc1})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1X</span><span class="odd-card-val">${dc1}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance 12)', ${dc12})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">12</span><span class="odd-card-val">${dc12}</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X2</span><span class="odd-card-val">${dc2}</span></div>
+            `;
+
+            // Total de Gols Ampliado (0.5 até 4.5)
+            document.getElementById('modalOddsGols').innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 0.5 Gols)', 1.12)"><span class="odd-card-title">Mais de 0.5 Gols</span><span class="odd-card-val">1.12</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 1.5 Gols)', 1.42)"><span class="odd-card-title">Mais de 1.5 Gols</span><span class="odd-card-val">1.42</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 2.5 Gols)', 1.85)"><span class="odd-card-title">Mais de 2.5 Gols</span><span class="odd-card-val">1.85</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Gols)', 2.75)"><span class="odd-card-title">Mais de 3.5 Gols</span><span class="odd-card-val">2.75</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95)"><span class="odd-card-title">Menos de 2.5 Gols</span><span class="odd-card-val">1.95</span></div>
+            `;
+
+            // Escanteios Ampliados (7.5 até 12.5)
+            document.getElementById('modalOddsEscanteios').innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 7.5 Escanteios)', 1.45)"><span class="odd-card-title">Mais de 7.5 Cantos</span><span class="odd-card-val">1.45</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90)"><span class="odd-card-title">Mais de 9.5 Cantos</span><span class="odd-card-val">1.90</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 11.5 Escanteios)', 2.60)"><span class="odd-card-title">Mais de 11.5 Cantos</span><span class="odd-card-val">2.60</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80)"><span class="odd-card-title">Menos de 9.5 Cantos</span><span class="odd-card-val">1.80</span></div>
+            `;
+
+            // Cartões
+            document.getElementById('modalOddsCartoes').innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Cartões)', 1.75)"><span class="odd-card-title">Mais de 3.5 Cartões na Partida</span><span class="odd-card-val">1.75</span></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 4.5 Cartões)', 2.20)"><span class="odd-card-title">Mais de 4.5 Cartões na Partida</span><span class="odd-card-val">2.20</span></div>
+            `;
+
+            document.getElementById('matchModal').style.display = 'flex';
+        }
+
+        function fecharModalPartida() {
+            document.getElementById('matchModal').style.display = 'none';
+        }
+
+        // Adiciona ou remove uma aposta na lista de apostas múltiplas
+        function adicionarApostaAoBoletim(matchId, jogoOdd, odd) {
+            // Se já existir uma seleção para a mesma partida, substitui a anterior
+            let indexExistente = apostasSelecionadas.findIndex(a => a.matchId === matchId);
+            if (indexExistente !== -1) {
+                if (apostasSelecionadas[indexExistente].selecao === jogoOdd) {
+                    // Clicar na mesma odd remove do boletim
+                    apostasSelecionadas.splice(indexExistente, 1);
+                } else {
+                    apostasSelecionadas[indexExistente] = { matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) };
+                }
+            } else {
+                apostasSelecionadas.push({ matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) });
+            }
+
+            renderizarBoletimApostas();
+        }
+
+        function selecionarAposta(matchId, jogoOdd, odd, elemento) {
+            adicionarApostaAoBoletim(matchId, jogoOdd, odd);
+            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
+        }
+
+        function selecionarApostaModal(matchId, jogoOdd, odd) {
+            fecharModalPartida();
+            adicionarApostaAoBoletim(matchId, jogoOdd, odd);
+            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
+        }
+
+        function removerSelecaoBoletim(index) {
+            apostasSelecionadas.splice(index, 1);
+            renderizarBoletimApostas();
+            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
+        }
+
+        function calcularOddTotal() {
+            if (apostasSelecionadas.length === 0) return 0;
+            return apostasSelecionadas.reduce((acc, item) => acc * item.odd, 1);
+        }
+
+        function renderizarBoletimApostas() {
+            const betSlip = document.getElementById('betSlip');
+            const infoContainer = document.getElementById('betSelectionInfo');
+            const titleType = document.getElementById('betSlipTypeTitle');
+
+            if (apostasSelecionadas.length === 0) {
+                betSlip.style.display = 'none';
+                return;
+            }
+
+            betSlip.style.display = 'block';
+            
+            if (apostasSelecionadas.length === 1) {
+                titleType.innerText = "🎟️ BILHETE SIMPLES";
+            } else {
+                titleType.innerText = `🎟️ BILHETE MÚLTIPLO (${apostasSelecionadas.length} SELEÇÕES)`;
+            }
+
+            let html = '';
+            apostasSelecionadas.forEach((item, index) => {
+                html += `
+                    <div class="bet-slip-item">
+                        <div>
+                            <b>${item.selecao}</b>
+                            <div style="color: #00ff88; font-weight: bold;">Odd: ${item.odd.toFixed(2)}</div>
+                        </div>
+                        <span style="color:#ff4500; font-size: 16px; cursor:pointer; font-weight:bold; padding-left: 10px;" onclick="removerSelecaoBoletim(${index})">&times;</span>
+                    </div>
+                `;
+            });
+
+            infoContainer.innerHTML = html;
+            let totalOdd = calcularOddTotal();
+            document.getElementById('oddTotalInfo').innerText = `Odd Total Acumulada: ${totalOdd.toFixed(2)}`;
+            atualizarRetornoPotencial();
+        }
+
+        function fecharBilhete() {
+            apostasSelecionadas = [];
+            document.getElementById('betSlip').style.display = 'none';
+            document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
+        }
+
+        document.getElementById('betValorInput').addEventListener('input', atualizarRetornoPotencial);
+
+        function atualizarRetornoPotencial() {
+            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
+            let totalOdd = calcularOddTotal();
+            let retorno = valor * totalOdd;
+            document.getElementById('retornoPotencial').innerText = `Retorno potencial: R$ ${retorno.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        function confirmarEEnviarParaBilhetes() {
+            if (apostasSelecionadas.length === 0) { alert('Selecione ao menos um jogo para apostar!'); return; }
+            
+            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
+            if (valor <= 0) { alert('Insira um valor válido!'); return; }
+            if (saldo < valor) { alert('Saldo insuficiente!'); return; }
+
+            let oddTotal = calcularOddTotal();
+            saldo -= valor;
+            atualizarSaldoNaTela();
+
+            let ehMultipla = apostasSelecionadas.length > 1;
+            let tipoApostaText = ehMultipla ? `Aposta Múltipla (${apostasSelecionadas.length} seleções)` : `Aposta Simples (${apostasSelecionadas[0].selecao})`;
+            registarTransacao('aposta', `Aposta Esportiva - ${tipoApostaText}`, -valor);
+
+            let retorno = (valor * oddTotal).toFixed(2);
+
+            // Mapeia todas as seleções com detalhes e placar do momento
+            let itensBilhete = apostasSelecionadas.map(item => {
+                let partidaObj = listaGlobalPartidas.find(p => p.id === item.matchId);
+                return {
+                    selecao: item.selecao,
+                    odd: item.odd.toFixed(2),
+                    placar: partidaObj ? `${partidaObj.golsCasa} - ${partidaObj.golsFora}` : "0 - 0",
+                    minuto: partidaObj ? `${partidaObj.minuto}'` : "Ao Vivo",
+                    liga: partidaObj ? partidaObj.liga : "Cangaço Bet",
+                    matchId: item.matchId
+                };
+            });
+
+            let novoBilhete = { 
+                itens: itensBilhete, 
+                tipo: ehMultipla ? 'Múltipla' : 'Simples',
+                valor: valor.toFixed(2), 
+                oddTotal: oddTotal.toFixed(2),
+                retorno: retorno, 
+                status: "⏳ Aguardando Resultado", 
+                cor: "#ffb703" 
+            };
+
+            meusBilhetesSalvos.unshift(novoBilhete);
+            salvarDadosStorage();
+
+            fecharBilhete();
+            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
+            
+            // Redireciona automaticamente para a aba Meus Bilhetes
+            mudarAba('bilhetes');
+            alert(`✅ Bilhete de Aposta criado com sucesso! Redirecionado para a aba Meus Bilhetes.`);
+
+            let indexBilhete = 0; // O bilhete novo é inserido no início da lista (unshift)
+            setTimeout(() => {
+                let venceu = Math.random() >= 0.5;
+                if (venceu) {
+                    meusBilhetesSalvos[indexBilhete].status = "Ganhou 🎉";
+                    meusBilhetesSalvos[indexBilhete].cor = "#00ff88";
+                    saldo += parseFloat(retorno);
+                    atualizarSaldoNaTela();
+                    registarTransacao('premio', `Prêmio - ${tipoApostaText}`, parseFloat(retorno));
+                } else {
+                    meusBilhetesSalvos[indexBilhete].status = "Perdeu ❌";
+                    meusBilhetesSalvos[indexBilhete].cor = "#ff4500";
+                }
+                salvarDadosStorage();
+                if (document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
+                    renderizarBilhetesNaTela();
+                }
+            }, 12000);
+        }
+
+        function renderizarBilhetesNaTela() {
+            const container = document.getElementById('listaMeusBilhetesImpressos');
+            if (meusBilhetesSalvos.length === 0) { 
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`; 
+                return; 
+            }
+
+            let html = '';
+            meusBilhetesSalvos.forEach((b, idx) => {
+                let totalItens = meusBilhetesSalvos.length - idx;
+                
+                // Suporte para bilhetes novos (múltiplas/simples estruturados) e legado
+                let listaItens = b.itens || [{
+                    selecao: b.selecao,
+                    odd: (b.retorno / b.valor).toFixed(2),
+                    placar: b.placar || "0 - 0",
+                    minuto: b.hora || "Ao Vivo",
+                    liga: b.liga || "Cangaço Bet",
+                    matchId: b.matchId
+                }];
+
+                let detalhesItensHtml = '';
+                listaItens.forEach(item => {
+                    let matchAtual = listaGlobalPartidas.find(p => p.id === item.matchId);
+                    let placarExatoVivo = matchAtual ? `${matchAtual.golsCasa} - ${matchAtual.golsFora}` : (item.placar || "0 - 0");
+                    let minutoExatoVivo = matchAtual ? `${matchAtual.minuto}'` : (item.minuto || "Ao Vivo");
+
+                    detalhesItensHtml += `
+                        <div style="background: #0b0c10; border: 1px solid #232838; padding: 8px; border-radius: 8px; margin-top: 6px;">
+                            <div style="font-size: 11px; color: #ffb703; font-weight: bold;">📌 ${item.liga || 'Esporte'}</div>
+                            <div><b>Seleção:</b> ${item.selecao} (Odd: ${item.odd})</div>
+                            <div><b>Minuto Atual:</b> ${minutoExatoVivo}</div>
+                            <div><b>Placar Exato ao Vivo:</b> <span style="color: #00ff88; font-weight: bold;">${placarExatoVivo}</span></div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                    <div class="bilhete-impresso">
+                        <div class="bilhete-header">
+                            <span>COMPROVATIVO DE APOSTA #${totalItens} [${b.tipo || 'Aposta'}]</span>
+                            <span>Odd Total: ${b.oddTotal || (b.retorno / b.valor).toFixed(2)}</span>
+                        </div>
+                        <div class="bilhete-detalhes">
+                            ${detalhesItensHtml}
+                            <div style="margin-top: 10px; font-weight: bold; font-size: 13px;">
+                                💵 <b>Apostado:</b> R$ ${b.valor} | 🏆 <b>Retorno Potencial:</b> <span style="color: #00ff88;">R$ ${b.retorno}</span>
+                            </div>
+                        </div>
+                        <div class="bilhete-status" style="color: ${b.cor};">Estado: ${b.status}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderizarExtratoNaTela() {
+            const container = document.getElementById('listaExtratoTransacoes');
+            if (historicoTransacoes.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>`; return; }
+
+            let html = '';
+            historicoTransacoes.forEach(t => {
+                let corValor = (t.tipo === 'deposito' || t.tipo === 'premio' || t.tipo === 'cassino_ganho') ? '#00ff88' : '#ff4500';
+                let sinal = (t.tipo === 'deposito' || t.tipo === 'premio' || t.tipo === 'cassino_ganho') ? '+' : '-';
+                html += `
+                    <div class="extrato-item">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #ffb703; margin-bottom: 4px;">
+                            <span>${t.descricao}</span><span>${t.data}</span>
+                        </div>
+                        <div style="font-size: 14px; font-weight: bold; color: ${corValor};">
+                            ${sinal} R$ ${Math.abs(t.valor).toFixed(2)}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function abrirModalLogin() { tocarAudioInicio(); document.getElementById('loginModal').style.display = 'flex'; }
+        function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
+        function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
+        function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+        const scrollContainer = document.getElementById('winnersScroll');
+        setInterval(() => {
+            if (scrollContainer) {
+                if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+                    scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    scrollContainer.scrollBy({ left: 160, behavior: 'smooth' });
+                }
+            }
+        }, 3000);
+
+        const promoTrack = document.getElementById('promoTrack');
+        let currentSlide = 0;
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 3;
+            promoTrack.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+        }, 4000);
     </script>
 </body>
 </html>
