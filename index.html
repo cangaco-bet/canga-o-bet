@@ -335,6 +335,7 @@
         <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
     </div>
 
+    <!-- Menu Lateral (Com Registrar configurado corretamente) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -355,6 +356,7 @@
         </div>
     </div>
 
+    <!-- ABA 1: CASSINO -->
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
             <div class="promo-track" id="promoTrack">
@@ -438,6 +440,7 @@
         </div>
     </div>
 
+    <!-- ABA 2: ESPORTES -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
             <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Ativas / Futuras)</div>
@@ -447,6 +450,7 @@
         </div>
     </div>
 
+    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span>🎟️ BILHETE DE APOSTA</span>
@@ -458,6 +462,7 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
+    <!-- Modal de Registro Completo -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -472,6 +477,7 @@
         </div>
     </div>
 
+    <!-- Modal de Depósito -->
     <div id="depositModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -484,6 +490,7 @@
     <script>
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
+        const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
         let apostaSelecionada = null;
         let oddAtual = 0;
 
@@ -560,8 +567,48 @@
             });
         }
 
+        function renderizarPartidasNaTela(listaPartidas, container) {
+            container.innerHTML = '';
+            listaPartidas.slice(0, 10).forEach(match => {
+                const casa = match.casa;
+                const fora = match.fora;
+                const liga = match.liga;
+                const statusHora = match.statusHora;
+
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.innerHTML = `
+                    <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
+                    <div class="match-teams">
+                        <span class="team-name">${casa}</span>
+                        <span class="match-vs">VS</span>
+                        <span class="team-name">${fora}</span>
+                    </div>
+                    <div class="odds-grid">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, this)">
+                            <span class="odd-label">1 (Casa)</span>
+                            <span class="odd-value">1.85</span>
+                        </div>
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, this)">
+                            <span class="odd-label">X (Empate)</span>
+                            <span class="odd-value">3.40</span>
+                        </div>
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, this)">
+                            <span class="odd-label">2 (Fora)</span>
+                            <span class="odd-value">3.90</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas válidas...</p>`;
+            let listaFormatada = [];
+
+            // 1. TENTATIVA COM A API PRINCIPAL (API-FOOTBALL)
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
@@ -570,59 +617,63 @@
                 const dados = await resposta.json();
 
                 if (dados.response && dados.response.length > 0) {
-                    // FILTRAGEM: Remove jogos encerrados (FT, AET, PEN, PST, CNO, etc.)
-                    // Mantém apenas os não iniciados (NS) ou ao vivo (1H, HT, 2H, ET, P)
                     const statusExcluidos = ['FT', 'AET', 'PEN', 'PST', 'CANC', 'ABD', 'AWD', 'WO'];
                     const partidasAtivas = dados.response.filter(match => {
                         const status = match.fixture.status.short;
                         return !statusExcluidos.includes(status);
                     });
 
-                    if (partidasAtivas.length > 0) {
-                        container.innerHTML = '';
-                        partidasAtivas.slice(0, 10).forEach(match => {
-                            const casa = match.teams.home.name;
-                            const fora = match.teams.away.name;
-                            const liga = match.league.name;
-                            const statusCurto = match.fixture.status.short;
-                            const statusHora = (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H') 
-                                ? `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>` 
-                                : match.fixture.date.split('T')[1].substring(0,5);
+                    partidasAtivas.forEach(match => {
+                        const statusCurto = match.fixture.status.short;
+                        const statusHora = (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H') 
+                            ? `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>` 
+                            : match.fixture.date.split('T')[1].substring(0,5);
 
-                            const card = document.createElement('div');
-                            card.className = 'match-card';
-                            card.innerHTML = `
-                                <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
-                                <div class="match-teams">
-                                    <span class="team-name">${casa}</span>
-                                    <span class="match-vs">VS</span>
-                                    <span class="team-name">${fora}</span>
-                                </div>
-                                <div class="odds-grid">
-                                    <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, this)">
-                                        <span class="odd-label">1 (Casa)</span>
-                                        <span class="odd-value">1.85</span>
-                                    </div>
-                                    <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, this)">
-                                        <span class="odd-label">X (Empate)</span>
-                                        <span class="odd-value">3.40</span>
-                                    </div>
-                                    <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, this)">
-                                        <span class="odd-label">2 (Fora)</span>
-                                        <span class="odd-value">3.90</span>
-                                    </div>
-                                </div>
-                            `;
-                            container.appendChild(card);
+                        listaFormatada.push({
+                            casa: match.teams.home.name,
+                            fora: match.teams.away.name,
+                            liga: match.league.name,
+                            statusHora: statusHora
                         });
-                    } else {
-                        container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento (todas já encerraram).</p>`;
-                    }
-                } else {
-                    container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Sem partidas oficiais para hoje.</p>`;
+                    });
                 }
             } catch (erro) {
-                container.innerHTML = `<p style="color: #ff4500; text-align: center; padding: 20px;">Erro ao carregar dados de futebol.</p>`;
+                console.log("Erro na API principal, tentando secundária...");
+            }
+
+            // 2. TENTATIVA COM A SEGUNDA API (FOOTBALL-DATA.ORG) PARA JUNTAR OS JOGOS
+            try {
+                const resposta2 = await fetch(`https://api.football-data.org/v4/matches`, {
+                    headers: { "X-Auth-Token": footballDataApiKey }
+                });
+                const dados2 = await resposta2.json();
+
+                if (dados2.matches && dados2.matches.length > 0) {
+                    const statusExcluidosFd = ['FINISHED', 'POSTPONED', 'CANCELED', 'SUSPENDED'];
+                    const partidasAtivasFd = dados2.matches.filter(match => !statusExcluidosFd.includes(match.status));
+
+                    partidasAtivasFd.forEach(match => {
+                        const statusHora = (match.status === 'IN_PLAY' || match.status === 'PAUSED')
+                            ? `<span style="color: #00ff88;">● AO VIVO</span>`
+                            : match.utcDate.split('T')[1].substring(0,5);
+
+                        listaFormatada.push({
+                            casa: match.homeTeam.name,
+                            fora: match.awayTeam.name,
+                            liga: match.competition.name,
+                            statusHora: statusHora
+                        });
+                    });
+                }
+            } catch (erro) {
+                console.log("Erro na API secundaria.");
+            }
+
+            // EXIBIR RESULTADOS COMBINADOS DAS DUAS APIS
+            if (listaFormatada.length > 0) {
+                renderizarPartidasNaTela(listaFormatada, container);
+            } else {
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento (todas já encerraram).</p>`;
             }
         }
 
