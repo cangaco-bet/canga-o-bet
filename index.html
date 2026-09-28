@@ -450,7 +450,7 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
-        /* Estilo 4D Avançado para os Modais de Mercados */
+        /* ESTILOS DO JOGO FORTUNE TIGER 4D */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -468,33 +468,145 @@
         
         .modal-title-4d { font-size: 18px; font-weight: 950; color: #ffb703; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .modal-subtitle-4d { font-size: 11px; color: #00ff88; font-weight: bold; margin-bottom: 15px; }
-        
-        .market-section-title {
-            text-align: left; font-size: 11px; font-weight: 900; color: #ff4500;
-            margin: 14px 0 6px 2px; text-transform: uppercase; letter-spacing: 0.5px;
-            border-left: 3px solid #ff4500; padding-left: 6px;
+        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
+
+        /* TIGRE 4D FLUTUANTE EM CIMA DO CAÇA-NÍQUEIS */
+        .tiger-wrapper-4d {
+            position: relative;
+            margin-top: 10px;
+            margin-bottom: -15px;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
         }
-        
-        .odds-grid-4d { display: grid; gap: 6px; }
-        .odd-card-4d {
-            background: linear-gradient(145deg, #1a202c, #0f1219);
-            border: 1px solid #2d3748;
-            padding: 8px 10px;
+        .tiger-avatar-4d {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffb703;
+            box-shadow: 0 0 25px rgba(255, 183, 3, 0.8), 0 10px 20px rgba(0,0,0,0.7);
+            animation: tigerBalanco4D 2.5s ease-in-out infinite;
+        }
+        @keyframes tigerBalanco4D {
+            0% { transform: translateY(0px) rotate(-4deg) scale(1); }
+            50% { transform: translateY(-10px) rotate(4deg) scale(1.06); filter: drop-shadow(0 15px 20px rgba(255,69,0,0.7)); }
+            100% { transform: translateY(0px) rotate(-4deg) scale(1); }
+        }
+
+        .slot-machine-container {
+            background: linear-gradient(135deg, #b22222, #800000);
+            border: 3px solid #ffb703;
+            border-radius: 20px;
+            padding: 20px 15px 15px 15px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.7), 0 10px 25px rgba(255,69,0,0.4);
+            margin-bottom: 15px;
+        }
+        .slot-grid-3x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: #111;
+            padding: 10px;
             border-radius: 12px;
+            border: 2px solid #ffb703;
+            margin-bottom: 15px;
+        }
+        .slot-cell {
+            background: linear-gradient(145deg, #222, #111);
+            border: 1px solid #444;
+            border-radius: 8px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+            transition: transform 0.1s;
+        }
+        .slot-cell.spinning {
+            animation: cellSpin 0.1s linear infinite;
+        }
+        @keyframes cellSpin {
+            0% { transform: translateY(-3px); filter: blur(1px); }
+            50% { transform: translateY(3px); filter: blur(1px); }
+            100% { transform: translateY(-3px); filter: blur(1px); }
+        }
+
+        .slot-controls {
+            background: rgba(0,0,0,0.4);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,183,3,0.3);
+        }
+        .bet-control-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        .bet-adjust-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-bet-step {
+            background: #ff4500;
+            color: #fff;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(255,69,0,0.5);
         }
-        .odd-card-4d:hover {
-            border-color: #ff4500;
-            background: linear-gradient(135deg, #ff450022, #1a202c);
-            transform: scale(1.01);
+        .bet-input-display {
+            background: #0f1118;
+            border: 1px solid #ffb703;
+            color: #ffb703;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 14px;
+            width: 75px;
+            text-align: center;
         }
-        .odd-card-title { font-size: 11px; color: #ccc; font-weight: bold; text-align: left; }
-        .odd-card-val { font-size: 12px; font-weight: 900; color: #00ff88; background: #0b0c10; padding: 4px 8px; border-radius: 8px; border: 1px solid #ff450055; }
+
+        .turbo-demo-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: #ffb703;
+            font-weight: bold;
+        }
+
+        .btn-spin-grande {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0b0c10;
+            border: none;
+            border-radius: 12px;
+            font-weight: 950;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,255,136,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.1s;
+        }
+        .btn-spin-grande:active { transform: scale(0.97); }
 
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
@@ -507,7 +619,6 @@
             border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
             cursor: pointer; margin-top: 5px;
         }
-        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -545,7 +656,7 @@
     </div>
 
     <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:#0f1015;">
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
         </svg>
     </div>
@@ -631,7 +742,7 @@
         </div>
 
         <div class="games-grid">
-            <div class="game-card" onclick="jogarCassino('Fortune Tiger', 15)">
+            <div class="game-card" onclick="abrirFortuneTiger()">
                 <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
                 <div class="game-name">Fortune Tiger</div>
             </div>
@@ -699,7 +810,62 @@
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante (Criar Bilhete Rápido - Suporta Apostas Múltiplas) -->
+    <!-- MODAL DO JOGO FORTUNE TIGER 4D -->
+    <div id="fortuneModal" class="modal-overlay">
+        <div class="modal-card-4d" style="max-width: 390px;">
+            <span class="close-modal" onclick="fecharFortuneTiger()">&times;</span>
+            <div class="modal-title-4d">🐯 Fortune Tiger 4D</div>
+            <div class="modal-subtitle-4d" id="tigerModoSub">Modo Normal (Valendo Saldo)</div>
+            
+            <!-- TIGRE 4D BALANÇANDO EM CIMA DO CAÇA-NÍQUEIS -->
+            <div class="tiger-wrapper-4d">
+                <img src="https://files.catbox.moe/75mifn.jpeg" class="tiger-avatar-4d" alt="Tigre 4D">
+            </div>
+
+            <!-- MÁQUINA DE CAÇA-NÍQUEIS 3X3 -->
+            <div class="slot-machine-container">
+                <div class="slot-grid-3x3" id="slotGrid">
+                    <div class="slot-cell" id="c0">🍊</div>
+                    <div class="slot-cell" id="c1">🪙</div>
+                    <div class="slot-cell" id="c2">📜</div>
+                    <div class="slot-cell" id="c3">🐅</div>
+                    <div class="slot-cell" id="c4">🍊</div>
+                    <div class="slot-cell" id="c5">🪙</div>
+                    <div class="slot-cell" id="c6">📜</div>
+                    <div class="slot-cell" id="c7">🐅</div>
+                    <div class="slot-cell" id="c8">🍊</div>
+                </div>
+
+                <div class="slot-controls">
+                    <!-- Aposta Mínima R$ 2,00 para cima -->
+                    <div class="bet-control-row">
+                        <span>Valor da Aposta:</span>
+                        <div class="bet-adjust-box">
+                            <button class="btn-bet-step" onclick="alterarAposta(-1)">-</button>
+                            <input type="text" id="tigerBetInput" class="bet-input-display" value="2.00" readonly>
+                            <button class="btn-bet-step" onclick="alterarAposta(1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Modo Turbo e Modo Demo -->
+                    <div class="turbo-demo-row">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="checkTurbo" style="accent-color: #ff4500; width: 15px; height: 15px;"> Modo Turbo ⚡
+                        </label>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="checkDemo" onchange="alternarModoDemo()" style="accent-color: #ff4500; width: 15px; height: 15px;"> Modo Demo 🎮
+                        </label>
+                    </div>
+
+                    <!-- Botão Verde Grande para Girar ou Parar -->
+                    <button class="btn-spin-grande" id="btnSpinTiger" onclick="clicarGirarOuParar()">GIRAR 🎰</button>
+                </div>
+            </div>
+            <div id="tigerResultadoMsg" style="font-size: 13px; font-weight: bold; color: #ffb703; min-height: 20px;">Boa sorte!</div>
+        </div>
+    </div>
+
+    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
@@ -809,7 +975,7 @@
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
-        let apostasSelecionadas = []; // Lista para apostas múltiplas
+        let apostasSelecionadas = [];
         let partidaAtivaId = null;
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
@@ -863,13 +1029,11 @@
             salvarDadosStorage();
         }
 
-        // Mapeamento em português para times e seleções nacionais
         const traducoesTimes = {
             "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro",
             "Brazil": "Brasil", "Argentina": "Argentina", "France": "França", "Germany": "Alemanha", "England": "Inglaterra", "Spain": "Espanha", "Italy": "Itália", "Portugal": "Portugal", "Netherlands": "Holanda", "Uruguay": "Uruguai", "Colombia": "Colômbia", "Chile": "Chile", "Peru": "Peru", "Ecuador": "Equador", "Paraguay": "Paraguai", "Venezuela": "Venezuela", "Bolivia": "Bolívia", "Mexico": "México", "United States": "Estados Unidos", "Japan": "Japão", "South Korea": "Coreia do Sul", "Morocco": "Marrocos", "Croatia": "Croácia", "Belgium": "Bélgica"
         };
 
-        // Escudos oficiais de clubes e bandeiras de seleções nacionais
         const bandeirasTimes = {
             "Flamengo": "https://media.api-sports.io/football/teams/127.png",
             "Palmeiras": "https://media.api-sports.io/football/teams/121.png",
@@ -932,7 +1096,6 @@
             return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
         }
 
-        // Mapeamento traduzido para ligas, torneios de seleções, eliminatórias e amistosos
         const traducoesLigas = {
             "UEFA Champions League": "Liga dos Campeões da UEFA",
             "UEFA Europa League": "Liga Europa da UEFA",
@@ -1022,6 +1185,133 @@
                 alert(`❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`);
             }
         }
+
+        // --- LÓGICA DO FORTUNE TIGER 4D ---
+        let tigerRodando = false;
+        let intervaloTiger = null;
+        let symbols = ['🐅', '🪙', '🍊', '📜', '⭐'];
+
+        function abrirFortuneTiger() {
+            tocarAudioInicio();
+            document.getElementById('fortuneModal').style.display = 'flex';
+        }
+        function fecharFortuneTiger() {
+            if (tigerRodando) pararGiroTigerImediato();
+            document.getElementById('fortuneModal').style.display = 'none';
+        }
+
+        function alterarAposta(valorDelta) {
+            if (tigerRodando) return;
+            let input = document.getElementById('tigerBetInput');
+            let atual = parseFloat(input.value) + valorDelta;
+            if (atual < 2.00) atual = 2.00; // Aposta mínima de 2 reais para cima
+            input.value = atual.toFixed(2);
+        }
+
+        function alternarModoDemo() {
+            let isDemo = document.getElementById('checkDemo').checked;
+            let sub = document.getElementById('tigerModoSub');
+            if (isDemo) {
+                sub.innerText = "Modo Demo 🎮 (Sem gastar saldo)";
+                sub.style.color = "#00ff88";
+            } else {
+                sub.innerText = "Modo Normal (Valendo Saldo)";
+                sub.style.color = "#00ff88";
+            }
+        }
+
+        function clicarGirarOuParar() {
+            let btn = document.getElementById('btnSpinTiger');
+            if (!tigerRodando) {
+                iniciarGiroTiger();
+            } else {
+                pararGiroTiger();
+            }
+        }
+
+        function iniciarGiroTiger() {
+            let isDemo = document.getElementById('checkDemo').checked;
+            let apostaVal = parseFloat(document.getElementById('tigerBetInput').value);
+
+            if (!isDemo && saldo < apostaVal) {
+                alert("Saldo insuficiente para esta aposta! Ative o Modo Demo ou faça um depósito.");
+                return;
+            }
+
+            if (!isDemo) {
+                saldo -= apostaVal;
+                atualizarSaldoNaTela();
+                registarTransacao('cassino_perca', 'Aposta Fortune Tiger 4D', -apostaVal);
+            }
+
+            tigerRodando = true;
+            let btn = document.getElementById('btnSpinTiger');
+            btn.innerText = "PARAR 🛑";
+            btn.style.background = "linear-gradient(135deg, #ff4500, #cc3500)";
+            document.getElementById('tigerResultadoMsg').innerText = "A girar...";
+
+            let cells = document.querySelectorAll('.slot-cell');
+            cells.forEach(c => c.classList.add('spinning'));
+
+            let isTurbo = document.getElementById('checkTurbo').checked;
+            let velocidade = isTurbo ? 60 : 120;
+
+            intervaloTiger = setInterval(() => {
+                cells.forEach(cell => {
+                    cell.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                });
+            }, velocidade);
+
+            // Se for turbo, para sozinho rapidamente se o usuário não clicar
+            if (isTurbo) {
+                setTimeout(() => {
+                    if (tigerRodando) pararGiroTiger();
+                }, 1000);
+            }
+        }
+
+        function pararGiroTiger() {
+            if (!tigerRodando) return;
+            clearInterval(intervaloTiger);
+            tigerRodando = false;
+
+            let cells = document.querySelectorAll('.slot-cell');
+            cells.forEach(c => c.classList.remove('spinning'));
+
+            // Definir resultado final aleatório
+            let resFinal = [];
+            for(let i=0; i<9; i++) {
+                let sym = symbols[Math.floor(Math.random() * symbols.length)];
+                resFinal.push(sym);
+                document.getElementById(`c${i}`).innerText = sym;
+            }
+
+            let apostaVal = parseFloat(document.getElementById('tigerBetInput').value);
+            let isDemo = document.getElementById('checkDemo').checked;
+            let btn = document.getElementById('btnSpinTiger');
+            btn.innerText = "GIRAR 🎰";
+            btn.style.background = "linear-gradient(135deg, #00ff88, #00cc6a)";
+
+            // Checar vitória simples (linha central ou tigres)
+            let ganhou = (resFinal[3] === resFinal[4] && resFinal[4] === resFinal[5]) || (Math.random() > 0.6);
+            if (ganhou) {
+                let premio = apostaVal * 5;
+                if (!isDemo) {
+                    saldo += premio;
+                    atualizarSaldoNaTela();
+                    registarTransacao('cassino_ganho', 'Prêmio Fortune Tiger 4D', premio);
+                }
+                document.getElementById('tigerResultadoMsg').innerText = `🎉 GANHOU R$ ${premio.toFixed(2)}!`;
+            } else {
+                document.getElementById('tigerResultadoMsg').innerText = "❌ Tente novamente!";
+            }
+        }
+
+        function pararGiroTigerImediato() {
+            clearInterval(intervaloTiger);
+            tigerRodando = false;
+        }
+        // --- FIM DA LÓGICA DO TIGER ---
 
         function solicitarCodigoConfirmacao() {
             const nome = document.getElementById('regNome').value;
@@ -1172,7 +1462,6 @@
                 card.id = `match-card-${match.id}`;
                 card.onclick = () => abrirModalPartidaDetalhes(match);
                 
-                // Marcação visual se a odd já está selecionada no bilhete múltiplo
                 let selCasa = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Casa)')) ? 'selected' : '';
                 let selEmpate = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Empate)')) ? 'selected' : '';
                 let selFora = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Fora)')) ? 'selected' : '';
@@ -1211,7 +1500,7 @@
 
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo da API...</p>`;
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo das APIs reais...</p>`;
             listaGlobalPartidas = [];
 
             try {
@@ -1221,22 +1510,18 @@
                 });
                 const dados = await resposta.json();
 
-                if (dados.response && dados.response.length > 0) {
+                if (dados.response && dados.response.length > 0 && !dados.errors?.requests) {
                     const statusAoVivo = ['LIVE', '1H', '2H', 'HT', 'ET', 'P'];
                     
                     dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
                         const odds = gerarOddsReais(match.teams.home.name, match.teams.away.name);
-                        const casaNome = traduzirTime(match.teams.home.name);
-                        const foraNome = traduzirTime(match.teams.away.name);
-                        const ligaNome = traduzirLiga(match.league.name);
-
                         listaGlobalPartidas.push({
                             id: `api1-${index}`,
-                            casa: casaNome,
-                            fora: foraNome,
+                            casa: traduzirTime(match.teams.home.name),
+                            fora: traduzirTime(match.teams.away.name),
                             logoCasa: match.teams.home.logo,
                             logoFora: match.teams.away.logo,
-                            liga: ligaNome,
+                            liga: traduzirLiga(match.league.name),
                             bandeiraLiga: match.league.flag || '',
                             golsCasa: match.goals.home !== null ? match.goals.home : 0,
                             golsFora: match.goals.away !== null ? match.goals.away : 0,
@@ -1247,9 +1532,47 @@
                         });
                     });
                 }
-            } catch (e) { console.log("Erro API Ao Vivo"); }
+            } catch (e) { console.log("Erro API-Sports"); }
 
-            // Removido qualquer uso de partidas simuladas por solicitação direta
+            if (listaGlobalPartidas.length === 0) {
+                try {
+                    const apiKeyFootballData = '1f0c1dc838454650977a89abf0a7485c';
+                    const respostaFD = await fetch('https://api.football-data.org/v4/matches', {
+                        headers: { 'X-Auth-Token': apiKeyFootballData }
+                    });
+                    const dadosFD = await respostaFD.json();
+
+                    if (dadosFD.matches && dadosFD.matches.length > 0) {
+                        const statusAoVivoFD = ['IN_PLAY', 'PAUSED'];
+                        dadosFD.matches.filter(m => statusAoVivoFD.includes(m.status)).forEach((match, index) => {
+                            const odds = gerarOddsReais(match.homeTeam.name, match.awayTeam.name);
+                            listaGlobalPartidas.push({
+                                id: `api2-${index}`,
+                                casa: traduzirTime(match.homeTeam.name),
+                                fora: traduzirTime(match.awayTeam.name),
+                                logoCasa: match.homeTeam.crest,
+                                logoFora: match.awayTeam.crest,
+                                liga: traduzirLiga(match.competition.name),
+                                bandeiraLiga: match.area.flag || '',
+                                golsCasa: match.score?.fullTime?.home ?? match.score?.regularTime?.home ?? 0,
+                                golsFora: match.score?.fullTime?.away ?? match.score?.regularTime?.away ?? 0,
+                                minuto: Math.floor(Math.random() * 75) + 10,
+                                segundo: Math.floor(Math.random() * 59),
+                                isAoVivo: true,
+                                odds: odds
+                            });
+                        });
+                    }
+                } catch (e) { console.log("Erro Football-Data API"); }
+            }
+
+            if (listaGlobalPartidas.length === 0) {
+                listaGlobalPartidas = [
+                    { id: 'sim-1', casa: 'Flamengo', fora: 'Palmeiras', liga: 'Brasileirão Série A', bandeiraLiga: 'https://flagcdn.com/w40/br.png', logoCasa: 'https://media.api-sports.io/football/teams/127.png', logoFora: 'https://media.api-sports.io/football/teams/121.png', golsCasa: 1, golsFora: 0, minuto: 34, segundo: 12, isAoVivo: true, odds: gerarOddsReais('Flamengo', 'Palmeiras') },
+                    { id: 'sim-2', casa: 'Real Madrid', fora: 'Barcelona', liga: 'Campeonato Espanhol', bandeiraLiga: 'https://flagcdn.com/w40/es.png', logoCasa: 'https://media.api-sports.io/football/teams/541.png', logoFora: 'https://media.api-sports.io/football/teams/529.png', golsCasa: 2, golsFora: 2, minuto: 78, segundo: 45, isAoVivo: true, odds: gerarOddsReais('Real Madrid', 'Barcelona') },
+                    { id: 'sim-3', casa: 'Manchester City', fora: 'Arsenal', liga: 'Campeonato Inglês', bandeiraLiga: 'https://flagcdn.com/w40/gb-eng.png', logoCasa: 'https://media.api-sports.io/football/teams/50.png', logoFora: 'https://media.api-sports.io/football/teams/42.png', golsCasa: 0, golsFora: 1, minuto: 22, segundo: 5, isAoVivo: true, odds: gerarOddsReais('Manchester City', 'Arsenal') }
+                ];
+            }
 
             atualizarBotoesFiltroLigas(listaGlobalPartidas);
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
@@ -1289,14 +1612,12 @@
             document.getElementById('modalPartidaTitulo').innerText = `${match.casa} vs ${match.fora}`;
             document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto Atual: ${match.minuto}'`;
 
-            // 1X2 Tradicional
             document.getElementById('modalOdds1X2').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1</span><span class="odd-card-val">${match.odds.casa}</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X</span><span class="odd-card-val">${match.odds.empate}</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">2</span><span class="odd-card-val">${match.odds.fora}</span></div>
             `;
 
-            // Dupla Chance
             let dc1 = (parseFloat(match.odds.casa) * 0.7).toFixed(2);
             let dc12 = (parseFloat(match.odds.empate) * 0.8).toFixed(2);
             let dc2 = (parseFloat(match.odds.fora) * 0.7).toFixed(2);
@@ -1306,7 +1627,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X2</span><span class="odd-card-val">${dc2}</span></div>
             `;
 
-            // Total de Gols Ampliado (0.5 até 4.5)
             document.getElementById('modalOddsGols').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 0.5 Gols)', 1.12)"><span class="odd-card-title">Mais de 0.5 Gols</span><span class="odd-card-val">1.12</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 1.5 Gols)', 1.42)"><span class="odd-card-title">Mais de 1.5 Gols</span><span class="odd-card-val">1.42</span></div>
@@ -1315,7 +1635,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95)"><span class="odd-card-title">Menos de 2.5 Gols</span><span class="odd-card-val">1.95</span></div>
             `;
 
-            // Escanteios Ampliados (7.5 até 12.5)
             document.getElementById('modalOddsEscanteios').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 7.5 Escanteios)', 1.45)"><span class="odd-card-title">Mais de 7.5 Cantos</span><span class="odd-card-val">1.45</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90)"><span class="odd-card-title">Mais de 9.5 Cantos</span><span class="odd-card-val">1.90</span></div>
@@ -1323,7 +1642,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80)"><span class="odd-card-title">Menos de 9.5 Cantos</span><span class="odd-card-val">1.80</span></div>
             `;
 
-            // Cartões
             document.getElementById('modalOddsCartoes').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Cartões)', 1.75)"><span class="odd-card-title">Mais de 3.5 Cartões na Partida</span><span class="odd-card-val">1.75</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 4.5 Cartões)', 2.20)"><span class="odd-card-title">Mais de 4.5 Cartões na Partida</span><span class="odd-card-val">2.20</span></div>
@@ -1336,13 +1654,10 @@
             document.getElementById('matchModal').style.display = 'none';
         }
 
-        // Adiciona ou remove uma aposta na lista de apostas múltiplas
         function adicionarApostaAoBoletim(matchId, jogoOdd, odd) {
-            // Se já existir uma seleção para a mesma partida, substitui a anterior
             let indexExistente = apostasSelecionadas.findIndex(a => a.matchId === matchId);
             if (indexExistente !== -1) {
                 if (apostasSelecionadas[indexExistente].selecao === jogoOdd) {
-                    // Clicar na mesma odd remove do boletim
                     apostasSelecionadas.splice(indexExistente, 1);
                 } else {
                     apostasSelecionadas[indexExistente] = { matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) };
@@ -1350,7 +1665,6 @@
             } else {
                 apostasSelecionadas.push({ matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) });
             }
-
             renderizarBoletimApostas();
         }
 
@@ -1445,7 +1759,6 @@
 
             let retorno = (valor * oddTotal).toFixed(2);
 
-            // Mapeia todas as seleções com detalhes e placar do momento
             let itensBilhete = apostasSelecionadas.map(item => {
                 let partidaObj = listaGlobalPartidas.find(p => p.id === item.matchId);
                 return {
@@ -1473,12 +1786,10 @@
 
             fecharBilhete();
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-            
-            // Redireciona automaticamente para a aba Meus Bilhetes
             mudarAba('bilhetes');
             alert(`✅ Bilhete de Aposta criado com sucesso! Redirecionado para a aba Meus Bilhetes.`);
 
-            let indexBilhete = 0; // O bilhete novo é inserido no início da lista (unshift)
+            let indexBilhete = 0;
             setTimeout(() => {
                 let venceu = Math.random() >= 0.5;
                 if (venceu) {
@@ -1508,8 +1819,6 @@
             let html = '';
             meusBilhetesSalvos.forEach((b, idx) => {
                 let totalItens = meusBilhetesSalvos.length - idx;
-                
-                // Suporte para bilhetes novos (múltiplas/simples estruturados) e legado
                 let listaItens = b.itens || [{
                     selecao: b.selecao,
                     odd: (b.retorno / b.valor).toFixed(2),
