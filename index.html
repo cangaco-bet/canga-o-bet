@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet - Aviator Realista</title>
+    <title>Cangaço Bet - Cassino & Jogos</title>
     <style>
         * {
             margin: 0;
@@ -457,7 +457,7 @@
             color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; text-transform: uppercase;
         }
 
-        /* --- AVIATOR ESTILOS REALISTAS & CRASH/EXPLOSÃO ELEGANTE --- */
+        /* --- AVIATOR ESTILOS REALISTAS & CRASH --- */
         #aviatorSectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
@@ -474,17 +474,10 @@
             letter-spacing: 2px; z-index: 10; margin-bottom: 5px;
         }
         
-        /* BANNER FLUTUANTE DE SUCESSO */
         .aviator-win-banner {
-            position: absolute;
-            top: 54%;
+            position: absolute; top: 54%;
             background: linear-gradient(135deg, rgba(13, 27, 21, 0.95), rgba(7, 43, 26, 0.95));
-            border: 2px solid #00ff88;
-            border-radius: 14px;
-            padding: 10px 22px;
-            text-align: center;
-            z-index: 40;
-            display: none;
+            border: 2px solid #00ff88; border-radius: 14px; padding: 10px 22px; text-align: center; z-index: 40; display: none;
             box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4), inset 0 0 15px rgba(0,255,136,0.2);
             animation: popInBanner 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
@@ -492,61 +485,21 @@
             0% { transform: scale(0.4) translateY(10px); opacity: 0; }
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
-        .win-badge-title {
-            font-size: 11px;
-            font-weight: 900;
-            color: #ffb703;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-        }
-        .win-badge-amount {
-            font-size: 20px;
-            font-weight: 950;
-            color: #00ff88;
-            text-shadow: 0 0 12px rgba(0,255,136,0.7);
-            letter-spacing: 0.5px;
-        }
+        .win-badge-title { font-size: 11px; font-weight: 900; color: #ffb703; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+        .win-badge-amount { font-size: 20px; font-weight: 950; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,0.7); }
 
-        /* NOVO BANNER ELEGANTE DE CRASH / EXPLOSÃO (QUANDO PERDE) */
         .aviator-crash-banner {
-            position: absolute;
-            top: 54%;
+            position: absolute; top: 54%;
             background: linear-gradient(135deg, rgba(43, 11, 5, 0.95), rgba(20, 5, 2, 0.95));
-            border: 2px solid #ff4500;
-            border-radius: 14px;
-            padding: 10px 24px;
-            text-align: center;
-            z-index: 40;
-            display: none;
+            border: 2px solid #ff4500; border-radius: 14px; padding: 10px 24px; text-align: center; z-index: 40; display: none;
             box-shadow: 0 10px 30px rgba(255, 69, 0, 0.5), inset 0 0 15px rgba(255,69,0,0.2);
             animation: popInBanner 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-        .crash-badge-title {
-            font-size: 11px;
-            font-weight: 900;
-            color: #ffb703;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-        }
-        .crash-badge-text {
-            font-size: 20px;
-            font-weight: 950;
-            color: #ff3300;
-            text-shadow: 0 0 12px rgba(255, 51, 0, 0.8);
-            letter-spacing: 0.5px;
-        }
+        .crash-badge-title { font-size: 11px; font-weight: 900; color: #ffb703; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+        .crash-badge-text { font-size: 20px; font-weight: 950; color: #ff3300; text-shadow: 0 0 12px rgba(255, 51, 0, 0.8); }
 
-        .aviator-status-text {
-            font-size: 13px; font-weight: bold; color: #ffb703; z-index: 10; text-transform: uppercase; letter-spacing: 1px;
-        }
-        
-        .aviator-airplane-real {
-            position: absolute; width: 110px; height: 60px; z-index: 15;
-            transition: transform 0.1s linear; filter: drop-shadow(0 0 12px rgba(255,69,0,0.9));
-        }
+        .aviator-status-text { font-size: 13px; font-weight: bold; color: #ffb703; z-index: 10; text-transform: uppercase; letter-spacing: 1px; }
+        .aviator-airplane-real { position: absolute; width: 110px; height: 60px; z-index: 15; transition: transform 0.1s linear; filter: drop-shadow(0 0 12px rgba(255,69,0,0.9)); }
         
         .explosion-effect-real {
             position: absolute; width: 180px; height: 180px; border-radius: 50%;
@@ -569,14 +522,49 @@
             100% { transform: translate(0, 0); }
         }
 
-        .aviator-controls-box {
-            width: 100%; background: #151821; padding: 15px; border-radius: 16px; 
-            border: 1px solid rgba(255,69,0,0.4); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+        .aviator-controls-box { width: 100%; background: #151821; padding: 15px; border-radius: 16px; border: 1px solid rgba(255,69,0,0.4); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); }
+        .btn-aviator-acao { width: 100%; padding: 16px; color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5); text-transform: uppercase; transition: 0.2s; }
+
+        /* --- MINES ESTILOS EXCLUSIVOS --- */
+        #minesSectionContainer {
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
         }
-        .btn-aviator-acao {
-            width: 100%; padding: 16px; color: #000; border: none; border-radius: 50px; 
-            font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5); text-transform: uppercase;
-            transition: 0.2s;
+        .mines-screen-3d {
+            position: relative; width: 100%; height: 380px;
+            background: radial-gradient(circle at 50% 30%, #1a1508 0%, #080703 100%);
+            border: 3px solid #ffb703; border-radius: 18px; overflow: hidden;
+            box-shadow: inset 0 0 70px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.8);
+            margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px;
+        }
+        .mines-grid-5x5 {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 320px; z-index: 10;
+        }
+        .mine-tile {
+            aspect-ratio: 1; background: linear-gradient(145deg, #252a38, #151821);
+            border: 2px solid #323b52; border-radius: 10px; display: flex; justify-content: center; align-items: center;
+            font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s;
+        }
+        .mine-tile:hover { border-color: #ffb703; transform: scale(1.04); }
+        .mine-tile.revealed-star { background: radial-gradient(circle, #00ff8833 0%, #151821 80%); border-color: #00ff88; }
+        .mine-tile.revealed-mine { background: radial-gradient(circle, #ff330044 0%, #151821 80%); border-color: #ff3300; }
+        
+        .mines-header-info {
+            display: flex; justify-content: space-between; width: 100%; max-width: 320px; margin-bottom: 12px; font-size: 13px; font-weight: bold; color: #ffb703; z-index: 10;
+        }
+        .mines-mode-selector {
+            display: flex; gap: 8px; margin-bottom: 12px; width: 100%; max-width: 500px;
+        }
+        .btn-mine-mode {
+            flex: 1; padding: 8px; background: #151821; border: 1px solid #232838; border-radius: 10px; color: #aaa; font-weight: bold; font-size: 12px; cursor: pointer; text-align: center;
+        }
+        .btn-mine-mode.active { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: #fff; }
+        
+        .mines-config-row {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; font-weight: bold; color: #fff;
+        }
+        .mines-count-select {
+            background: #0f1118; border: 1px solid #ffb703; color: #ffb703; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px;
         }
     </style>
 </head>
@@ -637,6 +625,7 @@
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino & Jogos</div>
         <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">⚽ Penalty Cangaço</div>
         <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">✈️ Aviator</div>
+        <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">💣 Mines</div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Esportivas</div>
         <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
@@ -719,7 +708,7 @@
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="jogarCassino('Mines', 10)">
+            <div class="game-card" onclick="mudarAba('mines')">
                 <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
                 <div class="game-name">Mines</div>
             </div>
@@ -845,19 +834,16 @@
                 <div class="aviator-mult-display" id="aviatorMultDisplay">1.00x</div>
                 <div class="aviator-status-text" id="aviatorStatusText">PRONTO PARA DECOLAR</div>
 
-                <!-- BANNER FLUTUANTE DE SUCESSO -->
                 <div class="aviator-win-banner" id="aviatorWinBanner">
                     <div class="win-badge-title">🎉 SACOU COM SUCESSO!</div>
                     <div class="win-badge-amount" id="aviatorWinAmountText">R$ 0,00</div>
                 </div>
 
-                <!-- NOVO BANNER ELEGANTE DE CRASH / EXPLOSÃO -->
                 <div class="aviator-crash-banner" id="aviatorCrashBanner">
                     <div class="crash-badge-title">💥 VOO ENCERRADO</div>
                     <div class="crash-badge-text">AVIÃO EXPLODIU!</div>
                 </div>
                 
-                <!-- AVIÃO COMERCIAL REALISTA EM SVG -->
                 <svg class="aviator-airplane-real" id="aviatorPlane" viewBox="0 0 120 70" style="bottom: 30px; left: 20px;">
                     <defs>
                         <linearGradient id="planeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -886,6 +872,65 @@
                     </div>
                 </div>
                 <button class="btn-aviator-acao" id="btnAviatorAcao" onclick="acaoAviatorBtn()">APOSTAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA MINES -->
+    <div id="tab-mines" class="main-tab-content">
+        <div id="minesSectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">
+                🏠 Voltar para a Tela Inicial
+            </button>
+
+            <div class="mines-mode-selector">
+                <div class="btn-mine-mode active" id="btnMinesModeReal" onclick="mudarModoMines('real')">💵 Modo Real</div>
+                <div class="btn-mine-mode" id="btnMinesModeDemo" onclick="mudarModoMines('demo')">🎮 Modo Demo (Treino)</div>
+            </div>
+
+            <div class="mines-screen-3d" id="minesScreen">
+                <div class="explosion-effect-real" id="minesExplosionEffect" style="z-index: 30;"></div>
+                
+                <div class="aviator-win-banner" id="minesWinBanner" style="z-index: 35;">
+                    <div class="win-badge-title">🎉 SACOU COM SUCESSO!</div>
+                    <div class="win-badge-amount" id="minesWinAmountText">R$ 0,00</div>
+                </div>
+
+                <div class="aviator-crash-banner" id="minesCrashBanner" style="z-index: 35;">
+                    <div class="crash-badge-title">💥 BOMBA ACIONADA</div>
+                    <div class="crash-badge-text">MINA EXPLODIU!</div>
+                </div>
+
+                <div class="mines-header-info">
+                    <span>Multiplicador: <b id="minesMultDisplay" style="color:#00ff88;">1.00x</b></span>
+                    <span>Prêmio: <b id="minesProfitDisplay" style="color:#00ff88;">R$ 0,00</b></span>
+                </div>
+
+                <div class="mines-grid-5x5" id="minesGridContainer">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+
+            <div class="aviator-controls-box">
+                <div class="mines-config-row">
+                    <span>Quantidade de Minas:</span>
+                    <select id="minesCountSelect" class="mines-count-select" onchange="atualizarConfigMines()">
+                        <option value="1">1 Mina (Fácil / Menor Prêmio)</option>
+                        <option value="3" selected>3 Minas (Padrão)</option>
+                        <option value="5">5 Minas</option>
+                        <option value="10">10 Minas</option>
+                        <option value="15">15 Minas (Difícil / Maior Prêmio)</option>
+                    </select>
+                </div>
+                <div class="bet-control-row">
+                    <span>Aposta Mines:</span>
+                    <div class="bet-adjust-box">
+                        <button class="btn-bet-step" onclick="alterarApostaMines(-1)">-</button>
+                        <input type="text" id="minesBetInput" class="btn-input-display" value="20.00" readonly>
+                        <button class="btn-bet-step" onclick="alterarApostaMines(1)">+</button>
+                    </div>
+                </div>
+                <button class="btn-aviator-acao" id="btnMinesAcao" onclick="acaoMinesBtn()">JOGAR</button>
             </div>
         </div>
     </div>
@@ -1118,6 +1163,9 @@
             } else if (aba === 'aviator') {
                 jogoSelecionadoAtual = 'aviator';
                 iniciarCarregamentoJogo('Aviator Realista', 'https://files.catbox.moe/f5zgx9.webp');
+            } else if (aba === 'mines') {
+                jogoSelecionadoAtual = 'mines';
+                iniciarCarregamentoJogo('Mines Cangaço', 'https://files.catbox.moe/9k06uq.jpeg');
             } else if (aba === 'esportes') {
                 document.getElementById('tab-esportes').classList.add('active-tab');
                 carregarJogosReais();
@@ -1173,11 +1221,176 @@
                 } else if (jogoSelecionadoAtual === 'aviator') {
                     document.getElementById('tab-aviator').classList.add('active-tab');
                     resetarAviatorTela();
+                } else if (jogoSelecionadoAtual === 'mines') {
+                    document.getElementById('tab-mines').classList.add('active-tab');
+                    resetarMinesTela();
                 }
             }, 500);
         }
 
-        /* --- LÓGICA DO AVIATOR REALISTA & CRASH/EXPLOSÃO --- */
+        /* --- LÓGICA DO MINES EXCLUSIVA --- */
+        let minesModo = 'real'; // 'real' ou 'demo'
+        let minesRodando = false;
+        let minesApostaValor = 20.00;
+        let minesQuantidadeMinas = 3;
+        let minesPosicoesMinas = [];
+        let minesEstrelasReveladas = 0;
+        let minesMultAtual = 1.00;
+
+        function mudarModoMines(modo) {
+            if(minesRodando) return;
+            minesModo = modo;
+            document.getElementById('btnMinesModeReal').classList.toggle('active', modo === 'real');
+            document.getElementById('btnMinesModeDemo').classList.toggle('active', modo === 'demo');
+        }
+
+        function alterarApostaMines(delta) {
+            if(minesRodando) return;
+            minesApostaValor += (delta * 10);
+            if(minesApostaValor < 10) minesApostaValor = 10;
+            document.getElementById('minesBetInput').value = minesApostaValor.toFixed(2);
+        }
+
+        function atualizarConfigMines() {
+            if(minesRodando) return;
+            minesQuantidadeMinas = parseInt(document.getElementById('minesCountSelect').value);
+        }
+
+        function resetarMinesTela() {
+            minesRodando = false;
+            minesEstrelasReveladas = 0;
+            minesMultAtual = 1.00;
+            document.getElementById('minesMultDisplay').innerText = "1.00x";
+            document.getElementById('minesProfitDisplay').innerText = "R$ 0,00";
+            document.getElementById('minesWinBanner').style.display = 'none';
+            document.getElementById('minesCrashBanner').style.display = 'none';
+            document.getElementById('minesExplosionEffect').style.display = 'none';
+
+            const btn = document.getElementById('btnMinesAcao');
+            btn.innerText = "JOGAR";
+            btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
+            btn.style.color = "#000";
+
+            renderizarGridMines(false);
+        }
+
+        function renderizarGridMines(revelarTudo) {
+            const container = document.getElementById('minesGridContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < 25; i++) {
+                let tile = document.createElement('div');
+                tile.className = 'mine-tile';
+                tile.innerText = '⭐';
+                tile.onclick = () => clicarTileMines(i);
+                container.appendChild(tile);
+            }
+        }
+
+        function acaoMinesBtn() {
+            const btn = document.getElementById('btnMinesAcao');
+            if (!minesRodando) {
+                if (minesModo === 'real' && saldo < minesApostaValor) { alert("Saldo insuficiente!"); return; }
+                if (minesModo === 'real') {
+                    saldo -= minesApostaValor;
+                    atualizarSaldoNaTela();
+                    registarTransacao('perca', 'Aposta Mines', -minesApostaValor);
+                }
+
+                minesRodando = true;
+                minesEstrelasReveladas = 0;
+                minesMultAtual = 1.00;
+                document.getElementById('minesWinBanner').style.display = 'none';
+                document.getElementById('minesCrashBanner').style.display = 'none';
+                document.getElementById('minesExplosionEffect').style.display = 'none';
+
+                // Sortear minas
+                minesPosicoesMinas = [];
+                while(minesPosicoesMinas.length < minesQuantidadeMinas) {
+                    let r = Math.floor(Math.random() * 25);
+                    if(!minesPosicoesMinas.includes(r)) minesPosicoesMinas.push(r);
+                }
+
+                btn.innerText = "SACAR";
+                btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
+                btn.style.color = "#fff";
+
+                renderizarGridMines(false);
+            } else {
+                // Botão de Sacar clicado!
+                if(minesEstrelasReveladas === 0) { alert("Encontre ao menos uma estrela para poder sacar!"); return; }
+                
+                minesRodando = false;
+                let lucro = minesApostaValor * minesMultAtual;
+                if (minesModo === 'real') {
+                    saldo += lucro;
+                    atualizarSaldoNaTela();
+                    registarTransacao('premio', `Prêmio Mines (${minesMultAtual.toFixed(2)}x)`, lucro);
+                }
+
+                document.getElementById('minesWinAmountText').innerText = `R$ ${lucro.toFixed(2)}`;
+                document.getElementById('minesWinBanner').style.display = 'block';
+
+                btn.innerText = "JOGAR NOVAMENTE";
+                btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
+                btn.style.color = "#000";
+            }
+        }
+
+        function clicarTileMines(index) {
+            if(!minesRodando) return;
+            const tiles = document.querySelectorAll('.mine-tile');
+            const tile = tiles[index];
+            if(tile.classList.contains('revealed-star') || tile.classList.contains('revealed-mine')) return;
+
+            if (minesPosicoesMinas.includes(index)) {
+                // Acha uma mina! Explosão igual Aviator
+                minesRodando = false;
+                tile.classList.add('revealed-mine');
+                tile.innerText = '💣';
+
+                // Revelar todas as minas
+                minesPosicoesMinas.forEach(mIdx => {
+                    tiles[mIdx].classList.add('revealed-mine');
+                    tiles[mIdx].innerText = '💣';
+                });
+
+                const expAudio = document.getElementById('explosionAudio');
+                if(expAudio) { expAudio.currentTime = 0; expAudio.play().catch(e => console.log(e)); }
+
+                const screenEl = document.getElementById('minesScreen');
+                screenEl.classList.add('shake-screen');
+                setTimeout(() => screenEl.classList.remove('shake-screen'), 400);
+
+                document.getElementById('minesExplosionEffect').style.display = 'block';
+                document.getElementById('minesCrashBanner').style.display = 'block';
+
+                const btn = document.getElementById('btnMinesAcao');
+                btn.innerText = "EXPLODIU!";
+                btn.style.background = "#555";
+                btn.style.color = "#aaa";
+                setTimeout(() => {
+                    btn.innerText = "JOGAR";
+                    btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
+                    btn.style.color = "#000";
+                }, 2500);
+
+            } else {
+                // Achou estrela! Multiplicador sobe conforme poucas ou muitas minas escolhidas
+                tile.classList.add('revealed-star');
+                tile.innerText = '⭐';
+                minesEstrelasReveladas++;
+
+                // Fórmula dinâmica de ganho baseada na quantidade de minas selecionadas
+                let fatorMina = 1 + (minesQuantidadeMinas * 0.15);
+                minesMultAtual = parseFloat((Math.pow(fatorMina, minesEstrelasReveladas)).toFixed(2));
+
+                document.getElementById('minesMultDisplay').innerText = minesMultAtual.toFixed(2) + "x";
+                let lucroParcial = minesApostaValor * minesMultAtual;
+                document.getElementById('minesProfitDisplay').innerText = `R$ ${lucroParcial.toFixed(2)}`;
+            }
+        }
+
+        /* --- LÓGICA DO AVIATOR --- */
         let aviatorApostando = false;
         let aviatorRodando = false;
         let aviatorMult = 1.00;
@@ -1263,8 +1476,6 @@
 
                         const expl = document.getElementById('explosionEffect');
                         expl.style.display = 'block';
-
-                        // Exibe o banner elegante de crash/explosão
                         document.getElementById('aviatorCrashBanner').style.display = 'block';
 
                         btn.innerText = "EXPLODIU!";
@@ -1289,7 +1500,6 @@
                 registarTransacao('premio', `Prêmio Aviator (${aviatorMult.toFixed(2)}x)`, premioGanho);
 
                 document.getElementById('aviatorStatusText').innerText = "VOO FINALIZADO";
-                
                 document.getElementById('aviatorWinAmountText').innerText = `R$ ${premioGanho.toFixed(2)}`;
                 document.getElementById('aviatorWinBanner').style.display = 'block';
 
@@ -1336,7 +1546,6 @@
             }
 
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
-            codigoGeradoTemp = "1234";
             alert(`📲 Código de Confirmação: 1234`);
             document.getElementById('etapaCadastro1').style.display = 'none';
             document.getElementById('etapaCadastro2').style.display = 'block';
@@ -1390,6 +1599,7 @@
             const itens = [
                 { nome: '🏆 Penalty Cangaço', tipo: 'penalty' },
                 { nome: '✈️ Aviator Realista', tipo: 'aviator' },
+                { nome: '💣 Mines Cangaço', tipo: 'mines' },
                 { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
                 { nome: '💬 Suporte Online', tipo: 'suporte' }
             ];
