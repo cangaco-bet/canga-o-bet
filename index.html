@@ -33,6 +33,11 @@
             align-items: center;
             gap: 12px;
         }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
         .btn-menu-lateral {
             background: #1e2029;
             border: 1px solid #ff4500;
@@ -64,14 +69,24 @@
             color: #ff4500;
             cursor: pointer;
         }
+        .saldo-topo {
+            background: #1e2029;
+            border: 1px solid #ffb703;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffb703;
+        }
         .btn-entrar-topo {
             background-color: #ff4500;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 12px;
         }
 
         .quick-search-bar {
@@ -264,6 +279,39 @@
         .bet-slip-input { width: 100%; padding: 8px; background: #13141b; border: 1px solid #363a4f; color: white; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
         .btn-place-bet { width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: 900; font-size: 13px; cursor: pointer; }
 
+        /* Estilo da aba Meus Bilhetes (integrada no conteúdo principal) */
+        .bilhetes-container {
+            padding: 15px;
+        }
+        .bilhete-impresso {
+            background: #161821;
+            border: 1px solid #ff4500;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .bilhete-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #ffb703;
+            font-weight: bold;
+            border-bottom: 1px solid #2a2d3d;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+        .bilhete-detalhes {
+            font-size: 13px;
+            color: #ddd;
+            line-height: 1.5;
+        }
+        .bilhete-status {
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
         /* Modais */
         .modal-overlay {
             display: none;
@@ -327,7 +375,10 @@
             </div>
             <div class="logo" onclick="mudarAba('cassino')">🔥 CANGAÇO BET</div>
         </div>
-        <button class="btn-entrar-topo" onclick="abrirModalRegistro()">REGISTRAR</button>
+        <div class="header-right">
+            <div class="saldo-topo">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
+            <button class="btn-entrar-topo" onclick="abrirModalRegistro()">REGISTRAR</button>
+        </div>
     </header>
 
     <div class="quick-search-bar">
@@ -335,7 +386,6 @@
         <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
     </div>
 
-    <!-- Menu Lateral (Com aba de Bilhetes adicionada) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -348,7 +398,7 @@
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">
             ⚽ Apostas Esportivas
         </div>
-        <div class="sidebar-item" onclick="abrirModalBilhetes(); fecharSidebar();">
+        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">
             📋 Meus Bilhetes
         </div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
@@ -359,7 +409,6 @@
         </div>
     </div>
 
-    <!-- ABA 1: CASSINO -->
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
             <div class="promo-track" id="promoTrack">
@@ -424,26 +473,25 @@
         </div>
 
         <div class="games-grid">
-            <div class="game-card" onclick="pararMusicaEEntrar('Fortune Tiger')">
+            <div class="game-card" onclick="jogarCassino('Fortune Tiger', 15)">
                 <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
                 <div class="game-name">Fortune Tiger</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Aviator')">
+            <div class="game-card" onclick="jogarCassino('Aviator', 20)">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Mines')">
+            <div class="game-card" onclick="jogarCassino('Mines', 10)">
                 <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
                 <div class="game-name">Mines</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
+            <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
                 <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
                 <div class="game-name">Gates of Olympus</div>
             </div>
         </div>
     </div>
 
-    <!-- ABA 2: ESPORTES -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
             <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Ativas / Futuras)</div>
@@ -453,7 +501,15 @@
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante -->
+    <div id="tab-bilhetes" class="main-tab-content">
+        <div class="bilhetes-container">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes</div>
+            <div id="listaMeusBilhetesImpressos">
+                <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span>🎟️ BILHETE DE APOSTA</span>
@@ -465,18 +521,6 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
-    <!-- Modal de Meus Bilhetes (Acompanhamento em Tempo Real) -->
-    <div id="bilhetesModal" class="modal-overlay">
-        <div class="modal-card">
-            <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title">📋 MEUS BILHETES</div>
-            <div id="listaMeusBilhetes" style="text-align: left; font-size: 13px; color: #ccc;">
-                <p style="text-align: center; color: #777; padding: 15px;">Nenhum bilhete confirmado ainda.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Registro Completo -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -491,13 +535,12 @@
         </div>
     </div>
 
-    <!-- Modal de Depósito -->
     <div id="depositModal" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title">💰 DEPOSITAR (PIX)</div>
-            <input type="number" class="modal-input" placeholder="Valor do depósito (R$)">
-            <button class="modal-btn" onclick="alert('Gerando QR Code Pix...'); fecharModais();">Gerar Pix</button>
+            <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor do depósito (R$)">
+            <button class="modal-btn" onclick="realizarDeposito()">Gerar Pix e Depositar</button>
         </div>
     </div>
 
@@ -507,9 +550,13 @@
         const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
         let apostaSelecionada = null;
         let oddAtual = 0;
+        let saldo = 1000.00;
         let meusBilhetesSalvos = [];
 
-        // Dicionários de tradução
+        function atualizarSaldoNaTela() {
+            document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
+        }
+
         const traducoesTimes = {
             "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Nápoles", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
         };
@@ -556,7 +603,34 @@
             } else if (aba === 'esportes') {
                 document.getElementById('tab-esportes').classList.add('active-tab');
                 carregarJogosReais();
+            } else if (aba === 'bilhetes') {
+                document.getElementById('tab-bilhetes').classList.add('active-tab');
+                renderizarBilhetesNaTela();
             }
+        }
+
+        function jogarCassino(nomeJogo, custoAposta) {
+            audio.pause(); 
+            audio.currentTime = 0; 
+            if (saldo < custoAposta) {
+                alert("Saldo insuficiente para jogar! Faça um depósito.");
+                return;
+            }
+            saldo -= custoAposta;
+            atualizarSaldoNaTela();
+            
+            // Simula resultado (50% ganha ou perde)
+            let ganhou = Math.random() >= 0.5;
+            let mensagem = "";
+            if (ganhou) {
+                let premio = custoAposta * 2;
+                saldo += premio;
+                atualizarSaldoNaTela();
+                mensagem = `🎉 Parabéns! Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`;
+            } else {
+                mensagem = `❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`;
+            }
+            alert(mensagem);
         }
 
         function realizarRegistro() {
@@ -575,6 +649,18 @@
             alert(`✅ Conta criada com sucesso para ${nome} (${email})! Bem-vindo ao Cangaço Bet.`);
         }
 
+        function realizarDeposito() {
+            const valorDep = parseFloat(document.getElementById('depositoValorInput').value) || 0;
+            if (valorDep <= 0) {
+                alert("Insira um valor de depósito válido!");
+                return;
+            }
+            saldo += valorDep;
+            atualizarSaldoNaTela();
+            fecharModais();
+            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado com sucesso via Pix!`);
+        }
+
         function pesquisaGeral() {
             const termo = document.getElementById('quickSearchInput').value.toLowerCase();
             const box = document.getElementById('quickSearchResult');
@@ -586,7 +672,8 @@
                 { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
                 { nome: '🎰 Cassino: Mines', tipo: 'cassino' },
                 { nome: '🎰 Cassino: Gates of Olympus', tipo: 'cassino' },
-                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' }
+                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
+                { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' }
             ];
 
             const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
@@ -597,8 +684,7 @@
                 div.style.borderBottom = '1px solid #2a2d3d';
                 div.innerText = r.nome;
                 div.onclick = () => {
-                    if(r.tipo === 'cassino') mudarAba('cassino');
-                    else mudarAba('esportes');
+                    mudarAba(r.tipo);
                     box.innerHTML = '';
                     document.getElementById('quickSearchInput').value = '';
                 };
@@ -738,51 +824,67 @@
         function confirmarApostaEsportiva() {
             let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
             if (valor <= 0) { alert('Insira um valor válido!'); return; }
+            if (saldo < valor) { alert('Saldo insuficiente para realizar esta aposta!'); return; }
+
+            saldo -= valor;
+            atualizarSaldoNaTela();
+
             let retorno = (valor * oddAtual).toFixed(2);
             
+            // Simulação de resultado da aposta (50% chance de ganhar ou perder)
+            let venceu = Math.random() >= 0.5;
+            let statusAposta = venceu ? "Ganhou 🎉" : "Perdeu ❌";
+            let corStatus = venceu ? "#00ff88" : "#ff4500";
+
+            if (venceu) {
+                saldo += parseFloat(retorno);
+                atualizarSaldoNaTela();
+            }
+
             meusBilhetesSalvos.push({
                 selecao: apostaSelecionada,
                 valor: valor.toFixed(2),
                 retorno: retorno,
-                status: "🔴 Ao Vivo / Em Andamento"
+                status: statusAposta,
+                cor: corStatus
             });
 
             fecharBilhete();
-            alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}! Podes acompanhar na aba "Meus Bilhetes".`);
+            alert(`✅ Aposta confirmada e registada! Valor: R$ ${valor.toFixed(2)} | Retorno Previsto: R$ ${retorno}. Vá até a aba "Meus Bilhetes" para ver o comprovativo.`);
         }
 
-        function abrirModalBilhetes() {
-            tocarAudioInicio();
-            fecharSidebar();
-            const container = document.getElementById('listaMeusBilhetes');
+        function renderizarBilhetesNaTela() {
+            const container = document.getElementById('listaMeusBilhetesImpressos');
             if (meusBilhetesSalvos.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #777; padding: 15px;">Nenhum bilhete confirmado ainda.</p>`;
-            } else {
-                let html = '';
-                meusBilhetesSalvos.forEach((b, idx) => {
-                    html += `
-                        <div style="background: #13141b; border: 1px solid #2a2d3d; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                            <div style="color: #ffb703; font-weight: bold;">Bilhete #${idx + 1}</div>
-                            <div><b>Aposta:</b> ${b.selecao}</div>
-                            <div><b>Valor:</b> R$ ${b.valor} | <b>Retorno:</b> R$ ${b.retorno}</div>
-                            <div style="color: #00ff88; margin-top: 4px;">Status: ${b.status}</div>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`;
+                return;
             }
-            document.getElementById('bilhetesModal').style.display = 'flex';
+
+            let html = '';
+            meusBilhetesSalvos.forEach((b, idx) => {
+                html += `
+                    <div class="bilhete-impresso">
+                        <div class="bilhete-header">
+                            <span>COMPROVATIVO DE APOSTA #${idx + 1}</span>
+                            <span>Cangaço Bet</span>
+                        </div>
+                        <div class="bilhete-detalhes">
+                            <div><b>Seleção:</b> ${b.selecao}</div>
+                            <div><b>Valor Apostado:</b> R$ ${b.valor}</div>
+                            <div><b>Retorno Possível:</b> R$ ${b.retorno}</div>
+                        </div>
+                        <div class="bilhete-status" style="color: ${b.cor};">
+                            Estado: ${b.status}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { tocarAudioInicio(); document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-
-        function pararMusicaEEntrar(nomeJogo) {
-            audio.pause(); 
-            audio.currentTime = 0; 
-            alert('A entrar em ' + nomeJogo + '...');
-        }
 
         const scrollContainer = document.getElementById('winnersScroll');
         setInterval(() => {
