@@ -236,7 +236,7 @@
             font-weight: 500;
         }
 
-        /* --- TELA DO JOGO FORTUNE TIGER IDÊNTICA AO VÍDEO --- */
+        /* --- TELA DO JOGO FORTUNE TIGER (ANIMAÇÃO E LAYOUT IDÊNTICOS AO VÍDEO) --- */
         #game-screen {
             display: none;
             position: fixed;
@@ -281,6 +281,8 @@
             color: #bbb;
             margin-bottom: 15px;
         }
+        
+        /* Container dos rolos com efeito de corte (slot machine real) */
         .tiger-reels {
             display: flex;
             justify-content: center;
@@ -291,18 +293,34 @@
             border-radius: 12px;
             border: 1px solid #222;
         }
-        .reel {
-            font-size: 30px;
-            background: #1c1d26;
+        .reel-window {
             width: 75px;
             height: 85px;
+            background: #1c1d26;
+            border-radius: 12px;
+            border: 2px solid #333;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
+        }
+        .reel-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.8s cubic-bezier(0.15, 0.85, 0.35, 1.2);
+        }
+        .reel-symbol {
+            width: 100%;
+            height: 85px;
+            font-size: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            border: 2px solid #333;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
         }
+
         .tiger-status {
             font-size: 14px;
             margin-bottom: 20px;
@@ -456,7 +474,6 @@
                 <div class="winner-card"><img src="https://files.catbox.moe/75mifn.jpeg"><div class="winner-info"><div class="winner-name">Kaiq***</div><div class="winner-prize">R$ 45.00 BRL</div></div></div>
                 <div class="winner-card"><img src="https://files.catbox.moe/f5zgx9.webp"><div class="winner-info"><div class="winner-name">Ebe***</div><div class="winner-prize">R$ 35.75 BRL</div></div></div>
                 <div class="winner-card"><img src="https://files.catbox.moe/9k06uq.jpeg"><div class="winner-info"><div class="winner-name">Lucas***</div><div class="winner-prize">R$ 120.00 BRL</div></div></div>
-                <div class="winner-card"><img src="https://files.catbox.moe/7dkz4q.jpeg"><div class="winner-info"><div class="winner-name">Mathe***</div><div class="winner-prize">R$ 250.50 BRL</div></div></div>
             </div>
         </div>
 
@@ -470,14 +487,6 @@
             <div class="game-card" onclick="pararMusicaEEntrar('Aviator')">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
-            </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Mines')">
-                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
-                <div class="game-name">Mines</div>
-            </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
-                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
-                <div class="game-name">Gates of Olympus</div>
             </div>
         </div>
 
@@ -500,11 +509,43 @@
 
         <div class="tiger-machine">
             <div class="tiger-aposta-texto">Aposta: R$ 2,00</div>
+            
             <div class="tiger-reels">
-                <div class="reel" id="reel1">💰</div>
-                <div class="reel" id="reel2">💰</div>
-                <div class="reel" id="reel3">💰</div>
+                <!-- Rolo 1 -->
+                <div class="reel-window">
+                    <div class="reel-strip" id="strip1" style="transform: translateY(0px);">
+                        <div class="reel-symbol">💰</div>
+                        <div class="reel-symbol">🍒</div>
+                        <div class="reel-symbol">⭐</div>
+                        <div class="reel-symbol">🍊</div>
+                        <div class="reel-symbol">💰</div>
+                        <div class="reel-symbol">🍋</div>
+                    </div>
+                </div>
+                <!-- Rolo 2 -->
+                <div class="reel-window">
+                    <div class="reel-strip" id="strip2" style="transform: translateY(0px);">
+                        <div class="reel-symbol">💰</div>
+                        <div class="reel-symbol">⭐</div>
+                        <div class="reel-symbol">🍊</div>
+                        <div class="reel-symbol">🍒</div>
+                        <div class="reel-symbol">💰</div>
+                        <div class="reel-symbol">📜</div>
+                    </div>
+                </div>
+                <!-- Rolo 3 -->
+                <div class="reel-window">
+                    <div class="reel-strip" id="strip3" style="transform: translateY(0px);">
+                        <div class="reel-symbol">💰</div>
+                        <div class="reel-symbol">🍊</div>
+                        <div class="reel-symbol">🍒</div>
+                        <div class="reel-symbol">⭐</div>
+                        <div class="reel-symbol">💰</div>
+                        <div class="reel-symbol">🍋</div>
+                    </div>
+                </div>
             </div>
+
             <div class="tiger-status" id="gameStatus">Você ganhou um prêmio baixo: R$ 1.50</div>
             <button class="btn-girar-tiger" onclick="girarTiger()">GIRAR 🐅</button>
         </div>
@@ -569,7 +610,6 @@
             alert('Entrando em ' + jogo + '...');
         }
 
-        // --- LÓGICA EXATA DO FORTUNE TIGER (Chances baixas de ganho, prêmios baixos e muitas perdas) ---
         let saldoVirtual = 99.50;
 
         function entrarFortuneTiger() {
@@ -589,54 +629,67 @@
             document.getElementById('saldoJogo').innerText = 'Saldo: R$ ' + saldoVirtual.toFixed(2).replace('.', ',');
         }
 
+        const iconesPool = ["💰", "🍒", "⭐", "🍊", "💰", "🍋", "📜"];
+
         function girarTiger() {
             if (saldoVirtual < 2.00) {
                 alert('Saldo insuficiente!');
                 return;
             }
 
-            saldoVirtual -= 2.00; // Custo da aposta
+            saldoVirtual -= 2.00;
             atualizarSaldoUI();
 
-            const r1 = document.getElementById('reel1');
-            const r2 = document.getElementById('reel2');
-            const r3 = document.getElementById('reel3');
             const status = document.getElementById('gameStatus');
-
             status.style.color = "#ccc";
             status.innerText = "Girando...";
-            r1.innerText = "🔄"; r2.innerText = "🔄"; r3.innerText = "🔄";
+
+            const strip1 = document.getElementById('strip1');
+            const strip2 = document.getElementById('strip2');
+            const strip3 = document.getElementById('strip3');
+
+            // Animação de rotação contínua adicionando deslocamento em pixels por slot (85px altura)
+            const randomOffset = (Math.floor(Math.random() * 3) + 3) * 85 * -1;
+            strip1.style.transform = `translateY(${randomOffset}px)`;
+            strip2.style.transform = `translateY(${randomOffset - 85}px)`;
+            strip3.style.transform = `translateY(${randomOffset - 170}px)`;
 
             setTimeout(() => {
-                const icones = ["💰", "🍊", "🍋", "🍒", "⭐", "📜"];
                 let rand = Math.random();
                 
-                // Configuração de probabilidades solicitada:
-                // 92% de chance de derrota (itens diferentes) e apenas 8% de chance de ganho (com prêmio baixo de R$ 1.50)
-                if (rand < 0.92) {
-                    // Derrota
-                    r1.innerText = icones[Math.floor(Math.random() * icones.length)];
-                    r2.innerText = icones[Math.floor(Math.random() * icones.length)];
-                    r3.innerText = icones[Math.floor(Math.random() * icones.length)];
+                if (rand < 0.90) {
+                    // Derrota (ícones diferentes)
+                    strip1.children[0].innerText = iconesPool[Math.floor(Math.random() * iconesPool.length)];
+                    strip2.children[0].innerText = iconesPool[Math.floor(Math.random() * iconesPool.length)];
+                    strip3.children[0].innerText = iconesPool[Math.floor(Math.random() * iconesPool.length)];
                     
-                    // Garante que não fiquem iguais por coincidência na derrota
-                    if(r1.innerText === r2.innerText && r2.innerText === r3.innerText) {
-                        r3.innerText = "🍒";
+                    if(strip1.children[0].innerText === strip2.children[0].innerText && strip2.children[0].innerText === strip3.children[0].innerText) {
+                        strip3.children[0].innerText = "🍒";
                     }
+
+                    strip1.style.transform = 'translateY(0px)';
+                    strip2.style.transform = 'translateY(0px)';
+                    strip3.style.transform = 'translateY(0px)';
 
                     status.style.color = "#ff4444";
                     status.innerText = "Não foi dessa vez! Tente novamente.";
                 } else {
-                    // Vitória com prêmio baixo fixo de R$ 1.50
+                    // Vitória com prêmio baixo de R$ 1.50
                     let premioBaixo = 1.50;
-                    r1.innerText = "💰"; r2.innerText = "💰"; r3.innerText = "💰";
+                    strip1.children[0].innerText = "💰";
+                    strip2.children[0].innerText = "💰";
+                    strip3.children[0].innerText = "💰";
+
+                    strip1.style.transform = 'translateY(0px)';
+                    strip2.style.transform = 'translateY(0px)';
+                    strip3.style.transform = 'translateY(0px)';
                     
                     saldoVirtual += premioBaixo;
                     status.style.color = "#00ff88";
                     status.innerText = `Você ganhou um prêmio baixo: R$ ${premioBaixo.toFixed(2)}`;
                 }
                 atualizarSaldoUI();
-            }, 1000);
+            }, 800);
         }
 
         function filtrarJogos() {
