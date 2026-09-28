@@ -550,6 +550,7 @@
         const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
         let apostaSelecionada = null;
         let oddAtual = 0;
+        let horaPartidaSelecionada = "";
         let saldo = 1000.00;
         let meusBilhetesSalvos = [];
 
@@ -619,7 +620,6 @@
             saldo -= custoAposta;
             atualizarSaldoNaTela();
             
-            // Simula resultado (50% ganha ou perde)
             let ganhou = Math.random() >= 0.5;
             let mensagem = "";
             if (ganhou) {
@@ -710,15 +710,15 @@
                         <span class="team-name">${fora}</span>
                     </div>
                     <div class="odds-grid">
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, '${statusHora}', this)">
                             <span class="odd-label">1 (Casa)</span>
                             <span class="odd-value">1.85</span>
                         </div>
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, '${statusHora}', this)">
                             <span class="odd-label">X (Empate)</span>
                             <span class="odd-value">3.40</span>
                         </div>
-                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, this)">
+                        <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, '${statusHora}', this)">
                             <span class="odd-label">2 (Fora)</span>
                             <span class="odd-value">3.90</span>
                         </div>
@@ -748,7 +748,7 @@
                         const statusCurto = match.fixture.status.short;
                         let statusHora = "";
                         if (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H' || statusCurto === 'HT') {
-                            statusHora = `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>`;
+                            statusHora = `AO VIVO (${match.fixture.status.elapsed || 0}')`;
                         } else {
                             statusHora = converterParaHorarioBrasilia(match.fixture.date);
                         }
@@ -776,7 +776,7 @@
                     partidasAtivasFd.forEach(match => {
                         let statusHora = "";
                         if (match.status === 'IN_PLAY' || match.status === 'PAUSED') {
-                            statusHora = `<span style="color: #00ff88;">● AO VIVO</span>`;
+                            statusHora = `AO VIVO`;
                         } else {
                             statusHora = converterParaHorarioBrasilia(match.utcDate);
                         }
@@ -794,15 +794,16 @@
             if (listaFormatada.length > 0) {
                 renderizarPartidasNaTela(listaFormatada, container);
             } else {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento (todas já encerraram).</p>`;
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento.</p>`;
             }
         }
 
-        function selecionarAposta(jogoOdd, odd, elemento) {
+        function selecionarAposta(jogoOdd, odd, horaMatch, elemento) {
             document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
             elemento.classList.add('selected');
             apostaSelecionada = jogoOdd;
             oddAtual = odd;
+            horaPartidaSelecionada = horaMatch;
             document.getElementById('betSelectionInfo').innerText = `Seleção: ${jogoOdd} (Odd: ${odd})`;
             document.getElementById('betSlip').style.display = 'block';
             atualizarRetornoPotencial();
@@ -831,26 +832,34 @@
 
             let retorno = (valor * oddAtual).toFixed(2);
             
-            // Simulação de resultado da aposta (50% chance de ganhar ou perder)
-            let venceu = Math.random() >= 0.5;
-            let statusAposta = venceu ? "Ganhou 🎉" : "Perdeu ❌";
-            let corStatus = venceu ? "#00ff88" : "#ff4500";
-
-            if (venceu) {
-                saldo += parseFloat(retorno);
-                atualizarSaldoNaTela();
-            }
-
-            meusBilhetesSalvos.push({
+            let novoBilhete = {
                 selecao: apostaSelecionada,
                 valor: valor.toFixed(2),
                 retorno: retorno,
-                status: statusAposta,
-                cor: corStatus
-            });
+                hora: horaPartidaSelecionada,
+                status: "⏳ Aguardando Resultado / Em Andamento",
+                cor: "#ffb703"
+            };
+
+            meusBilhetesSalvos.push(novoBilhete);
+            let indexBilhete = meusBilhetesSalvos.length - 1;
 
             fecharBilhete();
-            alert(`✅ Aposta confirmada e registada! Valor: R$ ${valor.toFixed(2)} | Retorno Previsto: R$ ${retorno}. Vá até a aba "Meus Bilhetes" para ver o comprovativo.`);
+            alert(`✅ Aposta confirmada! Valor: R$ ${valor.toFixed(2)} | Retorno Previsto: R$ ${retorno}. O bilhete foi guardado na aba "Meus Bilhetes".`);
+
+            // Simula o término da partida após 15 segundos para atualizar o resultado (ganhou ou perdeu)
+            setTimeout(() => {
+                let venceu = Math.random() >= 0.5;
+                if (venceu) {
+                    meusBilhetesSalvos[indexBilhete].status = "Ganhou 🎉";
+                    meusBilhetesSalvos[indexBilhete].cor = "#00ff88";
+                    saldo += parseFloat(retorno);
+                    atualizarSaldoNaTela();
+                } else {
+                    meusBilhetesSalvos[indexBilhete].status = "Perdeu ❌";
+                    meusBilhetesSalvos[indexBilhete].cor = "#ff4500";
+                }
+            }, 15000);
         }
 
         function renderizarBilhetesNaTela() {
@@ -870,6 +879,7 @@
                         </div>
                         <div class="bilhete-detalhes">
                             <div><b>Seleção:</b> ${b.selecao}</div>
+                            <div><b>Horário da Partida:</b> ${b.hora}</div>
                             <div><b>Valor Apostado:</b> R$ ${b.valor}</div>
                             <div><b>Retorno Possível:</b> R$ ${b.retorno}</div>
                         </div>
