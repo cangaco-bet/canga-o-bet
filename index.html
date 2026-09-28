@@ -370,23 +370,45 @@
         }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
+        /* --- BOTÃO DE VOLTAR PROFISSIONAL (PADRÃO CASAS DE APOSTAS) --- */
+        .btn-voltar-home {
+            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
+            background: linear-gradient(135deg, #1a1d28 0%, #11141c 100%); 
+            border: 1px solid #2c3347;
+            color: #ffb703; padding: 11px 16px; border-radius: 12px; font-size: 12px;
+            font-weight: 800; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.8px;
+        }
+        .btn-voltar-home:hover {
+            background: linear-gradient(135deg, #252a3a, #151821); 
+            border-color: #ff4500; color: #fff; transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.25);
+        }
+        .btn-voltar-home svg { width: 14px; height: 14px; fill: #ffb703; transition: fill 0.2s; }
+        .btn-voltar-home:hover svg { fill: #fff; }
+
+        /* --- SELETOR DE MODO PROFISSIONAL (REAL / DEMO) --- */
+        .mines-mode-selector {
+            display: flex; gap: 8px; margin-bottom: 12px; width: 100%; max-width: 500px;
+        }
+        .btn-mine-mode {
+            flex: 1; padding: 10px; background: linear-gradient(145deg, #151821, #0f1118); 
+            border: 1px solid #232838; border-radius: 12px; color: #888; font-weight: 800; 
+            font-size: 11px; cursor: pointer; text-align: center; text-transform: uppercase; 
+            letter-spacing: 0.5px; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .btn-mine-mode:hover { border-color: #ff4500; color: #ddd; }
+        .btn-mine-mode.active { 
+            background: linear-gradient(135deg, #ff4500, #cc3500); 
+            border-color: #ffb703; color: #fff; 
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+        }
+
         /* --- PENALTY CANGAÇO --- */
         #penaltySectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
-        }
-        
-        .btn-voltar-home {
-            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
-            background: linear-gradient(135deg, #1f2430, #13161f); border: 2px solid #ff4500;
-            color: #ffb703; padding: 10px 16px; border-radius: 14px; font-size: 13px;
-            font-weight: 900; cursor: pointer; display: flex; align-items: center;
-            justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
-            transition: 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .btn-voltar-home:hover {
-            background: linear-gradient(135deg, #ff4500, #cc3500); color: #fff;
-            border-color: #ffb703; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
         }
 
         .stadium-container-3d {
@@ -525,7 +547,7 @@
         .aviator-controls-box { width: 100%; background: #151821; padding: 15px; border-radius: 16px; border: 1px solid rgba(255,69,0,0.4); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); }
         .btn-aviator-acao { width: 100%; padding: 16px; color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5); text-transform: uppercase; transition: 0.2s; }
 
-        /* --- MINES ESTILOS EXCLUSIVOS --- */
+        /* --- MINES ESTILOS --- */
         #minesSectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
@@ -552,14 +574,6 @@
         .mines-header-info {
             display: flex; justify-content: space-between; width: 100%; max-width: 320px; margin-bottom: 12px; font-size: 13px; font-weight: bold; color: #ffb703; z-index: 10;
         }
-        .mines-mode-selector {
-            display: flex; gap: 8px; margin-bottom: 12px; width: 100%; max-width: 500px;
-        }
-        .btn-mine-mode {
-            flex: 1; padding: 8px; background: #151821; border: 1px solid #232838; border-radius: 10px; color: #aaa; font-weight: bold; font-size: 12px; cursor: pointer; text-align: center;
-        }
-        .btn-mine-mode.active { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: #fff; }
-        
         .mines-config-row {
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; font-weight: bold; color: #fff;
         }
@@ -599,14 +613,14 @@
             <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
-            <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
+            <div class="saldo-topo-3d">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
         </div>
     </header>
 
     <div class="quick-search-bar" id="quickSearchBarContainer">
-        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
         <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
@@ -619,20 +633,20 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-title">🤠 MENU PRINCIPAL</div>
+            <div class="sidebar-title">MENU PRINCIPAL</div>
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
-        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino & Jogos</div>
-        <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">⚽ Penalty Cangaço</div>
-        <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">✈️ Aviator</div>
-        <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">💣 Mines</div>
-        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Esportivas</div>
-        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
-        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
-        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">💬 Suporte Online</div>
-        <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">💰 Depositar (PIX)</div>
-        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">🔐 Entrar na Conta</div>
-        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">📝 Registrar Conta</div>
+        <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">Cassino & Jogos</div>
+        <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">Penalty Cangaço</div>
+        <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">Aviator</div>
+        <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">Mines</div>
+        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">Apostas Esportivas</div>
+        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">Meus Bilhetes</div>
+        <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">Histórico / Extrato</div>
+        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">Suporte Online</div>
+        <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">Depositar (PIX)</div>
+        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">Entrar na Conta</div>
+        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">Registar Conta</div>
     </div>
 
     <!-- ABA 1: CASSINO -->
@@ -641,21 +655,21 @@
             <div class="promo-track" id="promoTrack">
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/75mifn.jpeg');">
                     <div class="promo-content">
-                        <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
+                        <h3>BÔNUS DE BOAS-VINDAS</h3>
                         <p>Receba até R$1.000 + 50 Giros Grátis!</p>
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
                     </div>
                 </div>
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
                     <div class="promo-content">
-                        <h3>⚡ CASHBACK DIÁRIO</h3>
+                        <h3>CASHBACK DIÁRIO</h3>
                         <p>Até 12% de retorno em todas as apostas!</p>
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
                     </div>
                 </div>
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
                     <div class="promo-content">
-                        <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
+                        <h3>TORNEIOS EXCLUSIVOS</h3>
                         <p>Participe e concorra a prêmios em dinheiro!</p>
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Participar</button>
                     </div>
@@ -664,12 +678,12 @@
         </div>
 
         <div class="jackpot-box">
-            <div class="jackpot-title">🔥 JACKPOT GLOBAL 3D</div>
+            <div class="jackpot-title">JACKPOT GLOBAL 3D</div>
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
         </div>
 
         <div class="winners-section">
-            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
+            <div class="winners-title">OS ÚLTIMOS VENCEDORES</div>
             <div class="winners-scroll" id="winnersScroll">
                 <div class="winner-card">
                     <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
@@ -696,7 +710,7 @@
         </div>
 
         <div class="section-title">
-            🏆 TOP JOGOS <span>Todos ></span>
+            TOP JOGOS <span>Todos ></span>
         </div>
 
         <div class="games-grid">
@@ -723,7 +737,8 @@
     <div id="tab-penalty" class="main-tab-content">
         <div id="penaltySectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
-                🏠 Voltar para a Tela Inicial
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Voltar para a Início
             </button>
 
             <div class="stadium-container-3d" id="stadiumContainer">
@@ -826,7 +841,8 @@
     <div id="tab-aviator" class="main-tab-content">
         <div id="aviatorSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
-                🏠 Voltar para a Tela Inicial
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Voltar para a Início
             </button>
 
             <div class="aviator-screen-3d" id="aviatorScreen">
@@ -835,12 +851,12 @@
                 <div class="aviator-status-text" id="aviatorStatusText">PRONTO PARA DECOLAR</div>
 
                 <div class="aviator-win-banner" id="aviatorWinBanner">
-                    <div class="win-badge-title">🎉 SACOU COM SUCESSO!</div>
+                    <div class="win-badge-title">SACOU COM SUCESSO!</div>
                     <div class="win-badge-amount" id="aviatorWinAmountText">R$ 0,00</div>
                 </div>
 
                 <div class="aviator-crash-banner" id="aviatorCrashBanner">
-                    <div class="crash-badge-title">💥 VOO ENCERRADO</div>
+                    <div class="crash-badge-title">VOO ENCERRADO</div>
                     <div class="crash-badge-text">AVIÃO EXPLODIU!</div>
                 </div>
                 
@@ -880,24 +896,25 @@
     <div id="tab-mines" class="main-tab-content">
         <div id="minesSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
-                🏠 Voltar para a Tela Inicial
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Voltar para a Início
             </button>
 
             <div class="mines-mode-selector">
-                <div class="btn-mine-mode active" id="btnMinesModeReal" onclick="mudarModoMines('real')">💵 Modo Real</div>
-                <div class="btn-mine-mode" id="btnMinesModeDemo" onclick="mudarModoMines('demo')">🎮 Modo Demo (Treino)</div>
+                <div class="btn-mine-mode active" id="btnMinesModeReal" onclick="mudarModoMines('real')">Modo Real</div>
+                <div class="btn-mine-mode" id="btnMinesModeDemo" onclick="mudarModoMines('demo')">Modo Demo</div>
             </div>
 
             <div class="mines-screen-3d" id="minesScreen">
                 <div class="explosion-effect-real" id="minesExplosionEffect" style="z-index: 30;"></div>
                 
                 <div class="aviator-win-banner" id="minesWinBanner" style="z-index: 35;">
-                    <div class="win-badge-title">🎉 SACOU COM SUCESSO!</div>
+                    <div class="win-badge-title">SACOU COM SUCESSO!</div>
                     <div class="win-badge-amount" id="minesWinAmountText">R$ 0,00</div>
                 </div>
 
                 <div class="aviator-crash-banner" id="minesCrashBanner" style="z-index: 35;">
-                    <div class="crash-badge-title">💥 BOMBA ACIONADA</div>
+                    <div class="crash-badge-title">BOMBA ACIONADA</div>
                     <div class="crash-badge-text">MINA EXPLODIU!</div>
                 </div>
 
@@ -906,20 +923,18 @@
                     <span>Prêmio: <b id="minesProfitDisplay" style="color:#00ff88;">R$ 0,00</b></span>
                 </div>
 
-                <div class="mines-grid-5x5" id="minesGridContainer">
-                    <!-- Gerado via JS -->
-                </div>
+                <div class="mines-grid-5x5" id="minesGridContainer"></div>
             </div>
 
             <div class="aviator-controls-box">
                 <div class="mines-config-row">
                     <span>Quantidade de Minas:</span>
                     <select id="minesCountSelect" class="mines-count-select" onchange="atualizarConfigMines()">
-                        <option value="1">1 Mina (Fácil / Menor Prêmio)</option>
+                        <option value="1">1 Mina (Fácil)</option>
                         <option value="3" selected>3 Minas (Padrão)</option>
                         <option value="5">5 Minas</option>
                         <option value="10">10 Minas</option>
-                        <option value="15">15 Minas (Difícil / Maior Prêmio)</option>
+                        <option value="15">15 Minas (Difícil)</option>
                     </select>
                 </div>
                 <div class="bet-control-row">
@@ -941,7 +956,7 @@
     <!-- ABA 2: ESPORTES AO VIVO -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Partidas em Tempo Real (Ao Vivo)</div>
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">Partidas em Tempo Real (Ao Vivo)</div>
             <div class="filtro-ligas-scroll" id="filtroLigasContainer">
                 <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
             </div>
@@ -954,7 +969,7 @@
     <!-- ABA 3: MEUS BILHETES -->
     <div id="tab-bilhetes" class="main-tab-content">
         <div class="bilhetes-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Comprovativos de Bilhetes ao Vivo</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Comprovativos de Bilhetes ao Vivo</div>
             <div id="listaMeusBilhetesImpressos">
                 <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>
             </div>
@@ -964,7 +979,7 @@
     <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES -->
     <div id="tab-extrato" class="main-tab-content">
         <div class="extrato-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📜 Histórico de Transações</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Histórico de Transações</div>
             <div id="listaExtratoTransacoes">
                 <p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>
             </div>
@@ -974,9 +989,9 @@
     <!-- ABA 5: SUPORTE ONLINE -->
     <div id="tab-suporte" class="main-tab-content">
         <div class="suporte-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Central de Atendimento 3D</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Central de Atendimento 3D</div>
             <div class="suporte-card-3d">
-                <div class="suporte-badge-online">🟢 Operador Humano Online (Suporte 24h)</div>
+                <div class="suporte-badge-online">Operador Humano Online (Suporte 24h)</div>
                 <p style="font-size: 13px; margin-bottom: 18px; color: #ccc; line-height: 1.5;">Perdeu o acesso à conta, precisa recuperar login ou tem dúvidas sobre pagamentos Pix? Envie sua mensagem diretamente para nossa equipe.</p>
                 <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Recuperar Senha / Erro no Saldo)">
                 <textarea id="suporteMensagem" class="modal-input" placeholder="Escreva detalhadamente a sua dúvida ou informe seu e-mail de cadastro..." style="height: 100px; resize: none;"></textarea>
@@ -987,7 +1002,7 @@
 
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
-            <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
+            <span id="betSlipTypeTitle">BOLETIM DE APOSTAS</span>
             <span style="cursor:pointer;" onclick="fecharBilhete()">&times;</span>
         </div>
         <div class="bet-slip-info" id="betSelectionInfo">Nenhuma seleção feita.</div>
@@ -1018,7 +1033,7 @@
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">🔐 ENTRAR NA CONTA</div>
+            <div class="modal-title-4d">ENTRAR NA CONTA</div>
             <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail (Gmail cadastrado)">
             <input type="password" id="loginSenha" class="modal-input" placeholder="Sua Senha">
             <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
@@ -1028,7 +1043,7 @@
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">📝 CRIAR CONTA</div>
+            <div class="modal-title-4d">CRIAR CONTA</div>
             <div id="etapaCadastro1">
                 <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
                 <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
@@ -1049,7 +1064,7 @@
     <div id="depositModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
-            <div class="modal-title-4d">💰 DEPOSITAR (PIX)</div>
+            <div class="modal-title-4d">DEPOSITAR (PIX)</div>
             <input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor do depósito (R$)">
             <button class="modal-btn" onclick="realizarDeposito()">Gerar Pix e Depositar</button>
         </div>
@@ -1228,8 +1243,8 @@
             }, 500);
         }
 
-        /* --- LÓGICA DO MINES EXCLUSIVA --- */
-        let minesModo = 'real'; // 'real' ou 'demo'
+        /* --- LÓGICA DO MINES --- */
+        let minesModo = 'real';
         let minesRodando = false;
         let minesApostaValor = 20.00;
         let minesQuantidadeMinas = 3;
@@ -1303,7 +1318,6 @@
                 document.getElementById('minesCrashBanner').style.display = 'none';
                 document.getElementById('minesExplosionEffect').style.display = 'none';
 
-                // Sortear minas
                 minesPosicoesMinas = [];
                 while(minesPosicoesMinas.length < minesQuantidadeMinas) {
                     let r = Math.floor(Math.random() * 25);
@@ -1316,7 +1330,6 @@
 
                 renderizarGridMines(false);
             } else {
-                // Botão de Sacar clicado!
                 if(minesEstrelasReveladas === 0) { alert("Encontre ao menos uma estrela para poder sacar!"); return; }
                 
                 minesRodando = false;
@@ -1343,12 +1356,10 @@
             if(tile.classList.contains('revealed-star') || tile.classList.contains('revealed-mine')) return;
 
             if (minesPosicoesMinas.includes(index)) {
-                // Acha uma mina! Explosão igual Aviator
                 minesRodando = false;
                 tile.classList.add('revealed-mine');
                 tile.innerText = '💣';
 
-                // Revelar todas as minas
                 minesPosicoesMinas.forEach(mIdx => {
                     tiles[mIdx].classList.add('revealed-mine');
                     tiles[mIdx].innerText = '💣';
@@ -1375,12 +1386,10 @@
                 }, 2500);
 
             } else {
-                // Achou estrela! Multiplicador sobe conforme poucas ou muitas minas escolhidas
                 tile.classList.add('revealed-star');
                 tile.innerText = '⭐';
                 minesEstrelasReveladas++;
 
-                // Fórmula dinâmica de ganho baseada na quantidade de minas selecionadas
                 let fatorMina = 1 + (minesQuantidadeMinas * 0.15);
                 minesMultAtual = parseFloat((Math.pow(fatorMina, minesEstrelasReveladas)).toFixed(2));
 
@@ -1526,10 +1535,10 @@
                 saldo += premio;
                 atualizarSaldoNaTela();
                 registarTransacao('cassino_ganho', `Prêmio em ${nomeJogo}`, premio);
-                alert(`🎉 Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
+                alert(`Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
             } else {
                 registarTransacao('cassino_perca', `Aposta em ${nomeJogo}`, -custoAposta);
-                alert(`❌ Perdeu R$ ${custoAposta.toFixed(2)} em ${nomeJogo}.`);
+                alert(`Perdeu R$ ${custoAposta.toFixed(2)} em ${nomeJogo}.`);
             }
         }
 
@@ -1546,7 +1555,7 @@
             }
 
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
-            alert(`📲 Código de Confirmação: 1234`);
+            alert(`Código de Confirmação: 1234`);
             document.getElementById('etapaCadastro1').style.display = 'none';
             document.getElementById('etapaCadastro2').style.display = 'block';
         }
@@ -1557,7 +1566,7 @@
             salvarDadosStorage();
             verificarSessaoAtiva();
             fecharModais();
-            alert(`✅ Conta criada com sucesso!`);
+            alert(`Conta criada com sucesso!`);
         }
 
         function realizarLogin() {
@@ -1569,9 +1578,9 @@
                 salvarDadosStorage();
                 verificarSessaoAtiva();
                 fecharModais();
-                alert(`✅ Login efetuado com sucesso!`);
+                alert(`Login efetuado com sucesso!`);
             } else {
-                alert("❌ Dados incorretos!");
+                alert("Dados incorretos!");
             }
         }
 
@@ -1582,11 +1591,11 @@
             atualizarSaldoNaTela();
             registarTransacao('deposito', 'Depósito Pix', valorDep);
             fecharModais();
-            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado!`);
+            alert(`Depósito de R$ ${valorDep.toFixed(2)} efetuado!`);
         }
 
         function enviarMensagemSuporte() {
-            alert("✅ Mensagem enviada ao suporte!");
+            alert("Mensagem enviada ao suporte!");
             document.getElementById('suporteAssunto').value = "";
             document.getElementById('suporteMensagem').value = "";
         }
@@ -1597,11 +1606,11 @@
             box.innerHTML = '';
             if (!termo.trim()) return;
             const itens = [
-                { nome: '🏆 Penalty Cangaço', tipo: 'penalty' },
-                { nome: '✈️ Aviator Realista', tipo: 'aviator' },
-                { nome: '💣 Mines Cangaço', tipo: 'mines' },
-                { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
-                { nome: '💬 Suporte Online', tipo: 'suporte' }
+                { nome: 'Penalty Cangaço', tipo: 'penalty' },
+                { nome: 'Aviator Realista', tipo: 'aviator' },
+                { nome: 'Mines Cangaço', tipo: 'mines' },
+                { nome: 'Apostas Esportivas', tipo: 'esportes' },
+                { nome: 'Suporte Online', tipo: 'suporte' }
             ];
             itens.filter(i => i.nome.toLowerCase().includes(termo)).forEach(r => {
                 const div = document.createElement('div');
@@ -1741,7 +1750,7 @@
                     dados.response.slice(0, 5).forEach((match) => {
                         container.innerHTML += `
                             <div class="match-card">
-                                <div class="match-header"><span>🔴 ${match.league.name}</span></div>
+                                <div class="match-header"><span>${match.league.name}</span></div>
                                 <div class="match-teams">
                                     <span class="team-name">${match.teams.home.name}</span>
                                     <div class="match-score-vs"><span class="match-real-score">${match.goals.home ?? 0} - ${match.goals.away ?? 0}</span></div>
