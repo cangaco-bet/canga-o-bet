@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet - Penalty 3D</title>
+    <title>Cangaço Bet - Penalty Shoot-Out 3D</title>
     <style>
         * {
             margin: 0;
@@ -136,7 +136,7 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* --- PENALTY SHOOT-OUT 3D PROFISSIONAL SEM IMAGENS QUEBRADAS --- */
+        /* --- PENALTY SHOOT-OUT 3D IDÊNTICO AO ORIGINAL --- */
         #footballModal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: radial-gradient(circle, #092015 0%, #020804 100%);
@@ -180,36 +180,34 @@
         }
         .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); }
 
-        /* GOLEIRO VETORIZADO PROFISSIONAL (SEM ERROS DE IMAGEM) */
-        .goleiro-vector {
-            position: absolute; top: 35px; left: 50%; transform: translateX(-50%);
-            width: 85px; height: 95px; z-index: 10;
+        /* GOLEIRO REALISTA EM 3D (ATLETA HUMANO DETALHADO EM VETOR AVANÇADO) */
+        .goleiro-real-3d {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            width: 90px; height: 110px; z-index: 10;
             transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
-            filter: drop-shadow(0 5px 12px rgba(0,0,0,0.8));
+            filter: drop-shadow(0 6px 15px rgba(0,0,0,0.9));
         }
 
-        /* ALVOS DE BOLA IDÊNTICOS AO PRINT */
+        /* ALVOS DE CHUTE (APENAS MARCAÇÕES NOS CANTOS DA BALIZA) */
         .target-spot {
-            position: absolute; width: 44px; height: 44px; background: rgba(0, 0, 0, 0.6);
-            border: 2px solid #ffb703; border-radius: 50%; z-index: 20; cursor: pointer;
-            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px #ffb703;
+            position: absolute; width: 38px; height: 38px; background: rgba(255, 255, 255, 0.15);
+            border: 2px dashed #00ff88; border-radius: 50%; z-index: 20; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 12px #00ff88;
             animation: pulseTarget 1.2s infinite alternate;
         }
-        .target-spot::after {
-            content: '⚽'; font-size: 20px;
-        }
-        @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.85; } 100% { transform: scale(1.12); opacity: 1; } }
+        .target-spot::after { content: '🎯'; font-size: 16px; }
+        @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.18); opacity: 1; } }
 
-        #target1 { top: 35%; left: 18%; }
-        #target2 { top: 35%; right: 18%; }
+        #target1 { top: 32%; left: 16%; }
+        #target2 { top: 32%; right: 16%; }
         #target3 { top: 58%; left: 50%; transform: translateX(-50%); }
-        #target4 { top: 46%; left: 30%; }
-        #target5 { top: 46%; right: 30%; }
+        #target4 { top: 44%; left: 28%; }
+        #target5 { top: 44%; right: 28%; }
 
-        /* BOLA */
+        /* APENAS UMA BOLA NA BASE */
         .bola-penalty-3d {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            width: 34px; height: 34px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
+            width: 36px; height: 36px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
             border-radius: 50%; border: 2px solid #000; box-shadow: 0 6px 20px rgba(0,0,0,0.9);
             z-index: 15; transition: all 0.5s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
@@ -337,7 +335,7 @@
         </div>
     </div>
 
-    <!-- JOGO PENALTY SHOOT-OUT 3D PROFISSIONAL -->
+    <!-- JOGO PENALTY SHOOT-OUT 3D -->
     <div id="footballModal">
         <div class="penalty-header-top">
             <div>
@@ -347,7 +345,7 @@
             <span class="close-fullscreen" onclick="fecharPenaltyFootball()">&times;</span>
         </div>
         
-        <!-- ESTÁDIO 3D COM BALIZA E GOLEIRO VETORIAL PERFEITO -->
+        <!-- ESTÁDIO 3D COM GOLEIRO REALISTA -->
         <div class="stadium-container-3d" id="stadiumContainer">
             <div class="goal-frame"><div class="goal-net"></div></div>
 
@@ -360,31 +358,42 @@
                 <div class="mult-badge" id="m5">30.72x</div>
             </div>
 
-            <!-- GOLEIRO EM SVG LIMPO SEM FUNDOS BRANCOS -->
-            <div class="goleiro-vector" id="goleiroEl">
-                <svg viewBox="0 0 100 100" width="100%" height="100%">
-                    <circle cx="50" cy="20" r="14" fill="#f5d0b1" stroke="#222" stroke-width="2"/>
-                    <path d="M35 38 Q50 32 65 38 L72 72 Q50 80 28 72 Z" fill="#e74c3c" stroke="#ffb703" stroke-width="2.5"/>
-                    <path d="M35 42 L18 58" stroke="#e74c3c" stroke-width="8" stroke-linecap="round"/>
-                    <circle cx="14" cy="62" r="10" fill="#00ff88" stroke="#fff" stroke-width="2"/>
-                    <path d="M65 42 L82 58" stroke="#e74c3c" stroke-width="8" stroke-linecap="round"/>
-                    <circle cx="86" cy="62" r="10" fill="#00ff88" stroke="#fff" stroke-width="2"/>
-                    <rect x="36" y="72" width="12" height="24" rx="4" fill="#111"/>
-                    <rect x="52" y="72" width="12" height="24" rx="4" fill="#111"/>
+            <!-- GOLEIRO REALISTA EM 3D (ATLETA HUMANO EM SVG AVANÇADO) -->
+            <div class="goleiro-real-3d" id="goleiroEl">
+                <svg viewBox="0 0 120 130" width="100%" height="100%">
+                    <!-- Cabelo e Rosto Realista -->
+                    <circle cx="60" cy="22" r="14" fill="#e0ac69" stroke="#111" stroke-width="1.5"/>
+                    <path d="M48 14 Q60 8 72 14 Z" fill="#2c1d0c"/>
+                    <!-- Tronco / Camisa de Goleiro Esportiva -->
+                    <path d="M42 36 Q60 30 78 36 L86 80 Q60 90 34 80 Z" fill="url(#gradCamisa)" stroke="#ffb703" stroke-width="2"/>
+                    <defs>
+                        <linearGradient id="gradCamisa" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#2980b9"/>
+                            <stop offset="100%" stop-color="#1b4f72"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Braços musculosos e Luvas Profissionais -->
+                    <path d="M44 40 L20 62" stroke="#2980b9" stroke-width="9" stroke-linecap="round"/>
+                    <circle cx="15" cy="66" r="11" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                    <path d="M76 40 L100 62" stroke="#2980b9" stroke-width="9" stroke-linecap="round"/>
+                    <circle cx="105" cy="66" r="11" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                    <!-- Pernas / Calções -->
+                    <rect x="44" y="80" width="13" height="32" rx="4" fill="#111"/>
+                    <rect x="63" y="80" width="13" height="32" rx="4" fill="#111"/>
                 </svg>
             </div>
 
-            <!-- 5 ALVOS DE BOLA NOS CANTOS -->
+            <!-- 5 ALVOS DE CHUTE NOS CANTOS DA BALIZA -->
             <div class="target-spot" id="target1" onclick="chutarPenalty(1)"></div>
             <div class="target-spot" id="target2" onclick="chutarPenalty(2)"></div>
             <div class="target-spot" id="target3" onclick="chutarPenalty(3)"></div>
             <div class="target-spot" id="target4" onclick="chutarPenalty(4)"></div>
             <div class="target-spot" id="target5" onclick="chutarPenalty(5)"></div>
 
-            <!-- BOLA -->
+            <!-- APENAS UMA BOLA NA BASE -->
             <div class="bola-penalty-3d" id="bolaEl"></div>
 
-            <!-- TELA DE VITÓRIA / GOL IDÊNTICA AO SEU VÍDEO -->
+            <!-- TELA DE VITÓRIA / GOL -->
             <div class="win-display-banner" id="winBanner">
                 <div class="win-red-amount" id="winValorVermelho">R$ 20,00 virou</div>
                 <div class="win-white-text" id="winValorBranco">R$ 38,40</div>
