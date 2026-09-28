@@ -191,27 +191,6 @@
         .promo-slide p { font-size: 11px; color: #ddd; margin-bottom: 6px; }
         .btn-cadastre { background-color: #ff4500; color: white; border: none; padding: 5px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
-        .categories {
-            display: flex;
-            gap: 10px;
-            padding: 0 15px;
-            overflow-x: auto;
-            margin-bottom: 15px;
-        }
-        .category-pill {
-            background: #1e2029;
-            border: 1px solid #2a2d3d;
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: #ccc;
-            font-size: 13px;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-
         .jackpot-box {
             background: linear-gradient(135deg, #2b110a, #1a1c23);
             margin: 0 15px 15px 15px;
@@ -403,12 +382,6 @@
             </div>
         </div>
 
-        <div class="categories">
-            <div class="category-pill" onclick="alert('Funcionalidade em breve!')">🤠 Cangaço torneios</div>
-            <div class="category-pill" onclick="alert('Funcionalidade em breve!')">🌵 Cangaço missões</div>
-            <div class="category-pill" onclick="alert('Funcionalidade em breve!')">🔥 Top</div>
-        </div>
-
         <div class="jackpot-box">
             <div class="jackpot-title">🔥 JACKPOT GLOBAL</div>
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
@@ -467,9 +440,9 @@
 
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Disponíveis)</div>
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #ffb703;">⚽ Apostas Esportivas (Partidas Ativas / Futuras)</div>
             <div id="lista-partidas-api">
-                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas oficiais...</p>
+                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas válidas...</p>
             </div>
         </div>
     </div>
@@ -597,39 +570,54 @@
                 const dados = await resposta.json();
 
                 if (dados.response && dados.response.length > 0) {
-                    container.innerHTML = '';
-                    dados.response.slice(0, 10).forEach(match => {
-                        const casa = match.teams.home.name;
-                        const fora = match.teams.away.name;
-                        const liga = match.league.name;
-                        const statusHora = match.fixture.status.short === 'LIVE' ? `<span style="color: #00ff88;">● ${match.fixture.status.elapsed}'</span>` : match.fixture.date.split('T')[1].substring(0,5);
-
-                        const card = document.createElement('div');
-                        card.className = 'match-card';
-                        card.innerHTML = `
-                            <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
-                            <div class="match-teams">
-                                <span class="team-name">${casa}</span>
-                                <span class="match-vs">VS</span>
-                                <span class="team-name">${fora}</span>
-                            </div>
-                            <div class="odds-grid">
-                                <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, this)">
-                                    <span class="odd-label">1 (Casa)</span>
-                                    <span class="odd-value">1.85</span>
-                                </div>
-                                <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, this)">
-                                    <span class="odd-label">X (Empate)</span>
-                                    <span class="odd-value">3.40</span>
-                                </div>
-                                <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, this)">
-                                    <span class="odd-label">2 (Fora)</span>
-                                    <span class="odd-value">3.90</span>
-                                </div>
-                            </div>
-                        `;
-                        container.appendChild(card);
+                    // FILTRAGEM: Remove jogos encerrados (FT, AET, PEN, PST, CNO, etc.)
+                    // Mantém apenas os não iniciados (NS) ou ao vivo (1H, HT, 2H, ET, P)
+                    const statusExcluidos = ['FT', 'AET', 'PEN', 'PST', 'CANC', 'ABD', 'AWD', 'WO'];
+                    const partidasAtivas = dados.response.filter(match => {
+                        const status = match.fixture.status.short;
+                        return !statusExcluidos.includes(status);
                     });
+
+                    if (partidasAtivas.length > 0) {
+                        container.innerHTML = '';
+                        partidasAtivas.slice(0, 10).forEach(match => {
+                            const casa = match.teams.home.name;
+                            const fora = match.teams.away.name;
+                            const liga = match.league.name;
+                            const statusCurto = match.fixture.status.short;
+                            const statusHora = (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H') 
+                                ? `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>` 
+                                : match.fixture.date.split('T')[1].substring(0,5);
+
+                            const card = document.createElement('div');
+                            card.className = 'match-card';
+                            card.innerHTML = `
+                                <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
+                                <div class="match-teams">
+                                    <span class="team-name">${casa}</span>
+                                    <span class="match-vs">VS</span>
+                                    <span class="team-name">${fora}</span>
+                                </div>
+                                <div class="odds-grid">
+                                    <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, this)">
+                                        <span class="odd-label">1 (Casa)</span>
+                                        <span class="odd-value">1.85</span>
+                                    </div>
+                                    <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, this)">
+                                        <span class="odd-label">X (Empate)</span>
+                                        <span class="odd-value">3.40</span>
+                                    </div>
+                                    <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, this)">
+                                        <span class="odd-label">2 (Fora)</span>
+                                        <span class="odd-value">3.90</span>
+                                    </div>
+                                </div>
+                            `;
+                            container.appendChild(card);
+                        });
+                    } else {
+                        container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento (todas já encerraram).</p>`;
+                    }
                 } else {
                     container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Sem partidas oficiais para hoje.</p>`;
                 }
