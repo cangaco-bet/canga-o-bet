@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet - Penalty Cangaço</title>
+    <title>Cangaço Bet - Aviator & Cassino</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,6 @@
             overflow-x: hidden;
         }
 
-        /* TELA DE ABERTURA (SPLASH SCREEN COM MOVIMENTO) */
         #splashScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -89,7 +88,6 @@
             100% { transform: scale(1); }
         }
 
-        /* TELA DE CARREGAMENTO ESPECÍFICA DO PENALTY CANGAÇO */
         #penaltyLoadingScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -531,7 +529,7 @@
         }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
-        /* --- PENALTY SHOOT-OUT 3D ESTILOS --- */
+        /* --- PENALTY CANGAÇO --- */
         #penaltySectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
@@ -643,6 +641,48 @@
         .btn-input-display { background: #0f1118; border: 1px solid #00ff88; color: #00ff88; padding: 8px 10px; border-radius: 8px; font-weight: 900; font-size: 16px; width: 90px; text-align: center; }
         .btn-confirmar-aposta { width: 100%; padding: 16px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%); color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5); text-transform: uppercase; }
         .btn-confirmar-aposta:active { transform: scale(0.98); }
+
+        /* --- AVIATOR ESTILOS --- */
+        #aviatorSectionContainer {
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
+        }
+        .aviator-screen-3d {
+            position: relative; width: 100%; height: 380px;
+            background: radial-gradient(circle at 50% 50%, #201a30 0%, #0b0c10 100%);
+            border: 3px solid #ff4500; border-radius: 18px; overflow: hidden;
+            box-shadow: inset 0 0 70px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.8);
+            margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .aviator-mult-display {
+            font-size: 42px; font-weight: 950; color: #00ff88; text-shadow: 0 0 20px rgba(0,255,136,0.6);
+            letter-spacing: 2px; z-index: 10; margin-bottom: 10px;
+        }
+        .aviator-status-text {
+            font-size: 14px; font-weight: bold; color: #ffb703; z-index: 10; text-transform: uppercase;
+        }
+        .aviator-airplane {
+            position: absolute; width: 90px; height: 50px; z-index: 15;
+            transition: transform 0.1s linear; filter: drop-shadow(0 0 10px rgba(255,69,0,0.8));
+        }
+        .explosion-effect {
+            position: absolute; width: 140px; height: 140px; border-radius: 50%;
+            background: radial-gradient(circle, #ff4500 0%, #ffb703 40%, rgba(255,0,0,0) 70%);
+            z-index: 25; display: none; animation: explodeAnim 0.5s ease-out forwards;
+        }
+        @keyframes explodeAnim {
+            0% { transform: scale(0.2); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .aviator-controls-box {
+            width: 100%; background: #151821; padding: 15px; border-radius: 16px; 
+            border: 1px solid rgba(255,69,0,0.4); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+        }
+        .btn-aviator-acao {
+            width: 100%; padding: 16px; color: #000; border: none; border-radius: 50px; 
+            font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5); text-transform: uppercase;
+            transition: 0.2s;
+        }
     </style>
 </head>
 <body>
@@ -656,15 +696,14 @@
         <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
     </div>
 
-    <!-- TELA DE CARREGAMENTO DO PENALTY CANGAÇO -->
     <div id="penaltyLoadingScreen">
-        <div class="penalty-loading-title">PENALTY CANGAÇO</div>
-        <img src="https://files.catbox.moe/onqvbv.png" class="splash-banner" alt="Penalty Cangaço Capa" style="animation: float4D 3s ease-in-out infinite;">
+        <div class="penalty-loading-title" id="loadingGameTitle">PENALTY CANGAÇO</div>
+        <img src="https://files.catbox.moe/onqvbv.png" class="splash-banner" id="loadingGameImg" alt="Capa" style="animation: float4D 3s ease-in-out infinite;">
         <div class="loading-container">
             <div class="loading-bar" id="penaltyLoadingBar"></div>
         </div>
         <div class="loading-text" id="penaltyLoadingText">A CARREGAR JOGO... 0%</div>
-        <button class="btn-entrar-splash" id="btnEntrarPenalty" onclick="entrarNoPenaltyJogo()">ENTRAR NO JOGO</button>
+        <button class="btn-entrar-splash" id="btnEntrarPenalty" onclick="entrarNoJogoFinal()">ENTRAR NO JOGO</button>
     </div>
 
     <header>
@@ -683,13 +722,11 @@
         </div>
     </header>
 
-    <!-- BARRA DE PESQUISA (EXIBIDA APENAS NA TELA INICIAL) -->
     <div class="quick-search-bar" id="quickSearchBarContainer">
         <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
         <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
-    <!-- ÍCONE DE SUPORTE FLUTUANTE (EXIBIDO APENAS NA TELA INICIAL) -->
     <div class="floating-support-btn" id="floatingSupportBtn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="#0f1015">
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
@@ -704,6 +741,7 @@
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino & Jogos</div>
         <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">⚽ Penalty Cangaço</div>
+        <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">✈️ Aviator</div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Esportivas</div>
         <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
@@ -782,7 +820,7 @@
                 <img src="https://files.catbox.moe/onqvbv.png" class="game-img" alt="Penalty Cangaço">
                 <div class="game-name">Penalty Cangaço</div>
             </div>
-            <div class="game-card" onclick="jogarCassino('Aviator', 20)">
+            <div class="game-card" onclick="mudarAba('aviator')">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
@@ -890,12 +928,43 @@
                 <div class="bet-control-row">
                     <span>Valor da Aposta:</span>
                     <div class="bet-adjust-box">
-                        <button class="btn-bet-step" onclick="alterarAposta(-1)">-</button>
+                        <button class="btn-bet-step" onclick="alterarApostaPenalty(-1)">-</button>
                         <input type="text" id="penaltyBetInput" class="btn-input-display" value="20.00" readonly>
-                        <button class="btn-bet-step" onclick="alterarAposta(1)">+</button>
+                        <button class="btn-bet-step" onclick="alterarApostaPenalty(1)">+</button>
                     </div>
                 </div>
                 <button class="btn-confirmar-aposta" id="btnConfirmarAposta" onclick="iniciarNovoPenalty()">CHUTAR PÊNALTI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA AVIATOR -->
+    <div id="tab-aviator" class="main-tab-content">
+        <div id="aviatorSectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">
+                🏠 Voltar para a Tela Inicial
+            </button>
+
+            <div class="aviator-screen-3d" id="aviatorScreen">
+                <div class="explosion-effect" id="explosionEffect"></div>
+                <div class="aviator-mult-display" id="aviatorMultDisplay">1.00x</div>
+                <div class="aviator-status-text" id="aviatorStatusText">PRONTO PARA DECOLAR</div>
+                <svg class="aviator-airplane" id="aviatorPlane" viewBox="0 0 100 60" style="bottom: 40px; left: 30px;">
+                    <path d="M10 30 L90 10 L60 30 L90 50 Z" fill="#ff4500" stroke="#ffb703" stroke-width="2"/>
+                    <circle cx="50" cy="30" r="8" fill="#fff"/>
+                </svg>
+            </div>
+
+            <div class="aviator-controls-box">
+                <div class="bet-control-row">
+                    <span>Aposta Aviator:</span>
+                    <div class="bet-adjust-box">
+                        <button class="btn-bet-step" onclick="alterarApostaAviator(-1)">-</button>
+                        <input type="text" id="aviatorBetInput" class="btn-input-display" value="20.00" readonly>
+                        <button class="btn-bet-step" onclick="alterarApostaAviator(1)">+</button>
+                    </div>
+                </div>
+                <button class="btn-aviator-acao" id="btnAviatorAcao" onclick="acaoAviatorBtn()">APOSTAR</button>
             </div>
         </div>
     </div>
@@ -947,10 +1016,8 @@
         </div>
     </div>
 
-    <!-- Áudio do Penalty -->
     <audio id="penaltyAudio" src="https://files.catbox.moe/q0a2z0.mp3" preload="auto" loop></audio>
 
-    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
@@ -963,7 +1030,6 @@
         <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
     </div>
 
-    <!-- Modal 4D de Mercados -->
     <div id="matchModal" class="modal-overlay">
         <div class="modal-card-4d">
             <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
@@ -982,7 +1048,6 @@
         </div>
     </div>
 
-    <!-- Modais de Autenticação / Depósito -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card-4d" style="max-width: 380px;">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
@@ -1044,27 +1109,18 @@
         function fecharSplashScreen() {
             const splash = document.getElementById('splashScreen');
             splash.style.opacity = '0';
-            setTimeout(() => {
-                splash.style.display = 'none';
-            }, 500);
+            setTimeout(() => { splash.style.display = 'none'; }, 500);
         }
 
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
-        let apostasSelecionadas = [];
-        let partidaAtivaId = null;
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
-        
         let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
         let meusBilhetesSalvos = JSON.parse(localStorage.getItem('cangaco_bilhetes')) || [];
         let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
         let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
         
-        let listaGlobalPartidas = [];
-        let ligaFiltroAtual = 'TODAS';
-        let codigoGeradoTemp = "";
-        let dadosTempRegistro = {};
-        let intervaloAtualizacaoAoVivo = null;
+        let jogoSelecionadoAtual = 'penalty';
 
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
@@ -1087,7 +1143,6 @@
             if (usuarioLogado) {
                 document.querySelector('.btn-topo-login').innerText = usuarioLogado.nome.split(' ')[0];
                 document.querySelector('.btn-topo-login').setAttribute('onclick', 'fazerLogout()');
-                document.querySelector('.btn-topo-login').title = "Clique para sair da conta";
             }
         }
 
@@ -1107,10 +1162,7 @@
 
         function pararMusicaPenalty() {
             const audio = document.getElementById('penaltyAudio');
-            if(audio) {
-                audio.pause();
-                audio.currentTime = 0;
-            }
+            if(audio) { audio.pause(); audio.currentTime = 0; }
         }
 
         function abrirSidebar() {
@@ -1123,7 +1175,6 @@
         }
 
         function mudarAba(aba) {
-            // Controla a visibilidade da barra de pesquisa e do suporte (apenas na tela inicial 'cassino')
             const searchBar = document.getElementById('quickSearchBarContainer');
             const supportBtn = document.getElementById('floatingSupportBtn');
 
@@ -1135,16 +1186,23 @@
                 if(supportBtn) supportBtn.style.display = 'none';
             }
 
-            // Se sair da aba penalty para qualquer outra aba, a música para imediatamente
             if(aba !== 'penalty') {
                 pararMusicaPenalty();
+            }
+
+            if(aba === 'aviator' && aviatorRodando) {
+                pararAviatorPorSaida();
             }
 
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') {
                 document.getElementById('tab-cassino').classList.add('active-tab');
             } else if (aba === 'penalty') {
-                iniciarCarregamentoPenalty();
+                jogoSelecionadoAtual = 'penalty';
+                iniciarCarregamentoJogo('Penalty Cangaço', 'https://files.catbox.moe/onqvbv.png');
+            } else if (aba === 'aviator') {
+                jogoSelecionadoAtual = 'aviator';
+                iniciarCarregamentoJogo('Aviator', 'https://files.catbox.moe/f5zgx9.webp');
             } else if (aba === 'esportes') {
                 document.getElementById('tab-esportes').classList.add('active-tab');
                 carregarJogosReais();
@@ -1159,7 +1217,10 @@
             }
         }
 
-        function iniciarCarregamentoPenalty() {
+        function iniciarCarregamentoJogo(nomeJogo, imgCapa) {
+            document.getElementById('loadingGameTitle').innerText = nomeJogo;
+            document.getElementById('loadingGameImg').src = imgCapa;
+
             const penaltyLoadingScreen = document.getElementById('penaltyLoadingScreen');
             const penaltyBar = document.getElementById('penaltyLoadingBar');
             const penaltyText = document.getElementById('penaltyLoadingText');
@@ -1184,22 +1245,128 @@
             }, 30);
         }
 
-        function entrarNoPenaltyJogo() {
+        function entrarNoJogoFinal() {
             const penaltyLoadingScreen = document.getElementById('penaltyLoadingScreen');
             penaltyLoadingScreen.style.opacity = '0';
             setTimeout(() => {
                 penaltyLoadingScreen.style.display = 'none';
-                document.getElementById('tab-penalty').classList.add('active-tab');
-                
-                // Toca a música exatamente ao clicar em entrar no jogo após 100%
-                const penaltyAudio = document.getElementById('penaltyAudio');
-                if(penaltyAudio) {
-                    penaltyAudio.currentTime = 0;
-                    penaltyAudio.play().catch(e => console.log(e));
+                if (jogoSelecionadoAtual === 'penalty') {
+                    document.getElementById('tab-penalty').classList.add('active-tab');
+                    const penaltyAudio = document.getElementById('penaltyAudio');
+                    if(penaltyAudio) { penaltyAudio.currentTime = 0; penaltyAudio.play().catch(e => console.log(e)); }
+                    iniciarNovoPenalty();
+                } else if (jogoSelecionadoAtual === 'aviator') {
+                    document.getElementById('tab-aviator').classList.add('active-tab');
+                    resetarAviatorTela();
                 }
-
-                iniciarNovoPenalty();
             }, 500);
+        }
+
+        /* --- LÓGICA DO AVIATOR --- */
+        let aviatorApostando = false;
+        let aviatorRodando = false;
+        let aviatorMult = 1.00;
+        let aviatorCrashAt = 1.00;
+        let aviatorTimer = null;
+        let aviatorApostaValorAtual = 20.00;
+
+        function alterarApostaAviator(delta) {
+            if(aviatorRodando) return;
+            aviatorApostaValorAtual += (delta * 10);
+            if(aviatorApostaValorAtual < 10) aviatorApostaValorAtual = 10;
+            document.getElementById('aviatorBetInput').value = aviatorApostaValorAtual.toFixed(2);
+        }
+
+        function resetarAviatorTela() {
+            aviatorRodando = false;
+            aviatorApostando = false;
+            document.getElementById('aviatorMultDisplay').innerText = "1.00x";
+            document.getElementById('aviatorStatusText').innerText = "PRONTO PARA APOSTAR";
+            const btn = document.getElementById('btnAviatorAcao');
+            btn.innerText = "APOSTAR";
+            btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
+            btn.style.color = "#000";
+            document.getElementById('explosionEffect').style.display = 'none';
+            const plane = document.getElementById('aviatorPlane');
+            plane.style.transform = "translate(0px, 0px) rotate(0deg)";
+        }
+
+        function acaoAviatorBtn() {
+            const btn = document.getElementById('btnAviatorAcao');
+            if (!aviatorRodando && !aviatorApostando) {
+                // Iniciar Aposta e Decolar
+                if (saldo < aviatorApostaValorAtual) { alert("Saldo insuficiente!"); return; }
+                saldo -= aviatorApostaValorAtual;
+                atualizarSaldoNaTela();
+                registarTransacao('perca', 'Aposta Aviator', -aviatorApostaValorAtual);
+
+                aviatorApostando = true;
+                aviatorRodando = true;
+                aviatorMult = 1.00;
+                aviatorCrashAt = parseFloat((Math.random() * 4 + 1.20).toFixed(2)); // Ponto de explosão realista
+
+                btn.innerText = "SACAR";
+                btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
+                btn.style.color = "#fff";
+                document.getElementById('aviatorStatusText').innerText = "AVIÃO EM VOO...";
+
+                let posX = 30;
+                let posY = 40;
+
+                aviatorTimer = setInterval(() => {
+                    aviatorMult += 0.03;
+                    document.getElementById('aviatorMultDisplay').innerText = aviatorMult.toFixed(2) + "x";
+
+                    posX += 2;
+                    posY += 1.5;
+                    const plane = document.getElementById('aviatorPlane');
+                    plane.style.transform = `translate(${posX}px, -${posY}px) rotate(-25deg)`;
+
+                    if (aviatorMult >= aviatorCrashAt) {
+                        // Explodiu!
+                        clearInterval(aviatorTimer);
+                        aviatorRodando = false;
+                        aviatorApostando = false;
+
+                        document.getElementById('aviatorStatusText').innerText = "VOO ENCERRADO (EXPOLUIÇÃO)";
+                        document.getElementById('aviatorMultDisplay').innerText = aviatorCrashAt.toFixed(2) + "x 💥";
+                        
+                        // Efeito explosão
+                        const expl = document.getElementById('explosionEffect');
+                        expl.style.display = 'block';
+
+                        btn.innerText = "NOVA APOSTA";
+                        btn.style.background = "#555";
+                        btn.style.color = "#aaa";
+                        setTimeout(() => {
+                            btn.innerText = "APOSTAR";
+                            btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
+                            btn.style.color = "#000";
+                        }, 2500);
+                    }
+                }, 100);
+
+            } else if (aviatorRodando && aviatorApostando) {
+                // Sacar antes de explodir
+                clearInterval(aviatorTimer);
+                aviatorRodando = false;
+                aviatorApostando = false;
+
+                let premioGanho = aviatorApostaValorAtual * aviatorMult;
+                saldo += premioGanho;
+                atualizarSaldoNaTela();
+                registarTransacao('premio', `Prêmio Aviator (${aviatorMult.toFixed(2)}x)`, premioGanho);
+
+                document.getElementById('aviatorStatusText').innerText = `🎉 SACOU COM SUCESSO! R$ ${premioGanho.toFixed(2)}`;
+                btn.innerText = "APOSTAR NOVAMENTE";
+                btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
+                btn.style.color = "#000";
+            }
+        }
+
+        function pararAviatorPorSaida() {
+            if(aviatorTimer) clearInterval(aviatorTimer);
+            resetarAviatorTela();
         }
 
         function jogarCassino(nomeJogo, custoAposta) {
@@ -1248,29 +1415,21 @@
 
         function validarCodigoEConcluir() {
             const codigoDigitado = document.getElementById('codigoDigitado').value;
-            if (codigoDigitado !== codigoGeradoTemp) {
-                alert('❌ Código incorreto! Verifique o código enviado.');
-                return;
-            }
+            if (codigoDigitado !== codigoGeradoTemp) { alert('❌ Código incorreto!'); return; }
 
             baseDadosUtilizadores.push(dadosTempRegistro);
             usuarioLogado = dadosTempRegistro;
             salvarDadosStorage();
-            
             verificarSessaoAtiva();
             fecharModais();
-            
-            document.getElementById('etapaCadastro1').style.display = 'block';
-            document.getElementById('etapaCadastro2').style.display = 'none';
-            
-            alert(`✅ Conta verificada e criada com sucesso para ${usuarioLogado.nome}! Sessão iniciada.`);
+            alert(`✅ Conta criada com sucesso para ${usuarioLogado.nome}!`);
         }
 
         function realizarLogin() {
             const emailInput = document.getElementById('loginEmail').value.trim();
             const senhaInput = document.getElementById('loginSenha').value.trim();
 
-            if (!emailInput || !senhaInput) { alert("Preencha o E-mail e a Senha!"); return; }
+            if (!emailInput || !senhaInput) { alert("Preencha os campos!"); return; }
 
             let utilizadorEncontrado = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
 
@@ -1279,9 +1438,9 @@
                 salvarDadosStorage();
                 verificarSessaoAtiva();
                 fecharModais();
-                alert(`✅ Bem-vindo de volta, ${usuarioLogado.nome}! Login efetuado com sucesso.`);
+                alert(`✅ Bem-vindo de volta, ${usuarioLogado.nome}!`);
             } else {
-                alert("❌ Senha ou utilizador incorreto! Verifique os dados ou utilize o Suporte para recuperar a conta.");
+                alert("❌ Senha ou utilizador incorreto!");
             }
         }
 
@@ -1298,8 +1457,8 @@
         function enviarMensagemSuporte() {
             const assunto = document.getElementById('suporteAssunto').value;
             const msg = document.getElementById('suporteMensagem').value;
-            if (!assunto || !msg) { alert("Preencha o assunto e a mensagem para o suporte."); return; }
-            alert("✅ Mensagem enviada com sucesso ao suporte! Um atendente responderá em breve via E-mail ou WhatsApp.");
+            if (!assunto || !msg) { alert("Preencha os campos de suporte."); return; }
+            alert("✅ Mensagem enviada com sucesso ao suporte!");
             document.getElementById('suporteAssunto').value = "";
             document.getElementById('suporteMensagem').value = "";
         }
@@ -1312,7 +1471,7 @@
 
             const itens = [
                 { nome: '🏆 Penalty Cangaço', tipo: 'penalty' },
-                { nome: '🎰 Cassino: Aviator', tipo: 'cassino' },
+                { nome: '✈️ Aviator', tipo: 'aviator' },
                 { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
                 { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' },
                 { nome: '📜 Histórico / Extrato', tipo: 'extrato' },
@@ -1334,7 +1493,7 @@
         let jogadaEmAndamento = false;
         const multiplicadores = [1.92, 3.84, 7.68, 15.36, 30.72];
 
-        function alterarAposta(delta) {
+        function alterarApostaPenalty(delta) {
             if(jogadaEmAndamento) return;
             let input = document.getElementById('penaltyBetInput');
             let val = parseFloat(input.value) + (delta * 10);
@@ -1358,9 +1517,6 @@
             document.getElementById('bolaEl').style.transform = 'translateX(-50%) scale(1)';
             document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0) rotate(0deg)';
             
-            document.getElementById('gk-arm-left').style.transform = 'rotate(60deg)';
-            document.getElementById('gk-arm-right').style.transform = 'rotate(-60deg)';
-            
             atualizarMultiplicadoresUI();
             mostrarAlvos(true);
             
@@ -1368,7 +1524,6 @@
             btn.innerText = "ESCOLHA O ALVO";
             btn.style.background = "#555";
             btn.style.color = "#aaa";
-            btn.style.boxShadow = "none";
         }
 
         function atualizarMultiplicadoresUI() {
@@ -1389,7 +1544,6 @@
             mostrarAlvos(false);
             let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
 
-            // Garante que a música continua tocando ao chutar o pênalti
             const penaltyAudio = document.getElementById('penaltyAudio');
             if(penaltyAudio && penaltyAudio.paused) {
                 penaltyAudio.play().catch(e => console.log(e));
@@ -1397,14 +1551,7 @@
 
             let bola = document.getElementById('bolaEl');
             let goleiro = document.getElementById('goleiroEl');
-            let armL = document.getElementById('gk-arm-left');
-            let armR = document.getElementById('gk-arm-right');
-
-            let goleiroPulaMesmoCanto = Math.random() < 0.70;
-            let cantoGoleiro = goleiroPulaMesmoCanto ? cantoEscolhido : (Math.floor(Math.random() * 5) + 1);
-            if (cantoGoleiro === cantoEscolhido && !goleiroPulaMesmoCanto) {
-                cantoGoleiro = cantoEscolhido === 1 ? 2 : 1;
-            }
+            let cantoGoleiro = Math.random() < 0.70 ? cantoEscolhido : (Math.floor(Math.random() * 5) + 1);
 
             let bolaMovimentos = {
                 1: 'translate(calc(-50% - 115px), -250px) scale(0.4)',
@@ -1426,17 +1573,6 @@
                 bola.style.transform = bolaMovimentos[cantoEscolhido];
                 goleiro.style.transform = goleiroMovimentos[cantoGoleiro];
 
-                if (cantoGoleiro === 1 || cantoGoleiro === 4) {
-                    armL.style.transform = 'rotate(-20deg)';
-                    armR.style.transform = 'rotate(-80deg)';
-                } else if (cantoGoleiro === 2 || cantoGoleiro === 5) {
-                    armR.style.transform = 'rotate(20deg)';
-                    armL.style.transform = 'rotate(80deg)';
-                } else {
-                    armL.style.transform = 'rotate(-80deg)';
-                    armR.style.transform = 'rotate(80deg)';
-                }
-
                 setTimeout(() => {
                     let foiGol = (cantoGoleiro !== cantoEscolhido);
                     let banner = document.getElementById('winBanner');
@@ -1455,7 +1591,6 @@
                         let btn = document.getElementById('btnConfirmarAposta');
                         btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
                         btn.style.color = "#000";
-                        btn.style.boxShadow = "0 6px 20px rgba(0, 255, 136, 0.5)";
 
                         if (nivelAtual >= 5) {
                             saldo += premioTotal; atualizarSaldoNaTela();
@@ -1478,7 +1613,6 @@
                         let btn = document.getElementById('btnConfirmarAposta');
                         btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
                         btn.style.color = "#fff";
-                        btn.style.boxShadow = "0 6px 20px rgba(255, 69, 0, 0.5)";
                         btn.innerText = "NOVO PÊNALTI";
                         
                         registarTransacao('perca', 'Aposta Penalty Cangaço (Defesa)', -apostaVal);
@@ -1489,77 +1623,30 @@
             }, 50);
         }
 
-        /* --- API DE FUTEBOL PARA APOSTAS ESPORTIVAS --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo da API...</p>`;
-            listaGlobalPartidas = [];
-
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
                     headers: { "x-apisports-key": apiKey }
                 });
                 const dados = await resposta.json();
-
                 if (dados.response && dados.response.length > 0) {
-                    const statusAoVivo = ['LIVE', '1H', '2H', 'HT', 'ET', 'P'];
-                    dados.response.filter(m => statusAoVivo.includes(m.fixture.status.short)).forEach((match, index) => {
-                        const odds = gerarOddsReais(match.teams.home.name, match.teams.away.name);
-                        listaGlobalPartidas.push({
-                            id: `api1-${index}`,
-                            casa: match.teams.home.name,
-                            fora: match.teams.away.name,
-                            logoCasa: match.teams.home.logo,
-                            logoFora: match.teams.away.logo,
-                            liga: match.league.name,
-                            bandeiraLiga: match.league.flag || '',
-                            golsCasa: match.goals.home !== null ? match.goals.home : 0,
-                            golsFora: match.goals.away !== null ? match.goals.away : 0,
-                            minuto: match.fixture.status.elapsed || Math.floor(Math.random() * 75) + 10,
-                            segundo: Math.floor(Math.random() * 59),
-                            isAoVivo: true,
-                            odds: odds
-                        });
+                    container.innerHTML = '';
+                    dados.response.slice(0, 5).forEach((match) => {
+                        container.innerHTML += `
+                            <div class="match-card">
+                                <div class="match-header"><span>🔴 ${match.league.name}</span></div>
+                                <div class="match-teams">
+                                    <span class="team-name">${match.teams.home.name}</span>
+                                    <div class="match-score-vs"><span class="match-real-score">${match.goals.home ?? 0} - ${match.goals.away ?? 0}</span></div>
+                                    <span class="team-name">${match.teams.away.name}</span>
+                                </div>
+                            </div>`;
                     });
                 }
-            } catch (e) { console.log("Erro API Ao Vivo"); }
-
-            renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-        }
-
-        function gerarOddsReais(casa, fora) {
-            let seed = (casa.length + fora.length) * 7;
-            return {
-                casa: (1.45 + (seed % 17) / 10).toFixed(2),
-                empate: (3.20 + ((seed * 3) % 13) / 10).toFixed(2),
-                fora: (2.05 + ((seed * 5) % 23) / 10).toFixed(2)
-            };
-        }
-
-        function renderizarPartidasAoVivoNaTela(partidas) {
-            const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = '';
-            if (partidas.length === 0) {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ao vivo no momento.</p>`;
-                return;
-            }
-            partidas.forEach(match => {
-                const card = document.createElement('div');
-                card.className = 'match-card';
-                card.innerHTML = `
-                    <div class="match-header"><span>🔴 ${match.liga}</span></div>
-                    <div class="match-teams">
-                        <span class="team-name"><img src="${match.logoCasa}" alt=""> ${match.casa}</span>
-                        <div class="match-score-vs">
-                            <span class="match-vs-text">AO VIVO</span>
-                            <span class="match-real-score">${match.golsCasa} - ${match.golsFora}</span>
-                        </div>
-                        <span class="team-name"><img src="${match.logoFora}" alt=""> ${match.fora}</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+            } catch (e) { container.innerHTML = `<p style="color: #aaa; text-align: center;">Nenhuma partida ao vivo no momento.</p>`; }
         }
 
         function renderizarBilhetesNaTela() {
@@ -1586,7 +1673,7 @@
         function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
         function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-        function fecharBilhete() { document.getElementById('betSlip').style.display = 'none'; apostasSelecionadas = []; }
+        function fecharBilhete() { document.getElementById('betSlip').style.display = 'none'; }
 
         const scrollContainer = document.getElementById('winnersScroll');
         setInterval(() => {
