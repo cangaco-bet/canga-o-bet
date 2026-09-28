@@ -470,8 +470,8 @@
         .modal-subtitle-4d { font-size: 11px; color: #00ff88; font-weight: bold; margin-bottom: 15px; }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
-        /* TIGRE 4D ANIMADO EM CSS (SEM IMAGEM ESTÁTICA) */
-        .tiger-wrapper-4d {
+        /* TIGRE 3D DINÂMICO ESTILO DO VÍDEO OFICIAL */
+        .tiger-wrapper-3d {
             position: relative;
             margin-top: 5px;
             margin-bottom: -10px;
@@ -479,48 +479,60 @@
             display: flex;
             justify-content: center;
         }
-        .tiger-avatar-4d-css {
-            width: 85px;
-            height: 85px;
-            background: radial-gradient(circle, #ff9900 0%, #cc5500 70%, #882200 100%);
+        .tiger-avatar-3d-real {
+            width: 95px;
+            height: 95px;
+            background: radial-gradient(circle, #ffaa00 0%, #d35400 70%, #934300 100%);
             border-radius: 50%;
             border: 3px solid #ffb703;
-            box-shadow: 0 0 25px rgba(255, 183, 3, 0.9), 0 10px 20px rgba(0,0,0,0.8);
+            box-shadow: 0 0 30px rgba(255, 183, 3, 0.95), 0 12px 25px rgba(0,0,0,0.85);
             position: relative;
-            animation: tigerAnim4D 2s ease-in-out infinite;
+            animation: tigreBalançoReal 2.2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        @keyframes tigerAnim4D {
+        @keyframes tigreBalançoReal {
             0% { transform: translateY(0px) rotate(-3deg) scale(1); filter: brightness(1); }
-            50% { transform: translateY(-8px) rotate(3deg) scale(1.05); filter: brightness(1.15) drop-shadow(0 15px 25px rgba(255,69,0,0.8)); }
+            50% { transform: translateY(-10px) rotate(3deg) scale(1.08); filter: brightness(1.2) drop-shadow(0 18px 28px rgba(255,69,0,0.9)); }
             100% { transform: translateY(0px) rotate(-3deg) scale(1); filter: brightness(1); }
         }
-        /* Orelhas e rosto do tigre em CSS 4D */
-        .tiger-ear-left, .tiger-ear-right {
-            position: absolute; top: -8px; width: 22px; height: 25px;
-            background: #cc5500; border: 2px solid #ffb703; border-radius: 50% 50% 20% 20%;
+        /* Óculos de sol estilizados do Tigre Oficial */
+        .tigre-oculos {
+            position: absolute;
+            top: 34px;
+            width: 50px;
+            height: 18px;
+            background: #111;
+            border-radius: 4px;
+            border: 2px solid #ffb703;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px;
+            animation: olharOculos 3s ease-in-out infinite;
         }
-        .tiger-ear-left { left: 10px; transform: rotate(-15deg); }
-        .tiger-ear-right { right: 10px; transform: rotate(15deg); }
-        
-        .tiger-eyes {
-            position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 16px;
+        .tigre-oculos::before, .tigre-oculos::after {
+            content: '';
+            width: 18px;
+            height: 12px;
+            background: #222;
+            border-radius: 2px;
+            box-shadow: inset 0 0 4px #ffb703;
         }
-        .tiger-eye {
-            width: 10px; height: 14px; background: #fff; border-radius: 50%;
-            position: relative; animation: piscarTiger 4s infinite;
+        @keyframes olharOculos {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
         }
-        .tiger-eye::after {
-            content: ''; position: absolute; bottom: 2px; left: 2px; width: 6px; height: 8px;
-            background: #000; border-radius: 50%;
+        .tigre-orelha-esq, .tigre-orelha-dir {
+            position: absolute; top: -10px; width: 26px; height: 28px;
+            background: #d35400; border: 2px solid #ffb703; border-radius: 50% 50% 20% 20%;
         }
-        @keyframes piscarTiger {
-            0%, 90%, 100% { transform: scaleY(1); }
-            95% { transform: scaleY(0.1); }
-        }
-        .tiger-nose {
-            position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
-            width: 12px; height: 8px; background: #331100; border-radius: 40%;
+        .tigre-orelha-esq { left: 12px; transform: rotate(-20deg); }
+        .tigre-orelha-dir { right: 12px; transform: rotate(20deg); }
+        .tigre-focinho {
+            position: absolute; bottom: 22px; width: 16px; height: 10px;
+            background: #331100; border-radius: 50%;
         }
 
         .slot-machine-container {
@@ -658,7 +670,7 @@
     </div>
 
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
-    <!-- ÁUDIO CLÁSSICO DO FORTUNE TIGER PARA OS GIROS -->
+    <!-- MÚSICA CLÁSSICA DO FORTUNE TIGER -->
     <audio id="tigerAudioPlayer" src="https://files.catbox.moe/xz8qbc.mp3" preload="auto" loop></audio>
 
     <header>
@@ -844,16 +856,13 @@
             <div class="modal-title-4d">🐯 Fortune Tiger 4D</div>
             <div class="modal-subtitle-4d" id="tigerModoSub">Modo Normal (Valendo Saldo)</div>
             
-            <!-- TIGRE 4D ANIMADO EM CSS (SE MEXENDO DE VERDADE) -->
-            <div class="tiger-wrapper-4d">
-                <div class="tiger-avatar-4d-css">
-                    <div class="tiger-ear-left"></div>
-                    <div class="tiger-ear-right"></div>
-                    <div class="tiger-eyes">
-                        <div class="tiger-eye"></div>
-                        <div class="tiger-eye"></div>
-                    </div>
-                    <div class="tiger-nose"></div>
+            <!-- TIGRE 3D DINÂMICO IDÊNTICO AO VÍDEO OFICIAL -->
+            <div class="tiger-wrapper-3d">
+                <div class="tiger-avatar-3d-real">
+                    <div class="tigre-orelha-esq"></div>
+                    <div class="tigre-orelha-dir"></div>
+                    <div class="tigre-oculos"></div>
+                    <div class="tigre-focinho"></div>
                 </div>
             </div>
 
@@ -892,7 +901,7 @@
                         </label>
                     </div>
 
-                    <!-- BOTÃO REDONDO ESTILO FORTUNE TIGER REAL COM ÍCONE DE GIRO -->
+                    <!-- BOTÃO REDONDO ESTILO FORTUNE TIGER OFICIAL COM SETAS -->
                     <div class="btn-spin-redondo" id="btnSpinTiger" onclick="clicarGirarOuParar()" title="Girar">
                         <svg viewBox="0 0 24 24">
                             <path d="M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.4 13.3,20 11,19.8V17.8C12.8,18 14.7,17.4 16.1,16C18.4,13.7 18.4,10 16.1,7.7C15,6.6 13.5,6 12,6V9L8,5L12,1V4M6.4,7.8C4.1,10.1 4.1,13.8 6.4,16.1C7.5,17.2 9,17.8 10.5,17.8V19.8C8.2,20 5.7,19.4 3.9,17.6C0.8,14.5 0.8,9.4 3.9,6.3C5.3,4.9 7.3,4.2 9.2,4V6C7.9,6.2 6.6,6.8 5.6,7.8L6.4,7.8Z"/>
