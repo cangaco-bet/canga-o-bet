@@ -136,7 +136,7 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* --- PENALTY SHOOT-OUT 3D IDÊNTICO AO ORIGINAL --- */
+        /* --- PENALTY SHOOT-OUT 3D PROFISSIONAL IDÊNTICO AO ORIGINAL --- */
         #footballModal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: radial-gradient(circle, #092015 0%, #020804 100%);
@@ -160,7 +160,7 @@
         }
         .goal-frame {
             position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
-            width: 78%; height: 140px; border: 6px solid #ffffff; border-bottom: none;
+            width: 82%; height: 150px; border: 6px solid #ffffff; border-bottom: none;
             border-radius: 10px 10px 0 0; box-shadow: 0 0 25px rgba(255,255,255,0.7);
         }
         .goal-net {
@@ -180,29 +180,29 @@
         }
         .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); }
 
-        /* GOLEIRO REALISTA EM 3D (ATLETA HUMANO DETALHADO EM VETOR AVANÇADO) */
+        /* GOLEIRO 3D REALISTA HUMANO (COM SOMBRA E PROFUNDIDADE) */
         .goleiro-real-3d {
-            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
-            width: 90px; height: 110px; z-index: 10;
+            position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
+            width: 95px; height: 115px; z-index: 10;
             transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
-            filter: drop-shadow(0 6px 15px rgba(0,0,0,0.9));
+            filter: drop-shadow(0 8px 18px rgba(0,0,0,0.95));
         }
 
-        /* ALVOS DE CHUTE (APENAS MARCAÇÕES NOS CANTOS DA BALIZA) */
+        /* 5 ALVOS DE MIRA NOS CANTOS DA BALIZA */
         .target-spot {
-            position: absolute; width: 38px; height: 38px; background: rgba(255, 255, 255, 0.15);
+            position: absolute; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.15);
             border: 2px dashed #00ff88; border-radius: 50%; z-index: 20; cursor: pointer;
-            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 12px #00ff88;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px #00ff88;
             animation: pulseTarget 1.2s infinite alternate;
         }
-        .target-spot::after { content: '🎯'; font-size: 16px; }
+        .target-spot::after { content: '🎯'; font-size: 18px; }
         @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.18); opacity: 1; } }
 
-        #target1 { top: 32%; left: 16%; }
-        #target2 { top: 32%; right: 16%; }
-        #target3 { top: 58%; left: 50%; transform: translateX(-50%); }
-        #target4 { top: 44%; left: 28%; }
-        #target5 { top: 44%; right: 28%; }
+        #target1 { top: 32%; left: 14%; }
+        #target2 { top: 32%; right: 14%; }
+        #target3 { top: 62%; left: 50%; transform: translateX(-50%); }
+        #target4 { top: 46%; left: 28%; }
+        #target5 { top: 46%; right: 28%; }
 
         /* APENAS UMA BOLA NA BASE */
         .bola-penalty-3d {
@@ -212,9 +212,9 @@
             z-index: 15; transition: all 0.5s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
-        /* TELA DE VITÓRIA / GOL */
+        /* TELA DE GOL / DEFESA */
         .win-display-banner {
-            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
             z-index: 30; display: none; text-align: center; width: 100%; pointer-events: none;
         }
         .win-red-amount {
@@ -345,7 +345,7 @@
             <span class="close-fullscreen" onclick="fecharPenaltyFootball()">&times;</span>
         </div>
         
-        <!-- ESTÁDIO 3D COM GOLEIRO REALISTA -->
+        <!-- ESTÁDIO 3D COM GOLEIRO REALISTA 3D -->
         <div class="stadium-container-3d" id="stadiumContainer">
             <div class="goal-frame"><div class="goal-net"></div></div>
 
@@ -358,32 +358,33 @@
                 <div class="mult-badge" id="m5">30.72x</div>
             </div>
 
-            <!-- GOLEIRO REALISTA EM 3D (ATLETA HUMANO EM SVG AVANÇADO) -->
+            <!-- GOLEIRO REALISTA EM 3D (ATLETA HUMANO EM VETOR AVANÇADO) -->
             <div class="goleiro-real-3d" id="goleiroEl">
-                <svg viewBox="0 0 120 130" width="100%" height="100%">
-                    <!-- Cabelo e Rosto Realista -->
-                    <circle cx="60" cy="22" r="14" fill="#e0ac69" stroke="#111" stroke-width="1.5"/>
-                    <path d="M48 14 Q60 8 72 14 Z" fill="#2c1d0c"/>
-                    <!-- Tronco / Camisa de Goleiro Esportiva -->
-                    <path d="M42 36 Q60 30 78 36 L86 80 Q60 90 34 80 Z" fill="url(#gradCamisa)" stroke="#ffb703" stroke-width="2"/>
+                <svg viewBox="0 0 120 140" width="100%" height="100%">
+                    <!-- Cabeça e Rosto Estilizado 3D -->
+                    <circle cx="60" cy="24" r="15" fill="#e0ac69" stroke="#111" stroke-width="1.5"/>
+                    <path d="M46 16 Q60 10 74 16 Z" fill="#2c1d0c"/>
+                    <!-- Tronco / Camisa Esportiva 3D -->
+                    <path d="M40 38 Q60 32 80 38 L88 85 Q60 95 32 85 Z" fill="url(#gradCamisa3D)" stroke="#ffb703" stroke-width="2"/>
                     <defs>
-                        <linearGradient id="gradCamisa" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="gradCamisa3D" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#2980b9"/>
-                            <stop offset="100%" stop-color="#1b4f72"/>
+                            <stop offset="50%" stop-color="#1b4f72"/>
+                            <stop offset="100%" stop-color="#154360"/>
                         </linearGradient>
                     </defs>
-                    <!-- Braços musculosos e Luvas Profissionais -->
-                    <path d="M44 40 L20 62" stroke="#2980b9" stroke-width="9" stroke-linecap="round"/>
-                    <circle cx="15" cy="66" r="11" fill="#00ff88" stroke="#fff" stroke-width="2"/>
-                    <path d="M76 40 L100 62" stroke="#2980b9" stroke-width="9" stroke-linecap="round"/>
-                    <circle cx="105" cy="66" r="11" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                    <!-- Braços e Luvas Profissionais de Goleiro -->
+                    <path d="M42 42 L16 68" stroke="#2980b9" stroke-width="10" stroke-linecap="round"/>
+                    <circle cx="12" cy="72" r="12" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                    <path d="M78 42 L104 68" stroke="#2980b9" stroke-width="10" stroke-linecap="round"/>
+                    <circle cx="108" cy="72" r="12" fill="#00ff88" stroke="#fff" stroke-width="2"/>
                     <!-- Pernas / Calções -->
-                    <rect x="44" y="80" width="13" height="32" rx="4" fill="#111"/>
-                    <rect x="63" y="80" width="13" height="32" rx="4" fill="#111"/>
+                    <rect x="43" y="85" width="14" height="36" rx="4" fill="#111"/>
+                    <rect x="63" y="85" width="14" height="36" rx="4" fill="#111"/>
                 </svg>
             </div>
 
-            <!-- 5 ALVOS DE CHUTE NOS CANTOS DA BALIZA -->
+            <!-- 5 ALVOS DE MIRA NOS CANTOS DA BALIZA -->
             <div class="target-spot" id="target1" onclick="chutarPenalty(1)"></div>
             <div class="target-spot" id="target2" onclick="chutarPenalty(2)"></div>
             <div class="target-spot" id="target3" onclick="chutarPenalty(3)"></div>
