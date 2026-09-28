@@ -324,6 +324,184 @@
         .nav-item.active {
             color: #ff4500;
         }
+
+        /* TELA DO TIGRINHO INTEGRADA */
+        #tiger-game-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #3b0000;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+        }
+        .slot-container {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: linear-gradient(180deg, #600202 0%, #3b0000 60%, #1a0000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            border-left: 2px solid #ffcc00;
+            border-right: 2px solid #ffcc00;
+        }
+        .top-bar-game {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            font-size: 12px;
+            color: #ffcc00;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .tiger-header {
+            text-align: center;
+            position: relative;
+            margin-top: 5px;
+        }
+        .multiplier-badge {
+            display: inline-block;
+            background: #ffcc00;
+            color: #8b0000;
+            font-weight: 900;
+            font-size: 18px;
+            padding: 3px 16px;
+            border-radius: 20px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+        .tiger-icon-box {
+            font-size: 32px;
+            margin-top: -10px;
+            position: relative;
+            z-index: 1;
+        }
+        .machine-frame {
+            background: #7a0505;
+            margin: 0 12px;
+            padding: 12px;
+            border-radius: 14px;
+            border: 3px solid #ffcc00;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
+        }
+        .tiger-reels {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .reel {
+            font-size: 38px;
+            background: #fcfcfc;
+            width: 90px;
+            height: 98px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
+        }
+        @keyframes tremer {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(-4px); }
+            50% { transform: translateY(4px); }
+            75% { transform: translateY(-2px); }
+            100% { transform: translateY(0); }
+        }
+        .girando {
+            animation: tremer 0.12s infinite;
+        }
+        .game-message {
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 1px 1px 2px #000;
+            min-height: 25px;
+            margin: 2px 0;
+        }
+        .bottom-panel {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px 15px;
+            border-top: 2px solid #ffcc00;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            background: #2b0000;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #ffcc00;
+            font-size: 11px;
+        }
+        .stat-box span {
+            display: block;
+            font-size: 9px;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+        .stat-box strong {
+            color: #00ff88;
+            font-size: 12px;
+        }
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .btn-side {
+            background: #7a0505;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            padding: 8px 10px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 9px;
+            cursor: pointer;
+        }
+        .btn-girar-tiger {
+            background: radial-gradient(circle, #00ff88 0%, #008844 100%);
+            color: white;
+            border: 4px solid #ffcc00;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .btn-voltar-home {
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            background: #2a2d3d;
+            color: white;
+            border: 1px solid #ffcc00;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 50;
+        }
     </style>
 </head>
 <body>
@@ -440,7 +618,7 @@
         </div>
 
         <div class="games-grid" id="gamesGrid">
-            <div class="game-card" data-name="fortune tiger" onclick="pararMusicaEEntrar('Fortune Tiger')">
+            <div class="game-card" data-name="fortune tiger" onclick="entrarFortuneTiger()">
                 <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
                 <div class="game-name">Fortune Tiger</div>
             </div>
@@ -480,6 +658,58 @@
             <a class="nav-item" onclick="alert('Transmissões Ao Vivo em breve!')">📺<br>Ao Vivo</a>
             <a class="nav-item" onclick="abrirModalPesquisa()">🔍<br>Pesquisar</a>
         </nav>
+    </div>
+
+    <!-- TELA DO JOGO FORTUNE TIGER INTEGRADA -->
+    <div id="tiger-game-screen">
+        <button class="btn-voltar-home" onclick="sairFortuneTiger()">← Voltar</button>
+
+        <div class="slot-container">
+            <div class="top-bar-game">
+                <span>Fortune Tiger</span>
+                <span id="relogioJogo">01:31:49</span>
+            </div>
+
+            <div class="tiger-header">
+                <div class="multiplier-badge">x10</div>
+                <div class="tiger-icon-box">🐅</div>
+            </div>
+
+            <div class="machine-frame">
+                <div class="tiger-reels">
+                    <div class="reel" id="reel1">💰</div>
+                    <div class="reel" id="reel2">🍊</div>
+                    <div class="reel" id="reel3">🍋</div>
+                </div>
+            </div>
+
+            <div class="game-message" id="gameStatus">Tente novamente!</div>
+
+            <div class="bottom-panel">
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <span>Saldo</span>
+                        <strong id="saldoJogo">R$ 97,00</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span>Aposta</span>
+                        <strong style="color: #ffcc00;">R$ 2,00</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span>Ganho</span>
+                        <strong id="ganhoJogo" style="color: #00ff88;">R$ 0,00</strong>
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <button class="btn-side">⚡<br>TURBO</button>
+                    <button class="btn-girar-tiger" onclick="girarTiger(event)">
+                        🐯<span style="font-size: 9px;">GIRAR</span>
+                    </button>
+                    <button class="btn-side">🔄<br>AUTO</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="searchModal" class="modal-overlay">
@@ -564,6 +794,84 @@
             alert('A entrar em ' + nomeJogo + '...');
         }
 
+        // Funções específicas do Mini-Jogo do Tigrinho
+        function entrarFortuneTiger() {
+            audio.pause();
+            audio.currentTime = 0;
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('tiger-game-screen').style.display = 'flex';
+        }
+
+        function sairFortuneTiger() {
+            document.getElementById('tiger-game-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        let saldo = 97.00;
+
+        function atualizarUI() {
+            document.getElementById('saldoJogo').innerText = 'R$ ' + saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        }
+
+        function girarTiger(event) {
+            event.stopPropagation();
+
+            if (saldo < 2.00) {
+                alert('Saldo insuficiente!');
+                return;
+            }
+
+            saldo -= 2.00;
+            atualizarUI();
+
+            const r1 = document.getElementById('reel1');
+            const r2 = document.getElementById('reel2');
+            const r3 = document.getElementById('reel3');
+            const status = document.getElementById('gameStatus');
+            const ganhoEl = document.getElementById('ganhoJogo');
+
+            status.innerText = "Girando...";
+            ganhoEl.innerText = "R$ 0,00";
+
+            r1.classList.add('girando');
+            r2.classList.add('girando');
+            r3.classList.add('girando');
+
+            setTimeout(() => {
+                r1.classList.remove('girando');
+                r2.classList.remove('girando');
+                r3.classList.remove('girando');
+
+                const simbolos = ["💰", "🍊", "🍋", "🧧", "⭐"];
+                let chance = Math.random();
+
+                if (chance < 0.75) {
+                    r1.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    r2.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    r3.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    status.innerText = "Tente novamente!";
+                } else {
+                    r1.innerText = "💰";
+                    r2.innerText = "💰";
+                    r3.innerText = "💰";
+                    let premio = 10.00;
+                    saldo += premio;
+                    ganhoEl.innerText = "R$ " + premio.toFixed(2);
+                    status.innerText = "Funcionalidade Tigre da Sorte!";
+                }
+                atualizarUI();
+            }, 900);
+        }
+
+        // Relógio do jogo do Tigre
+        setInterval(() => {
+            const agora = new Date();
+            const relogioEl = document.getElementById('relogioJogo');
+            if (relogioEl) {
+                relogioEl.innerText = agora.toTimeString().split(' ')[0];
+            }
+        }, 1000);
+
         // Filtro de Pesquisa de Jogos em tempo real
         function filtrarJogos() {
             const termo = document.getElementById('searchInput').value.toLowerCase();
@@ -592,7 +900,11 @@
                     item.innerHTML = `🎰 ${j.nome}`;
                     item.onclick = () => {
                         fecharModais();
-                        pararMusicaEEntrar(j.nome);
+                        if (j.nome === 'Fortune Tiger') {
+                            entrarFortuneTiger();
+                        } else {
+                            pararMusicaEEntrar(j.nome);
+                        }
                     };
                     resultBox.appendChild(item);
                 });
