@@ -136,7 +136,7 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* --- JOGO PENALTY SHOOT-OUT 3D LIMPO E PROFISSIONAL --- */
+        /* --- PENALTY SHOOT-OUT 3D PROFISSIONAL SEM IMAGENS QUEBRADAS --- */
         #footballModal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: radial-gradient(circle, #092015 0%, #020804 100%);
@@ -153,14 +153,20 @@
         /* ESTÁDIO 3D */
         .stadium-container-3d {
             position: relative; width: 100%; max-width: 480px; flex-grow: 1;
-            background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=80') center/cover no-repeat;
+            background: linear-gradient(180deg, #1b5e3b 0%, #082012 100%);
             border: 3px solid #ffb703; border-radius: 18px; overflow: hidden;
-            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 10px 30px rgba(0,255,136,0.4);
-            margin: 6px 0; cursor: crosshair; touch-action: none;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9), 0 10px 30px rgba(0,255,136,0.4);
+            margin: 6px 0; cursor: crosshair; touch-action: none; display: flex; justify-content: center; align-items: center;
         }
-        .stadium-overlay-dark {
+        .goal-frame {
+            position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
+            width: 78%; height: 140px; border: 6px solid #ffffff; border-bottom: none;
+            border-radius: 10px 10px 0 0; box-shadow: 0 0 25px rgba(255,255,255,0.7);
+        }
+        .goal-net {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 15, 8, 0.4); z-index: 1;
+            background: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.15) 10px, rgba(255,255,255,0.15) 12px),
+                        repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.15) 10px, rgba(255,255,255,0.15) 12px);
         }
 
         /* MULTIPLICADORES NO TOPO */
@@ -174,50 +180,51 @@
         }
         .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); }
 
-        /* ALVOS DE BOLA NOS CANTOS DA BALIZA */
+        /* GOLEIRO VETORIZADO PROFISSIONAL (SEM ERROS DE IMAGEM) */
+        .goleiro-vector {
+            position: absolute; top: 35px; left: 50%; transform: translateX(-50%);
+            width: 85px; height: 95px; z-index: 10;
+            transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+            filter: drop-shadow(0 5px 12px rgba(0,0,0,0.8));
+        }
+
+        /* ALVOS DE BOLA IDÊNTICOS AO PRINT */
         .target-spot {
-            position: absolute; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.25);
-            border: 2px dashed #ffb703; border-radius: 50%; z-index: 20; cursor: pointer;
+            position: absolute; width: 44px; height: 44px; background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #ffb703; border-radius: 50%; z-index: 20; cursor: pointer;
             display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px #ffb703;
             animation: pulseTarget 1.2s infinite alternate;
         }
-        .target-spot img { width: 28px; height: 28px; object-fit: contain; }
-        @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; } }
-
-        #target1 { top: 32%; left: 15%; }
-        #target2 { top: 32%; right: 15%; }
-        #target3 { top: 52%; left: 45%; transform: translateX(-50%); }
-        #target4 { top: 42%; left: 28%; }
-        #target5 { top: 42%; right: 28%; }
-
-        /* GOLEIRO 3D PROFISSIONAL SEM MOLDURA NEM FUNDO BRANCO */
-        .goleiro-3d-img {
-            position: absolute; top: 24%; left: 50%; transform: translateX(-50%);
-            width: 120px; height: 140px; object-fit: contain; z-index: 10;
-            background: transparent; border: none; outline: none; box-shadow: none;
-            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.95));
-            transition: all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+        .target-spot::after {
+            content: '⚽'; font-size: 20px;
         }
+        @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.85; } 100% { transform: scale(1.12); opacity: 1; } }
+
+        #target1 { top: 35%; left: 18%; }
+        #target2 { top: 35%; right: 18%; }
+        #target3 { top: 58%; left: 50%; transform: translateX(-50%); }
+        #target4 { top: 46%; left: 30%; }
+        #target5 { top: 46%; right: 30%; }
 
         /* BOLA */
         .bola-penalty-3d {
-            position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%);
-            width: 36px; height: 36px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 34px; height: 34px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
             border-radius: 50%; border: 2px solid #000; box-shadow: 0 6px 20px rgba(0,0,0,0.9);
             z-index: 15; transition: all 0.5s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
         /* TELA DE VITÓRIA / GOL */
         .win-display-banner {
-            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
             z-index: 30; display: none; text-align: center; width: 100%; pointer-events: none;
         }
         .win-red-amount {
-            font-size: 32px; font-weight: 950; color: #ff2a2a;
+            font-size: 34px; font-weight: 950; color: #ff2a2a;
             text-shadow: 0 0 20px #ff0000, 0 0 10px #000; text-transform: uppercase;
         }
         .win-white-text {
-            font-size: 28px; font-weight: 950; color: #ffffff;
+            font-size: 30px; font-weight: 950; color: #ffffff;
             text-shadow: 0 0 15px #ffffff, 0 0 10px #000;
         }
 
@@ -330,7 +337,7 @@
         </div>
     </div>
 
-    <!-- JOGO PENALTY SHOOT-OUT 3D (TELA CHEIA PROFISSIONAL) -->
+    <!-- JOGO PENALTY SHOOT-OUT 3D PROFISSIONAL -->
     <div id="footballModal">
         <div class="penalty-header-top">
             <div>
@@ -340,9 +347,9 @@
             <span class="close-fullscreen" onclick="fecharPenaltyFootball()">&times;</span>
         </div>
         
-        <!-- ESTÁDIO 3D -->
+        <!-- ESTÁDIO 3D COM BALIZA E GOLEIRO VETORIAL PERFEITO -->
         <div class="stadium-container-3d" id="stadiumContainer">
-            <div class="stadium-overlay-dark"></div>
+            <div class="goal-frame"><div class="goal-net"></div></div>
 
             <!-- MULTIPLICADORES NO TOPO -->
             <div class="multipliers-bar">
@@ -353,20 +360,31 @@
                 <div class="mult-badge" id="m5">30.72x</div>
             </div>
 
-            <!-- GOLEIRO 3D 100% LIMPO E SEM MOLDURA -->
-            <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=300&auto=format&fit=crop&q=80" class="goleiro-3d-img" id="goleiroEl" alt="Goleiro">
+            <!-- GOLEIRO EM SVG LIMPO SEM FUNDOS BRANCOS -->
+            <div class="goleiro-vector" id="goleiroEl">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <circle cx="50" cy="20" r="14" fill="#f5d0b1" stroke="#222" stroke-width="2"/>
+                    <path d="M35 38 Q50 32 65 38 L72 72 Q50 80 28 72 Z" fill="#e74c3c" stroke="#ffb703" stroke-width="2.5"/>
+                    <path d="M35 42 L18 58" stroke="#e74c3c" stroke-width="8" stroke-linecap="round"/>
+                    <circle cx="14" cy="62" r="10" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                    <path d="M65 42 L82 58" stroke="#e74c3c" stroke-width="8" stroke-linecap="round"/>
+                    <circle cx="86" cy="62" r="10" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                    <rect x="36" y="72" width="12" height="24" rx="4" fill="#111"/>
+                    <rect x="52" y="72" width="12" height="24" rx="4" fill="#111"/>
+                </svg>
+            </div>
 
-            <!-- 5 ALVOS DE BOLA NOS CANTOS DA BALIZA -->
-            <div class="target-spot" id="target1" onclick="chutarPenalty(1)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
-            <div class="target-spot" id="target2" onclick="chutarPenalty(2)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
-            <div class="target-spot" id="target3" onclick="chutarPenalty(3)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
-            <div class="target-spot" id="target4" onclick="chutarPenalty(4)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
-            <div class="target-spot" id="target5" onclick="chutarPenalty(5)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
+            <!-- 5 ALVOS DE BOLA NOS CANTOS -->
+            <div class="target-spot" id="target1" onclick="chutarPenalty(1)"></div>
+            <div class="target-spot" id="target2" onclick="chutarPenalty(2)"></div>
+            <div class="target-spot" id="target3" onclick="chutarPenalty(3)"></div>
+            <div class="target-spot" id="target4" onclick="chutarPenalty(4)"></div>
+            <div class="target-spot" id="target5" onclick="chutarPenalty(5)"></div>
 
             <!-- BOLA -->
             <div class="bola-penalty-3d" id="bolaEl"></div>
 
-            <!-- TELA DE VITÓRIA / GOL -->
+            <!-- TELA DE VITÓRIA / GOL IDÊNTICA AO SEU VÍDEO -->
             <div class="win-display-banner" id="winBanner">
                 <div class="win-red-amount" id="winValorVermelho">R$ 20,00 virou</div>
                 <div class="win-white-text" id="winValorBranco">R$ 38,40</div>
@@ -479,7 +497,7 @@
                 bola.style.transform = `translateX(calc(-50% + ${offsetX}px)) translateY(${offsetY}px) scale(0.75)`;
                 
                 let puloGoleiroX = offsetX * 0.9;
-                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-30px) scale(1.12) rotate(${offsetX > 0 ? 22 : -22}deg)`;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-25px) scale(1.12) rotate(${offsetX > 0 ? 20 : -20}deg)`;
 
                 setTimeout(() => {
                     let goleiroDefendeu = Math.random() < 0.25 && nivelAtual > 1;
