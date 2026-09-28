@@ -222,7 +222,7 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* MODAL DO JOGO CANGAÇO FOOTBALL 4D HD */
+        /* MODAL DO JOGO CANGAÇO FOOTBALL 4D HD - BONECOS REAIS DETALHADOS */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
@@ -238,9 +238,9 @@
         .modal-subtitle-football { font-size: 11px; color: #ffb703; font-weight: bold; margin-bottom: 12px; }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
-        /* ESTÁDIO 4D REALISTA */
+        /* ESTÁDIO 4D HD */
         .stadium-container-4d {
-            position: relative; width: 100%; height: 230px;
+            position: relative; width: 100%; height: 240px;
             background: linear-gradient(180deg, #1f5c46 0%, #0d2b20 100%);
             border: 3px solid #ffb703; border-radius: 16px; overflow: hidden;
             box-shadow: inset 0 0 25px rgba(0,0,0,0.85), 0 8px 25px rgba(0,255,136,0.4);
@@ -248,7 +248,7 @@
         }
         .goal-post-4d {
             position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-            width: 250px; height: 85px; border: 5px solid #ffffff; border-bottom: none;
+            width: 260px; height: 90px; border: 5px solid #ffffff; border-bottom: none;
             border-radius: 8px 8px 0 0; box-shadow: 0 0 20px rgba(255,255,255,0.7);
         }
         .goal-net-4d {
@@ -257,55 +257,72 @@
                         repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.18) 10px, rgba(255,255,255,0.18) 12px);
         }
 
-        /* GUARDA-REDES 4D HD EM CSS PURO (PULANDO NA BOLA) */
+        /* --- BONECO DO GOLEIRO 4D HD DETALHADO --- */
         .goleiro-4d-hd {
-            position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
-            width: 44px; height: 50px; background: linear-gradient(135deg, #e74c3c, #c0392b);
-            border-radius: 14px; border: 2px solid #ffb703; box-shadow: 0 0 18px rgba(231,76,60,0.9);
-            transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1); z-index: 10;
+            position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
+            width: 50px; height: 56px; z-index: 10;
+            transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .goleiro-cabeca {
-            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-            width: 18px; height: 18px; background: #f5cd79; border-radius: 50%; border: 1px solid #333;
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 18px; height: 18px; background: radial-gradient(circle at 30% 30%, #ffdfc4, #d08b5b);
+            border-radius: 50%; border: 1px solid #333; box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
-        .goleiro-luva {
-            position: absolute; top: 14px; width: 14px; height: 14px; background: #00ff88; border-radius: 50%; border: 1px solid #fff;
+        .goleiro-corpo {
+            position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+            width: 32px; height: 24px; background: linear-gradient(135deg, #e74c3c, #900c3f);
+            border-radius: 6px; border: 2px solid #ffb703; box-shadow: 0 3px 6px rgba(0,0,0,0.6);
         }
-        .goleiro-luva.esq { left: -8px; }
-        .goleiro-luva.dir { right: -8px; }
+        .goleiro-luva-esq, .goleiro-luva-dir {
+            position: absolute; top: 20px; width: 14px; height: 14px; background: #00ff88;
+            border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 8px #00ff88;
+        }
+        .goleiro-luva-esq { left: -6px; }
+        .goleiro-luva-dir { right: -6px; }
+        .goleiro-pernas {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 26px; height: 16px; background: #111; border-radius: 4px;
+        }
 
-        /* JOGADOR 4D HD CORRENDO PARA CHUTAR */
+        /* --- BONECO DO JOGADOR 4D HD COM ANIMAÇÃO DE CHUTE --- */
         .jogador-4d-hd {
-            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-            width: 32px; height: 48px; z-index: 5; transition: all 0.5s ease-in-out;
+            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+            width: 38px; height: 56px; z-index: 12;
+            transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .jogador-cabeca {
             position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 16px; height: 16px; background: #f5cd79; border-radius: 50%;
+            width: 16px; height: 16px; background: radial-gradient(circle at 30% 30%, #ffdfc4, #d08b5b);
+            border-radius: 50%; border: 1px solid #333;
         }
         .jogador-tronco {
-            position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-            width: 20px; height: 20px; background: #ffffff; border-radius: 4px;
+            position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+            width: 26px; height: 22px; background: linear-gradient(135deg, #ffffff, #bdc3c7);
+            border-radius: 6px; border: 2px solid #2980b9; box-shadow: 0 3px 6px rgba(0,0,0,0.5);
         }
-        .jogador-pernas {
-            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 14px; height: 14px; background: #111; border-radius: 2px;
-            animation: animarCorrida 0.15s infinite alternate;
+        .jogador-perna-apoio {
+            position: absolute; bottom: 0; left: 6px; width: 8px; height: 20px;
+            background: #222; border-radius: 4px;
         }
-        @keyframes animarCorrida {
-            0% { transform: translateX(-50%) rotate(-15px) scaleY(0.9); }
-            100% { transform: translateX(-50%) rotate(15px) scaleY(1.1); }
+        .jogador-perna-chute {
+            position: absolute; bottom: 0; right: 6px; width: 8px; height: 20px;
+            background: #222; border-radius: 4px; transform-origin: top center;
+            transition: transform 0.3s ease;
+        }
+        /* Classe ativada no momento do chute para animar a perna */
+        .jogador-4d-hd.chutando .jogador-perna-chute {
+            transform: rotate(-45deg) translateY(-6px);
         }
 
-        /* BOLA 4D E MIRA */
+        /* BOLA 4D E MIRA DE TOQUE */
         .bola-4d-hd {
-            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 26px; height: 26px; background: radial-gradient(circle at 30% 30%, #fff 0%, #ccc 60%, #333 100%);
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 26px; height: 26px; background: radial-gradient(circle at 30% 30%, #fff 0%, #bbb 60%, #111 100%);
             border-radius: 50%; border: 2px solid #000; box-shadow: 0 4px 15px rgba(0,0,0,0.9);
             z-index: 15; transition: all 0.55s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .alvo-toque {
-            position: absolute; width: 26px; height: 26px; border: 2px dashed #00ff88;
+            position: absolute; width: 28px; height: 28px; border: 2px dashed #00ff88;
             border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none;
             z-index: 20; display: none; box-shadow: 0 0 12px #00ff88; animation: pulseAlvo 0.8s infinite alternate;
         }
@@ -521,7 +538,7 @@
         </div>
     </div>
 
-    <!-- MODAL DO JOGO CANGAÇO FOOTBALL 4D HD -->
+    <!-- MODAL DO JOGO CANGAÇO FOOTBALL 4D HD - COM BONECOS REAIS -->
     <div id="footballModal" class="modal-overlay">
         <div class="modal-card-football">
             <span class="close-modal" onclick="fecharCangaçoFootball()">&times;</span>
@@ -532,11 +549,13 @@
             <div class="stadium-container-4d" id="stadiumContainer" onclick="definirAlvoToque(event)">
                 <div class="goal-post-4d"><div class="goal-net-4d"></div></div>
                 
-                <!-- Goleiro 4D HD Pulando -->
+                <!-- Goleiro 4D HD Detalhado -->
                 <div class="goleiro-4d-hd" id="goleiroEl">
                     <div class="goleiro-cabeca"></div>
-                    <div class="goleiro-luva esq"></div>
-                    <div class="goleiro-luva dir"></div>
+                    <div class="goleiro-corpo"></div>
+                    <div class="goleiro-luva-esq"></div>
+                    <div class="goleiro-luva-dir"></div>
+                    <div class="goleiro-pernas"></div>
                 </div>
 
                 <!-- Mira do Toque -->
@@ -548,11 +567,12 @@
                     <div class="premio-badge" id="premioBadgeEl"></div>
                 </div>
 
-                <!-- Jogador 4D HD Correndo -->
+                <!-- Jogador 4D HD Detalhado com animação de chute -->
                 <div class="jogador-4d-hd" id="jogadorEl">
                     <div class="jogador-cabeca"></div>
                     <div class="jogador-tronco"></div>
-                    <div class="jogador-pernas"></div>
+                    <div class="jogador-perna-apoio"></div>
+                    <div class="jogador-perna-chute"></div>
                 </div>
                 <div class="bola-4d-hd" id="bolaEl"></div>
             </div>
@@ -571,7 +591,7 @@
         </div>
     </div>
 
-    <!-- Modais Gerais (Login, Registro, Depósito) -->
+    <!-- Modais Gerais -->
     <div id="loginModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">🔐 ENTRAR</div><input type="email" id="loginEmail" class="modal-input" placeholder="E-mail"><input type="password" id="loginSenha" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="realizarLogin()">Entrar</button></div></div>
     <div id="registerModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">📝 REGISTAR</div><input type="text" id="regNome" class="modal-input" placeholder="Nome"><input type="email" id="regEmail" class="modal-input" placeholder="E-mail"><input type="password" id="regSenha" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="realizarRegistro()">Registar</button></div></div>
     <div id="depositModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">💰 DEPOSITAR (PIX)</div><input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor (R$)"><button class="modal-btn" onclick="realizarDeposito()">Depositar</button></div></div>
@@ -650,7 +670,9 @@
             document.getElementById('alvoToque').style.display = 'none';
             document.getElementById('bolaEl').style.transform = 'translateX(-50%) translateY(0) scale(1)';
             document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0)';
-            document.getElementById('jogadorEl').style.transform = 'translateX(-50%) translateY(0)';
+            let jogador = document.getElementById('jogadorEl');
+            jogador.classList.remove('chutando');
+            jogador.style.transform = 'translateX(-50%) translateY(0)';
             document.getElementById('subStatusJogo').innerText = "Confirme a aposta e toque na baliza para direcionar o chute!";
             document.getElementById('btnConfirmarAposta').style.opacity = '1';
             document.getElementById('torcidaAudio').pause();
@@ -677,7 +699,10 @@
             let jogador = document.getElementById('jogadorEl');
             
             document.getElementById('subStatusJogo').innerText = "A chutar...";
-            jogador.style.transform = "translateX(-50%) translateY(-28px) scale(1.08)";
+            
+            // Ativa a animação da perna do boneco chutando
+            jogador.classList.add('chutando');
+            jogador.style.transform = "translateX(-50%) translateY(-22px) scale(1.05)";
 
             let deslocamentoX = (alvoX - 50) * 2.2;
             let deslocamentoY = -140;
@@ -687,7 +712,7 @@
                 
                 // Animação de pulo do goleiro 4D HD na direção da bola
                 let puloGoleiroX = deslocamentoX * 0.85;
-                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-35px) scale(1.15) rotate(${deslocamentoX > 0 ? 15 : -15}deg)`;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-38px) scale(1.15) rotate(${deslocamentoX > 0 ? 18 : -18}deg)`;
 
                 setTimeout(() => {
                     let anuncio = document.getElementById('anuncioResultado');
@@ -717,7 +742,7 @@
                         badge.style.display = 'none';
                         anuncio.style.display = 'flex';
 
-                        document.getElementById('subStatusJogo').innerText = "🧤 Defesa incrível do guarda-redes! Tente novamente.";
+                        document.getElementById('subStatusJogo').innerText = "🧤 Defesa espetacular do guarda-redes! Tente novamente.";
                     }
                     apostaConfirmada = false;
                     document.getElementById('btnConfirmarAposta').style.opacity = '1';
