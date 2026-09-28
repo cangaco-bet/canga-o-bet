@@ -335,7 +335,7 @@
         <div id="quickSearchResult" style="background: #1a1c23; border-radius: 8px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left;"></div>
     </div>
 
-    <!-- Menu Lateral (Com Registrar configurado corretamente) -->
+    <!-- Menu Lateral (Com aba de Bilhetes adicionada) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -347,6 +347,9 @@
         </div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">
             ⚽ Apostas Esportivas
+        </div>
+        <div class="sidebar-item" onclick="abrirModalBilhetes(); fecharSidebar();">
+            📋 Meus Bilhetes
         </div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">
             💰 Depositar (PIX)
@@ -462,6 +465,17 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
+    <!-- Modal de Meus Bilhetes (Acompanhamento em Tempo Real) -->
+    <div id="bilhetesModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">📋 MEUS BILHETES</div>
+            <div id="listaMeusBilhetes" style="text-align: left; font-size: 13px; color: #ccc;">
+                <p style="text-align: center; color: #777; padding: 15px;">Nenhum bilhete confirmado ainda.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Registro Completo -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-card">
@@ -493,97 +507,36 @@
         const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
         let apostaSelecionada = null;
         let oddAtual = 0;
+        let meusBilhetesSalvos = [];
 
-        // Dicionário ampliado para tradução de nomes de times para o português
+        // Dicionários de tradução
         const traducoesTimes = {
-            "Manchester City FC": "Manchester City",
-            "Manchester United FC": "Manchester United",
-            "Arsenal FC": "Arsenal",
-            "Chelsea FC": "Chelsea",
-            "Liverpool FC": "Liverpool",
-            "Tottenham Hotspur FC": "Tottenham",
-            "Real Madrid CF": "Real Madrid",
-            "FC Barcelona": "Barcelona",
-            "Atletico Madrid": "Atlético de Madrid",
-            "Villarreal CF": "Villarreal",
-            "Valencia CF": "Valência",
-            "Sevilla FC": "Sevilla",
-            "Juventus FC": "Juventus",
-            "AC Milan": "Milan",
-            "Inter Milan": "Inter de Milão",
-            "AS Roma": "Roma",
-            "SSC Napoli": "Nápoles",
-            "SS Lazio": "Lazio",
-            "FC Bayern München": "Bayern de Munique",
-            "Borussia Dortmund": "Borussia Dortmund",
-            "Bayer 04 Leverkusen": "Bayer Leverkusen",
-            "RB Leipzig": "RB Leipzig",
-            "Paris Saint-Germain FC": "Paris Saint-Germain",
-            "AS Monaco FC": "Monaco",
-            "Olympique de Marseille": "Olympique de Marselha",
-            "Olympique Lyonnais": "Lyon",
-            "AFC Ajax": "Ajax",
-            "PSV Eindhoven": "PSV",
-            "SL Benfica": "Benfica",
-            "FC Porto": "Porto",
-            "Sporting CP": "Sporting",
-            "CR Flamengo": "Flamengo",
-            "SE Palmeiras": "Palmeiras",
-            "São Paulo FC": "São Paulo",
-            "SC Corinthians Paulista": "Corinthians",
-            "Fluminense FC": "Fluminense",
-            "Botafogo FR": "Botafogo",
-            "CR Vasco da Gama": "Vasco da Gama",
-            "Grêmio FBPA": "Grêmio",
-            "SC Internacional": "Internacional",
-            "CA Mineiro": "Atlético Mineiro",
-            "Cruzeiro EC": "Cruzeiro"
+            "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Nápoles", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
         };
 
         const traducoesLigas = {
-            "UEFA Champions League": "Liga dos Campeões da UEFA",
-            "Premier League": "Campeonato Inglês",
-            "Primera Division": "Campeonato Espanhol",
-            "Serie A": "Campeonato Italiano",
-            "Bundesliga": "Campeonato Alemão",
-            "Ligue 1": "Campeonato Francês",
-            "Eredivisie": "Campeonato Holandês",
-            "Primeira Liga": "Campeonato Português",
-            "UEFA Nations League": "Liga das Nações da UEFA",
-            "Copa Libertadores": "Copa Libertadores",
-            "Campeonato Brasileiro Série A": "Brasileirão Série A"
+            "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A"
         };
 
-        function traduzirTime(nome) {
-            return traducoesTimes[nome] || nome;
-        }
-
-        function traduzirLiga(nome) {
-            return traducoesLigas[nome] || nome;
-        }
+        function traduzirTime(nome) { return traducoesTimes[nome] || nome; }
+        function traduzirLiga(nome) { return traducoesLigas[nome] || nome; }
 
         function converterParaHorarioBrasilia(utcString) {
             if (!utcString) return "";
             try {
-                // Garante que o formato seja reconhecido como UTC adicionando o 'Z' se faltar
                 let isoFormat = utcString;
                 if (!isoFormat.endsWith('Z') && !isoFormat.includes('+') && !isoFormat.includes('-')) {
                     isoFormat += 'Z';
                 }
                 let data = new Date(isoFormat);
-                if (isNaN(data.getTime())) {
-                    return utcString.substring(0, 5);
-                }
-                // Converte estritamente para o horário de Brasília (America/Sao_Paulo)
+                if (isNaN(data.getTime())) { return utcString.substring(0, 5); }
                 return data.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
             } catch (e) {
                 return utcString.substring(11, 16) || "";
             }
         }
 
-        function tocarAudioInicio() {
-            audio.play().catch(e => console.log(e));
-        }
+        function tocarAudioInicio() { audio.play().catch(e => console.log(e)); }
 
         function abrirSidebar() {
             tocarAudioInicio();
@@ -598,7 +551,6 @@
         function mudarAba(aba) {
             tocarAudioInicio();
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
-
             if (aba === 'cassino') {
                 document.getElementById('tab-cassino').classList.add('active-tab');
             } else if (aba === 'esportes') {
@@ -695,7 +647,6 @@
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas válidas...</p>`;
             let listaFormatada = [];
 
-            // 1. TENTATIVA COM A API PRINCIPAL (API-FOOTBALL)
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
@@ -705,15 +656,11 @@
 
                 if (dados.response && dados.response.length > 0) {
                     const statusExcluidos = ['FT', 'AET', 'PEN', 'PST', 'CANC', 'ABD', 'AWD', 'WO'];
-                    const partidasAtivas = dados.response.filter(match => {
-                        const status = match.fixture.status.short;
-                        return !statusExcluidos.includes(status);
-                    });
+                    const partidasAtivas = dados.response.filter(match => !statusExcluidos.includes(match.fixture.status.short));
 
                     partidasAtivas.forEach(match => {
                         const statusCurto = match.fixture.status.short;
                         let statusHora = "";
-
                         if (statusCurto === 'LIVE' || statusCurto === '1H' || statusCurto === '2H' || statusCurto === 'HT') {
                             statusHora = `<span style="color: #00ff88;">● AO VIVO (${match.fixture.status.elapsed || 0}')</span>`;
                         } else {
@@ -728,11 +675,8 @@
                         });
                     });
                 }
-            } catch (erro) {
-                console.log("Erro na API principal.");
-            }
+            } catch (erro) { console.log("Erro API 1"); }
 
-            // 2. TENTATIVA COM A SEGUNDA API (FOOTBALL-DATA.ORG)
             try {
                 const resposta2 = await fetch(`https://api.football-data.org/v4/matches`, {
                     headers: { "X-Auth-Token": footballDataApiKey }
@@ -759,11 +703,8 @@
                         });
                     });
                 }
-            } catch (erro) {
-                console.log("Erro na API secundaria.");
-            }
+            } catch (erro) { console.log("Erro API 2"); }
 
-            // EXIBIR RESULTADOS COMBINADOS
             if (listaFormatada.length > 0) {
                 renderizarPartidasNaTela(listaFormatada, container);
             } else {
@@ -797,8 +738,40 @@
         function confirmarApostaEsportiva() {
             let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
             if (valor <= 0) { alert('Insira um valor válido!'); return; }
+            let retorno = (valor * oddAtual).toFixed(2);
+            
+            meusBilhetesSalvos.push({
+                selecao: apostaSelecionada,
+                valor: valor.toFixed(2),
+                retorno: retorno,
+                status: "🔴 Ao Vivo / Em Andamento"
+            });
+
             fecharBilhete();
-            alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}!`);
+            alert(`✅ Aposta registada com sucesso em "${apostaSelecionada}" no valor de R$ ${valor.toFixed(2)}! Podes acompanhar na aba "Meus Bilhetes".`);
+        }
+
+        function abrirModalBilhetes() {
+            tocarAudioInicio();
+            fecharSidebar();
+            const container = document.getElementById('listaMeusBilhetes');
+            if (meusBilhetesSalvos.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 15px;">Nenhum bilhete confirmado ainda.</p>`;
+            } else {
+                let html = '';
+                meusBilhetesSalvos.forEach((b, idx) => {
+                    html += `
+                        <div style="background: #13141b; border: 1px solid #2a2d3d; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                            <div style="color: #ffb703; font-weight: bold;">Bilhete #${idx + 1}</div>
+                            <div><b>Aposta:</b> ${b.selecao}</div>
+                            <div><b>Valor:</b> R$ ${b.valor} | <b>Retorno:</b> R$ ${b.retorno}</div>
+                            <div style="color: #00ff88; margin-top: 4px;">Status: ${b.status}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+            document.getElementById('bilhetesModal').style.display = 'flex';
         }
 
         function abrirModalRegistro() { tocarAudioInicio(); document.getElementById('registerModal').style.display = 'flex'; }
