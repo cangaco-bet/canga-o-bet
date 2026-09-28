@@ -17,7 +17,7 @@
             padding-bottom: 80px;
         }
         
-        /* Tela Inicial de Boas-Vindas */
+        /* Tela Inicial de Carregamento (Splash Screen) */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -33,29 +33,72 @@
             text-align: center;
             padding: 20px;
         }
-        .splash-logo {
-            font-size: 32px;
+
+        .splash-banner {
+            width: 240px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid #ff4500;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .splash-title {
+            font-size: 24px;
             font-weight: bold;
             color: #ff4500;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
-        .splash-subtitle {
+
+        /* Estilo da Barra de Carregamento */
+        .loader-container {
+            width: 80%;
+            max-width: 300px;
+            background: #2a2d3d;
+            border-radius: 20px;
+            height: 14px;
+            padding: 2px;
+            margin-bottom: 15px;
+            border: 1px solid #3a3d4d;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff4500, #ff8c00);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+
+        .loader-text {
             font-size: 14px;
             color: #aaa;
-            margin-bottom: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
+
+        /* Botão Inicial (Oculto até 100%) */
         .btn-entrar-cassino {
+            display: none;
             background-color: #ff4500;
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 14px 30px;
             border-radius: 30px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.5);
+            animation: pulse 1.5s infinite;
         }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         .btn-entrar-cassino:active {
             transform: scale(0.95);
         }
@@ -169,14 +212,19 @@
 </head>
 <body>
 
-    <!-- Tela Inicial de Entrada -->
+    <!-- Tela Inicial com a sua Imagem e Carregamento -->
     <div id="splash-screen">
-        <div class="splash-logo">🔥 CANGAÇO BET</div>
-        <div class="splash-subtitle">A sua nova experiência de apostas</div>
-        <button class="btn-entrar-cassino" onclick="entrarNoCassino()">🎲 ENTRAR NO CASSINO</button>
+        <img src="https://files.catbox.moe/r34gpm.png" alt="Cangaço Bet" class="splash-banner">
+        
+        <div class="loader-container">
+            <div class="loader-bar" id="loaderBar"></div>
+        </div>
+        <div class="loader-text" id="loaderText">A carregar recursos... 0%</div>
+
+        <button class="btn-entrar-cassino" id="btnEntrar" onclick="entrarNoCassino()">🎲 ENTRAR NO CASSINO</button>
     </div>
 
-    <!-- Elemento de áudio -->
+    <!-- Elemento de áudio com a música -->
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
     <!-- Conteúdo Principal do Site -->
@@ -226,12 +274,31 @@
         const audio = document.getElementById('audioPlayer');
         const splashScreen = document.getElementById('splash-screen');
         const mainContent = document.getElementById('main-content');
+        const loaderBar = document.getElementById('loaderBar');
+        const loaderText = document.getElementById('loaderText');
+        const btnEntrar = document.getElementById('btnEntrar');
+
+        let progresso = 0;
+
+        // Simula a barra de carregamento de 0 a 100%
+        const intervalo = setInterval(() => {
+            progresso += 2;
+            if (progresso <= 100) {
+                loaderBar.style.width = progresso + '%';
+                loaderText.innerText = 'A carregar recursos... ' + progresso + '%';
+            } else {
+                clearInterval(intervalo);
+                loaderText.style.display = 'none';
+                loaderBar.parentElement.style.display = 'none';
+                btnEntrar.style.display = 'block'; // Mostra o botão ao chegar a 100%
+            }
+        }, 40); // Velocidade do carregamento
 
         function entrarNoCassino() {
-            // Toca a música
+            // Toca a música e limpa restrições de autoplay
             audio.play().catch(e => console.log(e));
             
-            // Esconde a tela de entrada e mostra o site
+            // Esconde a tela de carregamento e mostra o site principal
             splashScreen.style.display = 'none';
             mainContent.style.display = 'block';
         }
