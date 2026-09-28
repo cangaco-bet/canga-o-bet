@@ -3,197 +3,650 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cangaço Bet - Fortune Tiger</title>
+    <title>Cangaço Bet</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
-            background-color: #121212;
+            background-color: #0f1015;
             color: #ffffff;
+            padding-bottom: 80px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1c23, #0f1015);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff4500;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .btn-entrar {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Banner Promocional */
+        .promo-carousel-container {
+            margin: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #ff4500;
+            position: relative;
+            height: 110px;
+        }
+        .promo-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+            width: 300%;
+        }
+        .promo-slide {
+            width: 33.333%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+        .promo-slide::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        .promo-content {
+            position: relative;
+            z-index: 2;
+        }
+        .promo-slide h3 {
+            font-size: 14px;
+            color: #ffb703;
+            margin-bottom: 3px;
+        }
+        .promo-slide p {
+            font-size: 11px;
+            color: #ddd;
+            margin-bottom: 6px;
+        }
+        .btn-cadastre {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            padding: 0 15px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+        .category-pill {
+            background: #1e2029;
+            border: 1px solid #2a2d3d;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #ccc;
+            font-size: 13px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        /* Jackpot Box */
+        .jackpot-box {
+            background: linear-gradient(135deg, #2b110a, #1a1c23);
+            margin: 0 15px 15px 15px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #ff4500;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.2);
+        }
+        .jackpot-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 3px;
+        }
+        .jackpot-value {
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        /* Vencedores */
+        .winners-section {
+            margin: 15px 0;
+            padding: 0 15px;
+        }
+        .winners-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .winners-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 5px;
+        }
+        .winners-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .winner-card {
+            background: #1a1c23;
+            border: 1px solid #2a2d3d;
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .winner-card img {
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .winner-name {
+            color: #aaa;
+            font-size: 11px;
+        }
+        .winner-prize {
+            color: #ffb703;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .section-title {
+            padding: 0 15px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-title span {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 15px;
+            margin-bottom: 25px;
+        }
+        .game-card {
+            background: #1e2029;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2d3d;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .game-card:active {
+            transform: scale(0.97);
+        }
+        .game-img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+        }
+        .game-name {
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* TELA DO JOGO FORTUNE TIGER EXATAMENTE COMO NO VÍDEO */
+        #game-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f1015;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px;
         }
-        .header {
-            position: absolute;
-            top: 20px;
+        .game-screen-header {
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 20px;
-            max-width: 500px;
+            align-items: center;
+            max-width: 400px;
         }
-        .btn-voltar {
-            background: #333;
-            color: #fff;
+        .btn-voltar-home {
+            background: #2a2d3d;
+            color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 8px 14px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
         }
-        .saldo {
-            font-weight: bold;
-            color: #00ff88;
-        }
-        .game-container {
-            background: #1e1e1e;
+        
+        /* Caixa Estilo Vídeo Catbox */
+        .tiger-machine {
+            background: linear-gradient(180deg, #181922, #0d0e13);
             border: 2px solid #ff4500;
-            border-radius: 12px;
-            padding: 25px;
+            border-radius: 20px;
+            padding: 25px 20px;
             width: 100%;
-            max-width: 400px;
+            max-width: 360px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+            margin: auto;
         }
-        .aposta-info {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #ccc;
+        .tiger-aposta-texto {
+            font-size: 14px;
+            color: #bbb;
+            margin-bottom: 15px;
         }
-        .slots-grid {
+        .tiger-reels {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
-        .slot-box {
-            width: 80px;
-            height: 90px;
-            background: #111;
-            border: 2px solid #444;
-            border-radius: 8px;
+        .reel {
+            font-size: 28px;
+            background: #13141b;
+            width: 75px;
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            border-radius: 12px;
+            border: 2px solid #333;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
         }
-        .mensagem {
-            font-size: 15px;
+        .tiger-status {
+            font-size: 14px;
             margin-bottom: 20px;
-            min-height: 24px;
+            color: #ccc;
+            min-height: 20px;
             font-weight: bold;
         }
-        .btn-girar {
-            width: 100%;
-            background: linear-gradient(to bottom, #ff7300, #ff4500);
+        .btn-girar-tiger {
+            background: linear-gradient(135deg, #ff5e00, #ff2600);
             color: white;
             border: none;
-            padding: 15px;
+            width: 100%;
+            padding: 16px;
+            border-radius: 30px;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.5);
-            transition: 0.2s;
+            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.6);
+            letter-spacing: 1px;
         }
-        .btn-girar:active {
-            transform: scale(0.98);
+        .btn-girar-tiger:active {
+            transform: scale(0.97);
         }
-        .footer-modo {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #777;
+
+        /* Modais */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-card {
+            background: #1a1c23;
+            width: 100%;
+            max-width: 380px;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #ff4500;
+            text-align: center;
+            position: relative;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff4500;
+            margin-bottom: 15px;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #13141b;
+            border: 1px solid #2a2d3d;
+            border-radius: 8px;
+            color: white;
+        }
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: #aaa;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: #13141b;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #222;
+            z-index: 99;
+        }
+        .nav-item {
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: #ff4500;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <button class="btn-voltar" onclick="alert('Voltando...')">← Voltar</button>
-        <div style="font-size: 14px;">🐯 FORTUNE TIGER</div>
-        <div class="saldo">Saldo: R$ <span id="saldo-val">99,50</span></div>
-    </div>
+    <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
-    <div class="game-container">
-        <div class="aposta-info">Aposta: R$ 2,00</div>
-        
-        <div class="slots-grid">
-            <div class="slot-box" id="slot1">💰</div>
-            <div class="slot-box" id="slot2">💰</div>
-            <div class="slot-box" id="slot3">💰</div>
+    <div id="main-content">
+        <header>
+            <div class="logo" onclick="abrirModalDeposito()">🔥 CANGAÇO BET</div>
+            <button class="btn-entrar" onclick="abrirModalRegistro()">REGISTRAR</button>
+        </header>
+
+        <div class="promo-carousel-container">
+            <div class="promo-track" id="promoTrack">
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/75mifn.jpeg');">
+                    <div class="promo-content">
+                        <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
+                        <p>Receba até R$1.000 + 50 Giros Grátis!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
+                    </div>
+                </div>
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
+                    <div class="promo-content">
+                        <h3>⚡ CASHBACK DIÁRIO</h3>
+                        <p>Até 12% de retorno em todas as apostas!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
+                    </div>
+                </div>
+                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
+                    <div class="promo-content">
+                        <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
+                        <p>Participe e concorra a prêmios em dinheiro!</p>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Participar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="mensagem" id="mensagem">Você ganhou um prêmio baixo: R$ 1.50</div>
+        <div class="categories">
+            <div class="category-pill" onclick="abrirModalCategorias()">🤠 Cangaço torneios</div>
+            <div class="category-pill" onclick="abrirModalCategorias()">🌵 Cangaço missões</div>
+            <div class="category-pill" onclick="abrirModalCategorias()">🔥 Top</div>
+        </div>
 
-        <button class="btn-girar" id="btnGirar" onclick="girarJogo()">GIRAR 🎰</button>
-        
-        <div class="footer-modo">Modo Oficial Cangaço Bet</div>
+        <div class="jackpot-box">
+            <div class="jackpot-title">🔥 JACKPOT GLOBAL</div>
+            <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
+        </div>
+
+        <div class="winners-section">
+            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
+            <div class="winners-scroll" id="winnersScroll">
+                <div class="winner-card"><img src="https://files.catbox.moe/75mifn.jpeg"><div class="winner-info"><div class="winner-name">Kaiq***</div><div class="winner-prize">R$ 45.00 BRL</div></div></div>
+                <div class="winner-card"><img src="https://files.catbox.moe/f5zgx9.webp"><div class="winner-info"><div class="winner-name">Ebe***</div><div class="winner-prize">R$ 35.75 BRL</div></div></div>
+                <div class="winner-card"><img src="https://files.catbox.moe/9k06uq.jpeg"><div class="winner-info"><div class="winner-name">Lucas***</div><div class="winner-prize">R$ 120.00 BRL</div></div></div>
+                <div class="winner-card"><img src="https://files.catbox.moe/7dkz4q.jpeg"><div class="winner-info"><div class="winner-name">Mathe***</div><div class="winner-prize">R$ 250.50 BRL</div></div></div>
+            </div>
+        </div>
+
+        <div class="section-title">🏆 TOP <span>Todos ></span></div>
+
+        <div class="games-grid">
+            <div class="game-card" onclick="entrarFortuneTiger()">
+                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
+                <div class="game-name">Fortune Tiger</div>
+            </div>
+            <div class="game-card" onclick="pararMusicaEEntrar('Aviator')">
+                <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
+                <div class="game-name">Aviator</div>
+            </div>
+            <div class="game-card" onclick="pararMusicaEEntrar('Mines')">
+                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
+                <div class="game-name">Mines</div>
+            </div>
+            <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
+                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
+                <div class="game-name">Gates of Olympus</div>
+            </div>
+        </div>
+
+        <nav>
+            <a class="nav-item" onclick="abrirModalRegistro()">📁<br>Registrar</a>
+            <a class="nav-item" onclick="abrirModalCategorias()">📂<br>Categorias</a>
+            <a class="nav-item active" onclick="abrirModalDeposito()">💰<br>Depositar</a>
+            <a class="nav-item" onclick="alert('Ao Vivo em breve!')">📺<br>Ao Vivo</a>
+            <a class="nav-item" onclick="abrirModalPesquisa()">🔍<br>Pesquisar</a>
+        </nav>
+    </div>
+
+    <div id="game-screen">
+        <div class="game-screen-header">
+            <button class="btn-voltar-home" onclick="sairDoJogo()">⬅ Voltar</button>
+            <div style="font-weight: bold; color: #ff4500;">🐅 FORTUNE TIGER</div>
+            <div id="saldoJogo" style="font-size: 13px; color: #00ff88; font-weight: bold;">Saldo: R$ 99,50</div>
+        </div>
+
+        <div class="tiger-machine">
+            <div class="tiger-aposta-texto">Aposta: R$ 2,00</div>
+            <div class="tiger-reels">
+                <div class="reel" id="reel1">💰</div>
+                <div class="reel" id="reel2">💰</div>
+                <div class="reel" id="reel3">💰</div>
+            </div>
+            <div class="tiger-status" id="gameStatus">Você ganhou um prêmio baixo: R$ 1.50</div>
+            <button class="btn-girar-tiger" onclick="girarTiger()">GIRAR 🐅</button>
+        </div>
+        <div style="font-size: 11px; color: #666;">Modo Oficial Cangaço Bet</div>
+    </div>
+
+    <div id="searchModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">🔍 BUSCAR JOGO</div>
+            <input type="text" id="searchInput" class="modal-input" placeholder="Digite o nome..." oninput="filtrarJogos()">
+            <div id="searchResultBox" style="text-align: left; max-height: 150px; overflow-y: auto; color: #ccc; font-size: 13px;"></div>
+        </div>
+    </div>
+
+    <div id="categoryModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">📂 CATEGORIAS</div>
+            <button class="modal-btn" onclick="fecharModais()">Cassinos</button>
+        </div>
+    </div>
+
+    <div id="depositModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">💰 DEPOSITAR (PIX)</div>
+            <input type="number" class="modal-input" placeholder="Valor (R$)">
+            <button class="modal-btn" onclick="alert('Gerando Pix...'); fecharModais();">Gerar Pix</button>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">🔥 REGISTRO CANGAÇO BET</div>
+            <input type="text" id="usuario" class="modal-input" placeholder="Nome de Usuário">
+            <button class="modal-btn" onclick="realizarCadastro()">Cadastrar</button>
+        </div>
     </div>
 
     <script>
-        // Lógica e script ajustados conforme solicitado (probabilidade de ganho baixa e valores reduzidos)
-        let saldo = 99.50;
-        const custoAposta = 2.00;
+        const audio = document.getElementById('audioPlayer');
+        function tocarAudio() { audio.play().catch(e => console.log(e)); }
 
-        function girarJogo() {
-            if (saldo < custoAposta) {
-                alert("Saldo insuficiente!");
+        function abrirModalPesquisa() { tocarAudio(); document.getElementById('searchModal').style.display = 'flex'; }
+        function abrirModalCategorias() { tocarAudio(); document.getElementById('categoryModal').style.display = 'flex'; }
+        function abrirModalDeposito() { tocarAudio(); document.getElementById('depositModal').style.display = 'flex'; }
+        function abrirModalRegistro() { tocarAudio(); document.getElementById('registerModal').style.display = 'flex'; }
+        function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+        function realizarCadastro() {
+            const u = document.getElementById('usuario').value;
+            if(!u) { alert('Digite o nome!'); return; }
+            fecharModais();
+            alert('Cadastro efetuado com sucesso, ' + u + '!');
+        }
+
+        function pararMusicaEEntrar(jogo) {
+            audio.pause(); audio.currentTime = 0;
+            alert('Entrando em ' + jogo + '...');
+        }
+
+        // --- LÓGICA DO FORTUNE TIGER CUSTOMIZADA (Chances baixas de ganho / Perdas frequentes) ---
+        let saldoVirtual = 99.50;
+
+        function entrarFortuneTiger() {
+            audio.pause(); audio.currentTime = 0;
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            atualizarSaldoUI();
+        }
+
+        function sairDoJogo() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            tocarAudio();
+        }
+
+        function atualizarSaldoUI() {
+            document.getElementById('saldoJogo').innerText = 'Saldo: R$ ' + saldoVirtual.toFixed(2).replace('.', ',');
+        }
+
+        function girarTiger() {
+            if (saldoVirtual < 2.00) {
+                alert('Saldo insuficiente!');
                 return;
             }
 
-            // Desconta o valor da aposta
-            saldo -= custoAposta;
-            document.getElementById("saldo-val").innerText = saldo.toFixed(2);
+            saldoVirtual -= 2.00;
+            atualizarSaldoUI();
 
-            const btn = document.getElementById("btnGirar");
-            const msg = document.getElementById("mensagem");
-            const s1 = document.getElementById("slot1");
-            const s2 = document.getElementById("slot2");
-            const s3 = document.getElementById("slot3");
+            const r1 = document.getElementById('reel1');
+            const r2 = document.getElementById('reel2');
+            const r3 = document.getElementById('reel3');
+            const status = document.getElementById('gameStatus');
 
-            btn.disabled = true;
-            msg.style.color = "#ccc";
-            msg.innerText = "Girando...";
-            s1.innerText = "🔄";
-            s2.innerText = "🔄";
-            s3.innerText = "🔄";
+            status.style.color = "#ccc";
+            status.innerText = "Girando...";
+            r1.innerText = "🔄"; r2.innerText = "🔄"; r3.innerText = "🔄";
 
             setTimeout(() => {
-                // Configuração das probabilidades: 
-                // 90% de chance de derrota (itens diferentes) e apenas 10% de chance de prêmio baixo.
+                const icones = ["💰", "🍊", "🍋", "🍒", "⭐", "📜"];
                 let rand = Math.random();
-                let icones = ["💰", "🍊", "🍋", "🍒", "⭐"];
-
-                if (rand < 0.90) {
+                
+                // Configuração rigorosa: 92% de chance de perder e apenas 8% de chance de prêmio baixo
+                if (rand < 0.92) {
                     // Derrota
-                    s1.innerText = icones[Math.floor(Math.random() * icones.length)];
-                    s2.innerText = icones[Math.floor(Math.random() * icones.length)];
-                    s3.innerText = icones[Math.floor(Math.random() * icones.length)];
-                    
-                    if(s1.innerText === s2.innerText && s2.innerText === s3.innerText) {
-                        s3.innerText = "❌";
+                    r1.innerText = icones[Math.floor(Math.random() * icones.length)];
+                    r2.innerText = icones[Math.floor(Math.random() * icones.length)];
+                    r3.innerText = icones[Math.floor(Math.random() * icones.length)];
+                    if(r1.innerText === r2.innerText && r2.innerText === r3.innerText) {
+                        r3.innerText = "🍒";
                     }
-
-                    msg.style.color = "#ff4444";
-                    msg.innerText = "Não foi dessa vez! Tente novamente.";
+                    status.style.color = "#ff4444";
+                    status.innerText = "Não foi dessa vez! Tente novamente.";
                 } else {
-                    // Vitória com prêmio muito baixo (entre R$ 0.20 e R$ 1.00)
-                    let premioBaixo = (Math.random() * 0.8 + 0.2).toFixed(2);
-                    let iconeSorteado = "💰";
-                    
-                    s1.innerText = iconeSorteado;
-                    s2.innerText = iconeSorteado;
-                    s3.innerText = iconeSorteado;
-
-                    saldo += parseFloat(premioBaixo);
-                    document.getElementById("saldo-val").innerText = saldo.toFixed(2);
-
-                    msg.style.color = "#00ff88";
-                    msg.innerText = `Você ganhou um prêmio baixo: R$ ${premioBaixo}`;
+                    // Vitória com prêmio baixo (R$ 0.50 a R$ 1.50)
+                    let premioBaixo = 1.50;
+                    r1.innerText = "💰"; r2.innerText = "💰"; r3.innerText = "💰";
+                    saldoVirtual += premioBaixo;
+                    status.style.color = "#00ff88";
+                    status.innerText = `Você ganhou um prêmio baixo: R$ ${premioBaixo.toFixed(2)}`;
                 }
-
-                btn.disabled = false;
-            }, 1200);
+                atualizarSaldoUI();
+            }, 1000);
         }
+
+        function filtrarJogos() {
+            const termo = document.getElementById('searchInput').value.toLowerCase();
+            const res = document.getElementById('searchResultBox');
+            res.innerHTML = '';
+            if(!termo) return;
+            if('fortune tiger'.includes(termo)) {
+                res.innerHTML = '<div style="padding: 8px; cursor: pointer;" onclick="entrarFortuneTiger()">🐯 Fortune Tiger</div>';
+            } else {
+                res.innerHTML = '<div style="padding: 8px;">Nenhum jogo encontrado.</div>';
+            }
+        }
+
+        // Carrossel superior automático
+        const track = document.getElementById('promoTrack');
+        let slideIdx = 0;
+        setInterval(() => {
+            slideIdx = (slideIdx + 1) % 3;
+            track.style.transform = `translateX(-${slideIdx * 33.333}%)`;
+        }, 4000);
     </script>
 </body>
 </html>
