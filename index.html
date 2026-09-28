@@ -1,15 +1,179 @@
-<!-- Exemplo de estrutura para o card de partida com escudos -->
-<div class="match-card">
-  <div class="team home">
-    <img src="https://media.api-sports.io/football/teams/{team_id}.png" alt="Escudo Mandante" class="team-logo">
-    <span>Nome do Time Casa</span>
-  </div>
-  <div class="match-score">
-    <span class="live-clock">45:12</span> <!-- Relógio em tempo real -->
-    <strong>2 x 1</strong>
-  </div>
-  <div class="team away">
-    <span>Nome do Time Visitante</span>
-    <img src="https://media.api-sports.io/football/teams/{team_id}.png" alt="Escudo Visitante" class="team-logo">
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cangaço Bet - Apostas Desportivas e Casino</title>
+    <style>
+        :root {
+            --primary: #d4af37;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent: #2e7d32;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; }
+        
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 0.5s ease;
+        }
+        #splash-screen h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 20px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        .btn-entrar { background: var(--primary); color: #000; border: none; padding: 12px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 5px; cursor: pointer; }
+
+        /* Header */
+        header { background: #1a1a1a; border-bottom: 2px solid var(--primary); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: var(--primary); font-size: 1.5rem; font-weight: bold; }
+        .saldo-box { background: #2a2a2a; padding: 5px 15px; border-radius: 20px; border: 1px solid var(--primary); font-size: 0.9rem; }
+
+        /* Main Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Secção Desportos */
+        .seccao-titulo { color: var(--primary); margin: 20px 0 10px 0; border-left: 4px solid var(--primary); padding-left: 10px; }
+        .lista-jogos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .card-jogo { background: var(--bg-card); border: 1px solid #333; border-radius: 8px; padding: 15px; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+        .card-jogo:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .info-jogo { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted); }
+        .times { font-weight: bold; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
+        .odds-container { display: flex; justify-content: space-around; gap: 10px; }
+        .odd-btn { background: #2a2a2a; border: 1px solid #444; color: white; padding: 8px 12px; border-radius: 4px; flex: 1; text-align: center; cursor: pointer; font-size: 0.9rem; }
+        .odd-btn:hover { background: var(--primary); color: #000; font-weight: bold; }
+
+        /* Campo 4D Embutido (Invisível até clicar no jogo) */
+        #campo-4d-container { background: #0d47a1; border-radius: 8px; padding: 15px; text-align: center; margin: 20px 0; color: white; display: none; border: 2px solid var(--primary); }
+        .campo-futebol { position: relative; width: 100%; height: 180px; background: #2e7d32; border: 2px solid white; border-radius: 4px; overflow: hidden; margin-top: 10px; }
+        .linha-meio { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255,255,255,0.5); }
+        .circulo-centro { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.5); border-radius: 50%; }
+        .boneco-a { position: absolute; top: 40%; left: 30%; width: 10px; height: 10px; background: #ff5722; border-radius: 50%; box-shadow: 0 0 6px #fff; animation: correrA 3s infinite alternate ease-in-out; }
+        .boneco-b { position: absolute; top: 60%; left: 60%; width: 10px; height: 10px; background: #2196f3; border-radius: 50%; box-shadow: 0 0 6px #fff; animation: correrB 2.5s infinite alternate ease-in-out; }
+        .bola-4d { position: absolute; top: 48%; left: 45%; width: 6px; height: 6px; background: #fff; border-radius: 50%; box-shadow: 0 0 8px yellow; }
+        
+        @keyframes correrA { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, -30px); } }
+        @keyframes correrB { 0% { transform: translate(0, 0); } 100% { transform: translate(-40px, 20px); } }
+
+        #alerta-escanteio { margin-top: 10px; font-weight: bold; color: #ffeb3b; background: rgba(0,0,0,0.4); padding: 5px; border-radius: 4px; display: none; }
+
+        /* Modal de Mercados Extras (Dupla Chance, etc) */
+        #modal-mercados-extras {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #1a1a1a; padding: 20px; border-radius: 8px; z-index: 9999;
+            color: white; width: 90%; max-width: 400px; border: 2px solid var(--primary); display: none; box-data: 0 0 20px rgba(0,0,0,0.8);
+        }
+        .btn-aposta-extra { background: #333; color: white; border: 1px solid #554; padding: 10px; margin: 5px 0; cursor: pointer; width: 100%; border-radius: 4px; text-align: left; }
+        .btn-aposta-extra:hover { background: var(--primary); color: black; font-weight: bold; }
+        .fechar-modal { background: var(--primary); color: black; border: none; padding: 8px 15px; margin-top: 15px; cursor: pointer; font-weight: bold; width: 100%; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- Splash Screen 4D -->
+    <div id="splash-screen">
+        <h1>CANGAÇO BET</h1>
+        <button class="btn-entrar" onclick="entrarSite()">ENTRAR</button>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">🤠 Cangaço Bet</div>
+        <div class="saldo-box">Saldo: <strong>R$ 100,00</strong></div>
+    </header>
+
+    <div class="container">
+        <!-- Campo 4D (Ativado ao clicar num jogo) -->
+        <div id="campo-4d-container">
+            <h4 style="color: var(--primary);">Simulação 4D do Jogo ao Vivo</h4>
+            <div class="campo-futebol">
+                <div class="linha-meio"></div>
+                <div class="circulo-centro"></div>
+                <div class="boneco-a"></div>
+                <div class="boneco-b"></div>
+                <div class="bola-4d"></div>
+            </div>
+            <div id="alerta-escanteio">⚡ ESCANTEIO ASSINALADO PARA O ATAQUE!</div>
+        </div>
+
+        <h2 class="seccao-titulo">Partidas em Destaque (Ao Vivo)</h2>
+        
+        <!-- Lista de Jogos (Ainda mantendo a estrutura original intacta) -->
+        <div class="lista-jogos">
+            <div class="card-jogo" onclick="selecionarJogo('Flamengo x Vasco')">
+                <div class="info-jogo"><span>Brasileirão</span><span style="color: #4caf50;">AO VIVO 45'</span></div>
+                <div class="times">Flamengo vs Vasco</div>
+                <div class="odds-container">
+                    <div class="odd-btn">1: 1.85</div>
+                    <div class="odd-btn">X: 3.40</div>
+                    <div class="odd-btn">2: 4.20</div>
+                </div>
+            </div>
+
+            <div class="card-jogo" onclick="selecionarJogo('Palmeiras x Corinthians')">
+                <div class="info-jogo"><span>Paulistão</span><span style="color: #4caf50;">AO VIVO 72'</span></div>
+                <div class="times">Palmeiras vs Corinthians</div>
+                <div class="odds-container">
+                    <div class="odd-btn">1: 2.10</div>
+                    <div class="odd-btn">X: 3.10</div>
+                    <div class="odd-btn">2: 3.50</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Mercados Adicionais (Dupla Chance, etc.) -->
+    <div id="modal-mercados-extras">
+        <h3 id="titulo-modal-jogo" style="color: var(--primary); margin-bottom: 10px; font-size: 1.1rem;">Mercados Adicionais</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Selecione o mercado desejado:</p>
+        
+        <div style="margin-bottom: 5px;">
+            <strong>Dupla Chance</strong>
+            <button class="btn-aposta-extra" onclick="registraApostaExtra('Casa ou Empate (1X)')">Casa ou Empate (1X) — <strong>1.22</strong></button>
+            <button class="btn-aposta-extra" onclick="registraApostaExtra('Casa ou Fora (12)')">Casa ou Fora (12) — <strong>1.35</strong></button>
+            <button class="btn-aposta-extra" onclick="registraApostaExtra('Empate ou Fora (X2)')">Empate ou Fora (X2) — <strong>1.65</strong></button>
+        </div>
+
+        <button class="fechar-modal" onclick="fecharModalMercados()">Fechar</button>
+    </div>
+
+    <script>
+        function entrarSite() {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => splash.style.display = 'none', 500);
+        }
+
+        // Função executada exatamente ao clicar em cima do jogo escolhido
+        function selecionarJogo(nomeJogo) {
+            // 1. Exibe o Campo 4D com os bonequinhos correndo
+            const campo4D = document.getElementById('campo-4d-container');
+            campo4D.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 2. Simula aleatoriamente um aviso de escanteio após alguns segundos
+            setTimeout(() => {
+                const alerta = document.getElementById('alerta-escanteio');
+                if(alerta) {
+                    alerta.style.display = 'block';
+                    setTimeout(() => { alerta.style.display = 'none'; }, 4000);
+                }
+            }, 3000);
+
+            // 3. Abre a aba/modal com os mercados adicionais (Dupla Chance, etc.)
+            document.getElementById('titulo-modal-jogo').innerText = "Mercados: " + nomeJogo;
+            document.getElementById('modal-mercados-extras').style.display = 'block';
+        }
+
+        function fecharModalMercados() {
+            document.getElementById('modal-mercados-extras').style.display = 'none';
+        }
+
+        function registraApostaExtra(mercado) {
+            alert("Aposta adicionada com sucesso no mercado: " + mercado);
+            fecharModalMercados();
+        }
+    </script>
+</body>
+</html>
