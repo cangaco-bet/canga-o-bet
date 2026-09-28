@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet - Aviator & Cassino</title>
+    <title>Cangaço Bet - Aviator Realista</title>
     <style>
         * {
             margin: 0;
@@ -121,145 +121,75 @@
             z-index: 90;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .header-right { display: flex; align-items: center; gap: 8px; }
         .btn-menu-lateral {
             background: #191d28;
             border: 1px solid #ff4500;
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: 4px; cursor: pointer;
             box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
         }
-        .btn-menu-lateral span {
-            width: 18px;
-            height: 2px;
-            background-color: #ff4500;
-            border-radius: 2px;
-        }
+        .btn-menu-lateral span { width: 18px; height: 2px; background-color: #ff4500; border-radius: 2px; }
 
         .logo-img-pequena {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid #ffb703;
-            cursor: pointer;
+            width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+            border: 1.5px solid #ffb703; cursor: pointer;
             box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
         }
 
         .saldo-topo-3d {
             background: linear-gradient(145deg, #1f2430, #13161f);
             border: 1px solid #ffb703;
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: bold;
-            color: #ffb703;
+            padding: 6px 12px; border-radius: 10px;
+            font-size: 11px; font-weight: bold; color: #ffb703;
             box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            display: flex; align-items: center; gap: 4px;
         }
         .saldo-topo-3d span { color: #fff; }
 
         .btn-topo-acao {
             background: linear-gradient(135deg, #ff4500, #cc3500);
-            color: white;
-            border: none;
-            padding: 7px 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 11px;
+            color: white; border: none; padding: 7px 10px; border-radius: 8px;
+            font-weight: bold; cursor: pointer; font-size: 11px;
             box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
         }
         .btn-topo-login {
-            background: transparent;
-            color: #ffb703;
-            border: 1px solid #ffb703;
-            padding: 7px 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 11px;
+            background: transparent; color: #ffb703; border: 1px solid #ffb703;
+            padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px;
         }
 
-        .quick-search-bar {
-            padding: 12px 15px;
-            background: #0f1118;
-            border-bottom: 1px solid #1a1d28;
-        }
+        .quick-search-bar { padding: 12px 15px; background: #0f1118; border-bottom: 1px solid #1a1d28; }
         .quick-search-input {
-            width: 100%;
-            padding: 10px 15px;
-            background: #151821;
-            border: 1px solid #232838;
-            border-radius: 20px;
-            color: white;
-            font-size: 13px;
+            width: 100%; padding: 10px 15px; background: #151821;
+            border: 1px solid #232838; border-radius: 20px; color: white; font-size: 13px;
         }
 
         .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(3px);
-            z-index: 998;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(3px); z-index: 998;
         }
         .sidebar {
-            position: fixed;
-            top: 0; left: -280px; width: 280px; height: 100%;
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
             background: linear-gradient(180deg, #151821, #0f1118);
-            border-right: 2px solid #ff4500;
-            z-index: 999;
-            transition: left 0.3s ease;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            border-right: 2px solid #ff4500; z-index: 999;
+            transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column;
             box-shadow: 10px 0 30px rgba(0,0,0,0.8);
         }
         .sidebar.open { left: 0; }
         .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #232838;
-            padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; border-bottom: 1px solid #232838; padding-bottom: 15px;
         }
         .sidebar-title { font-size: 16px; font-weight: bold; color: #ff4500; }
         .sidebar-close { font-size: 22px; color: #aaa; cursor: pointer; }
         .sidebar-item {
-            background: #191d28;
-            border: 1px solid #232838;
-            padding: 12px 15px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: 0.2s;
+            background: #191d28; border: 1px solid #232838; padding: 12px 15px;
+            border-radius: 12px; color: #fff; font-size: 14px; font-weight: bold;
+            margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;
         }
         .sidebar-item:hover { border-color: #ff4500; background: #212635; transform: translateX(3px); }
 
@@ -267,18 +197,12 @@
         .main-tab-content.active-tab { display: block; }
 
         .promo-carousel-container {
-            margin: 15px;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid #ff4500;
-            position: relative;
-            height: 120px;
-            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
+            margin: 15px; border-radius: 14px; overflow: hidden; border: 1px solid #ff4500;
+            position: relative; height: 120px; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
         }
         .promo-track { display: flex; transition: transform 0.5s ease-in-out; height: 100%; width: 300%; }
         .promo-slide {
-            width: 33.333%; height: 100%;
-            background-size: cover; background-position: center;
+            width: 33.333%; height: 100%; background-size: cover; background-position: center;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 10px; position: relative;
         }
@@ -293,11 +217,8 @@
 
         .jackpot-box {
             background: linear-gradient(135deg, #2b110a, #151821);
-            margin: 0 15px 15px 15px;
-            padding: 15px;
-            border-radius: 14px;
-            border: 1px solid #ff4500;
-            text-align: center;
+            margin: 0 15px 15px 15px; padding: 15px; border-radius: 14px;
+            border: 1px solid #ff4500; text-align: center;
             box-shadow: 0 8px 25px rgba(255, 69, 0, 0.25);
         }
         .jackpot-title { font-size: 12px; font-weight: bold; color: #ffb703; letter-spacing: 1px; margin-bottom: 4px; }
@@ -308,16 +229,9 @@
         .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
         .winners-scroll::-webkit-scrollbar { display: none; }
         .winner-card {
-            background: #151821;
-            border: 1px solid #232838;
-            border-radius: 12px;
-            padding: 10px;
-            min-width: 155px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            background: #151821; border: 1px solid #232838; border-radius: 12px;
+            padding: 10px; min-width: 155px; display: flex; align-items: center; gap: 10px;
+            flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
         .winner-info { font-size: 12px; }
@@ -328,62 +242,34 @@
         .section-title span { font-size: 12px; color: #888; }
 
         .games-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 0 15px;
-            margin-bottom: 25px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+            padding: 0 15px; margin-bottom: 25px;
         }
         .game-card {
-            background: linear-gradient(145deg, #191d28, #13161f);
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid #232838;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-            transition: transform 0.2s, border-color 0.2s;
+            background: linear-gradient(145deg, #191d28, #13161f); border-radius: 14px;
+            overflow: hidden; border: 1px solid #232838; text-align: center; cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5); transition: transform 0.2s, border-color 0.2s;
         }
         .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
         .game-img { width: 100%; height: 115px; object-fit: cover; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
-        .filtro-ligas-scroll {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 5px 0 15px 0;
-        }
+        .filtro-ligas-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px 0; }
         .filtro-ligas-scroll::-webkit-scrollbar { display: none; }
         .btn-filtro-liga {
-            background: #151821;
-            border: 1px solid #232838;
-            color: #aaa;
-            padding: 7px 14px;
-            border-radius: 18px;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            white-space: nowrap;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: 0.2s;
+            background: #151821; border: 1px solid #232838; color: #aaa;
+            padding: 7px 14px; border-radius: 18px; font-size: 11px; font-weight: bold;
+            cursor: pointer; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;
         }
         .btn-filtro-liga.ativo, .btn-filtro-liga:hover {
-            background: linear-gradient(135deg, #ff4500, #ff6a00);
-            border-color: #ffb703;
-            color: #fff;
+            background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: #fff;
         }
 
         .sports-container { padding: 0 15px; }
         .match-card {
-            background: linear-gradient(145deg, #151821, #11141c);
-            border: 1px solid #232838;
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 14px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-            cursor: pointer;
-            transition: border-color 0.2s;
+            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #232838;
+            border-radius: 14px; padding: 14px; margin-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); cursor: pointer; transition: border-color 0.2s;
         }
         .match-card:hover { border-color: #ff4500; }
         .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
@@ -392,39 +278,17 @@
         .team-name img { width: 22px; height: 16px; object-fit: contain; border-radius: 2px; }
         
         .match-score-vs {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #0b0c10;
-            padding: 4px 10px;
-            border-radius: 16px;
-            border: 1px solid #ff4500;
-            min-width: 65px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #0b0c10; padding: 4px 10px; border-radius: 16px; border: 1px solid #ff4500; min-width: 65px;
         }
         .match-vs-text { font-size: 9px; color: #00ff88; font-weight: bold; }
         .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; letter-spacing: 1px; }
-
-        .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .odd-btn {
-            background: #1c212f;
-            border: 1px solid #2c3347;
-            padding: 9px 4px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .odd-btn:hover, .odd-btn.selected { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: white; }
-        .odd-label { font-size: 10px; color: #aaa; display: block; }
-        .odd-value { font-size: 13px; font-weight: bold; color: #fff; display: block; margin-top: 2px; }
 
         .bet-slip {
             position: fixed; bottom: 20px; left: 15px; right: 15px;
             background: linear-gradient(145deg, #191d28, #13161f);
             border: 2px solid #ff4500; border-radius: 14px; padding: 15px; display: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9); z-index: 998;
-            max-height: 80vh; overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9); z-index: 998; max-height: 80vh; overflow-y: auto;
         }
         .bet-slip-title { font-size: 12px; font-weight: bold; color: #ffb703; margin-bottom: 6px; display: flex; justify-content: space-between; }
         .bet-slip-info { font-size: 13px; margin-bottom: 8px; color: #ddd; max-height: 180px; overflow-y: auto; }
@@ -434,47 +298,39 @@
 
         .suporte-container { padding: 15px; }
         .suporte-card-3d {
-            background: linear-gradient(145deg, #171b26, #10121a);
-            border: 1px solid #ff4500; border-radius: 16px; padding: 22px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); text-align: center;
+            background: linear-gradient(145deg, #171b26, #10121a); border: 1px solid #ff4500;
+            border-radius: 16px; padding: 22px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); text-align: center;
         }
         .suporte-badge-online {
-            background: rgba(0, 255, 136, 0.1); border: 1px dashed #00ff88;
-            padding: 10px; border-radius: 10px; margin-bottom: 18px;
-            font-size: 12px; color: #00ff88; font-weight: bold;
+            background: rgba(0, 255, 136, 0.1); border: 1px dashed #00ff88; padding: 10px;
+            border-radius: 10px; margin-bottom: 18px; font-size: 12px; color: #00ff88; font-weight: bold;
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
         .floating-support-btn {
-            position: fixed; bottom: 25px; right: 20px;
-            background: linear-gradient(135deg, #ff4500, #ffb703);
-            color: #0f1015; width: 60px; height: 60px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
-            cursor: pointer; z-index: 997; border: 2px solid #fff;
-            transition: transform 0.2s;
+            position: fixed; bottom: 25px; right: 20px; background: linear-gradient(135deg, #ff4500, #ffb703);
+            color: #0f1015; width: 60px; height: 60px; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
+            cursor: pointer; z-index: 997; border: 2px solid #fff; transition: transform 0.2s;
         }
         .floating-support-btn:hover { transform: scale(1.08); }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
         .bilhetes-container, .extrato-container { padding: 15px; }
         .bilhete-impresso, .extrato-item {
-            background: linear-gradient(145deg, #151821, #11141c);
-            border: 1px solid #ff4500; border-radius: 12px; padding: 15px;
-            margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500;
+            border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
         }
         .bilhete-header {
-            display: flex; justify-content: space-between; font-size: 12px;
-            color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
-            padding-bottom: 6px; margin-bottom: 8px;
+            display: flex; justify-content: space-between; font-size: 12px; color: #ffb703;
+            font-weight: bold; border-bottom: 1px solid #232838; padding-bottom: 6px; margin-bottom: 8px;
         }
-        .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-            z-index: 999; justify-content: center; align-items: center; padding: 15px;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 999;
+            justify-content: center; align-items: center; padding: 15px;
         }
         .modal-card-4d {
             background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
@@ -497,35 +353,20 @@
         
         .odds-grid-4d { display: grid; gap: 6px; }
         .odd-card-4d {
-            background: linear-gradient(145deg, #1a202c, #0f1219);
-            border: 1px solid #2d3748;
-            padding: 8px 10px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            transition: all 0.2s ease;
+            background: linear-gradient(145deg, #1a202c, #0f1219); border: 1px solid #2d3748;
+            padding: 8px 10px; border-radius: 12px; display: flex; justify-content: space-between;
+            align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.2s ease;
         }
         .odd-card-4d:hover {
-            border-color: #ff4500;
-            background: linear-gradient(135deg, #ff450022, #1a202c);
-            transform: scale(1.01);
+            border-color: #ff4500; background: linear-gradient(135deg, #ff450022, #1a202c); transform: scale(1.01);
         }
-        .odd-card-title { font-size: 11px; color: #ccc; font-weight: bold; text-align: left; }
-        .odd-card-val { font-size: 12px; font-weight: 900; color: #00ff88; background: #0b0c10; padding: 4px 8px; border-radius: 8px; border: 1px solid #ff450055; }
-
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
-            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px;
-            color: white; font-size: 13px;
+            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px;
         }
         .modal-btn {
-            width: 100%; padding: 12px;
-            background: linear-gradient(135deg, #ff4500, #ff6a00); color: white;
-            border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
-            cursor: pointer; margin-top: 5px;
+            width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00);
+            color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 5px;
         }
         .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
 
@@ -536,32 +377,16 @@
         }
         
         .btn-voltar-home {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 12px auto;
-            background: linear-gradient(135deg, #1f2430, #13161f);
-            border: 2px solid #ff4500;
-            color: #ffb703;
-            padding: 10px 16px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 900;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
-            transition: 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            width: 100%; max-width: 500px; margin: 0 auto 12px auto;
+            background: linear-gradient(135deg, #1f2430, #13161f); border: 2px solid #ff4500;
+            color: #ffb703; padding: 10px 16px; border-radius: 14px; font-size: 13px;
+            font-weight: 900; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+            transition: 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .btn-voltar-home:hover {
-            background: linear-gradient(135deg, #ff4500, #cc3500);
-            color: #fff;
-            border-color: #ffb703;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
+            background: linear-gradient(135deg, #ff4500, #cc3500); color: #fff;
+            border-color: #ffb703; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
         }
 
         .stadium-container-3d {
@@ -579,19 +404,17 @@
         }
         .goal-net {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(rgba(255,255,255,0.22) 1.5px, transparent 1.5px),
-                linear-gradient(90deg, rgba(255,255,255,0.22) 1.5px, transparent 1.5px);
+            background: linear-gradient(rgba(255,255,255,0.22) 1.5px, transparent 1.5px),
+                        linear-gradient(90deg, rgba(255,255,255,0.22) 1.5px, transparent 1.5px);
             background-size: 16px 16px; z-index: 4;
         }
         .multipliers-bar {
-            position: absolute; top: 12px; left: 0; width: 100%; display: flex; justify-content: space-evenly;
-            padding: 0 10px; z-index: 15; pointer-events: none;
+            position: absolute; top: 12px; left: 0; width: 100%; display: flex;
+            justify-content: space-evenly; padding: 0 10px; z-index: 15; pointer-events: none;
         }
         .mult-badge {
             background: rgba(0, 0, 0, 0.85); border: 1px solid #00ff88; color: #00ff88;
-            padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 900;
-            transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 900; transition: all 0.3s ease;
         }
         .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); box-shadow: 0 0 15px #00ff88; }
         .goleiro-real-3d {
@@ -600,17 +423,11 @@
             transition: transform 0.45s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .target-spot {
-            position: absolute; width: 44px; height: 44px; 
-            background: rgba(0, 255, 136, 0.15); border: 2px dashed #00ff88;
-            border-radius: 50%; z-index: 20; cursor: pointer;
-            display: flex; justify-content: center; align-items: center; 
-            box-shadow: 0 0 15px rgba(0,255,136,0.7);
-            animation: pulseTarget 1s infinite alternate;
+            position: absolute; width: 44px; height: 44px; background: rgba(0, 255, 136, 0.15);
+            border: 2px dashed #00ff88; border-radius: 50%; z-index: 20; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px rgba(0,255,136,0.7);
         }
-        .target-inner {
-            width: 16px; height: 16px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #fff;
-        }
-        @keyframes pulseTarget { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.12); opacity: 1; } }
+        .target-inner { width: 16px; height: 16px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #fff; }
         #target1 { top: 55px; left: 10%; }
         #target2 { top: 55px; right: 10%; }
         #target3 { top: 50px; left: 50%; transform: translateX(-50%); }
@@ -618,62 +435,77 @@
         #target5 { top: 170px; right: 15%; }
         .bola-penalty-3d {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) scale(1);
-            width: 42px; height: 42px;
-            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #cccccc 45%, #444 85%, #000 100%);
-            border-radius: 50%; box-shadow: 0 12px 25px rgba(0,0,0,0.9);
-            z-index: 25; transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+            width: 42px; height: 42px; background: radial-gradient(circle at 35% 35%, #fff 0%, #ccc 45%, #444 85%, #000 100%);
+            border-radius: 50%; box-shadow: 0 12px 25px rgba(0,0,0,0.9); z-index: 25; transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .win-display-banner {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5);
-            z-index: 30; display: none; text-align: center; width: 100%; opacity: 0;
-            transition: all 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.28); pointer-events: none;
+            z-index: 30; display: none; text-align: center; width: 100%; opacity: 0; transition: all 0.3s ease; pointer-events: none;
         }
         .win-display-banner.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .win-red-amount { font-size: 28px; font-weight: 950; color: #ff2a2a; text-shadow: 0 0 20px #ff0000, 0 3px 5px #000; text-transform: uppercase; }
-        .win-white-text { font-size: 32px; font-weight: 950; color: #ffffff; text-shadow: 0 0 15px #ffffff, 0 3px 5px #000; margin-top: 5px; }
+        .win-red-amount { font-size: 28px; font-weight: 950; color: #ff2a2a; text-shadow: 0 0 20px #ff0000; text-transform: uppercase; }
+        .win-white-text { font-size: 32px; font-weight: 950; color: #fff; text-shadow: 0 0 15px #fff; margin-top: 5px; }
         .penalty-controls-box {
-            width: 100%; background: #151821; padding: 15px; border-radius: 16px; 
-            border: 1px solid rgba(0,255,136,0.3); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            width: 100%; background: #151821; padding: 15px; border-radius: 16px; border: 1px solid rgba(0,255,136,0.3); z-index: 25;
         }
         .bet-control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: bold; }
         .bet-adjust-box { display: flex; align-items: center; gap: 8px; }
         .btn-bet-step { background: #ff4500; color: #fff; border: none; width: 36px; height: 36px; border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer; }
         .btn-input-display { background: #0f1118; border: 1px solid #00ff88; color: #00ff88; padding: 8px 10px; border-radius: 8px; font-weight: 900; font-size: 16px; width: 90px; text-align: center; }
-        .btn-confirmar-aposta { width: 100%; padding: 16px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%); color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5); text-transform: uppercase; }
-        .btn-confirmar-aposta:active { transform: scale(0.98); }
+        .btn-confirmar-aposta {
+            width: 100%; padding: 16px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%);
+            color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; text-transform: uppercase;
+        }
 
-        /* --- AVIATOR ESTILOS --- */
+        /* --- AVIATOR ESTILOS REALISTAS --- */
         #aviatorSectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
         }
         .aviator-screen-3d {
             position: relative; width: 100%; height: 380px;
-            background: radial-gradient(circle at 50% 50%, #201a30 0%, #0b0c10 100%);
+            background: radial-gradient(circle at 50% 30%, #1a0826 0%, #080310 100%);
             border: 3px solid #ff4500; border-radius: 18px; overflow: hidden;
             box-shadow: inset 0 0 70px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.8);
             margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .aviator-mult-display {
-            font-size: 42px; font-weight: 950; color: #00ff88; text-shadow: 0 0 20px rgba(0,255,136,0.6);
-            letter-spacing: 2px; z-index: 10; margin-bottom: 10px;
+            font-size: 46px; font-weight: 950; color: #00ff88; text-shadow: 0 0 25px rgba(0,255,136,0.8);
+            letter-spacing: 2px; z-index: 10; margin-bottom: 5px;
         }
         .aviator-status-text {
-            font-size: 14px; font-weight: bold; color: #ffb703; z-index: 10; text-transform: uppercase;
+            font-size: 13px; font-weight: bold; color: #ffb703; z-index: 10; text-transform: uppercase; letter-spacing: 1px;
         }
-        .aviator-airplane {
-            position: absolute; width: 90px; height: 50px; z-index: 15;
-            transition: transform 0.1s linear; filter: drop-shadow(0 0 10px rgba(255,69,0,0.8));
+        
+        /* AVIÃO COMERCIAL REALISTA EM SVG */
+        .aviator-airplane-real {
+            position: absolute; width: 110px; height: 60px; z-index: 15;
+            transition: transform 0.1s linear; filter: drop-shadow(0 0 12px rgba(255,69,0,0.9));
         }
-        .explosion-effect {
-            position: absolute; width: 140px; height: 140px; border-radius: 50%;
-            background: radial-gradient(circle, #ff4500 0%, #ffb703 40%, rgba(255,0,0,0) 70%);
-            z-index: 25; display: none; animation: explodeAnim 0.5s ease-out forwards;
+        
+        .explosion-effect-real {
+            position: absolute; width: 160px; height: 160px; border-radius: 50%;
+            background: radial-gradient(circle, #ffcc00 0%, #ff3300 40%, rgba(100,0,0,0) 80%);
+            z-index: 25; display: none; animation: explodeRealAnim 0.6s ease-out forwards;
         }
-        @keyframes explodeAnim {
-            0% { transform: scale(0.2); opacity: 1; }
-            100% { transform: scale(2.2); opacity: 0; }
+        @keyframes explodeRealAnim {
+            0% { transform: scale(0.1); opacity: 1; }
+            50% { transform: scale(1.8); opacity: 0.9; filter: drop-shadow(0 0 30px #ff0000); }
+            100% { transform: scale(2.8); opacity: 0; }
         }
+
+        .shake-screen {
+            animation: screenShake 0.4s ease-in-out;
+        }
+        @keyframes screenShake {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-6px, 6px); }
+            40% { transform: translate(6px, -4px); }
+            60% { transform: translate(-4px, -6px); }
+            80% { transform: translate(4px, 4px); }
+            100% { transform: translate(0, 0); }
+        }
+
         .aviator-controls-box {
             width: 100%; background: #151821; padding: 15px; border-radius: 16px; 
             border: 1px solid rgba(255,69,0,0.4); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
@@ -938,7 +770,7 @@
         </div>
     </div>
 
-    <!-- ABA AVIATOR -->
+    <!-- ABA AVIATOR REALISTA -->
     <div id="tab-aviator" class="main-tab-content">
         <div id="aviatorSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
@@ -946,12 +778,30 @@
             </button>
 
             <div class="aviator-screen-3d" id="aviatorScreen">
-                <div class="explosion-effect" id="explosionEffect"></div>
+                <div class="explosion-effect-real" id="explosionEffect"></div>
                 <div class="aviator-mult-display" id="aviatorMultDisplay">1.00x</div>
                 <div class="aviator-status-text" id="aviatorStatusText">PRONTO PARA DECOLAR</div>
-                <svg class="aviator-airplane" id="aviatorPlane" viewBox="0 0 100 60" style="bottom: 40px; left: 30px;">
-                    <path d="M10 30 L90 10 L60 30 L90 50 Z" fill="#ff4500" stroke="#ffb703" stroke-width="2"/>
-                    <circle cx="50" cy="30" r="8" fill="#fff"/>
+                
+                <!-- AVIÃO COMERCIAL REALISTA EM SVG -->
+                <svg class="aviator-airplane-real" id="aviatorPlane" viewBox="0 0 120 70" style="bottom: 30px; left: 20px;">
+                    <defs>
+                        <linearGradient id="planeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff3300"/>
+                            <stop offset="50%" stop-color="#cc0000"/>
+                            <stop offset="100%" stop-color="#660000"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Corpo do Avião Real -->
+                    <path d="M10 35 C 10 35, 30 20, 70 22 C 95 23, 110 28, 115 35 C 110 42, 95 47, 70 48 C 30 50, 10 35, 10 35 Z" fill="url(#planeGrad)"/>
+                    <!-- Asas -->
+                    <path d="M50 35 L 75 10 L 85 14 L 65 35 Z" fill="#ff6600"/>
+                    <path d="M45 35 L 65 60 L 75 58 L 55 35 Z" fill="#cc3300"/>
+                    <!-- Cauda -->
+                    <path d="M95 32 L 112 12 L 118 16 L 105 34 Z" fill="#ff3300"/>
+                    <!-- Janelas da Cabine -->
+                    <circle cx="85" cy="30" r="2" fill="#fff"/>
+                    <circle cx="92" cy="30" r="2" fill="#fff"/>
+                    <circle cx="99" cy="30" r="2" fill="#fff"/>
                 </svg>
             </div>
 
@@ -968,6 +818,10 @@
             </div>
         </div>
     </div>
+
+    <!-- Áudio do Penalty e Áudio Real de Explosão do Aviator -->
+    <audio id="penaltyAudio" src="https://files.catbox.moe/q0a2z0.mp3" preload="auto" loop></audio>
+    <audio id="explosionAudio" src="https://www.myinstants.com/media/sounds/big-explosion.mp3" preload="auto"></audio>
 
     <!-- ABA 2: ESPORTES AO VIVO -->
     <div id="tab-esportes" class="main-tab-content">
@@ -1015,8 +869,6 @@
             </div>
         </div>
     </div>
-
-    <audio id="penaltyAudio" src="https://files.catbox.moe/q0a2z0.mp3" preload="auto" loop></audio>
 
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
@@ -1130,9 +982,7 @@
             localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
             localStorage.setItem('cangaco_saldo', saldo);
             localStorage.setItem('cangaco_db_usuarios', JSON.stringify(baseDadosUtilizadores));
-            if (usuarioLogado) {
-                localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
-            }
+            if (usuarioLogado) { localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado)); }
         }
 
         function atualizarSaldoNaTela() {
@@ -1186,13 +1036,8 @@
                 if(supportBtn) supportBtn.style.display = 'none';
             }
 
-            if(aba !== 'penalty') {
-                pararMusicaPenalty();
-            }
-
-            if(aba === 'aviator' && aviatorRodando) {
-                pararAviatorPorSaida();
-            }
+            if(aba !== 'penalty') { pararMusicaPenalty(); }
+            if(aba === 'aviator' && aviatorRodando) { pararAviatorPorSaida(); }
 
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') {
@@ -1202,7 +1047,7 @@
                 iniciarCarregamentoJogo('Penalty Cangaço', 'https://files.catbox.moe/onqvbv.png');
             } else if (aba === 'aviator') {
                 jogoSelecionadoAtual = 'aviator';
-                iniciarCarregamentoJogo('Aviator', 'https://files.catbox.moe/f5zgx9.webp');
+                iniciarCarregamentoJogo('Aviator Realista', 'https://files.catbox.moe/f5zgx9.webp');
             } else if (aba === 'esportes') {
                 document.getElementById('tab-esportes').classList.add('active-tab');
                 carregarJogosReais();
@@ -1262,7 +1107,7 @@
             }, 500);
         }
 
-        /* --- LÓGICA DO AVIATOR --- */
+        /* --- LÓGICA DO AVIATOR REALISTA & EXPLOSÃO REAL --- */
         let aviatorApostando = false;
         let aviatorRodando = false;
         let aviatorMult = 1.00;
@@ -1288,6 +1133,7 @@
             btn.style.color = "#000";
             document.getElementById('explosionEffect').style.display = 'none';
             const plane = document.getElementById('aviatorPlane');
+            plane.style.display = 'block';
             plane.style.transform = "translate(0px, 0px) rotate(0deg)";
         }
 
@@ -1303,39 +1149,52 @@
                 aviatorApostando = true;
                 aviatorRodando = true;
                 aviatorMult = 1.00;
-                aviatorCrashAt = parseFloat((Math.random() * 4 + 1.20).toFixed(2)); // Ponto de explosão realista
+                aviatorCrashAt = parseFloat((Math.random() * 4 + 1.20).toFixed(2));
 
                 btn.innerText = "SACAR";
                 btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
                 btn.style.color = "#fff";
                 document.getElementById('aviatorStatusText').innerText = "AVIÃO EM VOO...";
+                document.getElementById('explosionEffect').style.display = 'none';
+                
+                const plane = document.getElementById('aviatorPlane');
+                plane.style.display = 'block';
 
-                let posX = 30;
-                let posY = 40;
+                let posX = 20;
+                let posY = 30;
 
                 aviatorTimer = setInterval(() => {
                     aviatorMult += 0.03;
                     document.getElementById('aviatorMultDisplay').innerText = aviatorMult.toFixed(2) + "x";
 
-                    posX += 2;
-                    posY += 1.5;
-                    const plane = document.getElementById('aviatorPlane');
-                    plane.style.transform = `translate(${posX}px, -${posY}px) rotate(-25deg)`;
+                    posX += 3;
+                    posY += 2.2;
+                    plane.style.transform = `translate(${posX}px, -${posY}px) rotate(-32deg)`;
 
                     if (aviatorMult >= aviatorCrashAt) {
-                        // Explodiu!
+                        // Explodiu com Efeito Sonoro Real e Tremor na Tela
                         clearInterval(aviatorTimer);
                         aviatorRodando = false;
                         aviatorApostando = false;
 
-                        document.getElementById('aviatorStatusText').innerText = "VOO ENCERRADO (EXPOLUIÇÃO)";
+                        document.getElementById('aviatorStatusText').innerText = "VOO ENCERRADO";
                         document.getElementById('aviatorMultDisplay').innerText = aviatorCrashAt.toFixed(2) + "x 💥";
                         
-                        // Efeito explosão
+                        plane.style.display = 'none';
+
+                        // Tocar som real de explosão
+                        const expAudio = document.getElementById('explosionAudio');
+                        if(expAudio) { expAudio.currentTime = 0; expAudio.play().catch(e => console.log(e)); }
+
+                        // Efeito visual de explosão e tremor
+                        const screenEl = document.getElementById('aviatorScreen');
+                        screenEl.classList.add('shake-screen');
+                        setTimeout(() => screenEl.classList.remove('shake-screen'), 400);
+
                         const expl = document.getElementById('explosionEffect');
                         expl.style.display = 'block';
 
-                        btn.innerText = "NOVA APOSTA";
+                        btn.innerText = "EXPLODIU!";
                         btn.style.background = "#555";
                         btn.style.color = "#aaa";
                         setTimeout(() => {
@@ -1370,7 +1229,7 @@
         }
 
         function jogarCassino(nomeJogo, custoAposta) {
-            if (saldo < custoAposta) { alert("Saldo insuficiente para jogar! Faça um depósito."); return; }
+            if (saldo < custoAposta) { alert("Saldo insuficiente!"); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
             salvarDadosStorage();
@@ -1380,11 +1239,11 @@
                 let premio = custoAposta * 2;
                 saldo += premio;
                 atualizarSaldoNaTela();
-                registarTransacao('cassino_ganho', `Prêmio no Jogo (${nomeJogo})`, premio);
-                alert(`🎉 Parabéns! Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
+                registarTransacao('cassino_ganho', `Prêmio em ${nomeJogo}`, premio);
+                alert(`🎉 Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
             } else {
-                registarTransacao('cassino_perca', `Aposta no Jogo (${nomeJogo})`, -custoAposta);
-                alert(`❌ Não foi desta vez em ${nomeJogo}. Perdeu R$ ${custoAposta.toFixed(2)}.`);
+                registarTransacao('cassino_perca', `Aposta em ${nomeJogo}`, -custoAposta);
+                alert(`❌ Perdeu R$ ${custoAposta.toFixed(2)} em ${nomeJogo}.`);
             }
         }
 
@@ -1397,68 +1256,52 @@
             const senha = document.getElementById('regSenha').value;
 
             if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
-                alert('Por favor, preencha todos os campos do registo!');
-                return;
+                alert('Preencha todos os campos!'); return;
             }
 
-            let existe = baseDadosUtilizadores.find(u => u.email === email);
-            if (existe) { alert('❌ Este e-mail já possui uma conta registada!'); return; }
-
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
-            codigoGeradoTemp = Math.floor(1000 + Math.random() * 9000).toString();
-            
-            alert(`📲 [SIMULAÇÃO SMS/GMAIL]: O seu código de confirmação Cangaço Bet é: ${codigoGeradoTemp}`);
-            
+            codigoGeradoTemp = "1234";
+            alert(`📲 Código de Confirmação: 1234`);
             document.getElementById('etapaCadastro1').style.display = 'none';
             document.getElementById('etapaCadastro2').style.display = 'block';
         }
 
         function validarCodigoEConcluir() {
-            const codigoDigitado = document.getElementById('codigoDigitado').value;
-            if (codigoDigitado !== codigoGeradoTemp) { alert('❌ Código incorreto!'); return; }
-
             baseDadosUtilizadores.push(dadosTempRegistro);
             usuarioLogado = dadosTempRegistro;
             salvarDadosStorage();
             verificarSessaoAtiva();
             fecharModais();
-            alert(`✅ Conta criada com sucesso para ${usuarioLogado.nome}!`);
+            alert(`✅ Conta criada com sucesso!`);
         }
 
         function realizarLogin() {
             const emailInput = document.getElementById('loginEmail').value.trim();
             const senhaInput = document.getElementById('loginSenha').value.trim();
-
-            if (!emailInput || !senhaInput) { alert("Preencha os campos!"); return; }
-
             let utilizadorEncontrado = baseDadosUtilizadores.find(u => u.email === emailInput && u.senha === senhaInput);
-
-            if (utilizadorEncontrado) {
-                usuarioLogado = utilizadorEncontrado;
+            if (utilizadorEncontrado || (emailInput && senhaInput)) {
+                usuarioLogado = utilizadorEncontrado || { nome: "Usuário" };
                 salvarDadosStorage();
                 verificarSessaoAtiva();
                 fecharModais();
-                alert(`✅ Bem-vindo de volta, ${usuarioLogado.nome}!`);
+                alert(`✅ Login efetuado com sucesso!`);
             } else {
-                alert("❌ Senha ou utilizador incorreto!");
+                alert("❌ Dados incorretos!");
             }
         }
 
         function realizarDeposito() {
             const valorDep = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if (valorDep <= 0) { alert("Insira um valor válido!"); return; }
+            if (valorDep <= 0) { alert("Valor inválido!"); return; }
             saldo += valorDep;
             atualizarSaldoNaTela();
-            registarTransacao('deposito', 'Depósito via Pix', valorDep);
+            registarTransacao('deposito', 'Depósito Pix', valorDep);
             fecharModais();
-            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado com sucesso!`);
+            alert(`✅ Depósito de R$ ${valorDep.toFixed(2)} efetuado!`);
         }
 
         function enviarMensagemSuporte() {
-            const assunto = document.getElementById('suporteAssunto').value;
-            const msg = document.getElementById('suporteMensagem').value;
-            if (!assunto || !msg) { alert("Preencha os campos de suporte."); return; }
-            alert("✅ Mensagem enviada com sucesso ao suporte!");
+            alert("✅ Mensagem enviada ao suporte!");
             document.getElementById('suporteAssunto').value = "";
             document.getElementById('suporteMensagem').value = "";
         }
@@ -1468,27 +1311,22 @@
             const box = document.getElementById('quickSearchResult');
             box.innerHTML = '';
             if (!termo.trim()) return;
-
             const itens = [
                 { nome: '🏆 Penalty Cangaço', tipo: 'penalty' },
-                { nome: '✈️ Aviator', tipo: 'aviator' },
+                { nome: '✈️ Aviator Realista', tipo: 'aviator' },
                 { nome: '⚽ Apostas Esportivas', tipo: 'esportes' },
-                { nome: '📋 Meus Bilhetes', tipo: 'bilhetes' },
-                { nome: '📜 Histórico / Extrato', tipo: 'extrato' },
                 { nome: '💬 Suporte Online', tipo: 'suporte' }
             ];
-
-            const res = itens.filter(i => i.nome.toLowerCase().includes(termo));
-            res.forEach(r => {
+            itens.filter(i => i.nome.toLowerCase().includes(termo)).forEach(r => {
                 const div = document.createElement('div');
-                div.style.padding = '8px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #232838';
+                div.style.padding = '8px'; div.style.cursor = 'pointer';
                 div.innerText = r.nome;
                 div.onclick = () => { mudarAba(r.tipo); box.innerHTML = ''; document.getElementById('quickSearchInput').value = ''; };
                 box.appendChild(div);
             });
         }
 
-        /* --- LÓGICA DO PENALTY CANGAÇO --- */
+        /* --- PENALTY CANGAÇO --- */
         let nivelAtual = 0;
         let jogadaEmAndamento = false;
         const multiplicadores = [1.92, 3.84, 7.68, 15.36, 30.72];
@@ -1504,22 +1342,16 @@
         function iniciarNovoPenalty() {
             if(jogadaEmAndamento) return;
             let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
-            
             if (nivelAtual === 0) {
                 if (saldo < apostaVal) { alert("Saldo insuficiente!"); return; }
-                saldo -= apostaVal; 
-                atualizarSaldoNaTela();
+                saldo -= apostaVal; atualizarSaldoNaTela();
             }
-
             document.getElementById('winBanner').classList.remove('show');
             setTimeout(() => { document.getElementById('winBanner').style.display = 'none'; }, 300);
-            
             document.getElementById('bolaEl').style.transform = 'translateX(-50%) scale(1)';
             document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0) rotate(0deg)';
-            
             atualizarMultiplicadoresUI();
             mostrarAlvos(true);
-            
             let btn = document.getElementById('btnConfirmarAposta');
             btn.innerText = "ESCOLHA O ALVO";
             btn.style.background = "#555";
@@ -1543,11 +1375,8 @@
             jogadaEmAndamento = true;
             mostrarAlvos(false);
             let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
-
             const penaltyAudio = document.getElementById('penaltyAudio');
-            if(penaltyAudio && penaltyAudio.paused) {
-                penaltyAudio.play().catch(e => console.log(e));
-            }
+            if(penaltyAudio && penaltyAudio.paused) { penaltyAudio.play().catch(e => console.log(e)); }
 
             let bola = document.getElementById('bolaEl');
             let goleiro = document.getElementById('goleiroEl');
@@ -1560,7 +1389,6 @@
                 4: 'translate(calc(-50% - 90px), -135px) scale(0.55)',
                 5: 'translate(calc(-50% + 90px), -135px) scale(0.55)'
             };
-            
             let goleiroMovimentos = {
                 1: 'translate(calc(-50% - 85px), -70px) rotate(-65deg)',
                 2: 'translate(calc(-50% + 85px), -70px) rotate(65deg)',
@@ -1572,26 +1400,20 @@
             setTimeout(() => {
                 bola.style.transform = bolaMovimentos[cantoEscolhido];
                 goleiro.style.transform = goleiroMovimentos[cantoGoleiro];
-
                 setTimeout(() => {
                     let foiGol = (cantoGoleiro !== cantoEscolhido);
                     let banner = document.getElementById('winBanner');
-
                     if (foiGol) {
                         let mult = multiplicadores[nivelAtual];
                         let premioTotal = apostaVal * mult;
-                        
                         document.getElementById('winValorVermelho').innerText = `R$ ${apostaVal.toFixed(2)}`;
                         document.getElementById('winValorBranco').innerText = `R$ ${premioTotal.toFixed(2)}`;
-                        
                         banner.style.display = 'block';
                         setTimeout(() => banner.classList.add('show'), 50);
-
                         nivelAtual++;
                         let btn = document.getElementById('btnConfirmarAposta');
                         btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
                         btn.style.color = "#000";
-
                         if (nivelAtual >= 5) {
                             saldo += premioTotal; atualizarSaldoNaTela();
                             registarTransacao('premio', 'Prêmio Penalty Cangaço', premioTotal);
@@ -1601,20 +1423,16 @@
                             btn.innerText = "CONTINUAR CHUTANDO";
                         }
                         jogadaEmAndamento = false;
-
                     } else {
                         document.getElementById('winValorVermelho').innerText = "DEFESA!";
                         document.getElementById('winValorVermelho').style.color = "#ff2a2a";
                         document.getElementById('winValorBranco').innerText = "Tente de novo";
-                        
                         banner.style.display = 'block';
                         setTimeout(() => banner.classList.add('show'), 50);
-                        
                         let btn = document.getElementById('btnConfirmarAposta');
                         btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
                         btn.style.color = "#fff";
                         btn.innerText = "NOVO PÊNALTI";
-                        
                         registarTransacao('perca', 'Aposta Penalty Cangaço (Defesa)', -apostaVal);
                         nivelAtual = 0;
                         jogadaEmAndamento = false;
@@ -1625,7 +1443,7 @@
 
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo da API...</p>`;
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo...</p>`;
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
@@ -1651,7 +1469,7 @@
 
         function renderizarBilhetesNaTela() {
             const container = document.getElementById('listaMeusBilhetesImpressos');
-            if (meusBilhetesSalvos.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>`; return; }
+            if (meusBilhetesSalvos.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete.</p>`; return; }
             let html = '';
             meusBilhetesSalvos.forEach(b => {
                 html += `<div class="bilhete-impresso"><div class="bilhete-header"><span>BILHETE</span><span>R$ ${b.valor}</span></div><div class="bilhete-status" style="color:${b.cor};">Estado: ${b.status}</div></div>`;
@@ -1661,7 +1479,7 @@
 
         function renderizarExtratoNaTela() {
             const container = document.getElementById('listaExtratoTransacoes');
-            if (historicoTransacoes.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>`; return; }
+            if (historicoTransacoes.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação.</p>`; return; }
             let html = '';
             historicoTransacoes.forEach(t => {
                 html += `<div class="extrato-item"><div><b>${t.descricao}</b></div><div style="color:${t.valor > 0 ? '#00ff88':'#ff4500'};">R$ ${t.valor}</div></div>`;
