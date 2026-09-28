@@ -376,12 +376,33 @@
             position: relative;
             z-index: 2;
         }
-        .tiger-icon-box {
-            font-size: 32px;
-            margin-top: -10px;
+        
+        @keyframes flutuar {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes girarBrincando {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .tiger-img-animada {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            margin-top: -5px;
             position: relative;
             z-index: 1;
+            cursor: pointer;
+            animation: flutuar 2.5s ease-in-out infinite;
+            transition: filter 0.2s;
         }
+        .tiger-img-animada.girando-ativo {
+            animation: girarBrincando 0.6s linear infinite !important;
+        }
+
         .machine-frame {
             background: #7a0505;
             margin: 0 12px;
@@ -672,7 +693,7 @@
 
             <div class="tiger-header">
                 <div class="multiplier-badge">x10</div>
-                <div class="tiger-icon-box">🐅</div>
+                <img src="https://files.catbox.moe/gys1kk.png" alt="Tiger" class="tiger-img-animada" id="tigerImage" onclick="girarTiger(event)">
             </div>
 
             <div class="machine-frame">
@@ -829,6 +850,7 @@
             const r3 = document.getElementById('reel3');
             const status = document.getElementById('gameStatus');
             const ganhoEl = document.getElementById('ganhoJogo');
+            const tigerImg = document.getElementById('tigerImage');
 
             status.innerText = "Girando...";
             ganhoEl.innerText = "R$ 0,00";
@@ -836,11 +858,13 @@
             r1.classList.add('girando');
             r2.classList.add('girando');
             r3.classList.add('girando');
+            tigerImg.classList.add('girando-ativo');
 
             setTimeout(() => {
                 r1.classList.remove('girando');
                 r2.classList.remove('girando');
                 r3.classList.remove('girando');
+                tigerImg.classList.remove('girando-ativo');
 
                 const simbolos = ["💰", "🍊", "🍋", "🧧", "⭐"];
                 let chance = Math.random();
