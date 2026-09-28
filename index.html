@@ -33,13 +33,12 @@
 
         .section-title { padding: 0 15px; font-size: 16px; margin: 15px 0; font-weight: bold; color: #fff; text-transform: uppercase; }
 
-        /* --- PENALTY SHOOT-OUT 3D --- */
         #footballModal {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100vw; height: calc(100vh - 65px); max-width: 500px; margin: 0 auto;
         }
         
-        /* ESTÁDIO E BALIZA COM ILUMINAÇÃO REALISTA */
+        /* ESTÁDIO E BALIZA COM ESPAÇAMENTO PROFISSIONAL */
         .stadium-container-3d {
             position: relative; width: 100%; flex-grow: 1; max-height: 500px;
             background: radial-gradient(circle at 50% 30%, #174d2b 0%, #081d11 100%);
@@ -49,67 +48,67 @@
         }
 
         .goal-frame {
-            position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
-            width: 85%; height: 190px; border: 8px solid #f8f9f9; border-bottom: none;
+            position: absolute; top: 45px; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 170px; border: 7px solid #f8f9f9; border-bottom: none;
             border-radius: 6px 6px 0 0; box-shadow: 0 8px 25px rgba(0,0,0,0.7), inset 0 0 15px rgba(255,255,255,0.5);
             z-index: 5; pointer-events: none;
         }
         .goal-net {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                linear-gradient(rgba(255,255,255,0.22) 1.5px, transparent 1.5px),
-                linear-gradient(90deg, rgba(255,255,255,0.22) 1.5px, transparent 1.5px);
+                linear-gradient(rgba(255,255,255,0.2) 1.5px, transparent 1.5px),
+                linear-gradient(90deg, rgba(255,255,255,0.2) 1.5px, transparent 1.5px);
             background-size: 16px 16px;
             z-index: 4;
         }
 
         /* MULTIPLICADORES */
         .multipliers-bar {
-            position: absolute; top: 12px; left: 0; width: 100%; display: flex; justify-content: space-evenly;
+            position: absolute; top: 10px; left: 0; width: 100%; display: flex; justify-content: space-evenly;
             padding: 0 10px; z-index: 15; pointer-events: none;
         }
         .mult-badge {
             background: rgba(0, 0, 0, 0.85); border: 1px solid #00ff88; color: #00ff88;
-            padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 900;
+            padding: 3px 7px; border-radius: 6px; font-size: 10px; font-weight: 900;
             transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
         .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); box-shadow: 0 0 15px #00ff88; }
 
-        /* GOLEIRO 3D POLIGONAL REALISTA */
+        /* GOLEIRO PROPORCIONAL E ALINHADO CORRETAMENTE NA BALIZA */
         .goleiro-real-3d {
-            position: absolute; top: 100px; left: 50%; transform: translateX(-50%);
-            width: 150px; height: 190px; z-index: 10;
+            position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
+            width: 95px; height: 125px; z-index: 10;
             transform-origin: center center;
             transition: transform 0.45s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
         /* ALVOS NOS CANTOS DA BALIZA */
         .target-spot {
-            position: absolute; width: 44px; height: 44px; 
+            position: absolute; width: 38px; height: 38px; 
             background: rgba(0, 255, 136, 0.15); border: 2px dashed #00ff88;
             border-radius: 50%; z-index: 20; cursor: pointer;
             display: flex; justify-content: center; align-items: center; 
-            box-shadow: 0 0 15px rgba(0,255,136,0.7);
+            box-shadow: 0 0 12px rgba(0,255,136,0.6);
             animation: pulseTarget 1s infinite alternate;
         }
         .target-inner {
-            width: 16px; height: 16px; background: #00ff88;
-            border-radius: 50%; box-shadow: 0 0 10px #fff;
+            width: 14px; height: 14px; background: #00ff88;
+            border-radius: 50%; box-shadow: 0 0 8px #fff;
         }
         @keyframes pulseTarget { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.12); opacity: 1; } }
 
-        #target1 { top: 55px; left: 10%; }
-        #target2 { top: 55px; right: 10%; }
-        #target3 { top: 50px; left: 50%; transform: translateX(-50%); }
-        #target4 { top: 170px; left: 15%; }
-        #target5 { top: 170px; right: 15%; }
+        #target1 { top: 60px; left: 14%; }
+        #target2 { top: 60px; right: 14%; }
+        #target3 { top: 55px; left: 50%; transform: translateX(-50%); }
+        #target4 { top: 155px; left: 18%; }
+        #target5 { top: 155px; right: 18%; }
 
         /* FÍSICA DA BOLA */
         .bola-penalty-3d {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) scale(1);
-            width: 42px; height: 42px;
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%) scale(1);
+            width: 38px; height: 38px;
             background: radial-gradient(circle at 35% 35%, #ffffff 0%, #cccccc 45%, #444 85%, #000 100%);
-            border-radius: 50%; box-shadow: 0 12px 25px rgba(0,0,0,0.9);
+            border-radius: 50%; box-shadow: 0 10px 20px rgba(0,0,0,0.9);
             z-index: 25; transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
@@ -120,8 +119,8 @@
             transition: all 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.28); pointer-events: none;
         }
         .win-display-banner.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .win-red-amount { font-size: 32px; font-weight: 950; color: #ff2a2a; text-shadow: 0 0 20px #ff0000, 0 3px 5px #000; text-transform: uppercase; }
-        .win-white-text { font-size: 36px; font-weight: 950; color: #ffffff; text-shadow: 0 0 15px #ffffff, 0 3px 5px #000; margin-top: 5px; }
+        .win-red-amount { font-size: 30px; font-weight: 950; color: #ff2a2a; text-shadow: 0 0 20px #ff0000, 0 3px 5px #000; text-transform: uppercase; }
+        .win-white-text { font-size: 34px; font-weight: 950; color: #ffffff; text-shadow: 0 0 15px #ffffff, 0 3px 5px #000; margin-top: 5px; }
 
         /* CONTROLOS */
         .penalty-controls-box {
@@ -161,11 +160,10 @@
                 <div class="mult-badge" id="m5">30.72x</div>
             </div>
 
-            <!-- GOLEIRO 3D COM RENDERIZAÇÃO REALISTA E PROFUNDIDADE AVANÇADA -->
+            <!-- GOLEIRO 3D COM TAMANHO CORRETO E PROPORCIONAL -->
             <div class="goleiro-real-3d" id="goleiroEl">
                 <svg viewBox="0 0 200 220" width="100%" height="100%" style="overflow: visible;">
                     <defs>
-                        <!-- Gradientes 3D Ultra Realistas -->
                         <radialGradient id="proSkin" cx="35%" cy="35%" r="65%">
                             <stop offset="0%" stop-color="#ffd1b3"/>
                             <stop offset="50%" stop-color="#e3a07b"/>
@@ -191,54 +189,38 @@
                     </defs>
 
                     <g filter="url(#proShadow)">
-                        <!-- PERNAS & CHUTEIRAS 3D -->
                         <path d="M82 120 L96 120 L91 160 L79 160 Z" fill="url(#proSkin)"/>
                         <path d="M118 120 L104 120 L109 160 L121 160 Z" fill="url(#proSkin)"/>
-                        <!-- Calções -->
                         <path d="M72 110 L128 110 L125 138 L100 133 L75 138 Z" fill="#111"/>
-                        <path d="M72 110 L128 110 L125 138 L100 133 L75 138 Z" fill="rgba(0,0,0,0.3)"/>
-                        <!-- Meias -->
                         <path d="M79 160 L91 160 L88 190 L77 190 Z" fill="#fff"/>
                         <path d="M121 160 L109 160 L112 190 L123 190 Z" fill="#fff"/>
-                        <!-- Chuteiras -->
                         <path d="M74 190 L88 190 L92 206 L68 206 Z" fill="#00ff88"/>
                         <path d="M126 190 L112 190 L108 206 L132 206 Z" fill="#00ff88"/>
 
-                        <!-- BRAÇO ESQUERDO -->
+                        <!-- Braço Esquerdo -->
                         <g id="gk-arm-left" style="transform-origin: 82px 62px; transform: rotate(60deg); transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);">
                             <path d="M85 52 L32 58 L32 70 L85 73 Z" fill="url(#proJersey)"/>
                             <path d="M33 60 L16 60 L16 68 L33 68 Z" fill="url(#proSkin)"/>
-                            <!-- Luva Profissional -->
                             <path d="M20 50 Q -2 50 3 64 Q -2 78 20 78 Z" fill="url(#proGlove)"/>
                             <rect x="18" y="49" width="6" height="28" fill="#222" rx="2"/>
                         </g>
 
-                        <!-- BRAÇO DIREITO -->
+                        <!-- Braço Direito -->
                         <g id="gk-arm-right" style="transform-origin: 118px 62px; transform: rotate(-60deg); transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);">
                             <path d="M115 52 L168 58 L168 70 L115 73 Z" fill="url(#proJersey)"/>
                             <path d="M167 60 L184 60 L184 68 L167 68 Z" fill="url(#proSkin)"/>
-                            <!-- Luva Profissional -->
                             <path d="M180 50 Q 202 50 197 64 Q 202 78 180 78 Z" fill="url(#proGlove)"/>
                             <rect x="176" y="49" width="6" height="28" fill="#222" rx="2"/>
                         </g>
 
-                        <!-- TRONCO COM TEXTURA DE CAMISA DE JOGO -->
                         <path d="M68 52 Q 58 52 66 115 L 134 115 Q 142 52 132 52 Z" fill="url(#proJersey)"/>
-                        <path d="M68 52 Q 58 52 66 115 L 134 115 Q 142 52 132 52 Z" fill="rgba(0,0,0,0.2)"/>
-                        <path d="M88 52 L 100 68 L 112 52 Z" fill="#0b1e2d"/> <!-- Gola V -->
+                        <path d="M88 52 L 100 68 L 112 52 Z" fill="#0b1e2d"/>
 
-                        <!-- ROSTO E CABEÇA REALISTA 3D -->
-                        <rect x="92" y="38" width="16" height="18" fill="url(#proSkin)"/> <!-- Pescoço -->
-                        <!-- Orelhas -->
+                        <rect x="92" y="38" width="16" height="18" fill="url(#proSkin)"/>
                         <circle cx="78" cy="24" r="5" fill="url(#proSkin)"/>
                         <circle cx="122" cy="24" r="5" fill="url(#proSkin)"/>
-                        <!-- Contorno da Cabeça -->
                         <path d="M78 22 C 78 -2, 122 -2, 122 22 C 122 46, 112 48, 100 48 C 88 48, 78 46, 78 22 Z" fill="url(#proSkin)"/>
-                        
-                        <!-- Cabelo com volume 3D -->
                         <path d="M76 18 C 82 -6, 118 -6, 124 18 C 122 8, 100 2, 76 18 Z" fill="url(#proHair)"/>
-                        
-                        <!-- Rosto: Sobrancelhas, Olhos e Nariz detalhados -->
                         <path d="M84 19 Q 89 16 94 20" stroke="#140b02" stroke-width="2" fill="none" stroke-linecap="round"/>
                         <path d="M116 19 Q 111 16 106 20" stroke="#140b02" stroke-width="2" fill="none" stroke-linecap="round"/>
                         <circle cx="89" cy="24" r="2.5" fill="#fff"/><circle cx="89.5" cy="24" r="1.2" fill="#000"/>
@@ -352,19 +334,19 @@
             let armR = document.getElementById('gk-arm-right');
 
             let bolaMovimentos = {
-                1: 'translate(calc(-50% - 115px), -250px) scale(0.4)',
-                2: 'translate(calc(-50% + 115px), -250px) scale(0.4)',
-                3: 'translate(-50%, -250px) scale(0.4)',
-                4: 'translate(calc(-50% - 90px), -135px) scale(0.55)',
-                5: 'translate(calc(-50% + 90px), -135px) scale(0.55)'
+                1: 'translate(calc(-50% - 105px), -210px) scale(0.4)',
+                2: 'translate(calc(-50% + 105px), -210px) scale(0.4)',
+                3: 'translate(-50%, -210px) scale(0.4)',
+                4: 'translate(calc(-50% - 80px), -110px) scale(0.55)',
+                5: 'translate(calc(-50% + 80px), -110px) scale(0.55)'
             };
             
             let goleiroMovimentos = {
-                1: 'translate(calc(-50% - 85px), -70px) rotate(-65deg)',
-                2: 'translate(calc(-50% + 85px), -70px) rotate(65deg)',
-                3: 'translate(-50%, -85px) rotate(0deg)',
-                4: 'translate(calc(-50% - 100px), 10px) rotate(-85deg)',
-                5: 'translate(calc(-50% + 100px), 10px) rotate(85deg)'
+                1: 'translate(calc(-50% - 75px), -50px) rotate(-65deg)',
+                2: 'translate(calc(-50% + 75px), -50px) rotate(65deg)',
+                3: 'translate(-50%, -65px) rotate(0deg)',
+                4: 'translate(calc(-50% - 90px), 10px) rotate(-85deg)',
+                5: 'translate(calc(-50% + 90px), 10px) rotate(85deg)'
             };
 
             setTimeout(() => {
