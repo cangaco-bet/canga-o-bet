@@ -227,14 +227,96 @@
             align-items: center;
             gap: 6px;
         }
+
+        /* Jackpot Banner */
+        .jackpot-box {
+            background: linear-gradient(135deg, #2b110a, #1a1c23);
+            margin: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ff4500;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.2);
+        }
+        .jackpot-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 5px;
+        }
+        .jackpot-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        /* Carrusel de Últimos Vencedores (Estilo Video Referencia)[span_1](start_span)[span_1](end_span) */
+        .winners-section {
+            margin: 15px 0;
+            padding: 0 15px;
+        }
+        .winners-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .winners-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 5px;
+        }
+        .winners-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .winner-card {
+            background: #1a1c23;
+            border: 1px solid #2a2d3d;
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .winner-card img {
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .winner-info {
+            font-size: 12px;
+        }
+        .winner-name {
+            color: #aaa;
+            font-size: 11px;
+        }
+        .winner-prize {
+            color: #ffb703;
+            font-weight: bold;
+        }
+
         .section-title {
             padding: 0 15px;
             font-size: 18px;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: space-between;
         }
+        .section-title span {
+            font-size: 12px;
+            color: #888;
+        }
+
         .games-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -264,6 +346,7 @@
             font-size: 14px;
             font-weight: 500;
         }
+
         nav {
             position: fixed;
             bottom: 0;
@@ -274,6 +357,7 @@
             justify-content: space-around;
             padding: 10px 0;
             border-top: 1px solid #222;
+            z-index: 99;
         }
         .nav-item {
             text-align: center;
@@ -288,6 +372,7 @@
 </head>
 <body>
 
+    <!-- 1. Tela Inicial com Imagem e Carregamento -->
     <div id="splash-screen">
         <img src="https://files.catbox.moe/r34gpm.png" alt="Cangaço Bet" class="splash-banner">
         
@@ -299,6 +384,7 @@
         <button class="btn-entrar-cassino" id="btnEntrar" onclick="irParaCadastro()">🎲 ENTRAR NO CASSINO</button>
     </div>
 
+    <!-- 2. Tela de Cadastro Obrigatório -->
     <div id="auth-screen">
         <div class="auth-card">
             <div class="auth-title">🔥 CRIAR CONTA - CANGAÇO BET</div>
@@ -309,8 +395,10 @@
         </div>
     </div>
 
+    <!-- Elemento de áudio -->
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
+    <!-- Conteúdo Principal do Site -->
     <div id="main-content">
         <header>
             <div class="logo">🔥 CANGAÇO BET</div>
@@ -329,34 +417,92 @@
             <div class="category-pill">🔥 Top</div>
         </div>
 
-        <div class="section-title">🏆 TOP</div>
+        <!-- Jackpot Box -->
+        <div class="jackpot-box">
+            <div class="jackpot-title">🔥 JACKPOT GLOBAL</div>
+            <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
+        </div>
+
+        <!-- Carrossel de Últimos Vencedores (Nomes passando para o lado)[span_2](start_span)[span_2](end_span) -->
+        <div class="winners-section">
+            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
+            <div class="winners-scroll" id="winnersScroll">
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
+                    <div class="winner-info">
+                        <div class="winner-name">Kaiq***</div>
+                        <div class="winner-prize">R$ 45.00 BRL</div>
+                    </div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
+                    <div class="winner-info">
+                        <div class="winner-name">Ebe***</div>
+                        <div class="winner-prize">R$ 35.75 BRL</div>
+                    </div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/9k06uq.jpeg" alt="Mines">
+                    <div class="winner-info">
+                        <div class="winner-name">Lucas***</div>
+                        <div class="winner-prize">R$ 120.00 BRL</div>
+                    </div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/7dkz4q.jpeg" alt="Olympus">
+                    <div class="winner-info">
+                        <div class="winner-name">Mathe***</div>
+                        <div class="winner-prize">R$ 250.50 BRL</div>
+                    </div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/3kg3ao.webp" alt="Big Bass">
+                    <div class="winner-info">
+                        <div class="winner-name">Joao***</div>
+                        <div class="winner-prize">R$ 88.30 BRL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            🏆 TOP <span>Todos ></span>
+        </div>
 
         <div class="games-grid">
+            <!-- Fortune Tiger -->
             <div class="game-card" onclick="pararMusicaEEntrar('Fortune Tiger')">
                 <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
                 <div class="game-name">Fortune Tiger</div>
             </div>
+            <!-- Aviator -->
             <div class="game-card" onclick="pararMusicaEEntrar('Aviator')">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
+            <!-- Mines -->
             <div class="game-card" onclick="pararMusicaEEntrar('Mines')">
                 <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
                 <div class="game-name">Mines</div>
             </div>
+            <!-- Gates of Olympus -->
             <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
                 <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
                 <div class="game-name">Gates of Olympus</div>
             </div>
         </div>
 
-        <div class="section-title">⚡ MAIS JOGADOS</div>
+        <div class="section-title">
+            ⚡ MAIS JOGADOS <span>Todos ></span>
+        </div>
 
         <div class="games-grid">
+            <!-- Master Joker -->
             <div class="game-card" onclick="pararMusicaEEntrar('Master Joker')">
                 <img src="https://files.catbox.moe/wy9jwg.jpeg" class="game-img" alt="Master Joker">
                 <div class="game-name">Master Joker</div>
             </div>
+            <!-- Big Bass Bonanza -->
             <div class="game-card" onclick="pararMusicaEEntrar('Big Bass Bonanza')">
                 <img src="https://files.catbox.moe/3kg3ao.webp" class="game-img" alt="Big Bass Bonanza">
                 <div class="game-name">Big Bass Bonanza</div>
@@ -398,10 +544,7 @@
         }, 40);
 
         function irParaCadastro() {
-            // Toca a música após o primeiro clique
             audio.play().catch(e => console.log(e));
-            
-            // Oculta a tela inicial e mostra o painel de cadastro obrigatório
             splashScreen.style.display = 'none';
             authScreen.style.display = 'flex';
         }
@@ -416,7 +559,6 @@
                 return;
             }
 
-            // Esconde o cadastro e entra no site principal do cassino
             authScreen.style.display = 'none';
             mainContent.style.display = 'block';
             alert('Cadastro efetuado com sucesso! Bem-vindo ao Cangaço Bet, ' + usuario + '!');
@@ -427,6 +569,18 @@
             audio.currentTime = 0; 
             alert('A entrar em ' + nomeJogo + '...');
         }
+
+        // Movimento automático simulado do carrossel de vencedores passando para o lado
+        const scrollContainer = document.getElementById('winnersScroll');
+        setInterval(() => {
+            if (scrollContainer) {
+                if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+                    scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    scrollContainer.scrollBy({ left: 160, behavior: 'smooth' });
+                }
+            }
+        }, 3000);
     </script>
 </body>
 </html>
