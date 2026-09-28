@@ -325,11 +325,11 @@
             color: #ff4500;
         }
 
-        /* TELA DO TIGRINHO INTEGRADA */
+        /* TELA DO TIGRINHO INTEGRADA (TELA INTEIRA) */
         #tiger-game-screen {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: #3b0000;
             z-index: 1000;
             flex-direction: column;
@@ -339,24 +339,21 @@
         }
         .slot-container {
             width: 100%;
-            max-width: 400px;
-            height: 100vh;
+            height: 100%;
             background: linear-gradient(180deg, #600202 0%, #3b0000 60%, #1a0000 100%);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            border-left: 2px solid #ffcc00;
-            border-right: 2px solid #ffcc00;
         }
         .top-bar-game {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
-            font-size: 12px;
+            padding: 15px 20px;
+            font-size: 13px;
             color: #ffcc00;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
         }
         .tiger-header {
             text-align: center;
@@ -377,10 +374,11 @@
             z-index: 2;
         }
         
-        @keyframes flutuar {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-6px) rotate(-2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        @keyframes balancar {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
+            100% { transform: rotate(0deg); }
         }
         @keyframes girarBrincando {
             0% { transform: rotate(0deg) scale(1); }
@@ -389,14 +387,15 @@
         }
 
         .tiger-img-animada {
-            width: 75px;
-            height: 75px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
             margin-top: -5px;
             position: relative;
             z-index: 1;
             cursor: pointer;
-            animation: flutuar 2.5s ease-in-out infinite;
+            animation: balancar 1.5s ease-in-out infinite;
+            transform-origin: top center;
             transition: filter 0.2s;
         }
         .tiger-img-animada.girando-ativo {
@@ -405,8 +404,10 @@
 
         .machine-frame {
             background: #7a0505;
-            margin: 0 12px;
-            padding: 12px;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 420px;
+            padding: 15px;
             border-radius: 14px;
             border: 3px solid #ffcc00;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
@@ -414,16 +415,16 @@
         .tiger-reels {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             background: #ffffff;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
         }
         .reel {
-            font-size: 38px;
+            font-size: 42px;
             background: #fcfcfc;
-            width: 90px;
-            height: 98px;
+            width: 30%;
+            height: 105px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -443,39 +444,40 @@
         }
         .game-message {
             text-align: center;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             color: #ffcc00;
             text-shadow: 1px 1px 2px #000;
             min-height: 25px;
-            margin: 2px 0;
+            margin: 5px 0;
         }
         .bottom-panel {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 15px 20px;
             border-top: 2px solid #ffcc00;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            width: 100%;
         }
         .stats-row {
             display: flex;
             justify-content: space-between;
             background: #2b0000;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
             border: 1px solid #ffcc00;
-            font-size: 11px;
+            font-size: 12px;
         }
         .stat-box span {
             display: block;
-            font-size: 9px;
+            font-size: 10px;
             color: #ccc;
             text-transform: uppercase;
         }
         .stat-box strong {
             color: #00ff88;
-            font-size: 12px;
+            font-size: 13px;
         }
         .controls-row {
             display: flex;
@@ -486,18 +488,18 @@
             background: #7a0505;
             color: #fff;
             border: 2px solid #ffcc00;
-            padding: 8px 10px;
+            padding: 10px 12px;
             border-radius: 50%;
             font-weight: bold;
-            font-size: 9px;
+            font-size: 10px;
             cursor: pointer;
         }
         .btn-girar-tiger {
             background: radial-gradient(circle, #00ff88 0%, #008844 100%);
             color: white;
             border: 4px solid #ffcc00;
-            width: 75px;
-            height: 75px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             font-size: 14px;
             font-weight: 900;
@@ -511,14 +513,14 @@
         }
         .btn-voltar-home {
             position: absolute;
-            top: 8px;
-            left: 10px;
+            top: 12px;
+            left: 15px;
             background: #2a2d3d;
             color: white;
             border: 1px solid #ffcc00;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
             z-index: 50;
@@ -610,27 +612,6 @@
                         <div class="winner-prize">R$ 88.30 BRL</div>
                     </div>
                 </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
-                    <div class="winner-info">
-                        <div class="winner-name">Ana***</div>
-                        <div class="winner-prize">R$ 310.00 BRL</div>
-                    </div>
-                </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
-                    <div class="winner-info">
-                        <div class="winner-name">Carlos***</div>
-                        <div class="winner-prize">R$ 54.20 BRL</div>
-                    </div>
-                </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/9k06uq.jpeg" alt="Mines">
-                    <div class="winner-info">
-                        <div class="winner-name">Beatriz***</div>
-                        <div class="winner-prize">R$ 500.00 BRL</div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -681,7 +662,7 @@
         </nav>
     </div>
 
-    <!-- TELA DO JOGO FORTUNE TIGER INTEGRADA -->
+    <!-- TELA DO JOGO FORTUNE TIGER INTEGRADA (TELA INTEIRA) -->
     <div id="tiger-game-screen">
         <button class="btn-voltar-home" onclick="sairFortuneTiger()">← Voltar</button>
 
@@ -837,6 +818,12 @@
         function girarTiger(event) {
             event.stopPropagation();
 
+            const tigerImg = document.getElementById('tigerImage');
+            tigerImg.classList.add('girando-ativo');
+            setTimeout(() => {
+                tigerImg.classList.remove('girando-ativo');
+            }, 1200);
+
             if (saldo < 2.00) {
                 alert('Saldo insuficiente!');
                 return;
@@ -850,7 +837,6 @@
             const r3 = document.getElementById('reel3');
             const status = document.getElementById('gameStatus');
             const ganhoEl = document.getElementById('ganhoJogo');
-            const tigerImg = document.getElementById('tigerImage');
 
             status.innerText = "Girando...";
             ganhoEl.innerText = "R$ 0,00";
@@ -858,13 +844,11 @@
             r1.classList.add('girando');
             r2.classList.add('girando');
             r3.classList.add('girando');
-            tigerImg.classList.add('girando-ativo');
 
             setTimeout(() => {
                 r1.classList.remove('girando');
                 r2.classList.remove('girando');
                 r3.classList.remove('girando');
-                tigerImg.classList.remove('girando-ativo');
 
                 const simbolos = ["💰", "🍊", "🍋", "🧧", "⭐"];
                 let chance = Math.random();
