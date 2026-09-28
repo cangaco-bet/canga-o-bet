@@ -21,7 +21,7 @@
         #splashScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1a101f 0%, #0b0c10 100%);
+            background: radial-gradient(circle, #2b0b05 0%, #0b0c10 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -30,13 +30,17 @@
             padding: 20px;
             transition: opacity 0.5s ease;
         }
-        .splash-banner {
+        .splash-banner-box {
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            object-fit: cover;
+            background: radial-gradient(circle, #3d1208 0%, #151821 100%);
             border: 3px solid #ff4500;
             box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             animation: float4D 3s ease-in-out infinite;
             margin-bottom: 25px;
         }
@@ -131,11 +135,15 @@
             border-radius: 2px;
         }
 
-        .logo-img-pequena {
+        .logo-box-pequena {
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            object-fit: cover;
+            background: linear-gradient(135deg, #ff4500, #ffb703);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
             border: 1.5px solid #ffb703;
             cursor: pointer;
             box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
@@ -257,15 +265,10 @@
         .promo-track { display: flex; transition: transform 0.5s ease-in-out; height: 100%; width: 300%; }
         .promo-slide {
             width: 33.333%; height: 100%;
-            background-size: cover; background-position: center;
+            background: linear-gradient(135deg, #1a101f, #0f1118);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 10px; position: relative;
         }
-        .promo-slide::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75); z-index: 1;
-        }
-        .promo-content { position: relative; z-index: 2; }
         .promo-slide h3 { font-size: 14px; color: #ffb703; margin-bottom: 3px; }
         .promo-slide p { font-size: 11px; color: #ddd; margin-bottom: 6px; }
         .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
@@ -298,7 +301,7 @@
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-        .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
+        .winner-avatar { width: 35px; height: 35px; border-radius: 8px; background: #222d42; display: flex; justify-content: center; align-items: center; font-size: 18px; }
         .winner-info { font-size: 12px; }
         .winner-name { color: #aaa; font-size: 10px; }
         .winner-prize { color: #ffb703; font-weight: bold; }
@@ -324,7 +327,7 @@
             transition: transform 0.2s, border-color 0.2s;
         }
         .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
-        .game-img { width: 100%; height: 115px; object-fit: cover; }
+        .game-img-box { width: 100%; height: 115px; background: radial-gradient(circle, #222d42 0%, #10131c 100%); display: flex; justify-content: center; align-items: center; font-size: 45px; border-bottom: 1px solid #232838; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
         .filtro-ligas-scroll {
@@ -450,7 +453,6 @@
         .bilhete-detalhes { font-size: 13px; color: #ddd; line-height: 1.5; }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
 
-        /* Estilo 4D Avançado para os Modais de Mercados */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -513,7 +515,9 @@
 <body>
 
     <div id="splashScreen">
-        <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
+        <div class="splash-banner-box">
+            <span style="font-size: 55px;">🤠⚽</span>
+        </div>
         <div class="loading-container">
             <div class="loading-bar" id="loadingBar"></div>
         </div>
@@ -530,7 +534,7 @@
                 <span></span>
                 <span></span>
             </div>
-            <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
+            <div class="logo-box-pequena" onclick="mudarAba('cassino')">🤠</div>
         </div>
         <div class="header-right">
             <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
@@ -570,21 +574,21 @@
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
             <div class="promo-track" id="promoTrack">
-                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/75mifn.jpeg');">
+                <div class="promo-slide">
                     <div class="promo-content">
                         <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
                         <p>Receba até R$1.000 + 50 Giros Grátis!</p>
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
                     </div>
                 </div>
-                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
+                <div class="promo-slide">
                     <div class="promo-content">
                         <h3>⚡ CASHBACK DIÁRIO</h3>
                         <p>Até 12% de retorno em todas as apostas!</p>
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
                     </div>
                 </div>
-                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
+                <div class="promo-slide">
                     <div class="promo-content">
                         <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
                         <p>Participe e concorra a prêmios em dinheiro!</p>
@@ -603,21 +607,21 @@
             <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
             <div class="winners-scroll" id="winnersScroll">
                 <div class="winner-card">
-                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
+                    <div class="winner-avatar">🐯</div>
                     <div class="winner-info">
                         <div class="winner-name">Kaiq***</div>
                         <div class="winner-prize">R$ 45.00 BRL</div>
                     </div>
                 </div>
                 <div class="winner-card">
-                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
+                    <div class="winner-avatar">✈️</div>
                     <div class="winner-info">
                         <div class="winner-name">Ebe***</div>
                         <div class="winner-prize">R$ 35.75 BRL</div>
                     </div>
                 </div>
                 <div class="winner-card">
-                    <img src="https://files.catbox.moe/9k06uq.jpeg" alt="Mines">
+                    <div class="winner-avatar">💣</div>
                     <div class="winner-info">
                         <div class="winner-name">Lucas***</div>
                         <div class="winner-prize">R$ 120.00 BRL</div>
@@ -632,19 +636,19 @@
 
         <div class="games-grid">
             <div class="game-card" onclick="jogarCassino('Fortune Tiger', 15)">
-                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
+                <div class="game-img-box">🐯</div>
                 <div class="game-name">Fortune Tiger</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Aviator', 20)">
-                <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
+                <div class="game-img-box">✈️</div>
                 <div class="game-name">Aviator</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Mines', 10)">
-                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
+                <div class="game-img-box">💣</div>
                 <div class="game-name">Mines</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
-                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
+                <div class="game-img-box">⚡</div>
                 <div class="game-name">Gates of Olympus</div>
             </div>
         </div>
@@ -699,7 +703,7 @@
         </div>
     </div>
 
-    <!-- Boletim de Apostas Flutuante (Criar Bilhete Rápido - Suporta Apostas Múltiplas) -->
+    <!-- Boletim de Apostas Flutuante -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span id="betSlipTypeTitle">🎟️ BOLETIM DE APOSTAS</span>
@@ -712,7 +716,7 @@
         <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
     </div>
 
-    <!-- Modal 4D Avançado de Opções e Mercados Tradicionais da Partida -->
+    <!-- Modal 4D de Mercados -->
     <div id="matchModal" class="modal-overlay">
         <div class="modal-card-4d">
             <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
@@ -809,7 +813,7 @@
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         
-        let apostasSelecionadas = []; // Lista para apostas múltiplas
+        let apostasSelecionadas = [];
         let partidaAtivaId = null;
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
         
@@ -863,13 +867,11 @@
             salvarDadosStorage();
         }
 
-        // Mapeamento em português para times e seleções nacionais
         const traducoesTimes = {
             "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro",
             "Brazil": "Brasil", "Argentina": "Argentina", "France": "França", "Germany": "Alemanha", "England": "Inglaterra", "Spain": "Espanha", "Italy": "Itália", "Portugal": "Portugal", "Netherlands": "Holanda", "Uruguay": "Uruguai", "Colombia": "Colômbia", "Chile": "Chile", "Peru": "Peru", "Ecuador": "Equador", "Paraguay": "Paraguai", "Venezuela": "Venezuela", "Bolivia": "Bolívia", "Mexico": "México", "United States": "Estados Unidos", "Japan": "Japão", "South Korea": "Coreia do Sul", "Morocco": "Marrocos", "Croatia": "Croácia", "Belgium": "Bélgica"
         };
 
-        // Escudos oficiais de clubes e bandeiras de seleções nacionais
         const bandeirasTimes = {
             "Flamengo": "https://media.api-sports.io/football/teams/127.png",
             "Palmeiras": "https://media.api-sports.io/football/teams/121.png",
@@ -932,7 +934,6 @@
             return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
         }
 
-        // Mapeamento traduzido para ligas, torneios de seleções, eliminatórias e amistosos
         const traducoesLigas = {
             "UEFA Champions League": "Liga dos Campeões da UEFA",
             "UEFA Europa League": "Liga Europa da UEFA",
@@ -1172,7 +1173,6 @@
                 card.id = `match-card-${match.id}`;
                 card.onclick = () => abrirModalPartidaDetalhes(match);
                 
-                // Marcação visual se a odd já está selecionada no bilhete múltiplo
                 let selCasa = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Casa)')) ? 'selected' : '';
                 let selEmpate = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Empate)')) ? 'selected' : '';
                 let selFora = apostasSelecionadas.some(a => a.matchId === match.id && a.selecao.includes('(Fora)')) ? 'selected' : '';
@@ -1249,8 +1249,6 @@
                 }
             } catch (e) { console.log("Erro API Ao Vivo"); }
 
-            // Removido qualquer uso de partidas simuladas por solicitação direta
-
             atualizarBotoesFiltroLigas(listaGlobalPartidas);
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
             iniciarRelogioTempoReal();
@@ -1289,14 +1287,12 @@
             document.getElementById('modalPartidaTitulo').innerText = `${match.casa} vs ${match.fora}`;
             document.getElementById('modalPartidaInfoSub').innerText = `Liga: ${match.liga} | Minuto Atual: ${match.minuto}'`;
 
-            // 1X2 Tradicional
             document.getElementById('modalOdds1X2').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Casa)', ${match.odds.casa})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">1</span><span class="odd-card-val">${match.odds.casa}</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Empate)', ${match.odds.empate})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X</span><span class="odd-card-val">${match.odds.empate}</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Fora)', ${match.odds.fora})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">2</span><span class="odd-card-val">${match.odds.fora}</span></div>
             `;
 
-            // Dupla Chance
             let dc1 = (parseFloat(match.odds.casa) * 0.7).toFixed(2);
             let dc12 = (parseFloat(match.odds.empate) * 0.8).toFixed(2);
             let dc2 = (parseFloat(match.odds.fora) * 0.7).toFixed(2);
@@ -1306,7 +1302,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Dupla Chance X2)', ${dc2})" style="flex-direction:column; text-align:center;"><span class="odd-card-title">X2</span><span class="odd-card-val">${dc2}</span></div>
             `;
 
-            // Total de Gols Ampliado (0.5 até 4.5)
             document.getElementById('modalOddsGols').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 0.5 Gols)', 1.12)"><span class="odd-card-title">Mais de 0.5 Gols</span><span class="odd-card-val">1.12</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 1.5 Gols)', 1.42)"><span class="odd-card-title">Mais de 1.5 Gols</span><span class="odd-card-val">1.42</span></div>
@@ -1315,7 +1310,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 2.5 Gols)', 1.95)"><span class="odd-card-title">Menos de 2.5 Gols</span><span class="odd-card-val">1.95</span></div>
             `;
 
-            // Escanteios Ampliados (7.5 até 12.5)
             document.getElementById('modalOddsEscanteios').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 7.5 Escanteios)', 1.45)"><span class="odd-card-title">Mais de 7.5 Cantos</span><span class="odd-card-val">1.45</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 9.5 Escanteios)', 1.90)"><span class="odd-card-title">Mais de 9.5 Cantos</span><span class="odd-card-val">1.90</span></div>
@@ -1323,7 +1317,6 @@
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Menos de 9.5 Escanteios)', 1.80)"><span class="odd-card-title">Menos de 9.5 Cantos</span><span class="odd-card-val">1.80</span></div>
             `;
 
-            // Cartões
             document.getElementById('modalOddsCartoes').innerHTML = `
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 3.5 Cartões)', 1.75)"><span class="odd-card-title">Mais de 3.5 Cartões na Partida</span><span class="odd-card-val">1.75</span></div>
                 <div class="odd-card-4d" onclick="selecionarApostaModal('${match.id}', '${match.casa} x ${match.fora} (Mais de 4.5 Cartões)', 2.20)"><span class="odd-card-title">Mais de 4.5 Cartões na Partida</span><span class="odd-card-val">2.20</span></div>
@@ -1336,13 +1329,10 @@
             document.getElementById('matchModal').style.display = 'none';
         }
 
-        // Adiciona ou remove uma aposta na lista de apostas múltiplas
         function adicionarApostaAoBoletim(matchId, jogoOdd, odd) {
-            // Se já existir uma seleção para a mesma partida, substitui a anterior
             let indexExistente = apostasSelecionadas.findIndex(a => a.matchId === matchId);
             if (indexExistente !== -1) {
                 if (apostasSelecionadas[indexExistente].selecao === jogoOdd) {
-                    // Clicar na mesma odd remove do boletim
                     apostasSelecionadas.splice(indexExistente, 1);
                 } else {
                     apostasSelecionadas[indexExistente] = { matchId: matchId, selecao: jogoOdd, odd: parseFloat(odd) };
@@ -1445,7 +1435,6 @@
 
             let retorno = (valor * oddTotal).toFixed(2);
 
-            // Mapeia todas as seleções com detalhes e placar do momento
             let itensBilhete = apostasSelecionadas.map(item => {
                 let partidaObj = listaGlobalPartidas.find(p => p.id === item.matchId);
                 return {
@@ -1473,12 +1462,10 @@
 
             fecharBilhete();
             renderizarPartidasAoVivoNaTela(listaGlobalPartidas);
-            
-            // Redireciona automaticamente para a aba Meus Bilhetes
             mudarAba('bilhetes');
             alert(`✅ Bilhete de Aposta criado com sucesso! Redirecionado para a aba Meus Bilhetes.`);
 
-            let indexBilhete = 0; // O bilhete novo é inserido no início da lista (unshift)
+            let indexBilhete = 0;
             setTimeout(() => {
                 let venceu = Math.random() >= 0.5;
                 if (venceu) {
@@ -1508,8 +1495,6 @@
             let html = '';
             meusBilhetesSalvos.forEach((b, idx) => {
                 let totalItens = meusBilhetesSalvos.length - idx;
-                
-                // Suporte para bilhetes novos (múltiplas/simples estruturados) e legado
                 let listaItens = b.itens || [{
                     selecao: b.selecao,
                     odd: (b.retorno / b.valor).toFixed(2),
