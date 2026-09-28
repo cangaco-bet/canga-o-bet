@@ -257,61 +257,23 @@
                         repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.18) 10px, rgba(255,255,255,0.18) 12px);
         }
 
-        /* --- GOLEIRO 4D HD PROFISSIONAL (AVATAR COMPLETO 3D COM UNIFORME, LUVAS E ROSTO) --- */
-        .goleiro-4d-pro {
-            position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
-            width: 65px; height: 75px; z-index: 10;
+        /* --- AVATARES SVG DETALHADOS EM HD / 4D --- */
+        .goleiro-avatar-container {
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 70px; height: 75px; z-index: 10;
             transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
         }
-        .g-cabeca {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 20px; height: 20px; background: radial-gradient(circle at 35% 35%, #ffd1b3, #c68642);
-            border-radius: 50%; border: 1.5px solid #222; box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-        }
-        .g-tronco {
-            position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
-            width: 44px; height: 32px; background: linear-gradient(135deg, #e74c3c, #900c3f);
-            border-radius: 8px; border: 2px solid #ffb703; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-        }
-        .g-luva-esq, .g-luva-dir {
-            position: absolute; top: 24px; width: 16px; height: 16px; background: #00ff88;
-            border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 12px #00ff88;
-        }
-        .g-luva-esq { left: -10px; }
-        .g-luva-dir { right: -10px; }
-        .g-pernas {
-            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 34px; height: 22px; background: #111; border-radius: 6px;
-        }
-
-        /* --- JOGADOR 4D HD PROFISSIONAL (COM CORPO, CABEÇA, BRAÇOS, CHUTEIRAS E ANIMAÇÃO) --- */
-        .jogador-4d-pro {
+        .jogador-avatar-container {
             position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-            width: 55px; height: 85px; z-index: 12;
+            width: 65px; height: 90px; z-index: 12;
             transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
         }
-        .j-cabeca {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 20px; height: 20px; background: radial-gradient(circle at 35% 35%, #ffd1b3, #c68642);
-            border-radius: 50%; border: 1.5px solid #222; box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-        }
-        .j-tronco {
-            position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
-            width: 38px; height: 34px; background: linear-gradient(135deg, #ffffff, #bdc3c7);
-            border-radius: 8px; border: 2px solid #2980b9; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-        }
-        .j-perna-apoio {
-            position: absolute; bottom: 0; left: 12px; width: 10px; height: 32px;
-            background: #222; border-radius: 5px;
-        }
-        .j-perna-chute {
-            position: absolute; bottom: 0; right: 12px; width: 10px; height: 32px;
-            background: #222; border-radius: 5px; transform-origin: top center;
-            transition: transform 0.3s ease;
-        }
-        /* Animação HD do Chute */
-        .jogador-4d-pro.chutando .j-perna-chute {
-            transform: rotate(-55deg) translateY(-8px);
+        /* Animação HD da perna do jogador ao chutar */
+        .jogador-avatar-container.chutando .perna-chute-anim {
+            transform-origin: 35px 50px;
+            transform: rotate(-55deg) translate(-10px, -5px);
         }
 
         /* BOLA 4D E MIRA DE TOQUE */
@@ -549,13 +511,29 @@
             <div class="stadium-container-4d" id="stadiumContainer" onclick="definirAlvoToque(event)">
                 <div class="goal-post-4d"><div class="goal-net-4d"></div></div>
                 
-                <!-- Guarda-redes 4D HD Profissional (Cabeça, Tronco, Luvas e Perna) -->
-                <div class="goleiro-4d-pro" id="goleiroEl">
-                    <div class="g-cabeca"></div>
-                    <div class="g-tronco"></div>
-                    <div class="g-luva-esq"></div>
-                    <div class="g-luva-dir"></div>
-                    <div class="g-pernas"></div>
+                <!-- Guarda-redes 4D HD em Vetor Detalhado (Com luvas, braços, cabeça e uniforme) -->
+                <div class="goleiro-avatar-container" id="goleiroEl">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <!-- Cabeça e Rosto -->
+                        <circle cx="50" cy="18" r="12" fill="#ffd1b3" stroke="#222" stroke-width="2"/>
+                        <path d="M42 12 Q50 8 58 12" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Tronco / Uniforme -->
+                        <path d="M32 32 Q50 26 68 32 L72 65 Q50 72 28 65 Z" fill="url(#gradGoleiro)" stroke="#ffb703" stroke-width="2.5"/>
+                        <defs>
+                            <linearGradient id="gradGoleiro" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff4500" />
+                                <stop offset="100%" stop-color="#900c3f" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Braços e Luvas Neon -->
+                        <path d="M32 36 L15 50" stroke="#ff4500" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="12" cy="52" r="9" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                        <path d="M68 36 L85 50" stroke="#ff4500" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="88" cy="52" r="9" fill="#00ff88" stroke="#fff" stroke-width="2"/>
+                        <!-- Pernas/Calções -->
+                        <rect x="36" y="65" width="12" height="22" rx="4" fill="#111"/>
+                        <rect x="52" y="65" width="12" height="22" rx="4" fill="#111"/>
+                    </svg>
                 </div>
 
                 <!-- Mira do Toque -->
@@ -567,13 +545,32 @@
                     <div class="premio-badge" id="premioBadgeEl"></div>
                 </div>
 
-                <!-- Jogador 4D HD Profissional com Animação de Chute Real -->
-                <div class="jogador-4d-pro" id="jogadorEl">
-                    <div class="j-cabeca"></div>
-                    <div class="j-tronco"></div>
-                    <div class="j-perna-apoio"></div>
-                    <div class="j-perna-chute"></div>
+                <!-- Jogador 4D HD em Vetor Detalhado (Com cabeça, tronco, braços e perna animada para chutar) -->
+                <div class="jogador-avatar-container" id="jogadorEl">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <!-- Cabeça -->
+                        <circle cx="50" cy="14" r="11" fill="#ffd1b3" stroke="#222" stroke-width="2"/>
+                        <!-- Tronco / Camisola -->
+                        <path d="M34 28 Q50 24 66 28 L70 58 Q50 64 30 58 Z" fill="url(#gradJogador)" stroke="#2980b9" stroke-width="2.5"/>
+                        <defs>
+                            <linearGradient id="gradJogador" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" />
+                                <stop offset="100%" stop-color="#bdc3c7" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Braços -->
+                        <path d="M34 32 L20 48" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M66 32 L80 48" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+                        <!-- Perna de Apoio Estática -->
+                        <rect x="40" y="58" width="10" height="32" rx="4" fill="#222"/>
+                        <!-- Perna de Chute Animada -->
+                        <g class="perna-chute-anim">
+                            <rect x="52" y="58" width="10" height="30" rx="4" fill="#222"/>
+                            <ellipse cx="57" cy="90" rx="6" ry="4" fill="#ff4500"/>
+                        </g>
+                    </svg>
                 </div>
+
                 <div class="bola-4d-hd" id="bolaEl"></div>
             </div>
 
@@ -700,9 +697,9 @@
             
             document.getElementById('subStatusJogo').innerText = "A chutar...";
             
-            // Ativa a animação da perna do jogador
+            // Ativa a animação vetorizada de chute da perna
             jogador.classList.add('chutando');
-            jogador.style.transform = "translateX(-50%) translateY(-25px) scale(1.06)";
+            jogador.style.transform = "translateX(-50%) translateY(-22px) scale(1.05)";
 
             let deslocamentoX = (alvoX - 50) * 2.5;
             let deslocamentoY = -150;
@@ -710,9 +707,9 @@
             setTimeout(() => {
                 bola.style.transform = `translateX(calc(-50% + ${deslocamentoX}px)) translateY(${deslocamentoY}px) scale(0.75)`;
                 
-                // Animação de pulo do guarda-redes 4D HD em direção à bola
+                // Pulo dinâmico do guarda-redes 4D em direção à bola
                 let puloGoleiroX = deslocamentoX * 0.85;
-                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-40px) scale(1.18) rotate(${deslocamentoX > 0 ? 20 : -20}deg)`;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-38px) scale(1.18) rotate(${deslocamentoX > 0 ? 20 : -20}deg)`;
 
                 setTimeout(() => {
                     let anuncio = document.getElementById('anuncioResultado');
