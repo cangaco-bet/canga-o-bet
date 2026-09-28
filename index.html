@@ -16,141 +16,6 @@
             color: #ffffff;
             padding-bottom: 80px;
         }
-        
-        /* 1. Tela Inicial com Imagem e Carregamento */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1c23, #0f1015);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .splash-banner {
-            width: 240px;
-            height: 240px;
-            object-fit: cover;
-            border-radius: 20px;
-            border: 2px solid #ff4500;
-            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.4);
-            margin-bottom: 20px;
-        }
-
-        .loader-container {
-            width: 80%;
-            max-width: 300px;
-            background: #2a2d3d;
-            border-radius: 20px;
-            height: 14px;
-            padding: 2px;
-            margin-bottom: 15px;
-            border: 1px solid #3a3d4d;
-        }
-
-        .loader-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff4500, #ff8c00);
-            border-radius: 10px;
-            transition: width 0.1s linear;
-        }
-
-        .loader-text {
-            font-size: 14px;
-            color: #aaa;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .btn-entrar-cassino {
-            display: none;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.5);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* 2. Tela de Cadastro Obrigatório */
-        #auth-screen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 16, 21, 0.95);
-            z-index: 998;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .auth-card {
-            background: #1a1c23;
-            width: 100%;
-            max-width: 380px;
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid #2a2d3d;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-
-        .auth-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ff4500;
-            margin-bottom: 20px;
-        }
-
-        .auth-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            background: #13141b;
-            border: 1px solid #2a2d3d;
-            border-radius: 8px;
-            color: white;
-            font-size: 14px;
-        }
-
-        .auth-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        /* Conteúdo Principal do Site */
-        #main-content {
-            display: none;
-        }
 
         header {
             background: linear-gradient(135deg, #1a1c23, #0f1015);
@@ -167,6 +32,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
         }
         .btn-entrar {
             background-color: #ff4500;
@@ -178,7 +44,7 @@
             cursor: pointer;
         }
 
-        /* Banner Menor com Imagem de Fundo em Carrossel */
+        /* Banner Promocional Menor com Fundo e Carrossel Automático */
         .promo-carousel-container {
             margin: 15px;
             border-radius: 12px;
@@ -256,6 +122,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
         }
 
         /* Jackpot Box */
@@ -377,6 +244,64 @@
             font-weight: 500;
         }
 
+        /* Modais Dinâmicos (Pesquisa, Categorias, Depósito, Registro) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-card {
+            background: #1a1c23;
+            width: 100%;
+            max-width: 380px;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #ff4500;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            position: relative;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff4500;
+            margin-bottom: 15px;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #13141b;
+            border: 1px solid #2a2d3d;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: #aaa;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
         nav {
             position: fixed;
             bottom: 0;
@@ -394,6 +319,7 @@
             color: #888;
             font-size: 11px;
             text-decoration: none;
+            cursor: pointer;
         }
         .nav-item.active {
             color: #ff4500;
@@ -402,33 +328,12 @@
 </head>
 <body>
 
-    <div id="splash-screen">
-        <img src="https://files.catbox.moe/r34gpm.png" alt="Cangaço Bet" class="splash-banner">
-        
-        <div class="loader-container">
-            <div class="loader-bar" id="loaderBar"></div>
-        </div>
-        <div class="loader-text" id="loaderText">A carregar recursos... 0%</div>
-
-        <button class="btn-entrar-cassino" id="btnEntrar" onclick="irParaCadastro()">🎲 ENTRAR NO CASSINO</button>
-    </div>
-
-    <div id="auth-screen">
-        <div class="auth-card">
-            <div class="auth-title">🔥 CRIAR CONTA - CANGAÇO BET</div>
-            <input type="text" id="usuario" class="auth-input" placeholder="Nome de Utilizador">
-            <input type="email" id="email" class="auth-input" placeholder="O seu E-mail">
-            <input type="password" id="senha" class="auth-input" placeholder="Crie uma Senha">
-            <button class="auth-btn" onclick="realizarCadastro()">Concluir Cadastro</button>
-        </div>
-    </div>
-
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
     <div id="main-content">
         <header>
-            <div class="logo">🔥 CANGAÇO BET</div>
-            <button class="btn-entrar" onclick="alert('Já tem sessão iniciada!')">CONTA</button>
+            <div class="logo" onclick="abrirModalDeposito()">🔥 CANGAÇO BET</div>
+            <button class="btn-entrar" onclick="abrirModalRegistro()">REGISTRAR</button>
         </header>
 
         <div class="promo-carousel-container">
@@ -437,30 +342,30 @@
                     <div class="promo-content">
                         <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
                         <p>Receba até R$1.000 + 50 Giros Grátis!</p>
-                        <button class="btn-cadastre" onclick="irParaCadastro()">Resgatar</button>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
                     </div>
                 </div>
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
                     <div class="promo-content">
                         <h3>⚡ CASHBACK DIÁRIO</h3>
                         <p>Até 12% de retorno em todas as apostas!</p>
-                        <button class="btn-cadastre" onclick="irParaCadastro()">Aproveitar</button>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
                     </div>
                 </div>
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/7dkz4q.jpeg');">
                     <div class="promo-content">
                         <h3>🏆 TORNEIOS EXCLUSIVOS</h3>
                         <p>Participe e concorra a prêmios em dinheiro!</p>
-                        <button class="btn-cadastre" onclick="irParaCadastro()">Participar</button>
+                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Participar</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="categories">
-            <div class="category-pill">🤠 Cangaço torneios</div>
-            <div class="category-pill">🌵 Cangaço missões</div>
-            <div class="category-pill">🔥 Top</div>
+            <div class="category-pill" onclick="abrirModalCategorias()">🤠 Cangaço torneios</div>
+            <div class="category-pill" onclick="abrirModalCategorias()">🌵 Cangaço missões</div>
+            <div class="category-pill" onclick="abrirModalCategorias()">🔥 Top</div>
         </div>
 
         <div class="jackpot-box">
@@ -534,20 +439,20 @@
             🏆 TOP <span>Todos ></span>
         </div>
 
-        <div class="games-grid">
-            <div class="game-card" onclick="pararMusicaEEntrar('Fortune Tiger')">
+        <div class="games-grid" id="gamesGrid">
+            <div class="game-card" data-name="fortune tiger" onclick="pararMusicaEEntrar('Fortune Tiger')">
                 <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Fortune Tiger">
                 <div class="game-name">Fortune Tiger</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Aviator')">
+            <div class="game-card" data-name="aviator" onclick="pararMusicaEEntrar('Aviator')">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Mines')">
+            <div class="game-card" data-name="mines" onclick="pararMusicaEEntrar('Mines')">
                 <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
                 <div class="game-name">Mines</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
+            <div class="game-card" data-name="gates of olympus" onclick="pararMusicaEEntrar('Gates of Olympus')">
                 <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
                 <div class="game-name">Gates of Olympus</div>
             </div>
@@ -557,69 +462,99 @@
             ⚡ MAIS JOGADOS <span>Todos ></span>
         </div>
 
-        <div class="games-grid">
-            <div class="game-card" onclick="pararMusicaEEntrar('Master Joker')">
+        <div class="games-grid" id="gamesGrid2">
+            <div class="game-card" data-name="master joker" onclick="pararMusicaEEntrar('Master Joker')">
                 <img src="https://files.catbox.moe/wy9jwg.jpeg" class="game-img" alt="Master Joker">
                 <div class="game-name">Master Joker</div>
             </div>
-            <div class="game-card" onclick="pararMusicaEEntrar('Big Bass Bonanza')">
+            <div class="game-card" data-name="big bass bonanza" onclick="pararMusicaEEntrar('Big Bass Bonanza')">
                 <img src="https://files.catbox.moe/3kg3ao.webp" class="game-img" alt="Big Bass Bonanza">
                 <div class="game-name">Big Bass Bonanza</div>
             </div>
         </div>
 
         <nav>
-            <a href="#" class="nav-item">📁<br>Registrar</a>
-            <a href="#" class="nav-item">📂<br>Categorias</a>
-            <a href="#" class="nav-item active">💰<br>Cangaço</a>
-            <a href="#" class="nav-item">📺<br>Ao Vivo</a>
-            <a href="#" class="nav-item">🔍<br>Pesquisar</a>
+            <a class="nav-item" onclick="abrirModalRegistro()">📁<br>Registrar</a>
+            <a class="nav-item" onclick="abrirModalCategorias()">📂<br>Categorias</a>
+            <a class="nav-item active" onclick="abrirModalDeposito()">💰<br>Depositar</a>
+            <a class="nav-item" onclick="alert('Transmissões Ao Vivo em breve!')">📺<br>Ao Vivo</a>
+            <a class="nav-item" onclick="abrirModalPesquisa()">🔍<br>Pesquisar</a>
         </nav>
+    </div>
+
+    <div id="searchModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">🔍 BUSCAR JOGO</div>
+            <input type="text" id="searchInput" class="modal-input" placeholder="Digite o nome do jogo..." oninput="filtrarJogos()">
+            <div id="searchResultBox" style="text-align: left; max-height: 150px; overflow-y: auto; color: #ccc; font-size: 13px;"></div>
+        </div>
+    </div>
+
+    <div id="categoryModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">📂 SELECIONAR CATEGORIA</div>
+            <button class="modal-btn" onclick="alert('A entrar na categoria Cassino...')">🎰 Cassinos</button>
+            <button class="modal-btn" style="background-color: #2a2d3d; margin-top: 10px;" onclick="alert('A entrar na categoria Esportes...')">⚽ Esportes</button>
+        </div>
+    </div>
+
+    <div id="depositModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">💰 DEPOSITAR (PIX)</div>
+            <input type="number" class="modal-input" placeholder="Valor do depósito (R$)">
+            <button class="modal-btn" onclick="alert('Gerando QR Code Pix...'); fecharModais();">Gerar Pix</button>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="fecharModais()">&times;</span>
+            <div class="modal-title">🔥 CRIAR CONTA - CANGAÇO BET</div>
+            <input type="text" id="usuario" class="modal-input" placeholder="Nome de Utilizador">
+            <input type="email" id="email" class="modal-input" placeholder="O seu E-mail">
+            <input type="password" id="senha" class="modal-input" placeholder="Crie uma Senha">
+            <button class="modal-btn" onclick="realizarCadastro()">Concluir Cadastro</button>
+        </div>
     </div>
 
     <script>
         const audio = document.getElementById('audioPlayer');
-        const splashScreen = document.getElementById('splash-screen');
-        const authScreen = document.getElementById('auth-screen');
-        const mainContent = document.getElementById('main-content');
-        const loaderBar = document.getElementById('loaderBar');
-        const loaderText = document.getElementById('loaderText');
-        const btnEntrar = document.getElementById('btnEntrar');
 
-        let progresso = 0;
-
-        // Barra de carregamento até 100%
-        const intervalo = setInterval(() => {
-            progresso += 2;
-            if (progresso <= 100) {
-                loaderBar.style.width = progresso + '%';
-                loaderText.innerText = 'A carregar recursos... ' + progresso + '%';
-            } else {
-                clearInterval(intervalo);
-                loaderText.style.display = 'none';
-                loaderBar.parentElement.style.display = 'none';
-                btnEntrar.style.display = 'block'; 
-            }
-        }, 40);
-
-        function irParaCadastro() {
+        function tocarAudioInicio() {
             audio.play().catch(e => console.log(e));
-            splashScreen.style.display = 'none';
-            authScreen.style.display = 'flex';
+        }
+
+        // Modais
+        function abrirModalPesquisa() {
+            tocarAudioInicio();
+            document.getElementById('searchModal').style.display = 'flex';
+        }
+        function abrirModalCategorias() {
+            tocarAudioInicio();
+            document.getElementById('categoryModal').style.display = 'flex';
+        }
+        function abrirModalDeposito() {
+            tocarAudioInicio();
+            document.getElementById('depositModal').style.display = 'flex';
+        }
+        function abrirModalRegistro() {
+            tocarAudioInicio();
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+        function fecharModais() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
         }
 
         function realizarCadastro() {
             const usuario = document.getElementById('usuario').value;
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-
-            if (usuario.trim() === '' || email.trim() === '' || senha.trim() === '') {
-                alert('Por favor, preencha todos os campos para se cadastrar!');
+            if (usuario.trim() === '') {
+                alert('Por favor, preencha o seu nome de utilizador!');
                 return;
             }
-
-            authScreen.style.display = 'none';
-            mainContent.style.display = 'block';
+            fecharModais();
             alert('Cadastro efetuado com sucesso! Bem-vindo ao Cangaço Bet, ' + usuario + '!');
         }
 
@@ -627,6 +562,43 @@
             audio.pause(); 
             audio.currentTime = 0; 
             alert('A entrar em ' + nomeJogo + '...');
+        }
+
+        // Filtro de Pesquisa de Jogos em tempo real
+        function filtrarJogos() {
+            const termo = document.getElementById('searchInput').value.toLowerCase();
+            const resultBox = document.getElementById('searchResultBox');
+            resultBox.innerHTML = '';
+
+            if (termo.trim() === '') return;
+
+            const jogos = [
+                { nome: 'Fortune Tiger', img: 'https://files.catbox.moe/75mifn.jpeg' },
+                { nome: 'Aviator', img: 'https://files.catbox.moe/f5zgx9.webp' },
+                { nome: 'Mines', img: 'https://files.catbox.moe/9k06uq.jpeg' },
+                { nome: 'Gates of Olympus', img: 'https://files.catbox.moe/7dkz4q.jpeg' },
+                { nome: 'Master Joker', img: 'https://files.catbox.moe/wy9jwg.jpeg' },
+                { nome: 'Big Bass Bonanza', img: 'https://files.catbox.moe/3kg3ao.webp' }
+            ];
+
+            const encontrados = jogos.filter(j => j.nome.toLowerCase().includes(termo));
+
+            if (encontrados.length > 0) {
+                encontrados.forEach(j => {
+                    const item = document.createElement('div');
+                    item.style.padding = '8px';
+                    item.style.cursor = 'pointer';
+                    item.style.borderBottom = '1px solid #2a2d3d';
+                    item.innerHTML = `🎰 ${j.nome}`;
+                    item.onclick = () => {
+                        fecharModais();
+                        pararMusicaEEntrar(j.nome);
+                    };
+                    resultBox.appendChild(item);
+                });
+            } else {
+                resultBox.innerHTML = '<div style="padding: 8px;">Nenhum jogo encontrado.</div>';
+            }
         }
 
         // Movimento automático do carrossel de vencedores
@@ -651,4 +623,3 @@
     </script>
 </body>
 </html>
-
