@@ -10,15 +10,15 @@
         
         /* Cabeçalho */
         header { background: #161922; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff4500; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 18px; font-weight: 900; color: #ff4500; letter-spacing: 0.5px; }
-        .saldo-box { font-size: 12px; background: #222634; padding: 6px 12px; border-radius: 20px; border: 1px solid #333a4d; font-weight: bold; color: #ffcc00; }
+        .logo { font-size: 16px; font-weight: 900; color: #ff4500; letter-spacing: 0.5px; }
+        .saldo-box { font-size: 12px; background: #222634; padding: 5px 10px; border-radius: 20px; border: 1px solid #333a4d; font-weight: bold; color: #ffcc00; }
 
         /* Abas */
         .main-tab-content { display: none; padding: 12px; }
         .main-tab-content.active-tab { display: block; }
 
-        /* Layout de Esportes original */
-        .section-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #ffb703; display: flex; align-items: center; gap: 6px; }
+        /* Esportes */
+        .section-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; color: #ffb703; display: flex; align-items: center; gap: 6px; }
         
         .match-card { background: #161922; border: 1px solid #232836; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
         .match-header { display: flex; justify-content: space-between; font-size: 10px; color: #8c92a4; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
@@ -32,7 +32,7 @@
         .odd-label { font-size: 9px; color: #999; display: block; }
         .odd-value { font-size: 12px; font-weight: bold; color: #fff; display: block; margin-top: 1px; }
 
-        /* Estilos Cassino */
+        /* Cassino */
         .casino-container { text-align: center; padding-top: 10px; }
         .slot-machine { background: #161922; border: 2px solid #ffb703; border-radius: 12px; padding: 15px; max-width: 340px; margin: 0 auto; }
         .slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: #0d0e12; padding: 8px; border-radius: 8px; margin-bottom: 12px; }
@@ -46,7 +46,7 @@
         .bet-slip-input { width: 100%; padding: 6px; background: #0d0e12; border: 1px solid #333; color: white; border-radius: 4px; margin-bottom: 6px; font-size: 12px; }
         .btn-place-bet { width: 100%; background: #00c853; color: #000; border: none; padding: 8px; border-radius: 4px; font-weight: bold; font-size: 12px; cursor: pointer; }
 
-        /* Menu Inferior */
+        /* Menu Inferior Original */
         nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #12141c; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #222; z-index: 99; }
         .nav-item { text-align: center; color: #777; font-size: 10px; text-decoration: none; cursor: pointer; }
         .nav-item.active { color: #ff4500; font-weight: bold; }
@@ -54,26 +54,24 @@
 </head>
 <body>
 
-    <!-- ABA DE ESPORTES -->
     <div id="tab-esportes" class="main-tab-content active-tab">
         <header>
-            <div class="logo">⚽ CANGAÇO BET</div>
-            <div class="saldo-box">R$ <span id="saldoGeralUI">9.250,00</span></div>
+            <div class="logo">⚽ CANGAÇO ESPORTES</div>
+            <div class="saldo-box">Saldo: R$ <span id="saldoGeralUI">9.250,00</span></div>
         </header>
 
         <div style="padding: 10px 0;">
-            <div class="section-title">🔥 Partidas de Hoje (Ao Vivo / Programadas)</div>
+            <div class="section-title">🔥 Partidas Ao Vivo / Hoje</div>
             <div id="lista-partidas-api">
                 <p style="color: #777; text-align: center; font-size: 12px; padding: 20px;">A carregar jogos reais da API...</p>
             </div>
         </div>
     </div>
 
-    <!-- ABA DE CASSINO -->
     <div id="tab-cassino" class="main-tab-content">
         <header>
             <div class="logo">🎰 CANGAÇO CASSINO</div>
-            <div class="saldo-box">R$ <span id="saldoCassinoUI">9.250,00</span></div>
+            <div class="saldo-box">Saldo: R$ <span id="saldoCassinoUI">9.250,00</span></div>
         </header>
 
         <div class="casino-container">
@@ -92,7 +90,7 @@
                 </div>
                 <div style="margin-bottom: 8px; text-align: left;">
                     <span style="font-size: 10px; color: #999;">Aposta (R$):</span>
-                    <input type="number" id="slotApostaInput" value="100" style="width: 100%; padding: 5px; background: #0d0e12; border: 1px solid #333; color: #fff; border-radius: 4px; margin-top: 2px; font-size: 12px;">
+                    <input type="number" id="slotApostaInput" value="250" style="width: 100%; padding: 5px; background: #0d0e12; border: 1px solid #333; color: #fff; border-radius: 4px; margin-top: 2px; font-size: 12px;">
                 </div>
                 <button class="btn-girar" onclick="girarSlot()">GIRAR</button>
                 <div id="slotMensagem" style="margin-top: 8px; font-size: 12px; font-weight: bold; color: #00c853;"></div>
@@ -100,7 +98,6 @@
         </div>
     </div>
 
-    <!-- Boletim de Aposta -->
     <div class="bet-slip" id="betSlip">
         <div class="bet-slip-title">
             <span>🎟️ BILHETE DE APOSTA</span>
@@ -112,10 +109,12 @@
         <button class="btn-place-bet" onclick="confirmarApostaEsportiva()">CONFIRMAR APOSTA</button>
     </div>
 
-    <!-- MENU INFERIOR -->
     <nav>
         <a class="nav-item" id="navCassinoBtn" onclick="mudarAba('cassino')">🎰<br>Cassino</a>
         <a class="nav-item active" id="navEsportesBtn" onclick="mudarAba('esportes')">⚽<br>Esportes</a>
+        <a class="nav-item" onclick="alert('Funcionalidade de depósito em breve!')">💰<br>Depositar</a>
+        <a class="nav-item" onclick="alert('Pesquisa rápida em breve!')">🔍<br>Pesquisar</a>
+        <a class="nav-item" onclick="alert('Área da conta em breve!')">👤<br>Conta</a>
     </nav>
 
     <script>
@@ -138,129 +137,4 @@
         }
 
         function atualizarSaldosUI() {
-            document.getElementById('saldoGeralUI').innerText = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-            document.getElementById('saldoCassinoUI').innerText = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-        }
-
-        // Puxar partidas reais usando a tua chave
-        async function carregarJogosReais() {
-            const container = document.getElementById('lista-partidas-api');
-            try {
-                const hoje = new Date().toISOString().split('T')[0];
-                const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
-                    headers: {
-                        "x-apisports-key": apiKey
-                    }
-                });
-                const dados = await resposta.json();
-
-                if (dados.response && dados.response.length > 0) {
-                    container.innerHTML = '';
-                    
-                    dados.response.slice(0, 10).forEach(match => {
-                        const casa = match.teams.home.name;
-                        const fora = match.teams.away.name;
-                        const liga = match.league.name;
-                        const statusHora = match.fixture.status.short === 'LIVE' ? `<span style="color: #00c853;">● ${match.fixture.status.elapsed}'</span>` : match.fixture.date.split('T')[1].substring(0,5);
-
-                        const card = document.createElement('div');
-                        card.className = 'match-card';
-                        card.innerHTML = `
-                            <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
-                            <div class="match-teams">
-                                <span class="team-name">${casa}</span>
-                                <span class="match-vs">VS</span>
-                                <span class="team-name">${fora}</span>
-                            </div>
-                            <div class="odds-grid">
-                                <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Casa)', 1.85, this)">
-                                    <span class="odd-label">1 (Casa)</span>
-                                    <span class="odd-value">1.85</span>
-                                </div>
-                                <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Empate)', 3.40, this)">
-                                    <span class="odd-label">X (Empate)</span>
-                                    <span class="odd-value">3.40</span>
-                                </div>
-                                <div class="odd-btn" onclick="selecionarAposta('${casa} x ${fora} (Fora)', 3.90, this)">
-                                    <span class="odd-label">2 (Fora)</span>
-                                    <span class="odd-value">3.90</span>
-                                </div>
-                            </div>
-                        `;
-                        container.appendChild(card);
-                    });
-                } else {
-                    container.innerHTML = `<p style="color: #777; text-align: center; font-size: 12px; padding: 20px;">Sem partidas oficiais encontradas para hoje.</p>`;
-                }
-            } catch (erro) {
-                console.error("Erro ao puxar dados:", erro);
-                container.innerHTML = `<p style="color: #ff4500; text-align: center; font-size: 12px; padding: 20px;">Erro ao ligar à API de futebol.</p>`;
-            }
-        }
-
-        function selecionarAposta(jogoOdd, odd, elemento) {
-            document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
-            elemento.classList.add('selected');
-            apostaSelecionada = jogoOdd;
-            oddAtual = odd;
-            document.getElementById('betSelectionInfo').innerText = `Seleção: ${jogoOdd} (Odd: ${odd})`;
-            document.getElementById('betSlip').style.display = 'block';
-            atualizarRetornoPotencial();
-        }
-
-        function fecharBilhete() {
-            document.getElementById('betSlip').style.display = 'none';
-            document.querySelectorAll('.odd-btn').forEach(b => b.classList.remove('selected'));
-        }
-
-        document.getElementById('betValorInput').addEventListener('input', atualizarRetornoPotencial);
-
-        function atualizarRetornoPotencial() {
-            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
-            let retorno = valor * oddAtual;
-            document.getElementById('retornoPotencial').innerText = `Retorno potencial: R$ ${retorno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-        }
-
-        function confirmarApostaEsportiva() {
-            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
-            if (valor <= 0 || saldo < valor) {
-                alert('Valor inválido ou saldo insuficiente!');
-                return;
-            }
-            saldo -= valor;
-            atualizarSaldosUI();
-            fecharBilhete();
-            alert(`✅ Aposta registada com sucesso!`);
-        }
-
-        function girarSlot() {
-            let valorAposta = parseFloat(document.getElementById('slotApostaInput').value) || 0;
-            if (valorAposta <= 0 || saldo < valorAposta) {
-                alert('Saldo insuficiente!');
-                return;
-            }
-
-            saldo -= valorAposta;
-            atualizarSaldosUI();
-
-            const simbolos = ['🍊', '🏆', '💰', '🧧', '🍋', '⭐', '💎'];
-            const gridItems = document.querySelectorAll('.slot-item');
-            
-            gridItems.forEach(item => {
-                item.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-            });
-
-            if (Math.random() > 0.6) {
-                let premio = valorAposta * 3;
-                saldo += premio;
-                atualizarSaldosUI();
-                document.getElementById('slotMensagem').innerText = `🎉 Ganhou R$ ${premio.toFixed(2)}!`;
-            } else {
-                document.getElementById('slotMensagem').innerText = `Não foi desta vez!`;
-            }
-        }
-
-        window.onload = carregarJogosReais;
-    </script>
-</body>
-</html>
+            document.getElementById('
