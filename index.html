@@ -222,7 +222,6 @@
         .main-tab-content { display: none; }
         .main-tab-content.active-tab { display: block; }
 
-        /* Background Sofisticado na Tela Inicial */
         #tab-cassino {
             background: radial-gradient(circle at top, #1c1310 0%, var(--bg-body) 60%);
             min-height: 80vh;
@@ -286,7 +285,7 @@
         .game-img { width: 100%; height: 115px; object-fit: cover; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
-        /* --- NOTIFICAÇÕES TOAST ESTILOSAS --- */
+        /* NOTIFICAÇÕES TOAST */
         #toastContainer {
             position: fixed; bottom: 25px; left: 20px; z-index: 9999;
             display: flex; flex-direction: column; gap: 8px; pointer-events: none;
@@ -305,12 +304,11 @@
         }
         .toast-title { color: var(--gold); font-weight: 900; display: block; font-size: 10px; text-transform: uppercase; }
 
-        /* --- MISSÕES DIÁRIAS --- */
+        /* MISSÕES */
         .missions-container { padding: 15px; max-width: 500px; margin: 0 auto; }
         .mission-card {
             background: var(--bg-card); border: 1px solid var(--border-color);
             border-radius: 14px; padding: 15px; margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .mission-title { font-size: 14px; font-weight: bold; color: var(--gold); margin-bottom: 4px; }
         .mission-desc { font-size: 12px; color: var(--text-sub); margin-bottom: 10px; }
@@ -320,7 +318,7 @@
             font-size: 12px; cursor: pointer; width: 100%; text-transform: uppercase;
         }
 
-        /* --- CHAT AO VIVO --- */
+        /* CHAT AO VIVO */
         .chat-container { padding: 15px; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; height: 80vh; }
         .chat-box {
             flex: 1; background: var(--bg-card); border: 1px solid var(--border-color);
@@ -339,7 +337,7 @@
             padding: 0 16px; border-radius: 8px; font-weight: bold; cursor: pointer;
         }
 
-        /* --- SISTEMA DE AFILIADOS --- */
+        /* AFILIADOS */
         .affiliate-container { padding: 15px; max-width: 500px; margin: 0 auto; text-align: center; }
         .affiliate-card {
             background: var(--bg-card); border: 1px solid var(--border-color);
@@ -356,29 +354,11 @@
             width: 100%; cursor: pointer; text-transform: uppercase; font-size: 13px;
         }
 
-        /* Estilos comuns de modais e botões auxiliares */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 999;
-            justify-content: center; align-items: center; padding: 15px;
+        /* OUTROS JOGOS (PENALTY, AVIATOR, MINES, ESPORTES) */
+        #penaltySectionContainer, #aviatorSectionContainer, #minesSectionContainer {
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
         }
-        .modal-card-4d {
-            background: radial-gradient(circle at top, #21283d 0%, #11141c 100%);
-            width: 100%; max-width: 440px; padding: 22px; border-radius: 24px;
-            border: 2px solid rgba(255, 69, 0, 0.6);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9); text-align: center; position: relative;
-        }
-        .modal-title-4d { font-size: 18px; font-weight: 950; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; }
-        .modal-input {
-            width: 100%; padding: 11px 14px; margin-bottom: 12px;
-            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px;
-        }
-        .modal-btn {
-            width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00);
-            color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer;
-        }
-        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
-
         .btn-voltar-home {
             width: 100%; max-width: 500px; margin: 0 auto 12px auto;
             background: var(--bg-card); border: 1px solid var(--border-color);
@@ -388,6 +368,55 @@
         }
         .btn-voltar-home:hover { border-color: var(--accent); color: var(--text-main); }
         .btn-voltar-home svg { width: 14px; height: 14px; fill: var(--gold); }
+
+        /* MINES JOGO */
+        .mines-screen-3d {
+            position: relative; width: 100%; height: 380px;
+            background: radial-gradient(circle at 50% 30%, #181c2e 0%, #0b0e17 100%);
+            border-radius: 18px; overflow: hidden;
+            box-shadow: inset 0 0 70px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.8);
+            margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px;
+        }
+        .mines-grid-5x5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 320px; z-index: 10; }
+        .mine-tile {
+            aspect-ratio: 1; background: linear-gradient(145deg, #252a38, #151821);
+            border: 2px solid #323b52; border-radius: 10px; display: flex; justify-content: center; align-items: center;
+            font-size: 18px; font-weight: 900; color: var(--gold); cursor: pointer; transition: 0.2s;
+        }
+        .mine-tile:hover { border-color: var(--accent); transform: scale(1.04); }
+        .mine-tile.revealed-star { background: radial-gradient(circle, #00ff8833 0%, #151821 80%); border-color: #00ff88; color: #00ff88; }
+        .mine-tile.revealed-mine { background: radial-gradient(circle, #ff330044 0%, #151821 80%); border-color: #ff3300; color: #ff3300; }
+
+        /* AVIATOR JOGO */
+        .aviator-screen-3d {
+            position: relative; width: 100%; height: 380px;
+            background: radial-gradient(circle at 50% 30%, #1a0826 0%, #080310 100%);
+            border: 3px solid var(--accent); border-radius: 18px; overflow: hidden;
+            margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .aviator-mult-display { font-size: 46px; font-weight: 950; color: #00ff88; letter-spacing: 2px; z-index: 10; margin-bottom: 5px; }
+        .aviator-status-text { font-size: 13px; font-weight: bold; color: var(--gold); z-index: 10; text-transform: uppercase; }
+
+        /* PENALTY JOGO */
+        .stadium-container-3d {
+            position: relative; width: 100%; height: 420px;
+            background: radial-gradient(circle at 50% 30%, #174d2b 0%, #081d11 100%);
+            border: 3px solid var(--gold); border-radius: 18px; overflow: hidden; margin-bottom: 15px;
+        }
+        .goal-frame { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 85%; height: 190px; border: 8px solid #f8f9f9; border-bottom: none; border-radius: 6px 6px 0 0; z-index: 5; pointer-events: none; }
+        .target-spot { position: absolute; width: 44px; height: 44px; background: rgba(0, 255, 136, 0.15); border: 2px dashed #00ff88; border-radius: 50%; z-index: 20; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .bola-penalty-3d { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) scale(1); width: 42px; height: 42px; background: radial-gradient(circle at 35% 35%, #fff 0%, #ccc 45%, #444 85%, #000 100%); border-radius: 50%; z-index: 25; }
+
+        /* MODAIS COMUNS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center; padding: 15px; }
+        .modal-card-4d { background: radial-gradient(circle at top, #21283d 0%, #11141c 100%); width: 100%; max-width: 440px; padding: 22px; border-radius: 24px; border: 2px solid rgba(255, 69, 0, 0.6); text-align: center; position: relative; }
+        .modal-title-4d { font-size: 18px; font-weight: 950; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; }
+        .modal-input { width: 100%; padding: 11px 14px; margin-bottom: 12px; background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px; }
+        .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; }
+        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
+
+        .sports-container { padding: 15px; }
+        .match-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; margin-bottom: 14px; }
     </style>
 </head>
 <body>
@@ -413,7 +442,7 @@
             <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
-            <button class="btn-theme-toggle" onclick="alternarTema()" title="Mudar Modo Escuro / Claro">🌓</button>
+            <button class="btn-theme-toggle" onclick="alternarTema()">🌓</button>
             <div class="saldo-topo-3d">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
@@ -421,7 +450,7 @@
     </header>
 
     <div class="quick-search-bar" id="quickSearchBarContainer">
-        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="Pesquisar jogos ou esportes..." oninput="pesquisaGeral()">
         <div id="quickSearchResult" style="background: var(--bg-card); border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid var(--border-color);"></div>
     </div>
 
@@ -432,13 +461,15 @@
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">Cassino & Jogos</div>
+        <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">Penalty Cangaço</div>
+        <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">Aviator</div>
+        <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">Mines</div>
+        <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">Esportes Ao Vivo</div>
         <div class="sidebar-item" onclick="mudarAba('missoes'); fecharSidebar();">Missões Diárias</div>
         <div class="sidebar-item" onclick="mudarAba('afiliados'); fecharSidebar();">Indique e Ganhe (Afiliados)</div>
         <div class="sidebar-item" onclick="mudarAba('chat'); fecharSidebar();">Chat ao Vivo</div>
         <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">Suporte Online</div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">Depositar (PIX)</div>
-        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">Entrar na Conta</div>
-        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">Registar Conta</div>
     </div>
 
     <!-- ABA 1: CASSINO -->
@@ -452,13 +483,6 @@
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
                     </div>
                 </div>
-                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
-                    <div class="promo-content">
-                        <h3>CASHBACK DIÁRIO</h3>
-                        <p>Até 12% de retorno em todas as apostas!</p>
-                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -467,53 +491,82 @@
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
         </div>
 
-        <div class="winners-section">
-            <div class="winners-title">OS ÚLTIMOS VENCEDORES</div>
-            <div class="winners-scroll" id="winnersScroll">
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
-                    <div class="winner-info">
-                        <div class="winner-name">Ka***</div>
-                        <div class="winner-prize">R$ 45.00 BRL</div>
-                    </div>
-                </div>
-                <div class="winner-card">
-                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
-                    <div class="winner-info">
-                        <div class="winner-name">Eb***</div>
-                        <div class="winner-prize">R$ 35.75 BRL</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="section-title">TOP JOGOS</div>
         <div class="games-grid">
-            <div class="game-card" onclick="jogarCassino('Fortune Tiger', 20)">
-                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Tiger">
-                <div class="game-name">Fortune Tiger</div>
+            <div class="game-card" onclick="mudarAba('penalty')">
+                <img src="https://files.catbox.moe/onqvbv.png" class="game-img" alt="Penalty">
+                <div class="game-name">Penalty Cangaço</div>
+            </div>
+            <div class="game-card" onclick="mudarAba('aviator')">
+                <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
+                <div class="game-name">Aviator</div>
+            </div>
+            <div class="game-card" onclick="mudarAba('mines')">
+                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
+                <div class="game-name">Mines</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
-                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
+                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Olympus">
                 <div class="game-name">Gates of Olympus</div>
             </div>
         </div>
     </div>
 
-    <!-- ABA MISSÕES DIÁRIAS -->
+    <!-- ABA PENALTY -->
+    <div id="tab-penalty" class="main-tab-content">
+        <div id="penaltySectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
+            <div class="stadium-container-3d">
+                <div class="goal-frame"></div>
+                <div class="target-spot" id="target1" onclick="alert('Gol!')" style="top:55px; left:10%;"></div>
+                <div class="target-spot" id="target2" onclick="alert('Gol!')" style="top:55px; right:10%;"></div>
+                <div class="bola-penalty-3d"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA AVIATOR -->
+    <div id="tab-aviator" class="main-tab-content">
+        <div id="aviatorSectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
+            <div class="aviator-screen-3d">
+                <div class="aviator-mult-display">2.45x</div>
+                <div class="aviator-status-text">EM VOO...</div>
+            </div>
+            <button class="modal-btn" onclick="alert('Saque efetuado com sucesso!')">SACAR</button>
+        </div>
+    </div>
+
+    <!-- ABA MINES -->
+    <div id="tab-mines" class="main-tab-content">
+        <div id="minesSectionContainer">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
+            <div class="mines-screen-3d">
+                <div class="mines-grid-5x5" id="minesGridContainer"></div>
+            </div>
+            <button class="modal-btn" onclick="iniciarMinesJogo()">NOVO JOGO</button>
+        </div>
+    </div>
+
+    <!-- ABA ESPORTES -->
+    <div id="tab-esportes" class="main-tab-content">
+        <div class="sports-container">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px; color: var(--gold);">Partidas ao Vivo</div>
+            <div class="match-card"><b>Flamengo vs Vasco</b><br>Ao Vivo | 1 - 0</div>
+            <div class="match-card"><b>Real Madrid vs Barcelona</b><br>Ao Vivo | 2 - 2</div>
+        </div>
+    </div>
+
+    <!-- ABA MISSÕES -->
     <div id="tab-missoes" class="main-tab-content">
         <div class="missions-container">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--gold);">Missões Diárias & Recompensas</div>
             <div class="mission-card">
                 <div class="mission-title">Desafio Diário: Apostar R$ 100</div>
-                <div class="mission-desc">Aposte um total de R$ 100 em qualquer jogo ou esporte para ganhar uma Free Bet especial.</div>
-                <button class="btn-claim-mission" onclick="resgatarMissao(100, 150)">Resgatar Free Bet de R$ 150</button>
-            </div>
-            <div class="mission-card">
-                <div class="mission-title">Super Apostador: Apostar R$ 500</div>
-                <div class="mission-desc">Aposte R$ 500 hoje e ganhe R$ 750 em créditos de bônus direto na conta.</div>
-                <button class="btn-claim-mission" onclick="resgatarMissao(500, 750)">Resgatar Bônus de R$ 750</button>
+                <div class="mission-desc">Aposte R$ 100 e ganhe uma Free Bet de R$ 150.</div>
+                <button class="btn-claim-mission" onclick="resgatarMissao(150)">Resgatar Free Bet</button>
             </div>
         </div>
     </div>
@@ -524,21 +577,20 @@
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
             <div class="affiliate-card">
                 <div style="font-size: 18px; font-weight: bold; color: var(--gold); margin-bottom: 10px;">Indique Amigos e Ganhe</div>
-                <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 15px;">Compartilhe seu link exclusivo de indicação abaixo. Quando seus amigos se cadastrarem por ele, você ganha comissões automáticas!</p>
                 <div class="affiliate-link-box" id="linkAfiliadoBox">https://cangaco-bet.github.io/?ref=user</div>
                 <button class="btn-affiliate-copy" onclick="copiarLinkAfiliado()">Copiar Link de Convite</button>
             </div>
         </div>
     </div>
 
-    <!-- ABA CHAT AO VIVO -->
+    <!-- ABA CHAT -->
     <div id="tab-chat" class="main-tab-content">
         <div class="chat-container">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: var(--gold);">Chat Global de Apostadores</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: var(--gold);">Chat Global</div>
             <div class="chat-box" id="chatBox">
-                <div class="chat-msg"><span class="chat-user">Ka***:</span> E aí galera, alguém pegou o multiplicador alto hoje no Aviator?</div>
-                <div class="chat-msg"><span class="chat-user">Jo***:</span> Tirei uma boa grana agora pouco no Mines, recomendo!</div>
+                <div class="chat-msg"><span class="chat-user">Ka***:</span> E aí galera!</div>
+                <div class="chat-msg"><span class="chat-user">Jo***:</span> Boa sorte a todos nas apostas!</div>
             </div>
             <div class="chat-input-row">
                 <input type="text" id="chatInputMsg" class="chat-input" placeholder="Digite sua mensagem...">
@@ -547,26 +599,13 @@
         </div>
     </div>
 
-    <!-- ABA SUPORTE -->
-    <div id="tab-suporte" class="main-tab-content">
-        <div style="padding: 15px; max-width: 500px; margin: 0 auto;">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--gold);">Suporte 24h</div>
-            <div style="background: var(--bg-card); padding: 20px; border-radius: 14px; border: 1px solid var(--border-color);">
-                <p style="font-size: 13px; margin-bottom: 15px;">Dúvidas sobre depósitos Pix ou recuperação de conta? Nossa equipe está online.</p>
-                <input type="text" class="modal-input" placeholder="Seu E-mail">
-                <textarea class="modal-input" placeholder="Escreva sua dúvida..." style="height: 90px; resize: none;"></textarea>
-                <button class="modal-btn" onclick="alert('Mensagem enviada com sucesso ao suporte!')">Enviar Mensagem</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- MODAIS -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card-4d">
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title-4d">ENTRAR NA CONTA</div>
-            <input type="email" id="loginEmail" class="modal-input" placeholder="E-mail">
-            <input type="password" id="loginSenha" class="modal-input" placeholder="Senha">
+            <input type="email" class="modal-input" placeholder="E-mail">
+            <input type="password" class="modal-input" placeholder="Senha">
             <button class="modal-btn" onclick="realizarLogin()">Entrar</button>
         </div>
     </div>
@@ -576,8 +615,7 @@
             <span class="close-modal" onclick="fecharModais()">&times;</span>
             <div class="modal-title-4d">CRIAR CONTA</div>
             <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
-            <input type="email" id="regEmail" class="modal-input" placeholder="E-mail">
-            <input type="password" id="regSenha" class="modal-input" placeholder="Senha">
+            <input type="email" class="modal-input" placeholder="E-mail">
             <button class="modal-btn" onclick="concluirRegistro()">Cadastrar Agora</button>
         </div>
     </div>
@@ -610,9 +648,8 @@
         }, 30);
 
         function fecharSplashScreen() {
-            const splash = document.getElementById('splashScreen');
-            splash.style.opacity = '0';
-            setTimeout(() => { splash.style.display = 'none'; }, 500);
+            document.getElementById('splashScreen').style.opacity = '0';
+            setTimeout(() => { document.getElementById('splashScreen').style.display = 'none'; }, 500);
         }
 
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
@@ -620,35 +657,28 @@
         
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
+        iniciarMinesJogo();
 
-        function atualizarSaldoNaTela() {
-            document.getElementById('saldoAtual').innerText = saldo.toFixed(2);
-        }
-
+        function atualizarSaldoNaTela() { document.getElementById('saldoAtual').innerText = saldo.toFixed(2); }
         function verificarSessaoAtiva() {
             if (usuarioLogado) {
                 document.querySelector('.btn-topo-login').innerText = usuarioLogado.nome.substring(0, 2).toUpperCase() + '***';
                 document.querySelector('.btn-topo-login').setAttribute('onclick', 'fazerLogout()');
             }
         }
-
-        function fazerLogout() {
-            if (confirm("Deseja sair da sua conta?")) {
-                localStorage.removeItem('cangaco_usuario');
-                usuarioLogado = null;
-                location.reload();
-            }
-        }
-
+        function fazerLogout() { localStorage.removeItem('cangaco_usuario'); location.reload(); }
         function alternarTema() {
             const html = document.documentElement;
-            const atual = html.getAttribute('data-theme');
-            html.setAttribute('data-theme', atual === 'light' ? 'dark' : 'light');
+            html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
         }
 
         function mudarAba(aba) {
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') document.getElementById('tab-cassino').classList.add('active-tab');
+            if (aba === 'penalty') document.getElementById('tab-penalty').classList.add('active-tab');
+            if (aba === 'aviator') document.getElementById('tab-aviator').classList.add('active-tab');
+            if (aba === 'mines') document.getElementById('tab-mines').classList.add('active-tab');
+            if (aba === 'esportes') document.getElementById('tab-esportes').classList.add('active-tab');
             if (aba === 'missoes') document.getElementById('tab-missoes').classList.add('active-tab');
             if (aba === 'afiliados') {
                 document.getElementById('tab-afiliados').classList.add('active-tab');
@@ -668,13 +698,12 @@
 
         function concluirRegistro() {
             const nome = document.getElementById('regNome').value;
-            const email = document.getElementById('regEmail').value;
-            if(!nome || !email) { alert("Preencha todos os campos!"); return; }
+            if(!nome) return;
             usuarioLogado = { nome: nome };
             localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
             verificarSessaoAtiva();
             fecharModais();
-            alert("Cadastro realizado com sucesso!");
+            alert("Cadastro realizado!");
         }
 
         function realizarLogin() {
@@ -687,7 +716,7 @@
 
         function realizarDeposito() {
             const val = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if(val <= 0) { alert("Valor inválido"); return; }
+            if(val <= 0) return;
             saldo += val;
             atualizarSaldoNaTela();
             localStorage.setItem('cangaco_saldo', saldo);
@@ -696,23 +725,18 @@
         }
 
         function copiarLinkAfiliado() {
-            const link = document.getElementById('linkAfiliadoBox').innerText;
-            navigator.clipboard.writeText(link);
-            alert("Link de afiliado copiado com sucesso!");
+            navigator.clipboard.writeText(document.getElementById('linkAfiliadoBox').innerText);
+            alert("Link copiado!");
         }
 
-        function resgatarMissao(meta, premio) {
+        function resgatarMissao(premio) {
             saldo += premio;
             atualizarSaldoNaTela();
-            localStorage.setItem('cangaco_saldo', saldo);
-            alert(`Parabéns! Recompensa de R$ ${premio.toFixed(2)} creditada na sua conta.`);
+            alert(`Recompensa de R$ ${premio.toFixed(2)} creditada!`);
         }
 
         function enviarMensagemChat() {
-            if (!usuarioLogado) {
-                abrirModalRegistro();
-                return;
-            }
+            if (!usuarioLogado) { abrirModalRegistro(); return; }
             const txt = document.getElementById('chatInputMsg').value.trim();
             if(!txt) return;
             const box = document.getElementById('chatBox');
@@ -722,36 +746,41 @@
             box.scrollTop = box.scrollHeight;
         }
 
+        function iniciarMinesJogo() {
+            const container = document.getElementById('minesGridContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < 25; i++) {
+                let tile = document.createElement('div');
+                tile.className = 'mine-tile';
+                tile.innerText = '?';
+                tile.onclick = () => {
+                    tile.classList.add('revealed-star');
+                    tile.innerText = '⭐';
+                };
+                container.appendChild(tile);
+            }
+        }
+
         function jogarCassino(nome, custo) {
             if(saldo < custo) { alert("Saldo insuficiente!"); return; }
             saldo -= custo;
             atualizarSaldoNaTela();
-            let premio = custo * 2;
-            if(Math.random() > 0.5) {
-                saldo += premio;
-                atualizarSaldoNaTela();
-                alert(`Você ganhou R$ ${premio.toFixed(2)} em ${nome}!`);
-            } else {
-                alert(`Não foi dessa vez em ${nome}. Tente novamente!`);
-            }
+            alert(`Você jogou ${nome}!`);
         }
 
-        // Sistema de Notificações Toast automáticas
         function dispararToast(nome, valor) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
-            toast.innerHTML = `<div><span class="toast-title">Novo Saque / Prêmio</span> ${nome} acabou de faturar <b>R$ ${valor}</b>!</div>`;
+            toast.innerHTML = `<div><span class="toast-title">Novo Saque</span> ${nome} faturou <b>R$ ${valor}</b>!</div>`;
             container.appendChild(toast);
             setTimeout(() => { toast.remove(); }, 4000);
         }
 
         setInterval(() => {
-            const nomes = ["Carlos***", "Lucas***", "Fernanda***", "Bruno***", "Julio***"];
-            const valores = ["50.00", "120.75", "350.00", "89.50", "1.250.00"];
-            let n = nomes[Math.floor(Math.random() * nomes.length)];
-            let v = valores[Math.floor(Math.random() * valores.length)];
-            dispararToast(n, v);
+            let nomes = ["Carlos***", "Lucas***", "Fernanda***", "Bruno***"];
+            let valores = ["50.00", "120.75", "350.00", "89.50"];
+            dispararToast(nomes[Math.floor(Math.random()*nomes.length)], valores[Math.floor(Math.random()*valores.length)]);
         }, 8000);
 
         function pesquisaGeral() {
@@ -759,9 +788,7 @@
             const box = document.getElementById('quickSearchResult');
             box.innerHTML = '';
             if(!termo) return;
-            if("fortune tiger".includes(termo)) {
-                box.innerHTML = `<div style="padding:8px; cursor:pointer;" onclick="mudarAba('cassino')">🐯 Fortune Tiger</div>`;
-            }
+            if("mines".includes(termo)) box.innerHTML = `<div style="padding:8px; cursor:pointer;" onclick="mudarAba('mines')">Mines</div>`;
         }
     </script>
 </body>
