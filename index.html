@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cangaço Bet</title>
+    <title>Cangaço Bet - Penalty 3D</title>
     <style>
         * {
             margin: 0;
@@ -30,113 +30,55 @@
             transition: opacity 0.5s ease;
         }
         .splash-banner {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ff4500;
-            box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
-            animation: float4D 3s ease-in-out infinite;
-            margin-bottom: 25px;
+            width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+            border: 3px solid #ff4500; box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
+            animation: float4D 3s ease-in-out infinite; margin-bottom: 25px;
         }
         @keyframes float4D {
             0% { transform: translateY(0px) rotate(0deg) scale(1); }
             50% { transform: translateY(-15px) rotate(4deg) scale(1.06); filter: drop-shadow(0 20px 30px rgba(255,183,3,0.6)); }
             100% { transform: translateY(0px) rotate(0deg) scale(1); }
         }
-        .loading-container {
-            width: 260px;
-            background: #151821;
-            border: 1px solid #2c3347;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 14px;
-            margin-bottom: 15px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
-        }
-        .loading-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff4500, #ffb703);
-            border-radius: 20px;
-            transition: width 0.1s linear;
-        }
-        .loading-text {
-            font-size: 13px;
-            font-weight: bold;
-            color: #ffb703;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
+        .loading-container { width: 260px; background: #151821; border: 1px solid #2c3347; border-radius: 20px; overflow: hidden; height: 14px; margin-bottom: 15px; }
+        .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff4500, #ffb703); border-radius: 20px; transition: width 0.1s linear; }
+        .loading-text { font-size: 13px; font-weight: bold; color: #ffb703; margin-bottom: 20px; letter-spacing: 1px; }
         .btn-entrar-splash {
-            display: none;
-            background: linear-gradient(135deg, #ff4500, #ff6a00);
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
-            animation: pulseBtn 1.5s infinite;
-        }
-        @keyframes pulseBtn {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            display: none; background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff;
+            border: none; padding: 12px 30px; border-radius: 12px; font-size: 15px; font-weight: 900;
+            cursor: pointer; box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
         }
 
         header {
-            background: linear-gradient(135deg, #151821, #0b0c10);
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #ff4500;
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(135deg, #151821, #0b0c10); padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #ff4500; position: sticky; top: 0; z-index: 90;
         }
         .header-left { display: flex; align-items: center; gap: 10px; }
         .header-right { display: flex; align-items: center; gap: 8px; }
         .btn-menu-lateral {
             background: #191d28; border: 1px solid #ff4500; width: 38px; height: 38px;
             border-radius: 10px; display: flex; flex-direction: column; justify-content: center;
-            align-items: center; gap: 4px; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
+            align-items: center; gap: 4px; cursor: pointer;
         }
         .btn-menu-lateral span { width: 18px; height: 2px; background-color: #ff4500; border-radius: 2px; }
-        .logo-img-pequena {
-            width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
-            border: 1.5px solid #ffb703; cursor: pointer; box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
-        }
+        .logo-img-pequena { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1.5px solid #ffb703; cursor: pointer; }
         .saldo-topo-3d {
             background: linear-gradient(145deg, #1f2430, #13161f); border: 1px solid #ffb703;
             padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #ffb703;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
             display: flex; align-items: center; gap: 4px;
         }
         .saldo-topo-3d span { color: #fff; }
-        .btn-topo-acao {
-            background: linear-gradient(135deg, #ff4500, #cc3500); color: white; border: none;
-            padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px;
-            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
-        }
-        .btn-topo-login {
-            background: transparent; color: #ffb703; border: 1px solid #ffb703;
-            padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px;
-        }
+        .btn-topo-acao { background: linear-gradient(135deg, #ff4500, #cc3500); color: white; border: none; padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .btn-topo-login { background: transparent; color: #ffb703; border: 1px solid #ffb703; padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
         .quick-search-bar { padding: 12px 15px; background: #0f1118; border-bottom: 1px solid #1a1d28; }
         .quick-search-input { width: 100%; padding: 10px 15px; background: #151821; border: 1px solid #232838; border-radius: 20px; color: white; font-size: 13px; }
 
-        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(3px); z-index: 998; }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 998; }
         .sidebar {
             position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
             background: linear-gradient(180deg, #151821, #0f1118); border-right: 2px solid #ff4500;
             z-index: 999; transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
         }
         .sidebar.open { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #232838; padding-bottom: 15px; }
@@ -145,16 +87,15 @@
         .sidebar-item {
             background: #191d28; border: 1px solid #232838; padding: 12px 15px; border-radius: 12px;
             color: #fff; font-size: 14px; font-weight: bold; margin-bottom: 10px; cursor: pointer;
-            display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;
+            display: flex; align-items: center; gap: 10px;
         }
-        .sidebar-item:hover { border-color: #ff4500; background: #212635; transform: translateX(3px); }
 
         .main-tab-content { display: none; }
         .main-tab-content.active-tab { display: block; }
 
         .promo-carousel-container {
             margin: 15px; border-radius: 14px; overflow: hidden; border: 1px solid #ff4500;
-            position: relative; height: 120px; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
+            position: relative; height: 120px;
         }
         .promo-track { display: flex; transition: transform 0.5s ease-in-out; height: 100%; width: 300%; }
         .promo-slide {
@@ -170,23 +111,10 @@
 
         .jackpot-box {
             background: linear-gradient(135deg, #2b110a, #151821); margin: 0 15px 15px 15px; padding: 15px;
-            border-radius: 14px; border: 1px solid #ff4500; text-align: center; box-shadow: 0 8px 25px rgba(255, 69, 0, 0.25);
+            border-radius: 14px; border: 1px solid #ff4500; text-align: center;
         }
         .jackpot-title { font-size: 12px; font-weight: bold; color: #ffb703; letter-spacing: 1px; margin-bottom: 4px; }
         .jackpot-value { font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 15px rgba(255,69,0,0.6); }
-
-        .winners-section { margin: 15px 0; padding: 0 15px; }
-        .winners-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
-        .winners-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 5px; }
-        .winners-scroll::-webkit-scrollbar { display: none; }
-        .winner-card {
-            background: #151821; border: 1px solid #232838; border-radius: 12px; padding: 10px; min-width: 155px;
-            display: flex; align-items: center; gap: 10px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-        }
-        .winner-card img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
-        .winner-info { font-size: 12px; }
-        .winner-name { color: #aaa; font-size: 10px; }
-        .winner-prize { color: #ffb703; font-weight: bold; }
 
         .section-title { padding: 0 15px; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; }
         .section-title span { font-size: 12px; color: #888; }
@@ -194,26 +122,12 @@
         .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; margin-bottom: 25px; }
         .game-card {
             background: linear-gradient(145deg, #191d28, #13161f); border-radius: 14px; overflow: hidden;
-            border: 1px solid #232838; text-align: center; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+            border: 1px solid #232838; text-align: center; cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
         }
         .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
         .game-img { width: 100%; height: 115px; object-fit: cover; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
-
-        .sports-container { padding: 0 15px; }
-        .match-card {
-            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #232838;
-            border-radius: 14px; padding: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-        }
-        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
-        .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
-        .match-score-vs { background: #0b0c10; padding: 4px 10px; border-radius: 16px; border: 1px solid #ff4500; }
-        .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; }
-        .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .odd-btn { background: #1c212f; border: 1px solid #2c3347; padding: 8px; border-radius: 8px; text-align: center; cursor: pointer; }
-        .odd-label { font-size: 10px; color: #aaa; display: block; }
-        .odd-value { font-size: 12px; font-weight: bold; color: #fff; display: block; }
 
         .floating-support-btn {
             position: fixed; bottom: 25px; right: 20px; background: linear-gradient(135deg, #ff4500, #ffb703);
@@ -222,103 +136,101 @@
         }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        /* --- MODAL DO JOGO CANGAÇO FOOTBALL 4D HD PROFISSIONAL --- */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);
-            z-index: 999; justify-content: center; align-items: center; padding: 12px;
+        /* --- JOGO PENALTY 3D EXATAMENTE IGUAL AO SEU PRINT/VÍDEO --- */
+        #footballModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, #092015 0%, #020804 100%);
+            z-index: 99999; flex-direction: column; justify-content: space-between; align-items: center;
+            padding: 10px; overflow: hidden;
         }
-        .modal-card-football {
-            background: radial-gradient(circle at top, #163622 0%, #0b1a11 100%);
-            width: 100%; max-width: 420px; padding: 18px; border-radius: 24px;
-            border: 2px solid #00ff88; box-shadow: 0 20px 50px rgba(0,0,0,0.95), inset 0 2px 10px rgba(0,255,136,0.3);
-            text-align: center; position: relative; max-height: 95vh; overflow-y: auto;
+        .penalty-header-top {
+            width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px; background: rgba(0,0,0,0.85); border-radius: 12px; border: 1px solid #00ff88;
         }
-        .modal-title-football { font-size: 18px; font-weight: 950; color: #00ff88; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; }
-        .modal-subtitle-football { font-size: 11px; color: #ffb703; font-weight: bold; margin-bottom: 10px; }
-        .close-modal { position: absolute; top: 14px; right: 18px; color: #aaa; font-size: 22px; cursor: pointer; }
+        .modal-title-football { font-size: 15px; font-weight: 950; color: #00ff88; text-transform: uppercase; }
+        .close-fullscreen { color: #fff; font-size: 24px; cursor: pointer; font-weight: bold; }
 
-        /* ESTÁDIO 4D HD REALISTA */
-        .stadium-container-4d {
-            position: relative; width: 100%; height: 270px;
-            background: linear-gradient(180deg, #1f5c46 0%, #0d2b20 100%);
-            border: 3px solid #ffb703; border-radius: 16px; overflow: hidden;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.85), 0 8px 25px rgba(0,255,136,0.4);
-            margin-bottom: 12px; cursor: crosshair; touch-action: none;
+        /* CAMPO / ESTÁDIO 3D */
+        .stadium-container-3d {
+            position: relative; width: 100%; max-width: 480px; flex-grow: 1;
+            background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=80') center/cover no-repeat;
+            border: 3px solid #ffb703; border-radius: 18px; overflow: hidden;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 10px 30px rgba(0,255,136,0.4);
+            margin: 6px 0; cursor: crosshair; touch-action: none;
         }
-        .goal-post-4d {
-            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-            width: 260px; height: 95px; border: 5px solid #ffffff; border-bottom: none;
-            border-radius: 8px 8px 0 0; box-shadow: 0 0 20px rgba(255,255,255,0.8);
-        }
-        .goal-net-4d {
+        .stadium-overlay-dark {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.18) 10px, rgba(255,255,255,0.18) 12px),
-                        repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.18) 10px, rgba(255,255,255,0.18) 12px);
+            background: rgba(3, 15, 8, 0.45); z-index: 1;
         }
 
-        /* --- AVATARES SVG DETALHADOS EM HD / 4D --- */
-        .goleiro-avatar-container {
-            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 70px; height: 75px; z-index: 10;
-            transition: all 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+        /* MULTIPLICADORES NO TOPO (EXATAMENTE COMO NO VÍDEO: 1.92x, 3.84x, 7.68x...) */
+        .multipliers-bar {
+            position: absolute; top: 10px; left: 0; width: 100%; display: flex; justify-content: space-around;
+            padding: 0 15px; z-index: 15; pointer-events: none;
         }
-        .jogador-avatar-container {
-            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-            width: 65px; height: 90px; z-index: 12;
-            transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+        .mult-badge {
+            background: rgba(0, 0, 0, 0.7); border: 1px solid #00ff88; color: #00ff88;
+            padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: 900;
+            box-shadow: 0 2px 8px rgba(0,255,136,0.4);
         }
-        /* Animação HD da perna do jogador ao chutar */
-        .jogador-avatar-container.chutando .perna-chute-anim {
-            transform-origin: 35px 50px;
-            transform: rotate(-55deg) translate(-10px, -5px);
+        .mult-badge.active { background: #00ff88; color: #000; transform: scale(1.15); }
+
+        /* ALVOS DE BOLA NOS CANTOS DA BALIZA */
+        .target-spot {
+            position: absolute; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.25);
+            border: 2px dashed #ffb703; border-radius: 50%; z-index: 20; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px #ffb703;
+            animation: pulseTarget 1.2s infinite alternate;
+        }
+        .target-spot img { width: 28px; height: 28px; object-fit: contain; }
+        @keyframes pulseTarget { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; } }
+
+        /* POSIÇÕES DOS 5 ALVOS NA BALIZA (EXATAMENTE COMO O PENALTY SHOOT-OUT) */
+        #target1 { top: 32%; left: 15%; }
+        #target2 { top: 32%; right: 15%; }
+        #target3 { top: 52%; left: 45%; transform: translateX(-50%); }
+        #target4 { top: 42%; left: 28%; }
+        #target5 { top: 42%; right: 28%; }
+
+        /* GOLEIRO 3D REALISTA NO CENTRO */
+        .goleiro-3d-img {
+            position: absolute; top: 28%; left: 50%; transform: translateX(-50%);
+            width: 110px; height: 130px; object-fit: contain; z-index: 10;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.9));
+            transition: all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
-        /* BOLA 4D E MIRA DE TOQUE */
-        .bola-4d-hd {
-            position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
-            width: 28px; height: 28px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
-            border-radius: 50%; border: 2px solid #000; box-shadow: 0 5px 18px rgba(0,0,0,0.9);
-            z-index: 15; transition: all 0.55s cubic-bezier(0.1, 0.9, 0.2, 1);
-        }
-        .alvo-toque {
-            position: absolute; width: 30px; height: 30px; border: 3px dashed #00ff88;
-            border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none;
-            z-index: 20; display: none; box-shadow: 0 0 15px #00ff88; animation: pulseAlvo 0.8s infinite alternate;
-        }
-        @keyframes pulseAlvo { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.4); } }
-
-        /* TELA DE ANIMAÇÃO DE GOL / DEFENDEU */
-        .anuncio-resultado-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 30; display: none; backdrop-filter: blur(3px); background: rgba(0,0,0,0.5);
-        }
-        .texto-gol-gigante {
-            font-size: 38px; font-weight: 950; color: #ffb703;
-            text-shadow: 0 0 30px #00ff88, 0 0 15px #000; text-transform: uppercase; letter-spacing: 2px;
-            animation: zoomPop 0.4s ease;
-        }
-        .texto-defendeu-gigante {
-            font-size: 38px; font-weight: 950; color: #ff4500;
-            text-shadow: 0 0 30px #ff4500, 0 0 15px #000; text-transform: uppercase; letter-spacing: 2px;
-            animation: zoomPop 0.4s ease;
-        }
-        @keyframes zoomPop { 0% { transform: scale(0.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .premio-badge {
-            font-size: 16px; font-weight: 900; color: #fff; background: #000;
-            padding: 7px 20px; border-radius: 22px; border: 2px solid #ffb703; margin-top: 10px;
-            box-shadow: 0 0 18px #ffb703;
+        /* BOLA E JOGADOR */
+        .bola-penalty-3d {
+            position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%);
+            width: 36px; height: 36px; background: radial-gradient(circle at 30% 30%, #fff 0%, #aaa 60%, #111 100%);
+            border-radius: 50%; border: 2px solid #000; box-shadow: 0 6px 20px rgba(0,0,0,0.9);
+            z-index: 15; transition: all 0.5s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
-        .football-controls { background: rgba(0,0,0,0.6); padding: 12px; border-radius: 12px; border: 1px solid rgba(0,255,136,0.3); }
+        /* MENSAGEM DE GANHO GIGANTE EM VERMELHO/DOURADO (IGUAL AO PRINT) */
+        .win-display-banner {
+            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 30; display: none; text-align: center; width: 100%;
+        }
+        .win-red-amount {
+            font-size: 32px; font-weight: 950; color: #ff2a2a;
+            text-shadow: 0 0 20px #ff0000, 0 0 10px #000; text-transform: uppercase;
+        }
+        .win-white-text {
+            font-size: 28px; font-weight: 950; color: #ffffff;
+            text-shadow: 0 0 15px #ffffff, 0 0 10px #000;
+        }
+
+        .penalty-controls-box {
+            width: 100%; max-width: 480px; background: rgba(0,0,0,0.9);
+            padding: 12px; border-radius: 16px; border: 1px solid rgba(0,255,136,0.4); z-index: 25;
+        }
         .bet-control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; }
         .bet-adjust-box { display: flex; align-items: center; gap: 6px; }
         .btn-bet-step {
             background: #ff4500; color: #fff; border: none; width: 32px; height: 32px;
-            border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 3px 8px rgba(255,69,0,0.5);
+            border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer;
         }
         .bet-input-display {
             background: #0f1118; border: 1px solid #00ff88; color: #00ff88;
@@ -327,30 +239,19 @@
         .btn-confirmar-aposta {
             width: 100%; padding: 14px; background: linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%);
             color: #000; border: 2px solid #a9dfbf; border-radius: 50px; font-weight: 950; font-size: 16px;
-            cursor: pointer; box-shadow: 0 6px 20px rgba(0, 255, 136, 0.7); text-transform: uppercase; letter-spacing: 1px;
-            transition: transform 0.1s;
+            cursor: pointer; box-shadow: 0 6px 20px rgba(0, 255, 136, 0.7); text-transform: uppercase;
         }
-        .btn-confirmar-aposta:active { transform: scale(0.95); }
 
         .bilhetes-container, .extrato-container, .suporte-container { padding: 15px; }
-        .bilhete-impresso, .extrato-item {
-            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500;
-            border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-        }
-        .modal-input {
-            width: 100%; padding: 11px 14px; margin-bottom: 12px;
-            background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px;
-        }
-        .modal-btn {
-            width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00); color: white;
-            border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 5px;
-        }
+        .extrato-item { background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+        .modal-input { width: 100%; padding: 11px 14px; margin-bottom: 12px; background: #0f1118; border: 1px solid #2c3347; border-radius: 10px; color: white; font-size: 13px; }
+        .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 5px; }
     </style>
 </head>
 <body>
 
     <div id="splashScreen">
-        <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
+        <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner">
         <div class="loading-container"><div class="loading-bar" id="loadingBar"></div></div>
         <div class="loading-text" id="loadingText">A CARREGAR... 0%</div>
         <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
@@ -372,8 +273,7 @@
     </header>
 
     <div class="quick-search-bar">
-        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos ou esportes..." oninput="pesquisaGeral()">
-        <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
+        <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos ou esportes...">
     </div>
 
     <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Suporte">
@@ -388,30 +288,19 @@
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">🎰 Cassino & Jogos</div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">⚽ Apostas Desportivas</div>
-        <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">📋 Meus Bilhetes</div>
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">📜 Histórico / Extrato</div>
-        <div class="sidebar-item" onclick="mudarAba('suporte'); fecharSidebar();">💬 Suporte Online</div>
         <div class="sidebar-item" onclick="abrirModalDeposito(); fecharSidebar();">💰 Depositar (PIX)</div>
-        <div class="sidebar-item" onclick="abrirModalLogin(); fecharSidebar();">🔐 Entrar na Conta</div>
-        <div class="sidebar-item" onclick="abrirModalRegistro(); fecharSidebar();">📝 Registar Conta</div>
     </div>
 
-    <!-- ABA 1: CASSINO E JOGOS -->
+    <!-- ABA CASSINO -->
     <div id="tab-cassino" class="main-tab-content active-tab">
         <div class="promo-carousel-container">
-            <div class="promo-track" id="promoTrack">
+            <div class="promo-track">
                 <div class="promo-slide" style="background-image: url('https://files.catbox.moe/75mifn.jpeg');">
                     <div class="promo-content">
                         <h3>🎁 BÔNUS DE BOAS-VINDAS</h3>
                         <p>Receba até R$1.000 + 50 Giros Grátis!</p>
                         <button class="btn-cadastre" onclick="abrirModalRegistro()">Resgatar</button>
-                    </div>
-                </div>
-                <div class="promo-slide" style="background-image: url('https://files.catbox.moe/f5zgx9.webp');">
-                    <div class="promo-content">
-                        <h3>⚡ CASHBACK DIÁRIO</h3>
-                        <p>Até 12% de retorno em todas as apostas!</p>
-                        <button class="btn-cadastre" onclick="abrirModalRegistro()">Aproveitar</button>
                     </div>
                 </div>
             </div>
@@ -422,67 +311,19 @@
             <div class="jackpot-value" id="jackpotNum">R$ 602,23</div>
         </div>
 
-        <div class="winners-section">
-            <div class="winners-title">🔥 OS ÚLTIMOS VENCEDORES</div>
-            <div class="winners-scroll">
-                <div class="winner-card"><img src="https://files.catbox.moe/75mifn.jpeg" alt=""><div class="winner-info"><div class="winner-name">Kaiq***</div><div class="winner-prize">R$ 45.00 BRL</div></div></div>
-                <div class="winner-card"><img src="https://files.catbox.moe/f5zgx9.webp" alt=""><div class="winner-info"><div class="winner-name">Ebe***</div><div class="winner-prize">R$ 35.75 BRL</div></div></div>
-            </div>
-        </div>
-
-        <div class="section-title">🏆 TOP JOGOS 4D <span>Todos ></span></div>
-
+        <div class="section-title">🏆 PENALTY SHOOT-OUT 3D <span>Todos ></span></div>
         <div class="games-grid">
-            <div class="game-card" onclick="abrirCangacoFootball()">
-                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Cangaço Football">
-                <div class="game-name">⚽ Cangaço Football</div>
+            <div class="game-card" onclick="abrirPenaltyFootball()">
+                <img src="https://files.catbox.moe/75mifn.jpeg" class="game-img" alt="Penalty Shootout">
+                <div class="game-name">⚽ Penalty Shoot-Out 3D</div>
             </div>
             <div class="game-card" onclick="jogarCassino('Aviator', 20)">
                 <img src="https://files.catbox.moe/f5zgx9.webp" class="game-img" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="jogarCassino('Mines', 10)">
-                <img src="https://files.catbox.moe/9k06uq.jpeg" class="game-img" alt="Mines">
-                <div class="game-name">Mines</div>
-            </div>
-            <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
-                <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
-                <div class="game-name">Gates of Olympus</div>
-            </div>
         </div>
     </div>
 
-    <!-- ABA 2: ESPORTES -->
-    <div id="tab-esportes" class="main-tab-content">
-        <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Partidas em Tempo Real (Ao Vivo)</div>
-            <div id="lista-partidas-api">
-                <div class="match-card">
-                    <div class="match-header"><span>🔴 Flamengo x Palmeiras</span> <span>34'</span></div>
-                    <div class="match-teams">
-                        <span>Flamengo</span>
-                        <div class="match-score-vs"><span class="match-real-score">1 - 0</span></div>
-                        <span>Palmeiras</span>
-                    </div>
-                    <div class="odds-grid">
-                        <div class="odd-btn"><span class="odd-label">1</span><span class="odd-value">1.80</span></div>
-                        <div class="odd-btn"><span class="odd-label">X</span><span class="odd-value">3.40</span></div>
-                        <div class="odd-btn"><span class="odd-label">2</span><span class="odd-value">4.20</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABA 3: BILHETES -->
-    <div id="tab-bilhetes" class="main-tab-content">
-        <div class="bilhetes-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📋 Meus Bilhetes</div>
-            <div id="listaMeusBilhetesImpressos"><p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete registado.</p></div>
-        </div>
-    </div>
-
-    <!-- ABA 4: EXTRATO -->
     <div id="tab-extrato" class="main-tab-content">
         <div class="extrato-container">
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">📜 Histórico de Transações</div>
@@ -490,108 +331,66 @@
         </div>
     </div>
 
-    <!-- ABA 5: SUPORTE -->
-    <div id="tab-suporte" class="main-tab-content">
-        <div class="suporte-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Suporte Online 24h</div>
-            <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Erro no saldo)">
-            <textarea id="suporteMensagem" class="modal-input" placeholder="Descreva sua dúvida..." style="height: 100px; resize: none;"></textarea>
-            <button class="modal-btn" onclick="enviarMensagemSuporte()">Enviar Mensagem</button>
+    <!-- JOGO PENALTY SHOOT-OUT 3D (TELA CHEIA IDÊNTICA AO PRINT/VÍDEO) -->
+    <div id="footballModal">
+        <div class="penalty-header-top">
+            <div>
+                <div class="modal-title-football">⚽ PENALTY SHOOT-OUT 3D</div>
+                <div id="subStatusJogo" style="font-size: 11px; color: #ffb703; font-weight: bold;">Escolha um canto na baliza para chutar!</div>
+            </div>
+            <span class="close-fullscreen" onclick="fecharPenaltyFootball()">&times;</span>
         </div>
-    </div>
+        
+        <!-- ESTÁDIO 3D -->
+        <div class="stadium-container-3d" id="stadiumContainer">
+            <div class="stadium-overlay-dark"></div>
 
-    <!-- MODAL DO JOGO CANGAÇO FOOTBALL 4D HD PROFISSIONAL -->
-    <div id="footballModal" class="modal-overlay">
-        <div class="modal-card-football">
-            <span class="close-modal" onclick="fecharCangaçoFootball()">&times;</span>
-            <div class="modal-title-football">⚽ CANGAÇO FOOTBALL 4D HD</div>
-            <div class="modal-subtitle-football" id="subStatusJogo">Confirme a aposta e toque na baliza para direcionar o chute!</div>
-            
-            <!-- ESTÁDIO 4D HD -->
-            <div class="stadium-container-4d" id="stadiumContainer" onclick="definirAlvoToque(event)">
-                <div class="goal-post-4d"><div class="goal-net-4d"></div></div>
-                
-                <!-- Guarda-redes 4D HD em Vetor Detalhado (Com luvas, braços, cabeça e uniforme) -->
-                <div class="goleiro-avatar-container" id="goleiroEl">
-                    <svg viewBox="0 0 100 100" width="100%" height="100%">
-                        <!-- Cabeça e Rosto -->
-                        <circle cx="50" cy="18" r="12" fill="#ffd1b3" stroke="#222" stroke-width="2"/>
-                        <path d="M42 12 Q50 8 58 12" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"/>
-                        <!-- Tronco / Uniforme -->
-                        <path d="M32 32 Q50 26 68 32 L72 65 Q50 72 28 65 Z" fill="url(#gradGoleiro)" stroke="#ffb703" stroke-width="2.5"/>
-                        <defs>
-                            <linearGradient id="gradGoleiro" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#ff4500" />
-                                <stop offset="100%" stop-color="#900c3f" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Braços e Luvas Neon -->
-                        <path d="M32 36 L15 50" stroke="#ff4500" stroke-width="8" stroke-linecap="round"/>
-                        <circle cx="12" cy="52" r="9" fill="#00ff88" stroke="#fff" stroke-width="2"/>
-                        <path d="M68 36 L85 50" stroke="#ff4500" stroke-width="8" stroke-linecap="round"/>
-                        <circle cx="88" cy="52" r="9" fill="#00ff88" stroke="#fff" stroke-width="2"/>
-                        <!-- Pernas/Calções -->
-                        <rect x="36" y="65" width="12" height="22" rx="4" fill="#111"/>
-                        <rect x="52" y="65" width="12" height="22" rx="4" fill="#111"/>
-                    </svg>
-                </div>
-
-                <!-- Mira do Toque -->
-                <div class="alvo-toque" id="alvoToque"></div>
-
-                <!-- Anúncio de Gol / Defendeu -->
-                <div class="anuncio-resultado-overlay" id="anuncioResultado">
-                    <div id="textoResultadoGigante"></div>
-                    <div class="premio-badge" id="premioBadgeEl"></div>
-                </div>
-
-                <!-- Jogador 4D HD em Vetor Detalhado (Com cabeça, tronco, braços e perna animada para chutar) -->
-                <div class="jogador-avatar-container" id="jogadorEl">
-                    <svg viewBox="0 0 100 100" width="100%" height="100%">
-                        <!-- Cabeça -->
-                        <circle cx="50" cy="14" r="11" fill="#ffd1b3" stroke="#222" stroke-width="2"/>
-                        <!-- Tronco / Camisola -->
-                        <path d="M34 28 Q50 24 66 28 L70 58 Q50 64 30 58 Z" fill="url(#gradJogador)" stroke="#2980b9" stroke-width="2.5"/>
-                        <defs>
-                            <linearGradient id="gradJogador" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#ffffff" />
-                                <stop offset="100%" stop-color="#bdc3c7" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Braços -->
-                        <path d="M34 32 L20 48" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
-                        <path d="M66 32 L80 48" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
-                        <!-- Perna de Apoio Estática -->
-                        <rect x="40" y="58" width="10" height="32" rx="4" fill="#222"/>
-                        <!-- Perna de Chute Animada -->
-                        <g class="perna-chute-anim">
-                            <rect x="52" y="58" width="10" height="30" rx="4" fill="#222"/>
-                            <ellipse cx="57" cy="90" rx="6" ry="4" fill="#ff4500"/>
-                        </g>
-                    </svg>
-                </div>
-
-                <div class="bola-4d-hd" id="bolaEl"></div>
+            <!-- MULTIPLICADORES NO TOPO (EXATAMENTE COMO NO SEU VÍDEO) -->
+            <div class="multipliers-bar">
+                <div class="mult-badge" id="m1">1.92x</div>
+                <div class="mult-badge" id="m2">3.84x</div>
+                <div class="mult-badge" id="m3">7.68x</div>
+                <div class="mult-badge" id="m4">15.36x</div>
+                <div class="mult-badge" id="m5">30.72x</div>
             </div>
 
-            <div class="football-controls">
-                <div class="bet-control-row">
-                    <span>Valor da Aposta:</span>
-                    <div class="bet-adjust-box">
-                        <button class="btn-bet-step" onclick="alterarApostaFootball(-1)">-</button>
-                        <input type="text" id="footballBetInput" class="bet-input-display" value="1.00" readonly>
-                        <button class="btn-bet-step" onclick="alterarApostaFootball(1)">+</button>
-                    </div>
-                </div>
-                <button class="btn-confirmar-aposta" id="btnConfirmarAposta" onclick="confirmarApostaEChutar()">CONFIRMAR APOSTA</button>
+            <!-- GOLEIRO 3D REALISTA NO CENTRO -->
+            <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=300&auto=format&fit=crop&q=80" class="goleiro-3d-img" id="goleiroEl" alt="Goleiro">
+
+            <!-- 5 ALVOS DE BOLA NOS CANTOS DA BALIZA -->
+            <div class="target-spot" id="target1" onclick="chutarPenalty(1)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
+            <div class="target-spot" id="target2" onclick="chutarPenalty(2)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
+            <div class="target-spot" id="target3" onclick="chutarPenalty(3)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
+            <div class="target-spot" id="target4" onclick="chutarPenalty(4)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
+            <div class="target-spot" id="target5" onclick="chutarPenalty(5)"><img src="https://files.catbox.moe/qf2bly.jpeg" alt="bola"></div>
+
+            <!-- BOLA -->
+            <div class="bola-penalty-3d" id="bolaEl"></div>
+
+            <!-- TELA DE VITÓRIA / GOL (EXATAMENTE COM A ESTÉTICA DO PRINT R$ 20,00 VIROU R$ 614,40) -->
+            <div class="win-display-banner" id="winBanner">
+                <div class="win-red-amount" id="winValorVermelho">R$ 20,00 virou</div>
+                <div class="win-white-text" id="winValorBranco">R$ 614,40</div>
             </div>
+        </div>
+
+        <div class="penalty-controls-box">
+            <div class="bet-control-row">
+                <span>Valor da Aposta:</span>
+                <div class="bet-adjust-box">
+                    <button class="btn-bet-step" onclick="alterarAposta(-1)">-</button>
+                    <input type="text" id="penaltyBetInput" class="bet-input-display" value="20.00" readonly>
+                    <button class="btn-bet-step" onclick="alterarAposta(1)">+</button>
+                </div>
+            </div>
+            <button class="btn-confirmar-aposta" id="btnConfirmarAposta" onclick="reiniciarRodada()">NOVO PÊNALTI</button>
         </div>
     </div>
 
     <!-- Modais Gerais -->
-    <div id="loginModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">🔐 ENTRAR</div><input type="email" id="loginEmail" class="modal-input" placeholder="E-mail"><input type="password" id="loginSenha" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="realizarLogin()">Entrar</button></div></div>
-    <div id="registerModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">📝 REGISTAR</div><input type="text" id="regNome" class="modal-input" placeholder="Nome"><input type="email" id="regEmail" class="modal-input" placeholder="E-mail"><input type="password" id="regSenha" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="realizarRegistro()">Registar</button></div></div>
-    <div id="depositModal" class="modal-overlay"><div class="modal-card-football" style="max-width: 380px;"><span class="close-modal" onclick="fecharModais()">&times;</span><div class="modal-title-football">💰 DEPOSITAR (PIX)</div><input type="number" id="depositoValorInput" class="modal-input" placeholder="Valor (R$)"><button class="modal-btn" onclick="realizarDeposito()">Depositar</button></div></div>
+    <div id="loginModal" class="sidebar-overlay" style="display:none; align-items:center; justify-content:center;"><div class="modal-input" style="max-width:350px; background:#151821;"><div class="modal-title-football" style="margin-bottom:10px;">🔐 ENTRAR</div><input type="email" class="modal-input" placeholder="E-mail"><input type="password" class="modal-input" placeholder="Senha"><button class="modal-btn" onclick="fecharModais()">Entrar</button></div></div>
+    <div id="registerModal" class="sidebar-overlay" style="display:none; align-items:center; justify-content:center;"><div class="modal-input" style="max-width:350px; background:#151821;"><div class="modal-title-football" style="margin-bottom:10px;">📝 REGISTAR</div><input type="text" class="modal-input" placeholder="Nome"><input type="email" class="modal-input" placeholder="E-mail"><button class="modal-btn" onclick="fecharModais()">Registar</button></div></div>
+    <div id="depositModal" class="sidebar-overlay" style="display:none; align-items:center; justify-content:center;"><div class="modal-input" style="max-width:350px; background:#151821;"><div class="modal-title-football" style="margin-bottom:10px;">💰 DEPOSITAR PIX</div><input type="number" class="modal-input" placeholder="Valor (R$)"><button class="modal-btn" onclick="fecharModais()">Depositar</button></div></div>
 
     <script>
         let progresso = 0;
@@ -600,10 +399,10 @@
         const botaoEntrarSplash = document.getElementById('btnEntrarSplash');
 
         let intervaloCarregamento = setInterval(() => {
-            progresso += 2;
+            progresso += 3;
             if (progresso <= 100) { barra.style.width = progresso + '%'; textoCarregamento.innerText = `A CARREGAR... ${progresso}%`; }
             else { clearInterval(intervaloCarregamento); textoCarregamento.innerText = "PRONTO!"; botaoEntrarSplash.style.display = 'block'; }
-        }, 30);
+        }, 25);
 
         function fecharSplashScreen() {
             const splash = document.getElementById('splashScreen');
@@ -612,137 +411,115 @@
         }
 
         let saldo = parseFloat(localStorage.getItem('cangaco_saldo')) || 1000.00;
-        let baseDadosUtilizadores = JSON.parse(localStorage.getItem('cangaco_db_usuarios')) || [];
         let historicoTransacoes = JSON.parse(localStorage.getItem('cangaco_extrato')) || [];
-        let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
-
-        let alvoX = 50; 
-        let alvoY = 45; 
-        let apostaConfirmada = false;
+        let nivelAtual = 0;
+        const multiplicadores = [1.92, 3.84, 7.68, 15.36, 30.72];
 
         function atualizarSaldoNaTela() { document.getElementById('saldoAtual').innerText = saldo.toFixed(2); localStorage.setItem('cangaco_saldo', saldo); }
         atualizarSaldoNaTela();
 
-        function registarTransacao(tipo, descricao, valor) {
-            historicoTransacoes.unshift({ tipo, descricao, valor: valor.toFixed(2), data: new Date().toLocaleString('pt-PT') });
-            localStorage.setItem('cangaco_extrato', JSON.stringify(historicoTransacoes));
-            renderizarExtratoNaTela();
+        function abrirPenaltyFootball() { document.getElementById('footballModal').style.display = 'flex'; reiniciarRodada(); }
+        function fecharPenaltyFootball() { document.getElementById('footballModal').style.display = 'none'; document.getElementById('torcidaAudio').pause(); }
+
+        function alterarAposta(delta) {
+            let input = document.getElementById('penaltyBetInput');
+            let val = parseFloat(input.value) + (delta * 10);
+            if (val < 10) val = 10;
+            input.value = val.toFixed(2);
         }
 
-        function abrirCangacoFootball() { document.getElementById('footballModal').style.display = 'flex'; resetarRodadaFootball(); }
-        function fecharCangaçoFootball() { document.getElementById('footballModal').style.display = 'none'; document.getElementById('torcidaAudio').pause(); }
-
-        function alterarApostaFootball(delta) {
-            if (apostaConfirmada) return;
-            let input = document.getElementById('footballBetInput');
-            let atual = parseFloat(input.value) + delta;
-            if (atual < 1.00) atual = 1.00;
-            input.value = atual.toFixed(2);
+        function reiniciarRodada() {
+            nivelAtual = 0;
+            document.getElementById('winBanner').style.display = 'none';
+            document.getElementById('bolaEl').style.transform = 'translateX(-50%) translateY(0) scale(1)';
+            document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0)';
+            document.getElementById('subStatusJogo').innerText = "Escolha um canto na baliza para chutar!";
+            atualizarMultiplicadoresUI();
+            mostrarAlvos(true);
         }
 
-        function definirAlvoToque(event) {
-            if (!apostaConfirmada) {
-                alert("Confirme a aposta primeiro antes de direcionar o chute na baliza!");
+        function atualizarMultiplicadoresUI() {
+            for (let i = 1; i <= 5; i++) {
+                let badge = document.getElementById('m' + i);
+                badge.classList.remove('active');
+                if (i - 1 === nivelAtual) badge.classList.add('active');
+            }
+        }
+
+        function mostrarAlvos(status) {
+            let displayVal = status ? 'flex' : 'none';
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('target' + i).style.display = displayVal;
+            }
+        }
+
+        function chutarPenalty(cantoEscolhido) {
+            mostrarAlvos(false);
+            let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
+            
+            if (nivelAtual === 0 && saldo < apostaVal) {
+                alert("Saldo insuficiente!");
+                mostrarAlvos(true);
                 return;
             }
 
-            let rect = event.currentTarget.getBoundingClientRect();
-            let x = event.clientX - rect.left;
-            let y = event.clientY - rect.top;
-            
-            alvoX = (x / rect.width) * 100;
-            alvoY = (y / rect.height) * 100;
+            if (nivelAtual === 0) {
+                saldo -= apostaVal;
+                atualizarSaldoNaTela();
+            }
 
-            let alvoEl = document.getElementById('alvoToque');
-            alvoEl.style.left = x + 'px';
-            alvoEl.style.top = y + 'px';
-            alvoEl.style.display = 'block';
+            document.getElementById('subStatusJogo').innerText = "A chutar...";
 
-            executarChuteRealistaHD();
-        }
-
-        function resetarRodadaFootball() {
-            apostaConfirmada = false;
-            document.getElementById('anuncioResultado').style.display = 'none';
-            document.getElementById('alvoToque').style.display = 'none';
-            document.getElementById('bolaEl').style.transform = 'translateX(-50%) translateY(0) scale(1)';
-            document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0)';
-            let jogador = document.getElementById('jogadorEl');
-            jogador.classList.remove('chutando');
-            jogador.style.transform = 'translateX(-50%) translateY(0)';
-            document.getElementById('subStatusJogo').innerText = "Confirme a aposta e toque na baliza para direcionar o chute!";
-            document.getElementById('btnConfirmarAposta').style.opacity = '1';
-            document.getElementById('torcidaAudio').pause();
-            document.getElementById('torcidaAudio').currentTime = 0;
-        }
-
-        function confirmarApostaEChutar() {
-            if (apostaConfirmada) return;
-            let apostaVal = parseFloat(document.getElementById('footballBetInput').value);
-            if (saldo < apostaVal) { alert("Saldo insuficiente!"); return; }
-
-            saldo -= apostaVal;
-            atualizarSaldoNaTela();
-            registarTransacao('cassino_perca', 'Aposta Cangaço Football', -apostaVal);
-
-            apostaConfirmada = true;
-            document.getElementById('subStatusJogo').innerText = "✅ Aposta Confirmada! Agora toque com o dedo na baliza para chutar!";
-            document.getElementById('btnConfirmarAposta').style.opacity = '0.5';
-        }
-
-        function executarChuteRealistaHD() {
             let bola = document.getElementById('bolaEl');
             let goleiro = document.getElementById('goleiroEl');
-            let jogador = document.getElementById('jogadorEl');
-            
-            document.getElementById('subStatusJogo').innerText = "A chutar...";
-            
-            // Ativa a animação vetorizada de chute da perna
-            jogador.classList.add('chutando');
-            jogador.style.transform = "translateX(-50%) translateY(-22px) scale(1.05)";
 
-            let deslocamentoX = (alvoX - 50) * 2.5;
-            let deslocamentoY = -150;
+            // Simula a direção do chute baseada no alvo escolhido
+            let offsetX = (cantoEscolhido === 1 || cantoEscolhido === 4) ? -90 : (cantoEscolhido === 2 || cantoEscolhido === 5 ? 90 : 0);
+            let offsetY = -170;
 
             setTimeout(() => {
-                bola.style.transform = `translateX(calc(-50% + ${deslocamentoX}px)) translateY(${deslocamentoY}px) scale(0.75)`;
+                bola.style.transform = `translateX(calc(-50% + ${offsetX}px)) translateY(${offsetY}px) scale(0.75)`;
                 
-                // Pulo dinâmico do guarda-redes 4D em direção à bola
-                let puloGoleiroX = deslocamentoX * 0.85;
-                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-38px) scale(1.18) rotate(${deslocamentoX > 0 ? 20 : -20}deg)`;
+                // O goleiro pula para tentar defender
+                let puloGoleiroX = offsetX * 0.9;
+                goleiro.style.transform = `translateX(calc(-50% + ${puloGoleiroX}px)) translateY(-35px) scale(1.15) rotate(${offsetX > 0 ? 25 : -25}deg)`;
 
                 setTimeout(() => {
-                    let anuncio = document.getElementById('anuncioResultado');
-                    let textoRes = document.getElementById('textoResultadoGigante');
-                    let badge = document.getElementById('premioBadgeEl');
-                    
-                    let goleiroConseguiuDefender = Math.abs(puloGoleiroX - deslocamentoX) < 45;
-                    let apostaVal = parseFloat(document.getElementById('footballBetInput').value);
+                    // Chance de gol baseada no nível (estilo jogo de crash/penalty real)
+                    let goleiroDefendeu = Math.random() < 0.25 && nivelAtual > 1;
 
-                    if (!goleiroConseguiuDefender) {
-                        let premio = apostaVal * 3.5;
-                        saldo += premio;
-                        atualizarSaldoNaTela();
-                        registarTransacao('cassino_ganho', 'Prêmio Gol - Cangaço Football', premio);
-
-                        textoRes.innerHTML = "🎉 GOL! 🎉";
-                        textoRes.className = "texto-gol-gigante";
-                        badge.innerText = `R$ ${premio.toFixed(2)}`;
-                        badge.style.display = 'block';
-                        anuncio.style.display = 'flex';
+                    if (!goleiroDefendeu) {
+                        let mult = multiplicadores[nivelAtual];
+                        let premioTotal = apostaVal * mult;
                         
-                        document.getElementById('torcidaAudio').play().catch(e => {});
-                        document.getElementById('subStatusJogo').innerText = `🎉 GOLAÇO! Ganhou R$ ${premio.toFixed(2)}! Confirme nova aposta.`;
-                    } else {
-                        textoRes.innerHTML = "🧤 DEFENDEU!";
-                        textoRes.className = "texto-defendeu-gigante";
-                        badge.style.display = 'none';
-                        anuncio.style.display = 'flex';
+                        // Exibe a tela de vitória idêntica ao seu print do vídeo
+                        document.getElementById('winValorVermelho').innerText = `R$ ${apostaVal.toFixed(2)} virou`;
+                        document.getElementById('winValorBranco').innerText = `R$ ${premioTotal.toFixed(2)}`;
+                        document.getElementById('winBanner').style.display = 'block';
 
-                        document.getElementById('subStatusJogo').innerText = "🧤 Defesa espetacular do guarda-redes! Tente novamente.";
+                        document.getElementById('torcidaAudio').play().catch(e=>{});
+
+                        nivelAtual++;
+                        if (nivelAtual >= 5) {
+                            saldo += premioTotal;
+                            atualizarSaldoNaTela();
+                            document.getElementById('subStatusJogo').innerText = "🎉 PARABÉNS! Completou todos os níveis!";
+                        } else {
+                            document.getElementById('subStatusJogo').innerText = `⚽ GOL! Escolha o próximo alvo ou retire o prêmio!`;
+                            setTimeout(() => {
+                                document.getElementById('winBanner').style.display = 'none';
+                                atualizarMultiplicadoresUI();
+                                mostrarAlvos(true);
+                                bola.style.transform = 'translateX(-50%) translateY(0) scale(1)';
+                                goleiro.style.transform = 'translateX(-50%) translateY(0)';
+                            }, 2500);
+                        }
+                    } else {
+                        document.getElementById('subStatusJogo').innerText = "🧤 DEFESA DO GOLEIRO! Perdeu a aposta.";
+                        document.getElementById('winValorVermelho').innerText = "DEFESA!";
+                        document.getElementById('winValorBranco').innerText = "Tente de novo";
+                        document.getElementById('winBanner').style.display = 'block';
                     }
-                    apostaConfirmada = false;
-                    document.getElementById('btnConfirmarAposta').style.opacity = '1';
                 }, 400);
             }, 300);
         }
@@ -750,31 +527,8 @@
         function jogarCassino(nome, custo) {
             if (saldo < custo) { alert("Saldo insuficiente!"); return; }
             saldo -= custo; atualizarSaldoNaTela();
-            if (Math.random() > 0.5) {
-                let p = custo * 2; saldo += p; atualizarSaldoNaTela();
-                alert(`🎉 Ganhou R$ ${p.toFixed(2)} em ${nome}!`);
-                registarTransacao('cassino_ganho', `Prêmio ${nome}`, p);
-            } else {
-                alert(`❌ Perdeu R$ ${custo.toFixed(2)} em ${nome}.`);
-                registarTransacao('cassino_perca', `Aposta ${nome}`, -custo);
-            }
-        }
-
-        function renderizarExtratoNaTela() {
-            const container = document.getElementById('listaExtratoTransacoes');
-            if (historicoTransacoes.length === 0) return;
-            container.innerHTML = historicoTransacoes.map(t => `
-                <div class="extrato-item">
-                    <div style="font-size:12px; color:#ffb703;">${t.descricao} - ${t.data}</div>
-                    <div style="font-size:14px; font-weight:bold; color:${t.tipo.includes('ganho')||t.tipo=='deposito'?'#00ff88':'#ff4500'};">R$ ${t.valor}</div>
-                </div>
-            `).join('');
-        }
-
-        function enviarMensagemSuporte() {
-            alert("✅ Mensagem enviada com sucesso ao suporte!");
-            document.getElementById('suporteAssunto').value = "";
-            document.getElementById('suporteMensagem').value = "";
+            let p = custo * 2; saldo += p; atualizarSaldoNaTela();
+            alert(`🎉 Ganhou R$ ${p.toFixed(2)} em ${nome}!`);
         }
 
         function abrirSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').style.display = 'block'; }
@@ -783,44 +537,12 @@
             fecharSidebar();
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') document.getElementById('tab-cassino').classList.add('active-tab');
-            else if (aba === 'esportes') document.getElementById('tab-esportes').classList.add('active-tab');
-            else if (aba === 'bilhetes') document.getElementById('tab-bilhetes').classList.add('active-tab');
             else if (aba === 'extrato') document.getElementById('tab-extrato').classList.add('active-tab');
-            else if (aba === 'suporte') document.getElementById('tab-suporte').classList.add('active-tab');
         }
-
-        function realizarRegistro() {
-            let nome = document.getElementById('regNome').value;
-            let email = document.getElementById('regEmail').value;
-            let senha = document.getElementById('regSenha').value;
-            if(!nome || !email || !senha) { alert("Preencha tudo!"); return; }
-            usuarioLogado = { nome, email, senha };
-            baseDadosUtilizadores.push(usuarioLogado);
-            localStorage.setItem('cangaco_db_usuarios', JSON.stringify(baseDadosUtilizadores));
-            localStorage.setItem('cangaco_usuario', JSON.stringify(usuarioLogado));
-            fecharModais(); alert("Registo efetuado com sucesso!"); location.reload();
-        }
-
-        function realizarLogin() {
-            let email = document.getElementById('loginEmail').value;
-            let senha = document.getElementById('loginSenha').value;
-            let u = baseDadosUtilizadores.find(x => x.email === email && x.senha === senha);
-            if(u) { usuarioLogado = u; localStorage.setItem('cangaco_usuario', JSON.stringify(u)); fecharModais(); alert("Sessão iniciada!"); location.reload(); }
-            else { alert("Dados incorretos."); }
-        }
-
-        function realizarDeposito() {
-            let v = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if(v <= 0) { alert("Valor inválido"); return; }
-            saldo += v; atualizarSaldoNaTela(); registarTransacao('deposito', 'Depósito Pix', v);
-            fecharModais(); alert("Depósito efetuado com sucesso!");
-        }
-
         function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
         function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
-        function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-        function pesquisaGeral() {}
+        function fecharModais() { document.querySelectorAll('.sidebar-overlay').forEach(m => m.style.display = 'none'); }
     </script>
 </body>
 </html>
