@@ -325,7 +325,7 @@
             color: #ff4500;
         }
 
-        /* --- TELA DO FORTUNE TIGER EM TELA INTEIRA REAL (3D/4D) --- */
+        /* --- TELA DO FORTUNE TIGER PERFEITA E CORRIGIDA --- */
         #tiger-game-screen {
             display: none;
             position: fixed;
@@ -338,18 +338,20 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            overflow: hidden;
-            perspective: 1000px;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .tiger-app-container {
             width: 100%;
-            height: 100%;
+            max-width: 420px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            padding: 10px 0;
+            padding: 50px 10px 10px 10px;
+            margin: 0 auto;
         }
 
         .btn-voltar-home {
@@ -367,33 +369,31 @@
             z-index: 50;
         }
 
-        /* Topo do Tigre 3D/4D com animação fluida */
+        /* Topo do Tigre 3D */
         .tiger-roof-section {
             width: 100%;
             text-align: center;
             position: relative;
-            padding-top: 5px;
-            transform-style: preserve-3d;
+            margin: 5px 0;
         }
 
         @keyframes float3D {
-            0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
-            50% { transform: translateY(-8px) rotateX(5deg) rotateY(-5deg) scale(1.03); filter: drop-shadow(0 15px 10px rgba(255,204,0,0.4)); }
-            100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+            0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+            50% { transform: translateY(-6px) scale(1.03); filter: drop-shadow(0 12px 8px rgba(255,204,0,0.4)); }
+            100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
         }
 
         @keyframes spin3D {
             0% { transform: rotateY(0deg) scale(1); }
-            50% { transform: rotateY(540deg) scale(1.15); filter: drop-shadow(0 0 20px #ffcc00); }
+            50% { transform: rotateY(540deg) scale(1.1); filter: drop-shadow(0 0 15px #ffcc00); }
             100% { transform: rotateY(1080deg) scale(1); }
         }
 
         .tiger-img-3d {
-            width: 140px;
-            max-height: 130px;
+            width: 110px;
+            max-height: 100px;
             object-fit: contain;
             animation: float3D 3s ease-in-out infinite;
-            transform-style: preserve-3d;
             cursor: pointer;
         }
 
@@ -401,45 +401,44 @@
             animation: spin3D 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
         }
 
-        /* Estrutura dos Rolos (3x3 igual à imagem de referência) */
+        /* Estrutura dos Rolos (3x3) */
         .machine-frame-img {
             background: linear-gradient(135deg, #b8860b, #ffd700, #b8860b);
             margin: 0 auto;
-            width: 92%;
-            max-width: 360px;
-            padding: 8px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.6);
+            width: 90%;
+            max-width: 320px;
+            padding: 6px;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.6);
             border: 2px solid #fff;
-            transform: translateZ(20px);
         }
 
         .tiger-reels-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            gap: 5px;
             background: #fdfbf7;
-            padding: 8px;
-            border-radius: 10px;
+            padding: 6px;
+            border-radius: 8px;
         }
 
         .reel-cell {
             background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-            height: 70px;
+            height: 62px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 6px;
-            font-size: 36px;
+            font-size: 32px;
             border: 1px solid #d4d4d4;
-            box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.15);
         }
 
         @keyframes tremerRolos {
             0% { transform: translateY(0); }
-            25% { transform: translateY(-3px); }
-            50% { transform: translateY(3px); }
-            75% { transform: translateY(-2px); }
+            25% { transform: translateY(-2px); }
+            50% { transform: translateY(2px); }
+            75% { transform: translateY(-1px); }
             100% { transform: translateY(0); }
         }
         .girando-rolo {
@@ -448,32 +447,33 @@
 
         .win-banner-text {
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 900;
             color: #55ff99;
             text-shadow: 0 2px 4px #000;
-            margin: 2px 0;
+            margin: 4px 0;
             font-style: italic;
         }
 
-        /* Painel Inferior exato da imagem */
+        /* Painel Inferior fixo na base */
         .bottom-panel-img {
             background: linear-gradient(180deg, #600202 0%, #200000 100%);
             width: 100%;
-            padding: 10px 15px;
+            padding: 10px 12px;
             border-top: 3px solid #ffcc00;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+            border-radius: 12px 12px 0 0;
         }
 
         .stats-bar-img {
             display: flex;
             justify-content: space-between;
             background: rgba(0, 0, 0, 0.6);
-            padding: 6px 10px;
-            border-radius: 8px;
+            padding: 5px 8px;
+            border-radius: 6px;
             border: 1px solid #ffcc00;
         }
 
@@ -483,13 +483,13 @@
 
         .stat-item span {
             display: block;
-            font-size: 9px;
+            font-size: 8px;
             color: #ffcc00;
             text-transform: uppercase;
         }
 
         .stat-item strong {
-            font-size: 12px;
+            font-size: 11px;
             color: #ffffff;
         }
 
@@ -503,31 +503,31 @@
             background: #8b0000;
             color: #fff;
             border: 2px solid #ffcc00;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             font-weight: bold;
-            font-size: 9px;
+            font-size: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
         }
 
-        /* Botão Verde Principal 3D/4D */
+        /* Botão Verde Principal de Girar */
         .btn-girar-verde-3d {
             background: radial-gradient(circle, #00ff88 0%, #008844 70%, #004422 100%);
             color: white;
-            border: 4px solid #ffcc00;
-            width: 72px;
-            height: 72px;
+            border: 3px solid #ffcc00;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.6), inset 0 4px 6px rgba(255,255,255,0.6);
+            box-shadow: 0 6px 15px rgba(0, 255, 136, 0.6), inset 0 3px 5px rgba(255,255,255,0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -537,8 +537,8 @@
         }
 
         .btn-girar-verde-3d:active {
-            transform: scale(0.92) translateY(3px);
-            box-shadow: 0 3px 10px rgba(0, 255, 136, 0.8), inset 0 2px 3px rgba(0,0,0,0.5);
+            transform: scale(0.92) translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 255, 136, 0.8), inset 0 2px 2px rgba(0,0,0,0.5);
         }
     </style>
 </head>
@@ -670,7 +670,7 @@
         </nav>
     </div>
 
-    <!-- TELA DO TIGRINHO EM TELA INTEIRA REAL -->
+    <!-- TELA DO TIGRINHO CORRIGIDA E ENCAIXADA -->
     <div id="tiger-game-screen">
         <button class="btn-voltar-home" onclick="sairFortuneTiger()">← Voltar</button>
 
@@ -808,7 +808,6 @@
             document.getElementById('saldoJogo').innerText = saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         }
 
-        // Função de Giro com Animação 3D do Tigre e Rolos
         function acionarGirar() {
             const tigerImg = document.getElementById('tigerImage');
             const status = document.getElementById('gameStatus');
@@ -822,7 +821,6 @@
             saldo -= 250.00;
             atualizarUI();
 
-            // Ativar rotação 3D no tigrinho e agitação nos rolos
             tigerImg.classList.add('girando-ativo');
             status.innerText = "Girando...";
             ganhoEl.innerText = "0.00";
