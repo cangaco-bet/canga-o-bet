@@ -537,7 +537,6 @@
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
         }
         
-        /* NOVO BOTÃO BONITO PARA SAIR PARA A TELA INICIAL */
         .btn-voltar-home {
             width: 100%;
             max-width: 500px;
@@ -684,12 +683,14 @@
         </div>
     </header>
 
-    <div class="quick-search-bar">
+    <!-- BARRA DE PESQUISA (EXIBIDA APENAS NA TELA INICIAL) -->
+    <div class="quick-search-bar" id="quickSearchBarContainer">
         <input type="text" id="quickSearchInput" class="quick-search-input" placeholder="🔍 Pesquisar jogos de cassino ou esportes..." oninput="pesquisaGeral()">
         <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
-    <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
+    <!-- ÍCONE DE SUPORTE FLUTUANTE (EXIBIDO APENAS NA TELA INICIAL) -->
+    <div class="floating-support-btn" id="floatingSupportBtn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="#0f1015">
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
         </svg>
@@ -799,7 +800,6 @@
     <!-- ABA PENALTY CANGAÇO -->
     <div id="tab-penalty" class="main-tab-content">
         <div id="penaltySectionContainer">
-            <!-- NOVO BOTÃO BONITO PARA VOLTAR À TELA INICIAL -->
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
                 🏠 Voltar para a Tela Inicial
             </button>
@@ -1123,6 +1123,18 @@
         }
 
         function mudarAba(aba) {
+            // Controla a visibilidade da barra de pesquisa e do suporte (apenas na tela inicial 'cassino')
+            const searchBar = document.getElementById('quickSearchBarContainer');
+            const supportBtn = document.getElementById('floatingSupportBtn');
+
+            if (aba === 'cassino') {
+                if(searchBar) searchBar.style.display = 'block';
+                if(supportBtn) supportBtn.style.display = 'flex';
+            } else {
+                if(searchBar) searchBar.style.display = 'none';
+                if(supportBtn) supportBtn.style.display = 'none';
+            }
+
             // Se sair da aba penalty para qualquer outra aba, a música para imediatamente
             if(aba !== 'penalty') {
                 pararMusicaPenalty();
