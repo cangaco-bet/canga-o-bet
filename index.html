@@ -41,53 +41,12 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .music-bar {
-            background: #1e2029;
-            margin: 15px;
-            padding: 12px 15px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #2a2d3d;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .music-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .music-title {
-            font-size: 13px;
-            font-weight: bold;
-        }
-        .music-artist {
-            font-size: 11px;
-            color: #aaa;
-        }
-        .btn-music {
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: background 0.2s;
-        }
-        .btn-music:active {
-            transform: scale(0.95);
-        }
         .categories {
             display: flex;
             gap: 10px;
-            padding: 0 15px;
+            padding: 15px;
             overflow-x: auto;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .category-pill {
             background: #1e2029;
@@ -121,6 +80,11 @@
             overflow: hidden;
             border: 1px solid #2a2d3d;
             text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .game-card:active {
+            transform: scale(0.97);
         }
         .game-img {
             width: 100%;
@@ -161,19 +125,8 @@
         <button class="btn-entrar">ENTRAR</button>
     </header>
 
-    <!-- Barra de Música Elegante com Botão Único -->
-    <div class="music-bar">
-        <div class="music-info">
-            <span class="music-title">🎵 Famoso Ímã</span>
-            <span class="music-artist">MC Lele JP, Poze do Rodo</span>
-        </div>
-        <button class="btn-music" id="btnPlayMusic" onclick="togglePlay()">
-            ▶ Reproduzir
-        </button>
-    </div>
-
-    <!-- Elemento de áudio oculto -->
-    <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto"></audio>
+    <!-- Elemento de áudio que toca automaticamente -->
+    <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" autoplay loop></audio>
 
     <div class="categories">
         <div class="category-pill">🤠 Cangaço torneios</div>
@@ -184,19 +137,19 @@
     <div class="section-title">🏆 TOP</div>
 
     <div class="games-grid">
-        <div class="game-card">
+        <div class="game-card" onclick="pararMusicaEEntrar('Fortune Tiger')">
             <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=300" class="game-img" alt="Fortune Tiger">
             <div class="game-name">Fortune Tiger</div>
         </div>
-        <div class="game-card">
+        <div class="game-card" onclick="pararMusicaEEntrar('Aviator')">
             <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=300" class="game-img" alt="Aviator">
             <div class="game-name">Aviator</div>
         </div>
-        <div class="game-card">
+        <div class="game-card" onclick="pararMusicaEEntrar('Big Bass Bonanza')">
             <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300" class="game-img" alt="Big Bass">
             <div class="game-name">Big Bass Bonanza</div>
         </div>
-        <div class="game-card">
+        <div class="game-card" onclick="pararMusicaEEntrar('Gates of Olympus')">
             <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300" class="game-img" alt="Gates of Olympus">
             <div class="game-name">Gates of Olympus</div>
         </div>
@@ -212,18 +165,21 @@
 
     <script>
         const audio = document.getElementById('audioPlayer');
-        const btn = document.getElementById('btnPlayMusic');
 
-        function togglePlay() {
-            if (audio.paused) {
-                audio.play();
-                btn.innerHTML = "⏸ Pausar";
-                btn.style.backgroundColor = "#333";
-            } else {
-                audio.pause();
-                btn.innerHTML = "▶ Reproduzir";
-                btn.style.backgroundColor = "#ff4500";
-            }
+        // Garante que tenta reproduzir mal o site seja carregado ou tocado em qualquer parte
+        window.addEventListener('load', () => {
+            audio.play().catch(() => {
+                // Caso o navegador bloqueie o autoplay direto, toca no primeiro toque na tela
+                document.body.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        });
+
+        function pararMusicaEEntrar(nomeJogo) {
+            audio.pause(); // Para a música
+            audio.currentTime = 0; // Reinicia o áudio para o início
+            alert('A entrar em ' + nomeJogo + '...'); // Simula a entrada no jogo
         }
     </script>
 </body>
