@@ -17,9 +17,80 @@
             padding-bottom: 25px;
         }
 
+        /* TELA DE ABERTURA (SPLASH SCREEN 4D) */
+        #splashScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #1a101f 0%, #0b0c10 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
+        .splash-banner {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff4500;
+            box-shadow: 0 0 35px rgba(255, 69, 0, 0.8);
+            animation: float4D 3s ease-in-out infinite;
+            margin-bottom: 25px;
+        }
+        @keyframes float4D {
+            0% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-15px) rotate(4deg) scale(1.06); filter: drop-shadow(0 20px 30px rgba(255,183,3,0.6)); }
+            100% { transform: translateY(0px) rotate(0deg) scale(1); }
+        }
+        .loading-container {
+            width: 260px;
+            background: #151821;
+            border: 1px solid #2c3347;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 14px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+        }
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff4500, #ffb703);
+            border-radius: 20px;
+            transition: width 0.1s linear;
+        }
+        .loading-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .btn-entrar-splash {
+            display: none;
+            background: linear-gradient(135deg, #ff4500, #ff6a00);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
+            animation: pulseBtn 1.5s infinite;
+        }
+        @keyframes pulseBtn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         header {
             background: linear-gradient(135deg, #151821, #0b0c10);
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -32,7 +103,7 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         .header-right {
             display: flex;
@@ -51,7 +122,6 @@
             align-items: center;
             gap: 4px;
             cursor: pointer;
-            transition: 0.2s;
             box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
         }
         .btn-menu-lateral span {
@@ -60,63 +130,52 @@
             background-color: #ff4500;
             border-radius: 2px;
         }
-        .btn-menu-lateral:active {
-            transform: scale(0.92);
-        }
 
-        .logo {
-            font-size: 18px;
-            font-weight: 900;
-            color: #ff4500;
+        .logo-img-pequena {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #ffb703;
             cursor: pointer;
-            text-shadow: 0 2px 10px rgba(255,69,0,0.5);
-            letter-spacing: 0.5px;
+            box-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
         }
 
-        /* 🌟 BARRA DE SALDO 3D PROFISSIONAL */
         .saldo-topo-3d {
             background: linear-gradient(145deg, #1f2430, #13161f);
             border: 1px solid #ffb703;
-            padding: 7px 14px;
-            border-radius: 12px;
-            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 11px;
             font-weight: bold;
             color: #ffb703;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 5px 15px rgba(255, 183, 3, 0.25);
-            transform: translateY(-1px);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 4px 12px rgba(255, 183, 3, 0.2);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
-        .saldo-topo-3d span {
-            color: #fff;
-            text-shadow: 0 0 8px rgba(255,255,255,0.6);
-        }
+        .saldo-topo-3d span { color: #fff; }
 
         .btn-topo-acao {
             background: linear-gradient(135deg, #ff4500, #cc3500);
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 11px;
-            box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
         }
-        .btn-topo-acao:active { transform: scale(0.95); }
-
         .btn-topo-login {
             background: transparent;
             color: #ffb703;
             border: 1px solid #ffb703;
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 11px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .quick-search-bar {
@@ -132,10 +191,8 @@
             border-radius: 20px;
             color: white;
             font-size: 13px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        /* Menu Lateral 3D (Gaveta) */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -211,7 +268,7 @@
         .promo-content { position: relative; z-index: 2; }
         .promo-slide h3 { font-size: 14px; color: #ffb703; margin-bottom: 3px; }
         .promo-slide p { font-size: 11px; color: #ddd; margin-bottom: 6px; }
-        .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; box-shadow: 0 4px 10px rgba(255,69,0,0.4); }
+        .btn-cadastre { background: linear-gradient(135deg, #ff4500, #ff6a00); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
         .jackpot-box {
             background: linear-gradient(135deg, #2b110a, #151821);
@@ -267,7 +324,6 @@
             transition: transform 0.2s, border-color 0.2s;
         }
         .game-card:hover { border-color: #ff4500; transform: translateY(-3px); }
-        .game-card:active { transform: scale(0.97); }
         .game-img { width: 100%; height: 115px; object-fit: cover; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
@@ -295,7 +351,6 @@
             background: linear-gradient(135deg, #ff4500, #ff6a00);
             border-color: #ffb703;
             color: #fff;
-            box-shadow: 0 4px 15px rgba(255,69,0,0.4);
         }
 
         .sports-container { padding: 0 15px; }
@@ -309,9 +364,24 @@
         }
         .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #ffb703; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
         .match-teams { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; margin-bottom: 14px; }
-        .team-name { width: 42%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .team-name { width: 40%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .team-name img { width: 22px; height: 16px; object-fit: contain; border-radius: 2px; }
-        .match-vs { font-size: 10px; color: #888; background: #0b0c10; padding: 4px 8px; border-radius: 20px; border: 1px solid #1a1d28; }
+        
+        /* Placar em Tempo Real */
+        .match-score-vs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0b0c10;
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: 1px solid #ff4500;
+            min-width: 55px;
+        }
+        .match-vs-text { font-size: 9px; color: #888; }
+        .match-real-score { font-size: 13px; font-weight: 900; color: #00ff88; letter-spacing: 1px; }
+
         .odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .odd-btn {
             background: #1c212f;
@@ -320,10 +390,9 @@
             border-radius: 10px;
             text-align: center;
             cursor: pointer;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.05);
             transition: all 0.2s;
         }
-        .odd-btn:hover, .odd-btn.selected { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: white; box-shadow: 0 4px 12px rgba(255,69,0,0.4); }
+        .odd-btn:hover, .odd-btn.selected { background: linear-gradient(135deg, #ff4500, #ff6a00); border-color: #ffb703; color: white; }
         .odd-label { font-size: 10px; color: #aaa; display: block; }
         .odd-value { font-size: 13px; font-weight: bold; color: #fff; display: block; margin-top: 2px; }
 
@@ -336,56 +405,38 @@
         .bet-slip-title { font-size: 12px; font-weight: bold; color: #ffb703; margin-bottom: 6px; display: flex; justify-content: space-between; }
         .bet-slip-info { font-size: 13px; margin-bottom: 8px; color: #ddd; }
         .bet-slip-input { width: 100%; padding: 10px; background: #0f1118; border: 1px solid #2c3347; color: white; border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
-        .btn-place-bet { width: 100%; background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,255,136,0.3); }
+        .btn-place-bet { width: 100%; background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; cursor: pointer; }
 
-        /* 🌟 NOVO SUPORTE EM 3D ELEGANTE */
         .suporte-container { padding: 15px; }
         .suporte-card-3d {
             background: linear-gradient(145deg, #171b26, #10121a);
-            border: 1px solid #ff4500;
-            border-radius: 16px;
-            padding: 22px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255,255,255,0.1);
-            text-align: center;
+            border: 1px solid #ff4500; border-radius: 16px; padding: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); text-align: center;
         }
         .suporte-badge-online {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px dashed #00ff88;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 18px;
-            font-size: 12px;
-            color: #00ff88;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: inset 0 0 10px rgba(0,255,136,0.1);
+            background: rgba(0, 255, 136, 0.1); border: 1px dashed #00ff88;
+            padding: 10px; border-radius: 10px; margin-bottom: 18px;
+            font-size: 12px; color: #00ff88; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
-        /* 🌟 BOTÃO FLUTUANTE 3D DE SUPORTE */
         .floating-support-btn {
             position: fixed; bottom: 25px; right: 20px;
             background: linear-gradient(135deg, #ff4500, #ffb703);
             color: #0f1015; width: 60px; height: 60px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6), inset 0 2px 4px rgba(255,255,255,0.4);
-            cursor: pointer; z-index: 997; transition: transform 0.2s;
-            border: 2px solid #fff;
+            box-shadow: 0 8px 25px rgba(255, 69, 0, 0.6);
+            cursor: pointer; z-index: 997; border: 2px solid #fff;
+            transition: transform 0.2s;
         }
         .floating-support-btn:hover { transform: scale(1.08); }
-        .floating-support-btn:active { transform: scale(0.92); }
-        .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); }
+        .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
         .bilhetes-container, .extrato-container { padding: 15px; }
         .bilhete-impresso, .extrato-item {
             background: linear-gradient(145deg, #151821, #11141c);
-            border: 1px solid #ff4500;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+            border: 1px solid #ff4500; border-radius: 12px; padding: 15px;
+            margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
         }
         .bilhete-header {
             display: flex; justify-content: space-between; font-size: 12px;
@@ -403,26 +454,34 @@
         .modal-card {
             background: linear-gradient(145deg, #191d28, #11141c);
             width: 100%; max-width: 380px; padding: 25px; border-radius: 18px;
-            border: 1px solid #ff4500;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.1);
+            border: 1px solid #ff4500; box-shadow: 0 15px 40px rgba(0,0,0,0.8);
             text-align: center; position: relative; max-height: 90vh; overflow-y: auto;
         }
-        .modal-title { font-size: 18px; font-weight: 900; color: #ff4500; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(255,69,0,0.4); }
+        .modal-title { font-size: 18px; font-weight: 900; color: #ff4500; margin-bottom: 15px; }
         .modal-input {
             width: 100%; padding: 11px 14px; margin-bottom: 12px;
             background: #0f1118; border: 1px solid #2c3347; border-radius: 10px;
-            color: white; font-size: 13px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            color: white; font-size: 13px;
         }
         .modal-btn {
             width: 100%; padding: 12px;
             background: linear-gradient(135deg, #ff4500, #ff6a00); color: white;
             border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
-            cursor: pointer; margin-top: 5px; box-shadow: 0 6px 20px rgba(255,69,0,0.4);
+            cursor: pointer; margin-top: 5px;
         }
         .close-modal { position: absolute; top: 12px; right: 16px; color: #aaa; font-size: 22px; cursor: pointer; }
     </style>
 </head>
 <body>
+
+    <div id="splashScreen">
+        <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
+        <div class="loading-container">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <div class="loading-text" id="loadingText">A CARREGAR... 0%</div>
+        <button class="btn-entrar-splash" id="btnEntrarSplash" onclick="fecharSplashScreen()">ENTRAR NO SITE</button>
+    </div>
 
     <audio id="audioPlayer" src="https://files.catbox.moe/4plmor.mp3" preload="auto" loop></audio>
 
@@ -433,10 +492,9 @@
                 <span></span>
                 <span></span>
             </div>
-            <div class="logo" onclick="mudarAba('cassino')">🔥 CANGAÇO BET</div>
+            <img src="https://files.catbox.moe/qf2bly.jpeg" class="logo-img-pequena" alt="Logo" onclick="mudarAba('cassino')">
         </div>
         <div class="header-right">
-            <!-- 🌟 BARRA DE SALDO 3D ELEGANTE NO TOPO -->
             <div class="saldo-topo-3d">💰 Saldo: R$ <span id="saldoAtual">1000.00</span></div>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
@@ -448,14 +506,12 @@
         <div id="quickSearchResult" style="background: #151821; border-radius: 10px; margin-top: 5px; max-height: 120px; overflow-y: auto; font-size: 12px; text-align: left; border: 1px solid #232838;"></div>
     </div>
 
-    <!-- 🌟 BOTÃO FLUTUANTE 3D DE SUPORTE -->
     <div class="floating-support-btn" onclick="mudarAba('suporte')" title="Atendimento e Suporte">
         <svg viewBox="0 0 24 24">
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12C6,13.5 6.5,14.8 7.4,15.8L6,19L9.2,17.6C10.1,18.1 11,18.4 12,18.4A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
         </svg>
     </div>
 
-    <!-- Menu Lateral -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -556,10 +612,10 @@
         </div>
     </div>
 
-    <!-- ABA 2: ESPORTES COM FILTRO DE LIGAS -->
+    <!-- ABA 2: ESPORTES COM FILTRO DE LIGAS E PLACAR AO VIVO -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Apostas Esportivas</div>
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">⚽ Apostas Esportivas (Ao Vivo & Futuros)</div>
             
             <div class="filtro-ligas-scroll" id="filtroLigasContainer">
                 <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
@@ -591,16 +647,13 @@
         </div>
     </div>
 
-    <!-- 🌟 ABA 5: SUPORTE ONLINE EM 3D PROFISSIONAL -->
+    <!-- ABA 5: SUPORTE ONLINE -->
     <div id="tab-suporte" class="main-tab-content">
         <div class="suporte-container">
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">💬 Central de Atendimento 3D</div>
             <div class="suporte-card-3d">
-                <div class="suporte-badge-online">
-                    🟢 Operador Humano Online (Suporte 24h)
-                </div>
+                <div class="suporte-badge-online">🟢 Operador Humano Online (Suporte 24h)</div>
                 <p style="font-size: 13px; margin-bottom: 18px; color: #ccc; line-height: 1.5;">Perdeu o acesso à conta, precisa recuperar login ou tem dúvidas sobre pagamentos Pix? Envie sua mensagem diretamente para nossa equipe.</p>
-                
                 <input type="text" id="suporteAssunto" class="modal-input" placeholder="Assunto (ex: Recuperar Senha / Erro no Saldo)">
                 <textarea id="suporteMensagem" class="modal-input" placeholder="Escreva detalhadamente a sua dúvida ou informe seu e-mail de cadastro..." style="height: 100px; resize: none;"></textarea>
                 <button class="modal-btn" onclick="enviarMensagemSuporte()">Enviar Mensagem ao Suporte</button>
@@ -664,6 +717,32 @@
     </div>
 
     <script>
+        let progresso = 0;
+        const barra = document.getElementById('loadingBar');
+        const textoCarregamento = document.getElementById('loadingText');
+        const botaoEntrarSplash = document.getElementById('btnEntrarSplash');
+
+        let intervaloCarregamento = setInterval(() => {
+            progresso += 2;
+            if (progresso <= 100) {
+                barra.style.width = progresso + '%';
+                textoCarregamento.innerText = `A CARREGAR... ${progresso}%`;
+            } else {
+                clearInterval(intervaloCarregamento);
+                textoCarregamento.innerText = "PRONTO!";
+                botaoEntrarSplash.style.display = 'block';
+            }
+        }, 30);
+
+        function fecharSplashScreen() {
+            const splash = document.getElementById('splashScreen');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                tocarAudioInicio();
+            }, 500);
+        }
+
         const audio = document.getElementById('audioPlayer');
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
         const footballDataApiKey = '1f0c1dc838454650977a89abf0a7485c';
@@ -727,15 +806,61 @@
             "Manchester City FC": "Manchester City", "Manchester United FC": "Manchester United", "Arsenal FC": "Arsenal", "Chelsea FC": "Chelsea", "Liverpool FC": "Liverpool", "Tottenham Hotspur FC": "Tottenham", "Real Madrid CF": "Real Madrid", "FC Barcelona": "Barcelona", "Atletico Madrid": "Atlético de Madrid", "Villarreal CF": "Villarreal", "Valencia CF": "Valência", "Sevilla FC": "Sevilla", "Juventus FC": "Juventus", "AC Milan": "Milan", "Inter Milan": "Inter de Milão", "AS Roma": "Roma", "SSC Napoli": "Nápoles", "SS Lazio": "Lazio", "FC Bayern München": "Bayern de Munique", "Borussia Dortmund": "Borussia Dortmund", "Bayer 04 Leverkusen": "Bayer Leverkusen", "RB Leipzig": "RB Leipzig", "Paris Saint-Germain FC": "Paris Saint-Germain", "AS Monaco FC": "Monaco", "Olympique de Marseille": "Olympique de Marselha", "Olympique Lyonnais": "Lyon", "AFC Ajax": "Ajax", "PSV Eindhoven": "PSV", "SL Benfica": "Benfica", "FC Porto": "Porto", "Sporting CP": "Sporting", "CR Flamengo": "Flamengo", "SE Palmeiras": "Palmeiras", "São Paulo FC": "São Paulo", "SC Corinthians Paulista": "Corinthians", "Fluminense FC": "Fluminense", "Botafogo FR": "Botafogo", "CR Vasco da Gama": "Vasco da Gama", "Grêmio FBPA": "Grêmio", "SC Internacional": "Internacional", "CA Mineiro": "Atlético Mineiro", "Cruzeiro EC": "Cruzeiro"
         };
 
+        /* Mapeamento Completo de Emblemas e Bandeiras */
         const bandeirasTimes = {
-            "Singapore": "https://flagcdn.com/w40/sg.png", "Bangladesh": "https://flagcdn.com/w40/bd.png", "Japan": "https://flagcdn.com/w40/jp.png", "Venezuela": "https://flagcdn.com/w40/ve.png", "South Korea": "https://flagcdn.com/w40/kr.png", "Uruguay": "https://flagcdn.com/w40/uy.png", "Tajikistan": "https://flagcdn.com/w40/tj.png", "Palestine": "https://flagcdn.com/w40/ps.png",
-            "Flamengo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/CR_Flamengo_shield.svg", "Palmeiras": "https://upload.wikimedia.org/wikipedia/commons/1/10/SE_Palmeiras_logo_2020.svg", "São Paulo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sao_Paulo_Futebol_Clube_%281930%29.svg", "Corinthians": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Sport_Club_Corinthians_Paulista.svg", "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg", "Barcelona": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg", "Manchester City": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg", "Manchester United": "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg", "Arsenal": "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg", "Chelsea": "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg", "Liverpool": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg", "Tottenham": "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg", "Juventus": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", "Milan": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", "Inter de Milão": "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg", "Bayern de Munique": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282002%29.svg", "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg", "Benfica": "https://upload.wikimedia.org/wikipedia/en/a/a2/SL_Benfica_logo.svg", "Porto": "https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto_%28shield%29.svg", "Sporting": "https://upload.wikimedia.org/wikipedia/en/e/e1/Sporting_CP_restyling_2024.svg"
+            "Flamengo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/CR_Flamengo_shield.svg",
+            "Palmeiras": "https://upload.wikimedia.org/wikipedia/commons/1/10/SE_Palmeiras_logo_2020.svg",
+            "São Paulo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sao_Paulo_Futebol_Clube_%281930%29.svg",
+            "Corinthians": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Sport_Club_Corinthians_Paulista.svg",
+            "Fluminense": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Fluminense_FC_escudo.svg",
+            "Botafogo": "https://upload.wikimedia.org/wikipedia/commons/5/52/Botafogo_FR_%28logo%29.svg",
+            "Vasco da Gama": "https://upload.wikimedia.org/wikipedia/commons/a/ac/CRVascodaGama.svg",
+            "Grêmio": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Gremio_logo.svg",
+            "Internacional": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Sport_Club_Internacional_logo.svg",
+            "Atlético Mineiro": "https://upload.wikimedia.org/wikipedia/commons/2/27/Atletico_mineiro_galo.svg",
+            "Cruzeiro": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Cruzeiro_Esporte_Clube_%28logo%29.svg",
+            "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
+            "Barcelona": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
+            "Atlético de Madrid": "https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2024_logo.svg",
+            "Manchester City": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
+            "Manchester United": "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
+            "Arsenal": "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
+            "Chelsea": "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg",
+            "Liverpool": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
+            "Tottenham": "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg",
+            "Juventus": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg",
+            "Milan": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg",
+            "Inter de Milão": "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg",
+            "Roma": "https://upload.wikimedia.org/wikipedia/commons/f/f7/AS_Roma_Logo_2017.svg",
+            "Napoli": "https://upload.wikimedia.org/wikipedia/commons/2/2d/SSC_Napoli_Logo_%282022%29.svg",
+            "Bayern de Munique": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282002%29.svg",
+            "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg",
+            "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg",
+            "Benfica": "https://upload.wikimedia.org/wikipedia/commons/3/3a/SL_Benfica_logo.svg",
+            "Porto": "https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto_%28shield%29.svg",
+            "Sporting": "https://upload.wikimedia.org/wikipedia/en/e/e1/Sporting_CP_restyling_2024.svg",
+            // Seleções e Bandeiras
+            "Brazil": "https://flagcdn.com/w40/br.png", "Brasil": "https://flagcdn.com/w40/br.png",
+            "Argentina": "https://flagcdn.com/w40/ar.png",
+            "France": "https://flagcdn.com/w40/fr.png", "França": "https://flagcdn.com/w40/fr.png",
+            "England": "https://flagcdn.com/w40/gb-eng.png", "Inglaterra": "https://flagcdn.com/w40/gb-eng.png",
+            "Germany": "https://flagcdn.com/w40/de.png", "Alemanha": "https://flagcdn.com/w40/de.png",
+            "Portugal": "https://flagcdn.com/w40/pt.png",
+            "Spain": "https://flagcdn.com/w40/es.png", "Espanha": "https://flagcdn.com/w40/es.png",
+            "Italy": "https://flagcdn.com/w40/it.png", "Itália": "https://flagcdn.com/w40/it.png",
+            "Uruguay": "https://flagcdn.com/w40/uy.png",
+            "Colombia": "https://flagcdn.com/w40/co.png",
+            "Japan": "https://flagcdn.com/w40/jp.png"
         };
 
-        function obterBandeira(nomeTime) { return bandeirasTimes[nomeTime] || "https://flagcdn.com/w40/un.png"; }
+        function obterBandeira(nomeTime) { 
+            if (bandeirasTimes[nomeTime]) return bandeirasTimes[nomeTime];
+            // Sistema de fallback inteligente por API pública baseada no nome da equipa/seleção
+            return `https://media.api-sports.io/football/teams/${Math.abs(nomeTime.split('').reduce((acc,char)=>(acc<<5)-acc+char.charCodeAt(0),0)) % 3000 + 1}.png`; 
+        }
 
         const traducoesLigas = {
-            "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A", "FIFA ASEAN CUP": "FIFA ASEAN CUP", "FRIENDLIES": "AMISTOSOS INTERNACIONAIS", "PERSHA LIGA": "PERSHA LIGA"
+            "UEFA Champions League": "Liga dos Campeões da UEFA", "Premier League": "Campeonato Inglês", "Primera Division": "Campeonato Espanhol", "Serie A": "Campeonato Italiano", "Bundesliga": "Campeonato Alemão", "Ligue 1": "Campeonato Francês", "Eredivisie": "Campeonato Holandês", "Primeira Liga": "Campeonato Português", "UEFA Nations League": "Liga das Nações da UEFA", "Copa Libertadores": "Copa Libertadores", "Campeonato Brasileiro Série A": "Brasileirão Série A", "FIFA ASEAN CUP": "FIFA ASEAN CUP", "FRIENDLIES": "AMISTOSOS INTERNACIONAIS"
         };
 
         function traduzirTime(nome) { return traducoesTimes[nome] || nome; }
@@ -959,6 +1084,7 @@
                 const fora = match.fora;
                 const liga = match.liga;
                 const statusHora = match.statusHora;
+                const placarVivo = match.placarVivo;
                 const odds = gerarOddsReais(casa, fora);
 
                 const card = document.createElement('div');
@@ -967,7 +1093,10 @@
                     <div class="match-header"><span>${liga}</span> <span>${statusHora}</span></div>
                     <div class="match-teams">
                         <span class="team-name"><img src="${obterBandeira(casa)}" alt=""> ${casa}</span>
-                        <span class="match-vs">VS</span>
+                        <div class="match-score-vs">
+                            <span class="match-vs-text">VS</span>
+                            <span class="match-real-score">${placarVivo}</span>
+                        </div>
                         <span class="team-name"><img src="${obterBandeira(fora)}" alt=""> ${fora}</span>
                     </div>
                     <div class="odds-grid">
@@ -1002,11 +1131,31 @@
                 const dados = await resposta.json();
 
                 if (dados.response && dados.response.length > 0) {
+                    // Filtra rigorosamente para excluir jogos terminados (FT, AET, PEN, etc.)
                     const statusExcluidos = ['FT', 'AET', 'PEN', 'PST', 'CANC', 'ABD', 'AWD', 'WO'];
+                    
                     dados.response.filter(m => !statusExcluidos.includes(m.fixture.status.short)).forEach(match => {
                         const s = match.fixture.status.short;
-                        let statusHora = (s === 'LIVE' || s === '1H' || s === '2H' || s === 'HT') ? `AO VIVO (${match.fixture.status.elapsed || 0}')` : converterParaHorarioBrasilia(match.fixture.date);
-                        listaGlobalPartidas.push({ casa: traduzirTime(match.teams.home.name), fora: traduzirTime(match.teams.away.name), liga: traduzirLiga(match.league.name), statusHora: statusHora });
+                        let statusHora = "";
+                        let placarVivo = "0 - 0";
+
+                        if (s === 'LIVE' || s === '1H' || s === '2H' || s === 'HT') {
+                            statusHora = `AO VIVO (${match.fixture.status.elapsed || 0}')`;
+                            let gCasa = match.goals.home !== null ? match.goals.home : 0;
+                            let gFora = match.goals.away !== null ? match.goals.away : 0;
+                            placarVivo = `${gCasa} - ${gFora}`;
+                        } else {
+                            statusHora = converterParaHorarioBrasilia(match.fixture.date);
+                            placarVivo = "VS"; // Jogos futuros mostram VS
+                        }
+
+                        listaGlobalPartidas.push({ 
+                            casa: traduzirTime(match.teams.home.name), 
+                            fora: traduzirTime(match.teams.away.name), 
+                            liga: traduzirLiga(match.league.name), 
+                            statusHora: statusHora,
+                            placarVivo: placarVivo
+                        });
                     });
                 }
             } catch (e) { console.log("Erro API 1"); }
@@ -1017,9 +1166,28 @@
 
                 if (dados2.matches && dados2.matches.length > 0) {
                     const statusExcluidosFd = ['FINISHED', 'POSTPONED', 'CANCELED', 'SUSPENDED', 'AWARDED'];
+                    
                     dados2.matches.filter(m => !statusExcluidosFd.includes(m.status)).forEach(match => {
-                        let statusHora = (match.status === 'IN_PLAY' || match.status === 'PAUSED') ? `AO VIVO` : converterParaHorarioBrasilia(match.utcDate);
-                        listaGlobalPartidas.push({ casa: traduzirTime(match.homeTeam.name), fora: traduzirTime(match.awayTeam.name), liga: traduzirLiga(match.competition.name), statusHora: statusHora });
+                        let statusHora = "";
+                        let placarVivo = "0 - 0";
+
+                        if (match.status === 'IN_PLAY' || match.status === 'PAUSED') {
+                            statusHora = `AO VIVO`;
+                            let gCasa = match.score.fullTime.home !== null ? match.score.fullTime.home : 0;
+                            let gFora = match.score.fullTime.away !== null ? match.score.fullTime.away : 0;
+                            placarVivo = `${gCasa} - ${gFora}`;
+                        } else {
+                            statusHora = converterParaHorarioBrasilia(match.utcDate);
+                            placarVivo = "VS";
+                        }
+
+                        listaGlobalPartidas.push({ 
+                            casa: traduzirTime(match.homeTeam.name), 
+                            fora: traduzirTime(match.awayTeam.name), 
+                            liga: traduzirLiga(match.competition.name), 
+                            statusHora: statusHora,
+                            placarVivo: placarVivo
+                        });
                     });
                 }
             } catch (e) { console.log("Erro API 2"); }
@@ -1028,7 +1196,7 @@
                 atualizarBotoesFiltroLigas(listaGlobalPartidas);
                 renderizarPartidasNaTela(listaGlobalPartidas);
             } else {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis para apostas neste momento.</p>`;
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Não há partidas disponíveis em direto ou agendadas neste momento.</p>`;
             }
         }
 
