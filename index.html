@@ -17,10 +17,10 @@
             padding-bottom: 70px;
         }
 
-        /* --- PÁGINA INICIAL (HOME / CASSINO) --- */
+        /* TOPO E LOGO */
         header {
             background: linear-gradient(135deg, #1a1c23, #0f1015);
-            padding: 15px 20px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -31,46 +31,27 @@
             font-weight: bold;
             color: #ff4500;
         }
-        .btn-entrar {
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-        }
 
-        .categories {
+        .section-header {
             display: flex;
-            gap: 10px;
-            padding: 15px;
-            overflow-x: auto;
-        }
-        .category-pill {
-            background: #1e2029;
-            border: 1px solid #2a2d3d;
-            padding: 6px 14px;
-            border-radius: 20px;
-            color: #ccc;
-            font-size: 12px;
-            white-space: nowrap;
-        }
-
-        .section-title {
-            padding: 0 15px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 15px 10px 15px;
             font-size: 15px;
-            margin-bottom: 12px;
             font-weight: bold;
         }
+        .see-all {
+            font-size: 12px;
+            color: #888;
+        }
 
+        /* GRADE DE JOGOS IGUAL AO VÍDEO */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             padding: 0 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .game-card {
             background: #1e2029;
@@ -82,7 +63,7 @@
         }
         .game-img {
             width: 100%;
-            height: 105px;
+            height: 100px;
             background: #2a2d3d;
             display: flex;
             align-items: center;
@@ -90,32 +71,80 @@
             font-size: 32px;
         }
         .game-name {
-            padding: 10px;
+            padding: 8px;
             font-size: 13px;
-            font-weight: 500;
         }
 
+        /* MENU INFERIOR FIXO */
         nav {
             position: fixed;
             bottom: 0; left: 0; width: 100%;
             background: #13141b;
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 8px 0;
             border-top: 1px solid #222;
             z-index: 10;
         }
         .nav-item {
             text-align: center;
             color: #888;
-            font-size: 11px;
+            font-size: 10px;
             cursor: pointer;
         }
         .nav-item.active {
             color: #ff4500;
         }
 
-        /* --- TELA DO FORTUNE TIGER EXATA DO VÍDEO --- */
+        /* MODAIS POP-UP (BUSCA, CADASTRO, PIX, ETC) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 500;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #1a1c23;
+            border: 1px solid #ff4500;
+            width: 100%;
+            max-width: 350px;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: #aaa;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .modal-input {
+            width: 100%;
+            background: #121318;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 6px;
+            color: white;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .modal-btn {
+            background: #ff4500;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* TELA DO FORTUNE TIGER DO VÍDEO */
         #game-screen {
             display: none;
             position: fixed;
@@ -139,12 +168,12 @@
             border-left: 2px solid #ffcc00;
             border-right: 2px solid #ffcc00;
         }
-        .top-bar {
+        .top-bar-game {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 15px;
-            font-size: 13px;
+            font-size: 12px;
             color: #ffcc00;
             background: rgba(0, 0, 0, 0.2);
         }
@@ -296,26 +325,21 @@
 </head>
 <body>
 
-    <!-- Áudio de fundo -->
+    <!-- Música de fundo integrada -->
     <audio id="bgMusic" src="https://files.catbox.moe/4plmor.mp3" loop></audio>
 
-    <!-- PÁGINA PRINCIPAL COM OS OUTROS JOGOS -->
+    <!-- TELA PRINCIPAL (EXATAMENTE COMO NO SEU VÍDEO) -->
     <div id="main-content">
         <header>
             <div class="logo">🔥 CANGAÇO BET</div>
-            <button class="btn-entrar" onclick="alert('Área de registro')">REGISTRAR</button>
         </header>
 
-        <div class="categories">
-            <div class="category-pill">🤠 Destaques</div>
-            <div class="category-pill">🌵 Cassino</div>
-            <div class="category-pill">🎰 Slots</div>
+        <div class="section-header">
+            <span>🔥 TOP</span>
+            <span class="see-all">Todos ></span>
         </div>
 
-        <div class="section-title">🏆 Jogos populares</div>
-
         <div class="games-grid">
-            <!-- CLICAR AQUI ABRE O TIGRINHO EXATO DO VÍDEO -->
             <div class="game-card" onclick="entrarTiger()">
                 <div class="game-img">🐅</div>
                 <div class="game-name">Fortune Tiger</div>
@@ -324,31 +348,89 @@
                 <div class="game-img">✈️</div>
                 <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="alert('Abrindo Fortune Ox...')">
-                <div class="game-img">🐂</div>
-                <div class="game-name">Fortune Ox</div>
-            </div>
             <div class="game-card" onclick="alert('Abrindo Mines...')">
                 <div class="game-img">💣</div>
                 <div class="game-name">Mines</div>
             </div>
+            <div class="game-card" onclick="alert('Abrindo Gates of Olympus...')">
+                <div class="game-img">⚡</div>
+                <div class="game-name">Gates of Olympus</div>
+            </div>
         </div>
 
+        <div class="section-header">
+            <span>⚡ MAIS JOGADOS</span>
+            <span class="see-all">Todos ></span>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card" onclick="alert('Abrindo Master Joker...')">
+                <div class="game-img">🃏</div>
+                <div class="game-name">Master Joker</div>
+            </div>
+            <div class="game-card" onclick="alert('Abrindo Big Bass Bonanza...')">
+                <div class="game-img">🎣</div>
+                <div class="game-name">Big Bass Bonanza</div>
+            </div>
+        </div>
+
+        <!-- MENU DE NAVEGAÇÃO INFERIOR DO VÍDEO -->
         <nav>
-            <div class="nav-item">📁<br>Início</div>
-            <div class="nav-item active">💰<br>Cassino</div>
-            <div class="nav-item" onclick="alert('Perfil')">👤<br>Perfil</div>
+            <div class="nav-item" onclick="abrirModal('modalRegistrar')">👤<br>Registrar</div>
+            <div class="nav-item" onclick="abrirModal('modalCategorias')">📁<br>Categorias</div>
+            <div class="nav-item active" onclick="abrirModal('modalPix')">💰<br>Depositar</div>
+            <div class="nav-item" onclick="alert('Ao Vivo')">🔴<br>Ao Vivo</div>
+            <div class="nav-item" onclick="abrirModal('modalBusca')">🔍<br>Pesquisar</div>
         </nav>
     </div>
 
-    <!-- TELA DO FORTUNE TIGER IDÊNTICA AO VÍDEO -->
+    <!-- MODAIS DO SITE -->
+    <div id="modalBusca" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModais()">&times;</span>
+            <h3 style="color:#ff4500; font-size:15px;">🔍 BUSCAR JOGO</h3>
+            <input type="text" class="modal-input" placeholder="Digite o nome do jogo...">
+            <button class="modal-btn" onclick="fecharModais()">Buscar</button>
+        </div>
+    </div>
+
+    <div id="modalRegistrar" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModais()">&times;</span>
+            <h3 style="color:#ff4500; font-size:15px;">🔥 CRIAR CONTA - CANGAÇO BET</h3>
+            <input type="text" class="modal-input" placeholder="Nome de Utilizador">
+            <input type="email" class="modal-input" placeholder="O seu E-mail">
+            <input type="password" class="modal-input" placeholder="Crie uma Senha">
+            <button class="modal-btn" onclick="alert('Conta criada com sucesso!'); fecharModais();">Concluir Cadastro</button>
+        </div>
+    </div>
+
+    <div id="modalCategorias" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModais()">&times;</span>
+            <h3 style="color:#ff4500; font-size:15px;">📁 SELECIONAR CATEGORIA</h3>
+            <button class="modal-btn" style="margin-top:10px;" onclick="fecharModais()">🎰 Cassino</button>
+            <button class="modal-btn" style="margin-top:10px; background:#2a2d3d;" onclick="fecharModais()">⚽ Esportes</button>
+        </div>
+    </div>
+
+    <div id="modalPix" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModais()">&times;</span>
+            <h3 style="color:#ff4500; font-size:15px;">💰 DEPOSITAR (PIX)</h3>
+            <input type="number" class="modal-input" placeholder="Valor do depósito (R$)">
+            <button class="modal-btn" onclick="alert('Gerando Pix...'); fecharModais();">Gerar Pix</button>
+        </div>
+    </div>
+
+    <!-- TELA DO FORTUNE TIGER -->
     <div id="game-screen">
         <button class="btn-voltar-home" onclick="sairTiger()">← Voltar</button>
 
         <div class="slot-container" onclick="ativarAudio()">
-            <div class="top-bar">
-                <span style="font-size: 11px;">Fortune Tiger</span>
-                <span id="relogio" style="font-size: 11px;">01:31:49</span>
+            <div class="top-bar-game">
+                <span>Fortune Tiger</span>
+                <span id="relogio">01:31:49</span>
             </div>
 
             <div class="tiger-header">
@@ -394,7 +476,7 @@
     </div>
 
     <script>
-        // Relógio em tempo real
+        // Relógio sincronizado
         setInterval(() => {
             const agora = new Date();
             document.getElementById('relogio').innerText = agora.toTimeString().split(' ')[0];
@@ -407,6 +489,14 @@
                 music.play().catch(e => console.log(e));
                 audioAtivo = true;
             }
+        }
+
+        function abrirModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+        function fecharModais() {
+            const modais = document.querySelectorAll('.modal');
+            modais.forEach(m => m.style.display = 'none');
         }
 
         function entrarTiger() {
