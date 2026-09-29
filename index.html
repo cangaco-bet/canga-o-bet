@@ -2169,10 +2169,11 @@
 
             if (canalPreferido === 'gmail') {
                 dispararToast('Código enviado no site via Gmail...');
+                
+                // Parâmetros alinhados exatamente com o seu painel do EmailJS (to_email, to_name, codigo_verificacao)
                 const templateParams = {
                     to_email: dadosTempRegistro.email,
                     to_name: dadosTempRegistro.nome,
-                    email: dadosTempRegistro.email,
                     codigo_verificacao: codigoRealGerado
                 };
 
