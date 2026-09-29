@@ -2080,45 +2080,12 @@
                     });
                 }
 
-                if (listaValida.length === 0) {
-                    listaValida = [
-                        {
-                            fixture: { id: 99901, status: { short: '1H', elapsed: 28 } },
-                            league: { name: 'CONCACAF Nations League (Demo)' },
-                            teams: {
-                                home: { name: 'Jamaica (Demo)', logo: 'https://media.api-sports.io/football/teams/1525.png' },
-                                away: { name: 'Honduras (Demo)', logo: 'https://media.api-sports.io/football/teams/2277.png' }
-                            },
-                            goals: { home: 1, away: 0 }
-                        },
-                        {
-                            fixture: { id: 99902, status: { short: '2H', elapsed: 65 } },
-                            league: { name: 'Liga Panameña de Fútbol (Demo)' },
-                            teams: {
-                                home: { name: 'Alianza FC (Demo)', logo: 'https://media.api-sports.io/football/teams/4488.png' },
-                                away: { name: 'Independiente (Demo)', logo: 'https://media.api-sports.io/football/teams/4490.png' }
-                            },
-                            goals: { home: 2, away: 1 }
-                        }
-                    ];
-                }
-
                 partidasApiCache = listaValida;
                 renderizarListaPartidasFiltro('TODAS');
                 renderizarFiltroLigas(partidasApiCache);
 
             } catch (e) {
-                partidasApiCache = [
-                    {
-                        fixture: { id: 99901, status: { short: '1H', elapsed: 35 } },
-                        league: { name: 'CONCACAF Nations League (Demo)' },
-                        teams: {
-                            home: { name: 'Jamaica (Demo)', logo: 'https://media.api-sports.io/football/teams/1525.png' },
-                            away: { name: 'Honduras (Demo)', logo: 'https://media.api-sports.io/football/teams/2277.png' }
-                        },
-                        goals: { home: 0, away: 1 }
-                    }
-                ];
+                partidasApiCache = [];
                 renderizarListaPartidasFiltro('TODAS');
                 renderizarFiltroLigas(partidasApiCache);
             }
@@ -2193,7 +2160,7 @@
             }
 
             if (filtradas.length === 0) {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ativa ou agendada encontrada para esta liga.</p>`;
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ativa ou agendada neste momento.</p>`;
                 return;
             }
 
@@ -2526,7 +2493,6 @@
                                     let todasBateram = true;
                                     bilhete.selecoes.forEach(s => {
                                         let mercado = s.mercado;
-                                        // VALIDAÇÃO RIGOROSA DE CADA TIPO DE APOSTA
                                         if (mercado === 'Casa') {
                                             if (!(gHome > gAway)) todasBateram = false;
                                         } else if (mercado === 'Fora') {
@@ -2554,7 +2520,6 @@
                                         }
                                     });
 
-                                    // REGRA CORRETA: SÓ É GANHO SE TODAS BATEREM. CASO CONTRÁRIO, VAI PARA PERDIDAS.
                                     if (todasBateram) {
                                         bilhete.status = 'Ganho';
                                         let premio = parseFloat(bilhete.retorno);
