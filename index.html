@@ -19,7 +19,7 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* MODO CLARO */
+        /* MODO CLARO SEGURO */
         body.light-theme {
             background-color: #f4f6f9;
             color: #1a1a1a;
@@ -33,7 +33,7 @@
             border-color: #d0d7de;
         }
 
-        /* TOASTS */
+        /* NOTIFICAÇÕES TOAST */
         #toastContainer {
             position: fixed;
             top: 20px;
@@ -313,7 +313,7 @@
         .game-img { width: 100%; height: 115px; object-fit: cover; }
         .game-name { padding: 12px; font-size: 13px; font-weight: bold; }
 
-        /* NOVAS ESTILIZAÇÕES */
+        /* ESTILOS NOVAS FUNÇÕES */
         .affiliate-box-card {
             margin: 15px; padding: 25px 20px;
             background: linear-gradient(135deg, #ff4500 0%, #ffb703 100%);
@@ -767,6 +767,13 @@
                         <div class="winner-prize">R$ 45.00 BRL</div>
                     </div>
                 </div>
+                <div class="winner-card">
+                    <img src="https://files.catbox.moe/f5zgx9.webp" alt="Aviator">
+                    <div class="winner-info">
+                        <div class="winner-name">Ebe***</div>
+                        <div class="winner-prize">R$ 35.75 BRL</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -791,7 +798,7 @@
         </div>
     </div>
 
-    <!-- NOVAS ABAS -->
+    <!-- NOVAS ABAS DE FUNÇÕES -->
     <div id="tab-afiliados" class="main-tab-content">
         <div style="padding: 15px; max-width: 500px; margin: 0 auto; text-align: center;">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
@@ -832,10 +839,13 @@
         </div>
     </div>
 
-    <!-- ABA PENALTY -->
+    <!-- ABA PENALTY CANGAÇO -->
     <div id="tab-penalty" class="main-tab-content">
         <div id="penaltySectionContainer">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Voltar para a Início
+            </button>
             <div class="stadium-container-3d" id="stadiumContainer">
                 <div class="goal-frame"><div class="goal-net"></div></div>
                 <div class="multipliers-bar">
@@ -847,9 +857,53 @@
                 </div>
                 <div class="goleiro-real-3d" id="goleiroEl">
                     <svg viewBox="0 0 200 220" width="100%" height="100%" style="overflow: visible;">
-                        <g>
-                            <path d="M82 120 L96 120 L91 160 L79 160 Z" fill="#ffd1b3"/>
-                            <path d="M118 120 L104 120 L109 160 L121 160 Z" fill="#ffd1b3"/>
+                        <defs>
+                            <radialGradient id="proSkin" cx="35%" cy="35%" r="65%">
+                                <stop offset="0%" stop-color="#ffd1b3"/>
+                                <stop offset="50%" stop-color="#e3a07b"/>
+                                <stop offset="100%" stop-color="#965131"/>
+                            </radialGradient>
+                            <linearGradient id="proHair" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2c160b"/>
+                                <stop offset="100%" stop-color="#0a0502"/>
+                            </linearGradient>
+                            <linearGradient id="proJersey" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1b4f72"/>
+                                <stop offset="50%" stop-color="#154360"/>
+                                <stop offset="100%" stop-color="#0b1e2d"/>
+                            </linearGradient>
+                            <linearGradient id="proGlove" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="60%" stop-color="#d5dbdb"/>
+                                <stop offset="100%" stop-color="#85929e"/>
+                            </linearGradient>
+                            <filter id="proShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="2" dy="10" stdDeviation="5" flood-color="#000" flood-opacity="0.8"/>
+                            </filter>
+                        </defs>
+                        <g filter="url(#proShadow)">
+                            <path d="M82 120 L96 120 L91 160 L79 160 Z" fill="url(#proSkin)"/>
+                            <path d="M118 120 L104 120 L109 160 L121 160 Z" fill="url(#proSkin)"/>
+                            <path d="M72 110 L128 110 L125 138 L100 133 L75 138 Z" fill="#111"/>
+                            <path d="M79 160 L91 160 L88 190 L77 190 Z" fill="#fff"/>
+                            <path d="M121 160 L109 160 L112 190 L123 190 Z" fill="#fff"/>
+                            <path d="M74 190 L88 190 L92 206 L68 206 Z" fill="#00ff88"/>
+                            <path d="M126 190 L112 190 L108 206 L132 206 Z" fill="#00ff88"/>
+                            <g id="gk-arm-left" style="transform-origin: 82px 62px; transform: rotate(60deg);">
+                                <path d="M85 52 L32 58 L32 70 L85 73 Z" fill="url(#proJersey)"/>
+                                <path d="M33 60 L16 60 L16 68 L33 68 Z" fill="url(#proSkin)"/>
+                                <path d="M20 50 Q -2 50 3 64 Q -2 78 20 78 Z" fill="url(#proGlove)"/>
+                            </g>
+                            <g id="gk-arm-right" style="transform-origin: 118px 62px; transform: rotate(-60deg);">
+                                <path d="M115 52 L168 58 L168 70 L115 73 Z" fill="url(#proJersey)"/>
+                                <path d="M167 60 L184 60 L184 68 L167 68 Z" fill="url(#proSkin)"/>
+                                <path d="M180 50 Q 202 50 197 64 Q 202 78 180 78 Z" fill="url(#proGlove)"/>
+                            </g>
+                            <path d="M68 52 Q 58 52 66 115 L 134 115 Q 142 52 132 52 Z" fill="url(#proJersey)"/>
+                            <rect x="92" y="38" width="16" height="18" fill="url(#proSkin)"/>
+                            <circle cx="78" cy="24" r="5" fill="url(#proSkin)"/>
+                            <circle cx="122" cy="24" r="5" fill="url(#proSkin)"/>
+                            <path d="M78 22 C 78 -2, 122 -2, 122 22 C 122 46, 112 48, 100 48 C 88 48, 78 46, 78 22 Z" fill="url(#proSkin)"/>
                         </g>
                     </svg>
                 </div>
@@ -881,13 +935,35 @@
     <!-- ABA AVIATOR -->
     <div id="tab-aviator" class="main-tab-content">
         <div id="aviatorSectionContainer">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Voltar para a Início
+            </button>
             <div class="aviator-screen-3d" id="aviatorScreen">
                 <div class="explosion-effect-real" id="explosionEffect"></div>
                 <div class="aviator-mult-display" id="aviatorMultDisplay">1.00x</div>
                 <div class="aviator-status-text" id="aviatorStatusText">PRONTO PARA DECOLAR</div>
+                <div class="aviator-win-banner" id="aviatorWinBanner">
+                    <div class="win-badge-title">SACOU COM SUCESSO!</div>
+                    <div class="win-badge-amount" id="aviatorWinAmountText">R$ 0,00</div>
+                </div>
+                <div class="aviator-crash-banner" id="aviatorCrashBanner">
+                    <div class="crash-badge-title">VOO ENCERRADO</div>
+                    <div class="crash-badge-text">AVIÃO EXPLODIU!</div>
+                </div>
+                <svg class="aviator-airplane-real" id="aviatorPlane" viewBox="0 0 120 70" style="bottom: 30px; left: 20px;">
+                    <path d="M10 35 C 10 35, 30 20, 70 22 C 95 23, 110 28, 115 35 C 110 42, 95 47, 70 48 C 30 50, 10 35, 10 35 Z" fill="#ff3300"/>
+                </svg>
             </div>
             <div class="aviator-controls-box">
+                <div class="bet-control-row">
+                    <span>Aposta Aviator:</span>
+                    <div class="bet-adjust-box">
+                        <button class="btn-bet-step" onclick="alterarApostaAviator(-1)">-</button>
+                        <input type="text" id="aviatorBetInput" class="btn-input-display" value="20.00" readonly>
+                        <button class="btn-bet-step" onclick="alterarApostaAviator(1)">+</button>
+                    </div>
+                </div>
                 <button class="btn-aviator-acao" id="btnAviatorAcao" onclick="acaoAviatorBtn()">APOSTAR</button>
             </div>
         </div>
@@ -896,9 +972,50 @@
     <!-- ABA MINES -->
     <div id="tab-mines" class="main-tab-content">
         <div id="minesSectionContainer">
-            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Voltar para a Início
+            </button>
+            <div class="mines-mode-selector">
+                <div class="btn-mine-mode active" id="btnMinesModeReal" onclick="mudarModoMines('real')">Modo Real</div>
+                <div class="btn-mine-mode" id="btnMinesModeDemo" onclick="mudarModoMines('demo')">Modo Demo</div>
+            </div>
             <div class="mines-screen-3d" id="minesScreen">
+                <div class="explosion-effect-real" id="minesExplosionEffect" style="z-index: 30;"></div>
+                <div class="aviator-win-banner" id="minesWinBanner" style="z-index: 35;">
+                    <div class="win-badge-title">SACOU COM SUCESSO!</div>
+                    <div class="win-badge-amount" id="minesWinAmountText">R$ 0,00</div>
+                </div>
+                <div class="aviator-crash-banner" id="minesCrashBanner" style="z-index: 35;">
+                    <div class="crash-badge-title">BOMBA ACIONADA</div>
+                    <div class="crash-badge-text">MINA EXPLODIU!</div>
+                </div>
+                <div class="mines-header-info">
+                    <span>Multiplicador: <b id="minesMultDisplay" style="color:#00ff88;">1.00x</b></span>
+                    <span>Prêmio: <b id="minesProfitDisplay" style="color:#00ff88;">R$ 0,00</b></span>
+                </div>
                 <div class="mines-grid-5x5" id="minesGridContainer"></div>
+            </div>
+            <div class="aviator-controls-box">
+                <div class="mines-config-row">
+                    <span>Quantidade de Minas:</span>
+                    <select id="minesCountSelect" class="mines-count-select" onchange="atualizarConfigMines()">
+                        <option value="1">1 Mina (Fácil)</option>
+                        <option value="3" selected>3 Minas (Padrão)</option>
+                        <option value="5">5 Minas</option>
+                        <option value="10">10 Minas</option>
+                        <option value="15">15 Minas (Difícil)</option>
+                    </select>
+                </div>
+                <div class="bet-control-row">
+                    <span>Aposta Mines:</span>
+                    <div class="bet-adjust-box">
+                        <button class="btn-bet-step" onclick="alterarApostaMines(-1)">-</button>
+                        <input type="text" id="minesBetInput" class="btn-input-display" value="20.00" readonly>
+                        <button class="btn-bet-step" onclick="alterarApostaMines(1)">+</button>
+                    </div>
+                </div>
+                <button class="btn-aviator-acao" id="btnMinesAcao" onclick="acaoMinesBtn()">JOGAR</button>
             </div>
         </div>
     </div>
@@ -952,6 +1069,7 @@
 
         atualizarSaldoNaTela();
 
+        // TOASTS DE NOTIFICAÇÃO
         function dispararToast(mensagem) {
             const container = document.getElementById('toastContainer');
             if(!container) return;
@@ -962,6 +1080,7 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
+        // MODO ESCURO / CLARO
         function alternarModoEscuroClaro() {
             document.body.classList.toggle('light-theme');
             if(document.body.classList.contains('light-theme')) {
@@ -980,12 +1099,14 @@
             dispararToast('Bem-vindo ao Cangaço Bet!');
         }
 
+        // SISTEMA DE AFILIADOS LINK
         function clicarLinkAfiliado(e) {
             e.preventDefault();
             navigator.clipboard.writeText(window.location.href);
             dispararToast('Link de afiliado copiado com sucesso!');
         }
 
+        // MISSÕES DIÁRIAS
         function resgatarMissaoDiaria(premio) {
             if (!usuarioLogado) {
                 dispararToast('Precisa estar cadastrado para resgatar missões!');
@@ -997,6 +1118,7 @@
             dispararToast(`Parabéns! Resgatou R$ ${premio} de Free Bet!`);
         }
 
+        // CHAT AO VIVO COM NOME MASCARADO (**)
         function enviarMensagemChatAoVivo() {
             if (!usuarioLogado) {
                 dispararToast('Faça o cadastro para poder falar no chat!');
@@ -1061,6 +1183,7 @@
             if(audio) { audio.pause(); audio.currentTime = 0; }
         }
 
+        // NAVEGAÇÃO SEGURA ENTRE ABAS E JOGOS
         function mudarAba(aba) {
             const searchBar = document.getElementById('quickSearchBarContainer');
             const supportBtn = document.getElementById('floatingSupportBtn');
@@ -1210,6 +1333,7 @@
             dispararToast(`Depósito de R$ ${valor.toFixed(2)} efetuado!`);
         }
 
+        // Funções dos Jogos Mantidas
         let nivelAtual = 0;
         let jogadaEmAndamento = false;
         const multiplicadores = [1.92, 3.84, 7.68, 15.36, 30.72];
@@ -1334,3 +1458,4 @@
     </script>
 </body>
 </html>
+
