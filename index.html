@@ -1350,6 +1350,18 @@
         <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetesMultiplos()">CRIAR BILHETE E REGISTAR</button>
     </div>
 
+    <!-- MODAL DE ESTATÍSTICAS AO VIVO -->
+    <div id="statsModal" class="modal-overlay">
+        <div class="modal-card-4d">
+            <span class="close-modal" onclick="fecharModalStats()">&times;</span>
+            <div class="modal-title-4d" id="statsModalTitulo">Estatísticas Ao Vivo</div>
+            <div class="modal-subtitle-4d" id="statsModalSub">Dados oficiais da API</div>
+            <div id="statsModalContent" style="margin-top: 15px; text-align: left;">
+                <p style="color: #888; text-align: center;">A carregar estatísticas...</p>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL DE MERCADOS COMPLETOS -->
     <div id="matchModal" class="modal-overlay">
         <div class="modal-card-4d">
@@ -2175,6 +2187,10 @@
 
                 let odds = calcularOddsDinamicas(match);
 
+                let botaoStats = (statusShort !== 'NS') 
+                    ? `<button class="btn-topo-acao" style="background:#191d28; border:1px solid #00ff88; color:#00ff88; font-size:10px; width:100%; margin-top:8px;" onclick="abrirEstatisticasPartida(${match.fixture.id})">📊 Estatísticas Ao Vivo</button>`
+                    : '';
+
                 html += `
                     <div class="match-card" onclick="abrirMercadosPartida(${match.fixture.id})">
                         <div class="match-header">
@@ -2194,10 +2210,86 @@
                             <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${odds.draw}, ${match.fixture.id})">Empate: ${odds.draw}</button>
                             <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', ${odds.away}, ${match.fixture.id})">Fora: ${odds.away}</button>
                         </div>
+                        <div onclick="event.stopPropagation()">
+                            ${botaoStats}
+                        </div>
                     </div>
                 `;
             });
             container.innerHTML = html;
+        }
+
+        async function abrirEstatisticasPartida(fixtureId) {
+            const modal = document.getElementById('statsModal');
+            const content = document.getElementById('statsModalContent');
+            const titulo = document.getElementById('statsModalTitulo');
+            const sub = document.getElementById('statsModalSub');
+
+            let match = partidasApiCache.find(m => m.fixture.id === fixtureId);
+            if(match) {
+                titulo.innerText = `${match.teams.home.name} vs ${match.teams.away.name}`;
+                sub.innerText = `${match.league.name} | ${match.fixture.status.elapsed ? match.fixture.status.elapsed + "'" : 'Ao Vivo'}`;
+            }
+
+            content.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar estatísticas oficiais...</p>`;
+            modal.style.display = 'flex';
+
+            try {
+                const resposta = await fetch(`https://v3.football.api-sports.io/fixtures/statistics?fixture=${fixtureId}`, {
+                    headers: { "x-apisports-key": apiKey }
+                });
+                const dados = await resposta.json();
+
+                if (dados.response && dados.response.length >= 2) {
+                    let statsHome = dados.response[0].statistics;
+                    let statsAway = dados.response[1].statistics;
+
+                    let mapaHome = {};
+                    let mapaAway = {};
+
+                    statsHome.forEach(s => mapaHome[s.type] = s.value ?? 0);
+                    statsAway.forEach(s => mapaAway[s.type] = s.value ?? 0);
+
+                    let tiposDesejados = [
+                        { label: 'Posse de Bola', key: 'Ball Possession' },
+                        { label: 'Chutes ao Gol', key: 'Shots on Goal' },
+                        { label: 'Chutes Para Fora', key: 'Shots off Goal' },
+                        { label: 'Escanteios', key: 'Corner Kicks' },
+                        { label: 'Impedimentos', key: 'Offsides' },
+                        { label: 'Faltas', key: 'Fouls' },
+                        { label: 'Cartões Amarelos', key: 'Yellow Cards' },
+                        { label: 'Cartões Vermelhos', key: 'Red Cards' }
+                    ];
+
+                    let htmlStats = '';
+                    tiposDesejados.forEach(t => {
+                        let valH = mapaHome[t.key] ?? '0';
+                        let valA = mapaAway[t.key] ?? '0';
+                        htmlStats += `
+                            <div style="background: #0f1118; border: 1px solid #232838; border-radius: 10px; padding: 10px; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #aaa;">
+                                    <span>${valH}</span>
+                                    <span style="color: #ffb703; text-transform: uppercase;">${t.label}</span>
+                                    <span>${valA}</span>
+                                </div>
+                                <div style="display: flex; height: 6px; background: #222; border-radius: 3px; overflow: hidden;">
+                                    <div style="width: 50%; background: #ff4500;"></div>
+                                    <div style="width: 50%; background: #00ff88;"></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    content.innerHTML = htmlStats;
+                } else {
+                    content.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Estatísticas detalhadas ainda não disponíveis para esta partida.</p>`;
+                }
+            } catch(e) {
+                content.innerHTML = `<p style="color: #ff4500; text-align: center; padding: 20px;">Erro ao carregar estatísticas da API.</p>`;
+            }
+        }
+
+        function fecharModalStats() {
+            document.getElementById('statsModal').style.display = 'none';
         }
 
         function abrirMercadosPartida(fixtureId) {
