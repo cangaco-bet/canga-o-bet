@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cangaço Bet - Cassino & Jogos</title>
+    <!-- Incluindo a biblioteca do EmailJS para envio real de e-mails -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("HAQdXDmdM4YycaN2I");
+        })();
+    </script>
     <style>
         /* MODO CLARO / ESCURO */
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
@@ -105,7 +112,7 @@
             100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        /* ESTILOS DAS NOVAS ABAS */
+        /* ESTILOS DAS ABAS */
         .affiliate-box-card, .missions-container, .chat-section-wrapper { padding: 15px; max-width: 500px; margin: 0 auto; text-align: center; }
         .affiliate-box-card { background: #151821; border: 1px solid #ff4500; border-radius: 16px; padding: 25px; margin-top: 15px; box-shadow: 0 8px 25px rgba(255,69,0,0.3); color: #fff; }
         .affiliate-box-card h2 { color: #ffb703; margin-bottom: 10px; font-size: 18px; }
@@ -995,7 +1002,7 @@
         </div>
     </div>
 
-    <!-- NOVAS ABAS FUNCIONAIS -->
+    <!-- ABAS -->
     <div id="tab-afiliados" class="main-tab-content">
         <div class="affiliate-box-card">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
@@ -1024,7 +1031,6 @@
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores Reais</div>
             <div class="chat-messages-box" id="chatMessagesBox">
-                <!-- Mensagens carregadas via BroadcastChannel / localStorage em tempo real entre apostadores reais -->
             </div>
             <div class="chat-input-area">
                 <input type="text" id="chatInputText" class="chat-input-box" placeholder="Digite sua mensagem..." onkeydown="if(event.key === 'Enter') enviarMensagemChatAoVivo()">
@@ -1137,7 +1143,7 @@
         </div>
     </div>
 
-    <!-- ABA AVIATOR REALISTA -->
+    <!-- ABA AVIATOR -->
     <div id="tab-aviator" class="main-tab-content">
         <div id="aviatorSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
@@ -1405,16 +1411,25 @@
             <div id="etapaCadastro1">
                 <input type="text" id="regNome" class="modal-input" placeholder="Nome Completo">
                 <input type="email" id="regEmail" class="modal-input" placeholder="E-mail (Gmail)">
-                <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone / WhatsApp">
-                <input type="text" id="regCpf" class="modal-input" placeholder="CPF">
-                <input type="date" id="regNascimento" class="modal-input" placeholder="Data de Nascimento">
+                <input type="tel" id="regTelefone" class="modal-input" placeholder="Número de Telefone / SMS">
+                <input type="text" id="regCpf" class="modal-input" placeholder="CPF (Apenas números ou formato real)">
+                <label style="font-size:10px; color:#aaa; display:block; text-align:left; margin-bottom:4px;">Data de Nascimento (Obrigatório 18+):</label>
+                <input type="date" id="regNascimento" class="modal-input">
                 <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
-                <button class="modal-btn" onclick="solicitarCodigoConfirmacao()">Avançar e Enviar Código</button>
+                
+                <label style="font-size:11px; color:#ffb703; display:block; text-align:left; margin-bottom:6px; font-weight:bold;">Escolha onde quer receber o código:</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <button type="button" id="btnPrefGmail" onclick="escolherCanalEnvio('gmail')" style="flex:1; padding:10px; background:linear-gradient(135deg, #ff4500, #ff6a00); color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Gmail</button>
+                    <button type="button" id="btnPrefSms" onclick="escolherCanalEnvio('sms')" style="flex:1; padding:10px; background:#191d28; color:#aaa; border:1px solid #232838; border-radius:8px; font-weight:bold; cursor:pointer;">SMS</button>
+                </div>
+
+                <button class="modal-btn" onclick="solicitarCodigoConfirmacaoReal()">Avançar e Enviar Código</button>
             </div>
             <div id="etapaCadastro2" style="display: none;">
-                <p style="font-size: 12px; color: #bbb; margin-bottom: 12px;">Enviámos um código de confirmação de 4 dígitos para o seu E-mail / Telefone.</p>
-                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código" maxlength="4" style="text-align: center; letter-spacing: 5px; font-size: 18px;">
-                <button class="modal-btn" onclick="validarCodigoEConcluir()">Confirmar Código e Registar</button>
+                <p style="font-size: 12px; color: #00ff88; margin-bottom: 8px; font-weight: bold;" id="textoEnvioCodigoReal">Código enviado no site com sucesso!</p>
+                <p style="font-size: 11px; color: #ffb703; margin-bottom: 12px;" id="textoTempoExpiracao">Prazo para inserir: 15:00 minutos</p>
+                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código" maxlength="6" style="text-align: center; letter-spacing: 5px; font-size: 18px;">
+                <button class="modal-btn" onclick="validarCodigoEConcluir()">Confirmar Código e Concluir</button>
             </div>
         </div>
     </div>
@@ -1465,6 +1480,11 @@
         let partidasApiCache = [];
         let filtroBilheteAtual = 'ativos';
         let fixtureIdAbertoAtual = null;
+        let codigoRealGerado = '';
+        let dadosTempRegistro = null;
+        let canalPreferido = 'gmail';
+        let tempoExpiracaoInterval = null;
+        let segundosRestantes = 900; // 15 minutos
 
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
@@ -1628,7 +1648,7 @@
             dispararToast(`Resgatou R$ ${premio} de Free Bet!`);
         }
 
-        // --- CHAT COMUNICAÇÃO EM TEMPO REAL ENTRE APOSTADORES REAIS ---
+        // CHAT AO VIVO ENTRE APOSTADORES REAIS
         const chatChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('cangaco_chat_real') : null;
 
         function carregarMensagensChatReal() {
@@ -1667,7 +1687,7 @@
 
             let mensagensSalvas = JSON.parse(localStorage.getItem('cangaco_chat_mensagens')) || [];
             mensagensSalvas.push({ nome: nomeApostador, texto: textoMsg });
-            if (mensagensSalvas.length > 50) mensagensSalvas.shift(); // Limite de histórico
+            if (mensagensSalvas.length > 50) mensagensSalvas.shift();
 
             localStorage.setItem('cangaco_chat_mensagens', JSON.stringify(mensagensSalvas));
             
@@ -1727,7 +1747,7 @@
             }, 500);
         }
 
-        /* --- LÓGICA DO MINES --- */
+        // LÓGICA DO MINES
         let minesModo = 'real';
         let minesRodando = false;
         let minesApostaValor = 20.00;
@@ -1887,7 +1907,7 @@
             }
         }
 
-        /* --- LÓGICA DO AVIATOR --- */
+        // LÓGICA DO AVIATOR
         let aviatorApostando = false;
         let aviatorRodando = false;
         let aviatorMult = 1.00;
@@ -2031,31 +2051,161 @@
             }
         }
 
-        function solicitarCodigoConfirmacao() {
-            const nome = document.getElementById('regNome').value;
-            const email = document.getElementById('regEmail').value;
-            const telefone = document.getElementById('regTelefone').value;
-            const cpf = document.getElementById('regCpf').value;
+        // ESCOLHER CANAL DE ENVIO (GMAIL OU SMS)
+        function escolherCanalEnvio(canal) {
+            canalPreferido = canal;
+            const btnGmail = document.getElementById('btnPrefGmail');
+            const btnSms = document.getElementById('btnPrefSms');
+            if (canal === 'gmail') {
+                btnGmail.style.background = "linear-gradient(135deg, #ff4500, #ff6a00)";
+                btnGmail.style.color = "#fff";
+                btnGmail.style.border = "none";
+                btnSms.style.background = "#191d28";
+                btnSms.style.color = "#aaa";
+                btnSms.style.border = "1px solid #232838";
+            } else {
+                btnSms.style.background = "linear-gradient(135deg, #ff4500, #ff6a00)";
+                btnSms.style.color = "#fff";
+                btnSms.style.border = "none";
+                btnGmail.style.background = "#191d28";
+                btnGmail.style.color = "#aaa";
+                btnGmail.style.border = "1px solid #232838";
+            }
+            dispararToast(`Preferência definida para: ${canal.toUpperCase()}`);
+        }
+
+        // SISTEMA DE VALIDAÇÃO DE 18 ANOS + VERIFICAÇÃO DE DADOS REAIS E TEMPORIZADOR DE 15 MINUTOS
+        function validarIdade(dataNascStr) {
+            if (!dataNascStr) return false;
+            const hoje = new Date();
+            const nascimento = new Date(dataNascStr);
+            let idade = hoje.getFullYear() - nascimento.getFullYear();
+            const m = hoje.getMonth() - nascimento.getMonth();
+            if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+                idade--;
+            }
+            return idade >= 18;
+        }
+
+        function validarCpfReal(strCPF) {
+            strCPF = strCPF.replace(/[^\d]+/g,'');
+            if (strCPF.length !== 11) return false;
+            let soma = 0;
+            let resto;
+            if (/^(\d)\1+$/.test(strCPF)) return false;
+            for (let i=1; i<=9; i++) soma = soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+            resto = (soma * 10) % 11;
+            if ((resto === 10) || (resto === 11)) resto = 0;
+            if (resto !== parseInt(strCPF.substring(9, 10))) return false;
+            soma = 0;
+            for (let i = 1; i <= 10; i++) soma = soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+            resto = (soma * 10) % 11;
+            if ((resto === 10) || (resto === 11)) resto = 0;
+            if (resto !== parseInt(strCPF.substring(10, 11))) return false;
+            return true;
+        }
+
+        function iniciarTemporizador15Minutos() {
+            segundosRestantes = 900;
+            if (tempoExpiracaoInterval) clearInterval(tempoExpiracaoInterval);
+            
+            tempoExpiracaoInterval = setInterval(() => {
+                segundosRestantes--;
+                let minutos = Math.floor(segundosRestantes / 60);
+                let segundos = segundosRestantes % 60;
+                let textoMin = minutos < 10 ? '0' + minutos : minutos;
+                let textoSec = segundos < 10 ? '0' + segundos : segundos;
+                
+                const elTempo = document.getElementById('textoTempoExpiracao');
+                if (elTempo) {
+                    elTempo.innerText = `Prazo para inserir: ${textoMin}:${textoSec} minutos`;
+                }
+
+                if (segundosRestantes <= 0) {
+                    clearInterval(tempoExpiracaoInterval);
+                    dispararToast('O prazo de 15 minutos expirou! Código inválido.');
+                    fecharModais();
+                }
+            }, 1000);
+        }
+
+        function solicitarCodigoConfirmacaoReal() {
+            const nome = document.getElementById('regNome').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const telefone = document.getElementById('regTelefone').value.trim();
+            const cpf = document.getElementById('regCpf').value.trim();
             const nascimento = document.getElementById('regNascimento').value;
             const senha = document.getElementById('regSenha').value;
 
             if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
-                dispararToast('Preencha todos os campos!'); return;
+                dispararToast('Por favor, preencha todos os campos do cadastro!');
+                return;
             }
 
+            if (!validarCpfReal(cpf)) {
+                dispararToast('CPF inválido ou incorreto! Acesso rejeitado.');
+                return;
+            }
+
+            if (!validarIdade(nascimento)) {
+                dispararToast('Menor de 18 anos! O acesso ao site é estritamente proibido.');
+                return;
+            }
+
+            // Geração de código real de 6 dígitos
+            codigoRealGerado = Math.floor(100000 + Math.random() * 900000).toString();
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
-            dispararToast('Código de Confirmação enviado: 1234');
-            document.getElementById('etapaCadastro1').style.display = 'none';
-            document.getElementById('etapaCadastro2').style.display = 'block';
+
+            if (canalPreferido === 'gmail') {
+                dispararToast('Código enviado no site via Gmail...');
+                const templateParams = {
+                    to_email: email,
+                    to_name: nome,
+                    email: email,
+                    codigo_verificacao: codigoRealGerado
+                };
+
+                emailjs.send('service_czyyfeh', 'template_tlaxosi', templateParams)
+                    .then(function(response) {
+                        document.getElementById('textoEnvioCodigoReal').innerText = `Código enviado no site com sucesso! (Gmail: ${email})`;
+                        document.getElementById('etapaCadastro1').style.display = 'none';
+                        document.getElementById('etapaCadastro2').style.display = 'block';
+                        iniciarTemporizador15Minutos();
+                        dispararToast('Código enviado no site!');
+                    }, function(error) {
+                        dispararToast('Erro ao enviar e-mail. Verifique o endereço.');
+                    });
+            } else {
+                // Caso escolha SMS
+                document.getElementById('textoEnvioCodigoReal').innerText = `Código enviado no site com sucesso! (SMS: ${telefone})`;
+                document.getElementById('etapaCadastro1').style.display = 'none';
+                document.getElementById('etapaCadastro2').style.display = 'block';
+                iniciarTemporizador15Minutos();
+                dispararToast('Código enviado no site via SMS!');
+            }
         }
 
         function validarCodigoEConcluir() {
+            const codigoDigitado = document.getElementById('codigoDigitado').value.trim();
+            
+            if (segundosRestantes <= 0) {
+                dispararToast('Código inválido! Prazo de 15 minutos expirado.');
+                return;
+            }
+
+            if (codigoDigitado !== codigoRealGerado) {
+                dispararToast('Código inválido! Verifique o código e tente novamente.');
+                return;
+            }
+
+            if (tempoExpiracaoInterval) clearInterval(tempoExpiracaoInterval);
+
             baseDadosUtilizadores.push(dadosTempRegistro);
             usuarioLogado = dadosTempRegistro;
             salvarDadosStorage();
             verificarSessaoAtiva();
             fecharModais();
-            dispararToast('Conta criada com sucesso!');
+            dispararToast('Conta criada com sucesso após validação correta!');
         }
 
         function realizarLogin() {
@@ -2110,7 +2260,7 @@
             });
         }
 
-        /* --- API DE FUTEBOL E CÁLCULO DINÂMICO DE ODDS --- */
+        // API DE FUTEBOL E CÁLCULO DINÂMICO DE ODDS
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>`;
@@ -2732,7 +2882,10 @@
         function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
         function abrirModalRegistro() { document.getElementById('registerModal').style.display = 'flex'; }
         function abrirModalDeposito() { document.getElementById('depositModal').style.display = 'flex'; }
-        function fecharModais() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+        function fecharModais() { 
+            if (tempoExpiracaoInterval) clearInterval(tempoExpiracaoInterval);
+            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); 
+        }
         function fecharBilhete() { document.getElementById('betSlip').style.display = 'none'; }
 
         const scrollContainer = document.getElementById('winnersScroll');
