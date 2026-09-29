@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -24,7 +26,7 @@
             border: 2px solid #ff4500;
             border-left: 6px solid #ffb703;
             color: #fff;
-            padding: 14px 22px;
+            padding: 12px 18px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9);
             font-size: 13px;
@@ -33,13 +35,16 @@
             align-items: center;
             gap: 12px;
             animation: slideInToast 0.3s ease forwards;
+            max-width: 320px;
         }
-        .toast-icon {
-            width: 18px;
-            height: 18px;
-            fill: #ffb703;
+        .toast-icon-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ffb703;
             flex-shrink: 0;
-            filter: drop-shadow(0 0 6px rgba(255,183,3,0.6));
+            box-shadow: 0 0 8px rgba(255,183,3,0.6);
         }
         @keyframes slideInToast {
             from { transform: translateX(120%); opacity: 0; }
@@ -749,7 +754,7 @@
                 <div class="winner-card">
                     <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
                     <div class="winner-info">
-                        <div class="winner-name">Kaiq***</div>
+                        <div class="winner-name">Kai***</div>
                         <div class="winner-prize">R$ 45.00 BRL</div>
                     </div>
                 </div>
@@ -763,7 +768,7 @@
                 <div class="winner-card">
                     <img src="https://files.catbox.moe/9k06uq.jpeg" alt="Mines">
                     <div class="winner-info">
-                        <div class="winner-name">Lucas***</div>
+                        <div class="winner-name">Luc***</div>
                         <div class="winner-prize">R$ 120.00 BRL</div>
                     </div>
                 </div>
@@ -823,8 +828,8 @@
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores</div>
             <div class="chat-messages-box" id="chatMessagesBox">
-                <div class="chat-msg-row"><b>Ka**</b>: Alguém jogando o Penalty agora?</div>
-                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator 🔥</div>
+                <div class="chat-msg-row"><b>Kai***</b>: Alguém jogando o Penalty agora?</div>
+                <div class="chat-msg-row"><b>Luc***</b>: Acabei de forrar no Aviator</div>
             </div>
             <div class="chat-input-area">
                 <input type="text" id="chatInputText" class="chat-input-box" placeholder="Escreva sua mensagem...">
@@ -1207,6 +1212,7 @@
 
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
+        iniciarNotificacoesAutomaticasFicticias();
 
         function salvarDadosStorage() {
             localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
@@ -1302,16 +1308,20 @@
             }
         }
 
-        /* --- TOAST COM ÍCONE SVG PROFISSIONAL SEM EMOJIS --- */
-        function dispararToast(mensagem) {
+        /* --- SISTEMA DE NOTIFICAÇÕES TOAST COM 3 LETRAS E **, EMBLEMA E FLUTUANTE --- */
+        function formatarNomeMascarado(nomeCompleto) {
+            let limpo = nomeCompleto.replace(/[^a-zA-Z]/g, '');
+            if(limpo.length < 3) limpo = 'Jog';
+            return limpo.substring(0, 3).toUpperCase() + '***';
+        }
+
+        function dispararToast(mensagem, iconeUrl = 'https://files.catbox.moe/qf2bly.jpeg') {
             const container = document.getElementById('toastContainer');
             if(!container) return;
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
             toast.innerHTML = `
-                <svg class="toast-icon" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                </svg>
+                <img src="${iconeUrl}" class="toast-icon-img" alt="Emblema">
                 <span>${mensagem}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
@@ -1319,7 +1329,31 @@
                 toast.style.transform = 'translateX(120%)';
                 toast.style.transition = '0.3s ease';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 3500);
+        }
+
+        function iniciarNotificacoesAutomaticasFicticias() {
+            const nomesFicticios = ["Matheus", "Gabriel", "Lucas", "Carlos", "Rafael", "Bruno", "Thiago", "Vinicius", "Marcos", "Diego"];
+            const avataresFicticios = [
+                'https://files.catbox.moe/75mifn.jpeg',
+                'https://files.catbox.moe/f5zgx9.webp',
+                'https://files.catbox.moe/9k06uq.jpeg',
+                'https://files.catbox.moe/7dkz4q.jpeg',
+                'https://files.catbox.moe/qf2bly.jpeg'
+            ];
+            
+            setInterval(() => {
+                let nomeAleatorio = nomesFicticios[Math.floor(Math.random() * nomesFicticios.length)];
+                let nomeMascarado = formatarNomeMascarado(nomeAleatorio);
+                let avatarAleatorio = avataresFicticios[Math.floor(Math.random() * avataresFicticios.length)];
+                let valor = (Math.random() * 450 + 35).toFixed(2);
+                
+                if (Math.random() > 0.5) {
+                    dispararToast(`O jogador <b>${nomeMascarado}</b> ganhou <b>R$ ${valor}</b> no Cangaço Bet!`, avatarAleatorio);
+                } else {
+                    dispararToast(`O jogador <b>${nomeMascarado}</b> sacou <b>R$ ${valor}</b> com sucesso!`, avatarAleatorio);
+                }
+            }, 7000);
         }
 
         function alternarModoEscuroClaro() {
@@ -1345,7 +1379,7 @@
             if (!usuarioLogado) { dispararToast('Faça login para usar o chat!'); abrirModalRegistro(); return; }
             const input = document.getElementById('chatInputText');
             if(!input || !input.value.trim()) return;
-            let nomeMascarado = (usuarioLogado.nome || 'User').substring(0, 2) + '**';
+            let nomeMascarado = formatarNomeMascarado(usuarioLogado.nome || 'User');
             const box = document.getElementById('chatMessagesBox');
             if(box) {
                 box.innerHTML += `<div class="chat-msg-row"><b>${nomeMascarado}</b>: ${input.value.trim()}</div>`;
