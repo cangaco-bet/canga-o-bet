@@ -2061,7 +2061,7 @@
             });
         }
 
-        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS COM SEGUNDOS EXATOS E NOMES CORRIGIDOS --- */
+        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>`;
@@ -2117,9 +2117,9 @@
             let html = '';
             filtradas.forEach(match => {
                 let statusShort = match.fixture.status.short;
-                let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}:00'` : 'Pré-jogo';
+                let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}'` : 'Pré-jogo';
                 if(statusShort === 'HT') minutoExato = 'Intervalo';
-                if(statusShort === 'FT') return;
+                if(statusShort === 'FT') minutoExato = 'Encerrado';
 
                 let homeGols = match.goals.home ?? 0;
                 let awayGols = match.goals.away ?? 0;
@@ -2142,29 +2142,15 @@
                             <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px;" onclick="event.stopPropagation()">
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória Casa (${match.teams.home.name})', ${oddHome}, ${match.fixture.id})">Casa: ${oddHome}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa', ${oddHome}, ${match.fixture.id})">Casa: ${oddHome}</button>
                             <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${oddDraw}, ${match.fixture.id})">Empate: ${oddDraw}</button>
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória Fora (${match.teams.away.name})', ${oddAway}, ${match.fixture.id})">Fora: ${oddAway}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', ${oddAway}, ${match.fixture.id})">Fora: ${oddAway}</button>
                         </div>
                     </div>
                 `;
             });
             container.innerHTML = html;
         }
-
-        // Atualizar segundos exatos dinamicamente conforme a API avança
-        setInterval(() => {
-            partidasApiCache.forEach(m => {
-                if (m.fixture && m.fixture.status && m.fixture.status.elapsed) {
-                    let secRandom = Math.floor(Math.random() * 60);
-                    let secStr = secRandom < 10 ? '0' + secRandom : secRandom;
-                    m.fixture.status.elapsedWithSeconds = `${m.fixture.status.elapsed}:${secStr}`;
-                }
-            });
-            if(document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
-                renderizarBilhetesNaTela();
-            }
-        }, 1000);
 
         function abrirMercadosPartida(fixtureId) {
             fixtureIdAbertoAtual = fixtureId;
@@ -2175,9 +2161,9 @@
             
             let grid1X2 = document.getElementById('modalOdds1X2');
             grid1X2.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa (${match.teams.home.name})', 1.85, ${match.fixture.id})"><span>Casa</span><b>1.85</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa', 1.85, ${match.fixture.id})"><span>Casa</span><b>1.85</b></div>
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', 3.40, ${match.fixture.id})"><span>Empate</span><b>3.40</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora (${match.teams.away.name})', 2.10, ${match.fixture.id})"><span>Fora</span><b>2.10</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', 2.10, ${match.fixture.id})"><span>Fora</span><b>2.10</b></div>
             `;
 
             let gridDupla = document.getElementById('modalOddsDuplaChance');
@@ -2350,7 +2336,6 @@
                 let corStatus = '#ffb703';
                 if(b.status === 'Ganho') corStatus = '#00ff88';
                 if(b.status === 'Perdido') corStatus = '#ff4500';
-                if(b.status === 'Encerrado') corStatus = '#ff4500';
 
                 let selecoesHtml = '';
                 if (b.selecoes && b.selecoes.length > 0) {
@@ -2366,16 +2351,15 @@
                             placarAoVivoStr = `${gHome} - ${gAway}`;
 
                             if (statusShort === '1H' || statusShort === '2H' || statusShort === 'ET') {
-                                minutoAoVivo = `${matchObj.fixture.status.elapsedWithSeconds || matchObj.fixture.status.elapsed + ':00'}' em tempo real`;
+                                minutoAoVivo = `${matchObj.fixture.status.elapsed}'`;
                             } else if (statusShort === 'HT') {
                                 minutoAoVivo = 'Intervalo';
                             } else if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
                                 minutoAoVivo = 'Encerrado';
-                                if(b.status === 'Ativo') b.status = 'Encerrado';
                             }
                         } else {
                             if(b.status !== 'Ativo') minutoAoVivo = 'Encerrado';
-                            else minutoAoVivo = '90:00\' Encerrado';
+                            else minutoAoVivo = 'Encerrado';
                         }
 
                         selecoesHtml += `
@@ -2384,8 +2368,8 @@
                                     <b>${s.home} vs ${s.away}</b>
                                     <span style="background: #0b0c10; border: 1px solid #ff4500; padding: 2px 8px; border-radius: 8px; color: #00ff88; font-weight: 900; font-size: 11px;">Placar: ${placarAoVivoStr}</span>
                                 </div>
-                                <span style="color:#ddd;">Mercado escolhido: ${s.mercado} (Odd: ${s.odd})</span><br>
-                                <span style="color:#00ff88; font-weight:bold;">Tempo de Jogo: ${minutoAoVivo}</span>
+                                <span style="color:#ddd;">Aposta feita em: ${s.mercado} (Odd: ${s.odd})</span><br>
+                                <span style="color:#00ff88; font-weight:bold;">Tempo: ${minutoAoVivo}</span>
                             </div>`;
                     });
                 }
@@ -2426,13 +2410,45 @@
                     dados.response.forEach(partidaAtualizada => {
                         let fixtureId = partidaAtualizada.fixture.id;
                         let statusShort = partidaAtualizada.fixture.status.short;
+                        let gHome = partidaAtualizada.goals.home ?? 0;
+                        let gAway = partidaAtualizada.goals.away ?? 0;
                         
                         meusBilhetesSalvos.forEach(bilhete => {
                             if (bilhete.status === 'Ativo' && bilhete.selecoes) {
                                 let pertenceAoBilhete = bilhete.selecoes.some(s => s.fixtureId === fixtureId);
                                 if (pertenceAoBilhete && (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN')) {
-                                    let ganhou = Math.random() >= 0.4;
-                                    if (ganhou) {
+                                    
+                                    let todasBateram = true;
+                                    bilhete.selecoes.forEach(s => {
+                                        let mercado = s.mercado;
+                                        if (mercado === 'Casa') {
+                                            if (!(gHome > gAway)) todasBateram = false;
+                                        } else if (mercado === 'Fora') {
+                                            if (!(gAway > gHome)) todasBateram = false;
+                                        } else if (mercado === 'Empate') {
+                                            if (!(gHome === gAway)) todasBateram = false;
+                                        } else if (mercado.includes('Dupla Chance: Casa ou Empate')) {
+                                            if (!(gHome >= gAway)) todasBateram = false;
+                                        } else if (mercado.includes('Dupla Chance: Casa ou Fora')) {
+                                            if (!(gHome !== gAway)) todasBateram = false;
+                                        } else if (mercado.includes('Dupla Chance: Empate ou Fora')) {
+                                            if (!(gAway >= gHome)) todasBateram = false;
+                                        } else if (mercado.includes('Ambas Marcam: Sim')) {
+                                            if (!(gHome > 0 && gAway > 0)) todasBateram = false;
+                                        } else if (mercado.includes('Ambas Marcam: Não')) {
+                                            if (!(!(gHome > 0 && gAway > 0))) todasBateram = false;
+                                        } else {
+                                            let golsTotais = gHome + gAway;
+                                            if (mercado.includes('Mais de 1.5') && !(golsTotais > 1.5)) todasBateram = false;
+                                            if (mercado.includes('Menos de 1.5') && !(golsTotais < 1.5)) todasBateram = false;
+                                            if (mercado.includes('Mais de 2.5') && !(golsTotais > 2.5)) todasBateram = false;
+                                            if (mercado.includes('Menos de 2.5') && !(golsTotais < 2.5)) todasBateram = false;
+                                            if (mercado.includes('Mais de 3.5') && !(golsTotais > 3.5)) todasBateram = false;
+                                            if (mercado.includes('Menos de 3.5') && !(golsTotais < 3.5)) todasBateram = false;
+                                        }
+                                    });
+
+                                    if (todasBateram) {
                                         bilhete.status = 'Ganho';
                                         let premio = parseFloat(bilhete.retorno);
                                         saldo += premio;
@@ -2441,7 +2457,7 @@
                                         dispararToast(`Bilhete ${bilhete.id} foi GANHO! R$ ${premio.toFixed(2)} adicionado!`);
                                     } else {
                                         bilhete.status = 'Perdido';
-                                        dispararToast(`Bilhete ${bilhete.id} foi dado como PERDIDO.`);
+                                        dispararToast(`Bilhete ${bilhete.id} não bateu e foi para a aba de perdidas.`);
                                     }
                                     salvarDadosStorage();
                                 }
