@@ -1416,20 +1416,20 @@
                 <label style="font-size:10px; color:#aaa; display:block; text-align:left; margin-bottom:4px;">Data de Nascimento (Obrigatório 18+):</label>
                 <input type="date" id="regNascimento" class="modal-input">
                 <input type="password" id="regSenha" class="modal-input" placeholder="Criar Senha">
-                
+                <button class="modal-btn" onclick="avancarParaEtapaCodigo()">Avançar</button>
+            </div>
+            <div id="etapaCadastro2" style="display: none;">
                 <label style="font-size:11px; color:#ffb703; display:block; text-align:left; margin-bottom:6px; font-weight:bold;">Escolha onde quer receber o código:</label>
                 <div style="display: flex; gap: 8px; margin-bottom: 12px;">
                     <button type="button" id="btnPrefGmail" onclick="escolherCanalEnvio('gmail')" style="flex:1; padding:10px; background:linear-gradient(135deg, #ff4500, #ff6a00); color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Gmail</button>
                     <button type="button" id="btnPrefSms" onclick="escolherCanalEnvio('sms')" style="flex:1; padding:10px; background:#191d28; color:#aaa; border:1px solid #232838; border-radius:8px; font-weight:bold; cursor:pointer;">SMS</button>
                 </div>
+                <button class="modal-btn" onclick="solicitarCodigoConfirmacaoReal()" style="margin-bottom: 12px;">Receber Código</button>
 
-                <button class="modal-btn" onclick="solicitarCodigoConfirmacaoReal()">Avançar e Enviar Código</button>
-            </div>
-            <div id="etapaCadastro2" style="display: none;">
-                <p style="font-size: 12px; color: #00ff88; margin-bottom: 8px; font-weight: bold;" id="textoEnvioCodigoReal">Código enviado no site com sucesso!</p>
-                <p style="font-size: 11px; color: #ffb703; margin-bottom: 12px;" id="textoTempoExpiracao">Prazo para inserir: 15:00 minutos</p>
-                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código" maxlength="6" style="text-align: center; letter-spacing: 5px; font-size: 18px;">
-                <button class="modal-btn" onclick="validarCodigoEConcluir()">Confirmar Código e Concluir</button>
+                <p style="font-size: 12px; color: #00ff88; margin-bottom: 6px; font-weight: bold; display: none;" id="textoEnvioCodigoReal">Código enviado no site com sucesso!</p>
+                <p style="font-size: 11px; color: #ffb703; margin-bottom: 12px; display: none;" id="textoTempoExpiracao">15 minutos para confirmar o código (15:00)</p>
+                <input type="text" id="codigoDigitado" class="modal-input" placeholder="Digite o Código" maxlength="6" style="text-align: center; letter-spacing: 5px; font-size: 18px; display: none;">
+                <button class="modal-btn" id="btnConcluirCadastro" onclick="validarCodigoEConcluir()" style="display: none;">Confirmar Código e Concluir</button>
             </div>
         </div>
     </div>
@@ -2105,31 +2105,7 @@
             return true;
         }
 
-        function iniciarTemporizador15Minutos() {
-            segundosRestantes = 900;
-            if (tempoExpiracaoInterval) clearInterval(tempoExpiracaoInterval);
-            
-            tempoExpiracaoInterval = setInterval(() => {
-                segundosRestantes--;
-                let minutos = Math.floor(segundosRestantes / 60);
-                let segundos = segundosRestantes % 60;
-                let textoMin = minutos < 10 ? '0' + minutos : minutos;
-                let textoSec = segundos < 10 ? '0' + segundos : segundos;
-                
-                const elTempo = document.getElementById('textoTempoExpiracao');
-                if (elTempo) {
-                    elTempo.innerText = `Prazo para inserir: ${textoMin}:${textoSec} minutos`;
-                }
-
-                if (segundosRestantes <= 0) {
-                    clearInterval(tempoExpiracaoInterval);
-                    dispararToast('O prazo de 15 minutos expirou! Código inválido.');
-                    fecharModais();
-                }
-            }, 1000);
-        }
-
-        function solicitarCodigoConfirmacaoReal() {
+        function avancarParaEtapaCodigo() {
             const nome = document.getElementById('regNome').value.trim();
             const email = document.getElementById('regEmail').value.trim();
             const telefone = document.getElementById('regTelefone').value.trim();
@@ -2152,24 +2128,57 @@
                 return;
             }
 
+            dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
+            document.getElementById('etapaCadastro1').style.display = 'none';
+            document.getElementById('etapaCadastro2').style.display = 'block';
+            dispararToast('Escolha o canal de envio.');
+        }
+
+        function iniciarTemporizador15Minutos() {
+            segundosRestantes = 900;
+            if (tempoExpiracaoInterval) clearInterval(tempoExpiracaoInterval);
+            
+            tempoExpiracaoInterval = setInterval(() => {
+                segundosRestantes--;
+                let minutos = Math.floor(segundosRestantes / 60);
+                let segundos = segundosRestantes % 60;
+                let textoMin = minutos < 10 ? '0' + minutos : minutos;
+                let textoSec = segundos < 10 ? '0' + segundos : segundos;
+                
+                const elTempo = document.getElementById('textoTempoExpiracao');
+                if (elTempo) {
+                    elTempo.innerText = `15 minutos para confirmar o código (${textoMin}:${textoSec})`;
+                }
+
+                if (segundosRestantes <= 0) {
+                    clearInterval(tempoExpiracaoInterval);
+                    dispararToast('Código inválido! Prazo de 15 minutos expirado.');
+                    fecharModais();
+                }
+            }, 1000);
+        }
+
+        function solicitarCodigoConfirmacaoReal() {
             // Geração de código real de 6 dígitos
             codigoRealGerado = Math.floor(100000 + Math.random() * 900000).toString();
-            dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
+
+            document.getElementById('textoEnvioCodigoReal').style.display = 'block';
+            document.getElementById('textoTempoExpiracao').style.display = 'block';
+            document.getElementById('codigoDigitado').style.display = 'block';
+            document.getElementById('btnConcluirCadastro').style.display = 'block';
 
             if (canalPreferido === 'gmail') {
                 dispararToast('Código enviado no site via Gmail...');
                 const templateParams = {
-                    to_email: email,
-                    to_name: nome,
-                    email: email,
+                    to_email: dadosTempRegistro.email,
+                    to_name: dadosTempRegistro.nome,
+                    email: dadosTempRegistro.email,
                     codigo_verificacao: codigoRealGerado
                 };
 
                 emailjs.send('service_czyyfeh', 'template_tlaxosi', templateParams)
                     .then(function(response) {
-                        document.getElementById('textoEnvioCodigoReal').innerText = `Código enviado no site com sucesso! (Gmail: ${email})`;
-                        document.getElementById('etapaCadastro1').style.display = 'none';
-                        document.getElementById('etapaCadastro2').style.display = 'block';
+                        document.getElementById('textoEnvioCodigoReal').innerText = `Código enviado no site com sucesso! (Gmail: ${dadosTempRegistro.email})`;
                         iniciarTemporizador15Minutos();
                         dispararToast('Código enviado no site!');
                     }, function(error) {
@@ -2177,9 +2186,7 @@
                     });
             } else {
                 // Caso escolha SMS
-                document.getElementById('textoEnvioCodigoReal').innerText = `Código enviado no site com sucesso! (SMS: ${telefone})`;
-                document.getElementById('etapaCadastro1').style.display = 'none';
-                document.getElementById('etapaCadastro2').style.display = 'block';
+                document.getElementById('textoEnvioCodigoReal').innerText = `Código enviado no site com sucesso! (SMS: ${dadosTempRegistro.telefone})`;
                 iniciarTemporizador15Minutos();
                 dispararToast('Código enviado no site via SMS!');
             }
