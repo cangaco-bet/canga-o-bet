@@ -31,8 +31,15 @@
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             animation: slideInToast 0.3s ease forwards;
+        }
+        .toast-icon {
+            width: 18px;
+            height: 18px;
+            fill: #ffb703;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 6px rgba(255,183,3,0.6));
         }
         @keyframes slideInToast {
             from { transform: translateX(120%); opacity: 0; }
@@ -1185,7 +1192,7 @@
             const splash = document.getElementById('splashScreen');
             splash.style.opacity = '0';
             setTimeout(() => { splash.style.display = 'none'; }, 500);
-            dispararToast("Bem-vindo ao Cangaço Bet! 🚀");
+            dispararToast("Bem-vindo ao Cangaço Bet!");
         }
 
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
@@ -1295,13 +1302,17 @@
             }
         }
 
-        /* --- FUNÇÃO DE TOAST TOTALMENTE CORRIGIDA E FUNCIONAL --- */
+        /* --- TOAST COM ÍCONE SVG PROFISSIONAL SEM EMOJIS --- */
         function dispararToast(mensagem) {
             const container = document.getElementById('toastContainer');
             if(!container) return;
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
-            toast.innerHTML = `<span>⚡</span> <span>${mensagem}</span>`;
+            toast.innerHTML = `
+                <svg class="toast-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span>${mensagem}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
