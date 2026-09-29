@@ -9,6 +9,37 @@
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
         body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
 
+        /* ESTILOS DE IMPRESSÃO EM FOLHA BRANCA */
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #tab-extrato, #tab-extrato * {
+                visibility: visible !important;
+            }
+            #tab-extrato {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 20px !important;
+            }
+            .extrato-header-card, .extrato-item-detalhado, .extrato-stat-box {
+                background: #ffffff !important;
+                border: 1px solid #ccc !important;
+                color: #000000 !important;
+                box-shadow: none !important;
+            }
+            .extrato-main-title, .extrato-stat-val, .extrato-desc, .extrato-valor-badge {
+                color: #000000 !important;
+            }
+            .btn-imprimir-pdf, .btn-voltar-home {
+                display: none !important;
+            }
+        }
+
         /* TOAST NOTIFICATIONS EM BOLHA FLUTUANTE ELEGANTE */
         #toastContainer {
             position: fixed;
@@ -414,9 +445,6 @@
             display: flex; justify-content: space-between; align-items: center;
             font-size: 11px; color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
             padding-bottom: 8px; margin-bottom: 10px; text-transform: uppercase;
-        }
-        .bilhete-times-row {
-            font-size: 15px; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;
         }
         .bilhete-info-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; background: #0f1118; padding: 10px; border-radius: 10px; border: 1px solid #232838;
@@ -2009,7 +2037,7 @@
         /* --- API DE FUTEBOL E SISTEMA DE APOSTAS MÚLTIPLAS COM MERCADOS COMPLETOS --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas oficiais e ao vivo...</p>`;
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>`;
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
@@ -2115,9 +2143,9 @@
             // Dupla Chance
             let gridDupla = document.getElementById('modalOddsDuplaChance');
             gridDupla.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '1X (${match.teams.home.name} ou Empate)', 1.25, ${match.fixture.id})"><span>1X</span><b>1.25</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '12 (${match.teams.home.name} ou ${match.teams.away.name})', 1.32, ${match.fixture.id})"><span>12</span><b>1.32</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'X2 (Empate ou ${match.teams.away.name})', 1.40, ${match.fixture.id})"><span>X2</span><b>1.40</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: 1X (${match.teams.home.name} ou Empate)', 1.25, ${match.fixture.id})"><span>1X</span><b>1.25</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: 12 (${match.teams.home.name} ou ${match.teams.away.name})', 1.32, ${match.fixture.id})"><span>12</span><b>1.32</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: X2 (Empate ou ${match.teams.away.name})', 1.40, ${match.fixture.id})"><span>X2</span><b>1.40</b></div>
             `;
 
             // Ambas Marcam
@@ -2143,17 +2171,17 @@
             // Escanteios
             let gridEscanteios = document.getElementById('modalOddsEscanteios');
             gridEscanteios.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 8.5 Escanteios', 1.65, ${match.fixture.id})"><span>Mais 8.5 Escanteios</span><b>1.65</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 9.5 Escanteios', 2.05, ${match.fixture.id})"><span>Mais 9.5 Escanteios</span><b>2.05</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 10.5 Escanteios', 2.65, ${match.fixture.id})"><span>Mais 10.5 Escanteios</span><b>2.65</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Escanteios - Mais de 8.5', 1.65, ${match.fixture.id})"><span>Mais 8.5 Escanteios</span><b>1.65</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Escanteios - Mais de 9.5', 2.05, ${match.fixture.id})"><span>Mais 9.5 Escanteios</span><b>2.05</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Escanteios - Mais de 10.5', 2.65, ${match.fixture.id})"><span>Mais 10.5 Escanteios</span><b>2.65</b></div>
             `;
 
             // Cartões
             let gridCartoes = document.getElementById('modalOddsCartoes');
             gridCartoes.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 3.5 Cartões', 1.55, ${match.fixture.id})"><span>Mais 3.5 Cartões</span><b>1.55</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 4.5 Cartões', 2.10, ${match.fixture.id})"><span>Mais 4.5 Cartões</span><b>2.10</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 5.5 Cartões', 3.40, ${match.fixture.id})"><span>Mais 5.5 Cartões</span><b>3.40</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Cartões - Mais de 3.5', 1.55, ${match.fixture.id})"><span>Mais 3.5 Cartões</span><b>1.55</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Cartões - Mais de 4.5', 2.10, ${match.fixture.id})"><span>Mais 4.5 Cartões</span><b>2.10</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Cartões - Mais de 5.5', 3.40, ${match.fixture.id})"><span>Mais 5.5 Cartões</span><b>3.40</b></div>
             `;
 
             document.getElementById('matchModal').style.display = 'flex';
@@ -2164,10 +2192,9 @@
         }
 
         function adicionarSelecaoCarrinho(home, away, liga, mercado, odd, fixtureId) {
-            // Evitar duplicar a mesma aposta da mesma partida
             let existenteIndex = selecoesApostasMultiplas.findIndex(s => s.fixtureId === fixtureId);
             if (existenteIndex >= 0) {
-                selecoesApostasMultiplas.splice(existenteIndex, 1); // Substitui para permitir apenas 1 seleção por partida na múltipla ou atualiza
+                selecoesApostasMultiplas.splice(existenteIndex, 1);
             }
             selecoesApostasMultiplas.push({ home, away, liga, mercado, odd, fixtureId });
             dispararToast(`Adicionado à Múltipla: ${mercado} (${odd})`);
@@ -2288,14 +2315,36 @@
                 let corStatus = '#ffb703';
                 if(b.status === 'Ganho') corStatus = '#00ff88';
                 if(b.status === 'Perdido') corStatus = '#ff4500';
+                if(b.status === 'Encerrado') corStatus = '#ff4500';
 
                 let selecoesHtml = '';
                 if (b.selecoes && b.selecoes.length > 0) {
                     b.selecoes.forEach(s => {
-                        selecoesHtml += `<div style="font-size: 11px; color: #ffb703; border-bottom:1px solid #232838; padding-bottom:4px; margin-bottom:4px;">⚽ ${s.home} vs ${s.away} — <span style="color:#00ff88;">${s.mercado}</span> (Odd: ${s.odd})</div>`;
+                        // Buscar minuto ao vivo atual da partida se estiver ativa na API
+                        let matchObj = partidasApiCache.find(m => m.fixture.id === s.fixtureId);
+                        let minutoAoVivo = 'Encerrado';
+                        if (matchObj && matchObj.fixture && matchObj.fixture.status) {
+                            let statusShort = matchObj.fixture.status.short;
+                            if (statusShort === '1H' || statusShort === '2H' || statusShort === 'ET') {
+                                minutoAoVivo = `${matchObj.fixture.status.elapsed}' ao vivo`;
+                            } else if (statusShort === 'HT') {
+                                minutoAoVivo = 'Intervalo';
+                            } else if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
+                                minutoAoVivo = 'Encerrado';
+                                if(b.status === 'Ativo') b.status = 'Encerrado';
+                            }
+                        } else {
+                            if(b.status !== 'Ativo') minutoAoVivo = 'Encerrado';
+                            else minutoAoVivo = '90\' Encerrado';
+                        }
+
+                        selecoesHtml += `
+                            <div style="font-size: 11px; color: #ffb703; border-bottom:1px solid #232838; padding-bottom:6px; margin-bottom:6px;">
+                                ⚽ <b>${s.home} vs ${s.away}</b><br>
+                                Mercado escolhido: <span style="color:#00ff88; font-weight:bold;">${s.mercado}</span> (Odd: ${s.odd})<br>
+                                <span style="color:#00ff88;">🔴 Minuto: ${minutoAoVivo}</span>
+                            </div>`;
                     });
-                } else {
-                    selecoesHtml = `<div style="font-size: 11px; color: #ffb703;">⚽ ${b.home || ''} vs ${b.away || ''} — <span style="color:#00ff88;">${b.mercado || ''}</span></div>`;
                 }
 
                 html += `
@@ -2322,7 +2371,6 @@
             container.innerHTML = html;
         }
 
-        /* --- ATUALIZAÇÃO AUTOMÁTICA DE PLACAR E RESULTADOS DE BILHETES --- */
         async function atualizarResultadosBilhetesAoVivo() {
             if (partidasApiCache.length === 0) return;
             try {
@@ -2340,7 +2388,7 @@
                             if (bilhete.status === 'Ativo' && bilhete.selecoes) {
                                 let pertenceAoBilhete = bilhete.selecoes.some(s => s.fixtureId === fixtureId);
                                 if (pertenceAoBilhete && (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN')) {
-                                    let ganhou = Math.random() >= 0.4; // Resolução dinâmica baseada no encerramento da API
+                                    let ganhou = Math.random() >= 0.4;
                                     if (ganhou) {
                                         bilhete.status = 'Ganho';
                                         let premio = parseFloat(bilhete.retorno);
@@ -2357,6 +2405,9 @@
                             }
                         });
                     });
+                    if(document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
+                        renderizarBilhetesNaTela();
+                    }
                 }
             } catch(e) {}
         }
