@@ -2061,7 +2061,7 @@
             });
         }
 
-        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS --- */
+        /* --- API DE FUTEBOL E CÁLCULO DINÂMICO DE ODDS --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>`;
@@ -2102,6 +2102,48 @@
             renderizarListaPartidasFiltro(ligaNome);
         }
 
+        function calcularOddsDinamicas(match) {
+            let gHome = match.goals.home ?? 0;
+            let gAway = match.goals.away ?? 0;
+            let minuto = match.fixture.status.elapsed || 0;
+            let statusShort = match.fixture.status.short;
+
+            let oddHome = 2.10;
+            let oddDraw = 3.20;
+            let oddAway = 2.40;
+
+            if (statusShort === 'NS') {
+                return { home: 1.95, draw: 3.30, away: 2.25 };
+            }
+
+            let fatorTempo = Math.max(0.3, (90 - minuto) / 90);
+
+            if (gHome > gAway) {
+                // Time da casa ganhando -> paga pouco para casa, alto para fora
+                oddHome = parseFloat((1.15 + (1.2 * (minuto / 90))).toFixed(2));
+                oddAway = parseFloat((4.50 + ((gHome - gAway) * 2.0) + (fatorTempo * 3)).toFixed(2));
+                oddDraw = parseFloat((3.80 + (fatorTempo * 1.5)).toFixed(2));
+            } else if (gAway > gHome) {
+                // Time de fora ganhando -> paga pouco para fora, alto para casa
+                oddAway = parseFloat((1.15 + (1.2 * (minuto / 90))).toFixed(2));
+                oddHome = parseFloat((4.50 + ((gAway - gHome) * 2.0) + (fatorTempo * 3)).toFixed(2));
+                oddDraw = parseFloat((3.80 + (fatorTempo * 1.5)).toFixed(2));
+            } else {
+                // Empate -> valores médios dependendo do minuto
+                if (minuto > 75) {
+                    oddDraw = parseFloat((1.40 + (fatorTempo * 0.5)).toFixed(2));
+                    oddHome = parseFloat((3.10 + (fatorTempo * 2)).toFixed(2));
+                    oddAway = parseFloat((3.10 + (fatorTempo * 2)).toFixed(2));
+                } else {
+                    oddDraw = parseFloat((2.80 + (fatorTempo * 0.8)).toFixed(2));
+                    oddHome = parseFloat((2.05 + (fatorTempo * 0.5)).toFixed(2));
+                    oddAway = parseFloat((2.20 + (fatorTempo * 0.5)).toFixed(2));
+                }
+            }
+
+            return { home: Math.max(1.05, oddHome), draw: Math.max(1.20, oddDraw), away: Math.max(1.05, oddAway) };
+        }
+
         function renderizarListaPartidasFiltro(ligaFiltro) {
             const container = document.getElementById('lista-partidas-api');
             let filtradas = partidasApiCache;
@@ -2123,9 +2165,8 @@
 
                 let homeGols = match.goals.home ?? 0;
                 let awayGols = match.goals.away ?? 0;
-                let oddHome = parseFloat((1.70 + Math.random() * 0.4).toFixed(2));
-                let oddDraw = parseFloat((3.10 + Math.random() * 0.6).toFixed(2));
-                let oddAway = parseFloat((2.00 + Math.random() * 0.5).toFixed(2));
+
+                let odds = calcularOddsDinamicas(match);
 
                 html += `
                     <div class="match-card" onclick="abrirMercadosPartida(${match.fixture.id})">
@@ -2142,9 +2183,9 @@
                             <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px;" onclick="event.stopPropagation()">
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa', ${oddHome}, ${match.fixture.id})">Casa: ${oddHome}</button>
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${oddDraw}, ${match.fixture.id})">Empate: ${oddDraw}</button>
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', ${oddAway}, ${match.fixture.id})">Fora: ${oddAway}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa', ${odds.home}, ${match.fixture.id})">Casa: ${odds.home}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${odds.draw}, ${match.fixture.id})">Empate: ${odds.draw}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', ${odds.away}, ${match.fixture.id})">Fora: ${odds.away}</button>
                         </div>
                     </div>
                 `;
@@ -2159,18 +2200,23 @@
             document.getElementById('modalPartidaTitulo').innerText = `${match.teams.home.name} vs ${match.teams.away.name}`;
             document.getElementById('modalPartidaInfoSub').innerText = `${match.league.name} | Relógio: ${match.fixture.status.elapsed ? match.fixture.status.elapsed + "'" : 'Pré-jogo'}`;
             
+            let odds = calcularOddsDinamicas(match);
+
             let grid1X2 = document.getElementById('modalOdds1X2');
             grid1X2.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa', 1.85, ${match.fixture.id})"><span>Casa</span><b>1.85</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', 3.40, ${match.fixture.id})"><span>Empate</span><b>3.40</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', 2.10, ${match.fixture.id})"><span>Fora</span><b>2.10</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa', ${odds.home}, ${match.fixture.id})"><span>Casa</span><b>${odds.home}</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${odds.draw}, ${match.fixture.id})"><span>Empate</span><b>${odds.draw}</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora', ${odds.away}, ${match.fixture.id})"><span>Fora</span><b>${odds.away}</b></div>
             `;
 
             let gridDupla = document.getElementById('modalOddsDuplaChance');
+            let oddDC1 = (odds.home < 1.30 ? 1.08 : 1.25);
+            let oddDC2 = (odds.home < 1.50 || odds.away < 1.50 ? 1.15 : 1.35);
+            let oddDC3 = (odds.away < 1.30 ? 1.08 : 1.30);
             gridDupla.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Casa ou Empate', 1.25, ${match.fixture.id})"><span>Casa ou Empate</span><b>1.25</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Casa ou Fora', 1.32, ${match.fixture.id})"><span>Casa ou Fora</span><b>1.32</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Empate ou Fora', 1.40, ${match.fixture.id})"><span>Empate ou Fora</span><b>1.40</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Casa ou Empate', ${oddDC1}, ${match.fixture.id})"><span>Casa ou Empate</span><b>${oddDC1}</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Casa ou Fora', ${oddDC2}, ${match.fixture.id})"><span>Casa ou Fora</span><b>${oddDC2}</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Empate ou Fora', ${oddDC3}, ${match.fixture.id})"><span>Empate ou Fora</span><b>${oddDC3}</b></div>
             `;
 
             let gridBTTS = document.getElementById('modalOddsAmbasMarcam');
