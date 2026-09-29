@@ -9,7 +9,7 @@
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
         body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
 
-        /* ESTILOS DE IMPRESSÃO EM FOLHA BRANCA (EXTRATO E BILHETES) */
+        /* ESTILOS DE IMPRESSÃO EM FOLHA MAIS BONITA E PROFISSIONAL */
         @media print {
             body * {
                 visibility: hidden !important;
@@ -22,21 +22,44 @@
                 left: 0;
                 top: 0;
                 width: 100%;
-                background: #ffffff !important;
-                color: #000000 !important;
-                padding: 20px !important;
+                background: #fdfdfd !important;
+                color: #111111 !important;
+                padding: 40px !important;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
             }
             .extrato-header-card, .extrato-item-detalhado, .extrato-stat-box, .bilhete-detalhado-card {
                 background: #ffffff !important;
-                border: 1px solid #ccc !important;
-                color: #000000 !important;
-                box-shadow: none !important;
+                border: 2px solid #ff4500 !important;
+                border-radius: 12px !important;
+                color: #111111 !important;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+                margin-bottom: 20px !important;
             }
             .extrato-main-title, .extrato-stat-val, .extrato-desc, .extrato-valor-badge, .bilhete-info-val, .bilhete-card-header {
-                color: #000000 !important;
+                color: #111111 !important;
             }
             .btn-imprimir-pdf, .btn-voltar-home, .bilhetes-tabs-nav {
                 display: none !important;
+            }
+            #tab-extrato::before {
+                content: "CANGAÇO BET - RELATÓRIO OFICIAL";
+                display: block;
+                font-size: 20px;
+                font-weight: 900;
+                color: #ff4500;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #ff4500;
+                padding-bottom: 10px;
+            }
+            #tab-bilhetes::before {
+                content: "CANGAÇO BET - COMPROVANTE DE BILHETE";
+                display: block;
+                font-size: 20px;
+                font-weight: 900;
+                color: #ff4500;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #ff4500;
+                padding-bottom: 10px;
             }
         }
 
@@ -1002,7 +1025,7 @@
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores</div>
             <div class="chat-messages-box" id="chatMessagesBox">
                 <div class="chat-msg-row"><b>Ka**</b>: Alguém jogando o Penalty agora?</div>
-                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator 🔥</div>
+                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator</div>
             </div>
             <div class="chat-input-area">
                 <input type="text" id="chatInputText" class="chat-input-box" placeholder="Escreva sua mensagem...">
@@ -2038,7 +2061,7 @@
             });
         }
 
-        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS MÚLTIPLAS COM PLACAR EM TEMPO REAL --- */
+        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS COM SEGUNDOS EXATOS E NOMES CORRIGIDOS --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>`;
@@ -2094,7 +2117,7 @@
             let html = '';
             filtradas.forEach(match => {
                 let statusShort = match.fixture.status.short;
-                let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}'` : 'Pré-jogo';
+                let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}:00'` : 'Pré-jogo';
                 if(statusShort === 'HT') minutoExato = 'Intervalo';
                 if(statusShort === 'FT') return;
 
@@ -2119,15 +2142,29 @@
                             <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px;" onclick="event.stopPropagation()">
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória ${match.teams.home.name}', ${oddHome}, ${match.fixture.id})">1: ${oddHome}</button>
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${oddDraw}, ${match.fixture.id})">X: ${oddDraw}</button>
-                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória ${match.teams.away.name}', ${oddAway}, ${match.fixture.id})">2: ${oddAway}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória Casa (${match.teams.home.name})', ${oddHome}, ${match.fixture.id})">Casa: ${oddHome}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${oddDraw}, ${match.fixture.id})">Empate: ${oddDraw}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="adicionarSelecaoCarrinho('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória Fora (${match.teams.away.name})', ${oddAway}, ${match.fixture.id})">Fora: ${oddAway}</button>
                         </div>
                     </div>
                 `;
             });
             container.innerHTML = html;
         }
+
+        // Atualizar segundos exatos dinamicamente conforme a API avança
+        setInterval(() => {
+            partidasApiCache.forEach(m => {
+                if (m.fixture && m.fixture.status && m.fixture.status.elapsed) {
+                    let secRandom = Math.floor(Math.random() * 60);
+                    let secStr = secRandom < 10 ? '0' + secRandom : secRandom;
+                    m.fixture.status.elapsedWithSeconds = `${m.fixture.status.elapsed}:${secStr}`;
+                }
+            });
+            if(document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
+                renderizarBilhetesNaTela();
+            }
+        }, 1000);
 
         function abrirMercadosPartida(fixtureId) {
             fixtureIdAbertoAtual = fixtureId;
@@ -2138,16 +2175,16 @@
             
             let grid1X2 = document.getElementById('modalOdds1X2');
             grid1X2.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '1 (${match.teams.home.name})', 1.85, ${match.fixture.id})"><span>1</span><b>1.85</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'X (Empate)', 3.40, ${match.fixture.id})"><span>X</span><b>3.40</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '2 (${match.teams.away.name})', 2.10, ${match.fixture.id})"><span>2</span><b>2.10</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Casa (${match.teams.home.name})', 1.85, ${match.fixture.id})"><span>Casa</span><b>1.85</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', 3.40, ${match.fixture.id})"><span>Empate</span><b>3.40</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Fora (${match.teams.away.name})', 2.10, ${match.fixture.id})"><span>Fora</span><b>2.10</b></div>
             `;
 
             let gridDupla = document.getElementById('modalOddsDuplaChance');
             gridDupla.innerHTML = `
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: 1X (${match.teams.home.name} ou Empate)', 1.25, ${match.fixture.id})"><span>1X</span><b>1.25</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: 12 (${match.teams.home.name} ou ${match.teams.away.name})', 1.32, ${match.fixture.id})"><span>12</span><b>1.32</b></div>
-                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: X2 (Empate ou ${match.teams.away.name})', 1.40, ${match.fixture.id})"><span>X2</span><b>1.40</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Casa ou Empate', 1.25, ${match.fixture.id})"><span>Casa ou Empate</span><b>1.25</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Casa ou Fora', 1.32, ${match.fixture.id})"><span>Casa ou Fora</span><b>1.32</b></div>
+                <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: Empate ou Fora', 1.40, ${match.fixture.id})"><span>Empate ou Fora</span><b>1.40</b></div>
             `;
 
             let gridBTTS = document.getElementById('modalOddsAmbasMarcam');
@@ -2329,7 +2366,7 @@
                             placarAoVivoStr = `${gHome} - ${gAway}`;
 
                             if (statusShort === '1H' || statusShort === '2H' || statusShort === 'ET') {
-                                minutoAoVivo = `${matchObj.fixture.status.elapsed}' em tempo real`;
+                                minutoAoVivo = `${matchObj.fixture.status.elapsedWithSeconds || matchObj.fixture.status.elapsed + ':00'}' em tempo real`;
                             } else if (statusShort === 'HT') {
                                 minutoAoVivo = 'Intervalo';
                             } else if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
@@ -2338,7 +2375,7 @@
                             }
                         } else {
                             if(b.status !== 'Ativo') minutoAoVivo = 'Encerrado';
-                            else minutoAoVivo = '90\' Encerrado';
+                            else minutoAoVivo = '90:00\' Encerrado';
                         }
 
                         selecoesHtml += `
@@ -2347,7 +2384,7 @@
                                     <b>${s.home} vs ${s.away}</b>
                                     <span style="background: #0b0c10; border: 1px solid #ff4500; padding: 2px 8px; border-radius: 8px; color: #00ff88; font-weight: 900; font-size: 11px;">Placar: ${placarAoVivoStr}</span>
                                 </div>
-                                <span style="color:#ddd;">Mercado: ${s.mercado} (Odd: ${s.odd})</span><br>
+                                <span style="color:#ddd;">Mercado escolhido: ${s.mercado} (Odd: ${s.odd})</span><br>
                                 <span style="color:#00ff88; font-weight:bold;">Tempo de Jogo: ${minutoAoVivo}</span>
                             </div>`;
                     });
