@@ -386,8 +386,8 @@
         .floating-support-btn:hover { transform: scale(1.08); }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        .bilhetes-container, .extrato-container { padding: 15px; }
-        .bilhete-impresso, .extrato-item {
+        .bilhetes-container { padding: 15px; }
+        .bilhete-impresso {
             background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500;
             border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
         }
@@ -396,6 +396,120 @@
             font-weight: bold; border-bottom: 1px solid #232838; padding-bottom: 6px; margin-bottom: 8px;
         }
         .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
+
+        /* --- ESTILOS REFORMULADOS DA ABA DE EXTRATO / HISTÓRICO --- */
+        .extrato-container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .extrato-header-card {
+            background: linear-gradient(135deg, #151821, #0f1118);
+            border: 1px solid #ff4500;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 25px rgba(255,69,0,0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .extrato-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .extrato-main-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: #ffb703;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .btn-imprimir-pdf {
+            background: linear-gradient(135deg, #ff4500, #ff6a00);
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255,69,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .btn-imprimir-pdf:hover {
+            transform: scale(1.03);
+            background: linear-gradient(135deg, #ff5722, #ff781f);
+        }
+        .extrato-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .extrato-stat-box {
+            background: #0f1118;
+            border: 1px solid #232838;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+        .extrato-stat-label {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        .extrato-stat-val {
+            font-size: 12px;
+            font-weight: 900;
+            color: #fff;
+        }
+        .extrato-lista-detalhada {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .extrato-item-detalhado {
+            background: linear-gradient(145deg, #151821, #11141c);
+            border: 1px solid #232838;
+            border-left: 4px solid #ff4500;
+            border-radius: 12px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: 0.2s;
+        }
+        .extrato-item-detalhado:hover {
+            border-color: #ff4500;
+            transform: translateX(2px);
+        }
+        .extrato-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            text-align: left;
+        }
+        .extrato-desc {
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .extrato-hora {
+            font-size: 10px;
+            color: #888;
+            font-weight: 600;
+        }
+        .extrato-valor-badge {
+            font-size: 13px;
+            font-weight: 900;
+            padding: 5px 10px;
+            border-radius: 8px;
+            background: #0f1118;
+            border: 1px solid #232838;
+            white-space: nowrap;
+        }
 
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -1081,11 +1195,37 @@
         </div>
     </div>
 
-    <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES -->
+    <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES / EXTRATO REFORMULADA E DETALHADA -->
     <div id="tab-extrato" class="main-tab-content">
         <div class="extrato-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Histórico de Transações</div>
-            <div id="listaExtratoTransacoes">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            
+            <div class="extrato-header-card">
+                <div class="extrato-title-row">
+                    <div class="extrato-main-title">Extrato & Relatório</div>
+                    <button class="btn-imprimir-pdf" onclick="imprimirExtratoPDF()">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="#fff"><path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 14H8v-4h8v4zm4-6h-2v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4z"/></svg>
+                        Imprimir / PDF
+                    </button>
+                </div>
+                <div class="extrato-stats-grid">
+                    <div class="extrato-stat-box">
+                        <div class="extrato-stat-label">Total Depósitos</div>
+                        <div class="extrato-stat-val" id="statTotalDepositos" style="color:#00ff88;">R$ 0,00</div>
+                    </div>
+                    <div class="extrato-stat-box">
+                        <div class="extrato-stat-label">Total Saques</div>
+                        <div class="extrato-stat-val" id="statTotalSaques" style="color:#ffb703;">R$ 0,00</div>
+                    </div>
+                    <div class="extrato-stat-box">
+                        <div class="extrato-stat-label">Balanço Líquido</div>
+                        <div class="extrato-stat-val" id="statBalancoLiquido">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size: 13px; font-weight: bold; margin-bottom: 10px; color: #ffb703; text-align: left;">Detalhes de Transações, Apostas e Saques</div>
+            <div class="extrato-lista-detalhada" id="listaExtratoTransacoes">
                 <p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada ainda.</p>
             </div>
         </div>
@@ -1197,7 +1337,6 @@
             const splash = document.getElementById('splashScreen');
             splash.style.opacity = '0';
             setTimeout(() => { splash.style.display = 'none'; }, 500);
-            dispararToastGeral("Bem-vindo ao Cangaço Bet!", "https://files.catbox.moe/qf2bly.jpeg");
         }
 
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
@@ -1242,7 +1381,7 @@
 
         function registarTransacao(tipo, descricao, valor) {
             const dataHora = new Date().toLocaleString('pt-BR');
-            historicoTransacoes.unshift({ tipo: tipo, descricao: descricao, valor: valor.toFixed(2), data: dataHora });
+            historicoTransacoes.unshift({ tipo: tipo, descricao: descricao, valor: parseFloat(valor), data: dataHora });
             salvarDadosStorage();
         }
 
@@ -1307,17 +1446,8 @@
             }
         }
 
-        /* --- FUNÇÃO PARA EXIBIR TOAST COM EMBLEMA E NOME COM 3 LETRAS E ** --- */
+        /* --- FUNÇÃO PARA EXIBIR TOAST COM EMBLEMA ESPECÍFICO E NOME COM 3 LETRAS E ** --- */
         function dispararToastGeral(mensagem, urlEmblema) {
-            // VERIFICA SE ESTÁ DENTRO DE UM JOGO DE CASSINO (Penalty, Aviator ou Mines)
-            const abaPenaltyAtiva = document.getElementById('tab-penalty').classList.contains('active-tab');
-            const abaAviatorAtiva = document.getElementById('tab-aviator').classList.contains('active-tab');
-            const abaMinesAtiva = document.getElementById('tab-mines').classList.contains('active-tab');
-            
-            if (abaPenaltyAtiva || abaAviatorAtiva || abaMinesAtiva) {
-                return; // NÃO EXIBE NENHUMA NOTIFICAÇÃO ENQUANTO ESTIVER JOGANDO
-            }
-
             const container = document.getElementById('toastContainer');
             if(!container) return;
             const toast = document.createElement('div');
@@ -1541,7 +1671,7 @@
                 if (minesModo === 'real') {
                     saldo += lucro;
                     atualizarSaldoNaTela();
-                    registarTransacao('premio', `Prêmio Mines (${minesMultAtual.toFixed(2)}x)`, lucro);
+                    registarTransacao('saque', `Saque / Prêmio Mines (${minesMultAtual.toFixed(2)}x)`, lucro);
                 }
 
                 document.getElementById('minesWinAmountText').innerText = `R$ ${lucro.toFixed(2)}`;
@@ -1713,7 +1843,7 @@
                 let premioGanho = aviatorApostaValorAtual * aviatorMult;
                 saldo += premioGanho;
                 atualizarSaldoNaTela();
-                registarTransacao('premio', `Prêmio Aviator (${aviatorMult.toFixed(2)}x)`, premioGanho);
+                registarTransacao('saque', `Saque / Prêmio Aviator (${aviatorMult.toFixed(2)}x)`, premioGanho);
 
                 document.getElementById('aviatorStatusText').innerText = "VOO FINALIZADO";
                 document.getElementById('aviatorWinAmountText').innerText = `R$ ${premioGanho.toFixed(2)}`;
@@ -1734,17 +1864,16 @@
             if (saldo < custoAposta) { dispararToast("Saldo insuficiente!"); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
-            salvarDadosStorage();
+            registarTransacao('perca', `Aposta em ${nomeJogo}`, -custoAposta);
             
             let ganhou = Math.random() >= 0.5;
             if (ganhou) {
                 let premio = custoAposta * 2;
                 saldo += premio;
                 atualizarSaldoNaTela();
-                registarTransacao('cassino_ganho', `Prêmio em ${nomeJogo}`, premio);
+                registarTransacao('saque', `Prêmio / Saque em ${nomeJogo}`, premio);
                 dispararToast(`Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
             } else {
-                registarTransacao('cassino_perca', `Aposta em ${nomeJogo}`, -custoAposta);
                 dispararToast(`Perdeu R$ ${custoAposta.toFixed(2)} em ${nomeJogo}.`);
             }
         }
@@ -1847,6 +1976,7 @@
             if (nivelAtual === 0) {
                 if (saldo < apostaVal) { dispararToast("Saldo insuficiente!"); return; }
                 saldo -= apostaVal; atualizarSaldoNaTela();
+                registarTransacao('perca', 'Aposta Penalty Cangaço', -apostaVal);
                 dispararToast(`Aposta de R$ ${apostaVal.toFixed(2)} confirmada!`);
             }
             document.getElementById('winBanner').classList.remove('show');
@@ -1920,7 +2050,7 @@
                         btn.style.color = "#000";
                         if (nivelAtual >= 5) {
                             saldo += premioTotal; atualizarSaldoNaTela();
-                            registarTransacao('premio', 'Prêmio Penalty Cangaço', premioTotal);
+                            registarTransacao('saque', `Saque / Prêmio Penalty Cangaço (${mult}x)`, premioTotal);
                             btn.innerText = "SACAR E REINICIAR";
                             nivelAtual = 0;
                         } else {
@@ -1938,7 +2068,6 @@
                         btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
                         btn.style.color = "#fff";
                         btn.innerText = "NOVO PÊNALTI";
-                        registarTransacao('perca', 'Aposta Penalty Cangaço (Defesa)', -apostaVal);
                         nivelAtual = 0;
                         jogadaEmAndamento = false;
                     }
@@ -1984,12 +2113,57 @@
 
         function renderizarExtratoNaTela() {
             const container = document.getElementById('listaExtratoTransacoes');
-            if (historicoTransacoes.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação.</p>`; return; }
+            
+            let totalDepositos = 0;
+            let totalSaques = 0;
+
+            historicoTransacoes.forEach(t => {
+                if (t.tipo === 'deposito') totalDepositos += parseFloat(t.valor);
+                if (t.tipo === 'saque') totalSaques += parseFloat(t.valor);
+            });
+
+            let balancoLiquido = totalDepositos - totalSaques;
+
+            document.getElementById('statTotalDepositos').innerText = `R$ ${totalDepositos.toFixed(2)}`;
+            document.getElementById('statTotalSaques').innerText = `R$ ${totalSaques.toFixed(2)}`;
+            let elBalanco = document.getElementById('statBalancoLiquido');
+            elBalanco.innerText = `R$ ${balancoLiquido.toFixed(2)}`;
+            elBalanco.style.color = balancoLiquido >= 0 ? '#00ff88' : '#ff4500';
+
+            if (historicoTransacoes.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhuma transação registada.</p>`;
+                return;
+            }
+
             let html = '';
             historicoTransacoes.forEach(t => {
-                html += `<div class="extrato-item"><div><b>${t.descricao}</b></div><div style="color:${t.valor > 0 ? '#00ff88':'#ff4500'};">R$ ${t.valor}</div></div>`;
+                let corValor = '#fff';
+                let sinal = '';
+                if (t.tipo === 'deposito' || t.tipo === 'saque') {
+                    corValor = '#00ff88';
+                    sinal = '+';
+                } else if (t.tipo === 'perca') {
+                    corValor = '#ff4500';
+                    sinal = '-';
+                }
+
+                html += `
+                    <div class="extrato-item-detalhado">
+                        <div class="extrato-item-info">
+                            <div class="extrato-desc">${t.descricao}</div>
+                            <div class="extrato-hora">📅 ${t.data}</div>
+                        </div>
+                        <div class="extrato-valor-badge" style="color:${corValor};">
+                            ${sinal}R$ ${Math.abs(t.valor).toFixed(2)}
+                        </div>
+                    </div>
+                `;
             });
             container.innerHTML = html;
+        }
+
+        function imprimirExtratoPDF() {
+            window.print();
         }
 
         function abrirModalLogin() { document.getElementById('loginModal').style.display = 'flex'; }
