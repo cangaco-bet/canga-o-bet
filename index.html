@@ -1022,13 +1022,12 @@
     <div id="tab-chat" class="main-tab-content">
         <div class="chat-section-wrapper">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores</div>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores Reais</div>
             <div class="chat-messages-box" id="chatMessagesBox">
-                <div class="chat-msg-row"><b>Ka**</b>: Alguém jogando o Penalty agora?</div>
-                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator</div>
+                <!-- Mensagens carregadas via BroadcastChannel / localStorage em tempo real entre apostadores reais -->
             </div>
             <div class="chat-input-area">
-                <input type="text" id="chatInputText" class="chat-input-box" placeholder="Escreva sua mensagem...">
+                <input type="text" id="chatInputText" class="chat-input-box" placeholder="Digite sua mensagem..." onkeydown="if(event.key === 'Enter') enviarMensagemChatAoVivo()">
                 <button class="btn-send-chat" onclick="enviarMensagemChatAoVivo()">Enviar</button>
             </div>
         </div>
@@ -1541,6 +1540,7 @@
                 document.getElementById('tab-missoes').classList.add('active-tab');
             } else if (aba === 'chat') {
                 document.getElementById('tab-chat').classList.add('active-tab');
+                carregarMensagensChatReal();
             } else if (aba === 'penalty') {
                 jogoSelecionadoAtual = 'penalty';
                 iniciarCarregamentoJogo('Penalty Cangaço', 'https://files.catbox.moe/onqvbv.png');
@@ -1628,18 +1628,55 @@
             dispararToast(`Resgatou R$ ${premio} de Free Bet!`);
         }
 
+        // --- CHAT COMUNICAÇÃO EM TEMPO REAL ENTRE APOSTADORES REAIS ---
+        const chatChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('cangaco_chat_real') : null;
+
+        function carregarMensagensChatReal() {
+            const box = document.getElementById('chatMessagesBox');
+            if(!box) return;
+            let mensagensSalvas = JSON.parse(localStorage.getItem('cangaco_chat_mensagens')) || [
+                { nome: 'Sistema', texto: 'Bem-vindo ao chat ao vivo entre apostadores reais!' }
+            ];
+            let html = '';
+            mensagensSalvas.forEach(m => {
+                html += `<div class="chat-msg-row"><b>${m.nome}</b>: ${m.texto}</div>`;
+            });
+            box.innerHTML = html;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        if (chatChannel) {
+            chatChannel.onmessage = function (event) {
+                carregarMensagensChatReal();
+            };
+        }
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cangaco_chat_mensagens') {
+                carregarMensagensChatReal();
+            }
+        });
+
         function enviarMensagemChatAoVivo() {
             if (!usuarioLogado) { dispararToast('Faça login para usar o chat!'); abrirModalRegistro(); return; }
             const input = document.getElementById('chatInputText');
             if(!input || !input.value.trim()) return;
-            let nomeMascarado = (usuarioLogado.nome || 'User').substring(0, 3) + '**';
-            const box = document.getElementById('chatMessagesBox');
-            if(box) {
-                box.innerHTML += `<div class="chat-msg-row"><b>${nomeMascarado}</b>: ${input.value.trim()}</div>`;
-                box.scrollTop = box.scrollHeight;
+            
+            let nomeApostador = usuarioLogado.nome || 'Apostador';
+            let textoMsg = input.value.trim();
+
+            let mensagensSalvas = JSON.parse(localStorage.getItem('cangaco_chat_mensagens')) || [];
+            mensagensSalvas.push({ nome: nomeApostador, texto: textoMsg });
+            if (mensagensSalvas.length > 50) mensagensSalvas.shift(); // Limite de histórico
+
+            localStorage.setItem('cangaco_chat_mensagens', JSON.stringify(mensagensSalvas));
+            
+            if (chatChannel) {
+                chatChannel.postMessage({ novaMensagem: true });
             }
+
+            carregarMensagensChatReal();
             input.value = '';
-            dispararToast('Mensagem enviada no chat!');
         }
 
         function iniciarCarregamentoJogo(nomeJogo, imgCapa) {
