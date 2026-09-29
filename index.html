@@ -9,15 +9,15 @@
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
         body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
 
-        /* ESTILOS DE IMPRESSÃO EM FOLHA BRANCA */
+        /* ESTILOS DE IMPRESSÃO EM FOLHA BRANCA (EXTRATO E BILHETES) */
         @media print {
             body * {
                 visibility: hidden !important;
             }
-            #tab-extrato, #tab-extrato * {
+            #tab-extrato, #tab-extrato *, #tab-bilhetes, #tab-bilhetes * {
                 visibility: visible !important;
             }
-            #tab-extrato {
+            #tab-extrato, #tab-bilhetes {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -26,16 +26,16 @@
                 color: #000000 !important;
                 padding: 20px !important;
             }
-            .extrato-header-card, .extrato-item-detalhado, .extrato-stat-box {
+            .extrato-header-card, .extrato-item-detalhado, .extrato-stat-box, .bilhete-detalhado-card {
                 background: #ffffff !important;
                 border: 1px solid #ccc !important;
                 color: #000000 !important;
                 box-shadow: none !important;
             }
-            .extrato-main-title, .extrato-stat-val, .extrato-desc, .extrato-valor-badge {
+            .extrato-main-title, .extrato-stat-val, .extrato-desc, .extrato-valor-badge, .bilhete-info-val, .bilhete-card-header {
                 color: #000000 !important;
             }
-            .btn-imprimir-pdf, .btn-voltar-home {
+            .btn-imprimir-pdf, .btn-voltar-home, .bilhetes-tabs-nav {
                 display: none !important;
             }
         }
@@ -435,22 +435,23 @@
             background: linear-gradient(145deg, #151821, #11141c);
             border: 1px solid #232838;
             border-left: 4px solid #ff4500;
-            border-radius: 14px;
-            padding: 15px;
-            margin-bottom: 12px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
             text-align: left;
+            position: relative;
         }
         .bilhete-card-header {
             display: flex; justify-content: space-between; align-items: center;
-            font-size: 11px; color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
-            padding-bottom: 8px; margin-bottom: 10px; text-transform: uppercase;
+            font-size: 12px; color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
+            padding-bottom: 10px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .bilhete-info-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; background: #0f1118; padding: 10px; border-radius: 10px; border: 1px solid #232838;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; background: #0f1118; padding: 12px; border-radius: 12px; border: 1px solid #232838;
         }
-        .bilhete-info-label { font-size: 10px; color: #888; text-transform: uppercase; }
-        .bilhete-info-val { font-size: 12px; font-weight: 900; color: #fff; }
+        .bilhete-info-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .bilhete-info-val { font-size: 13px; font-weight: 900; color: #fff; }
 
         /* --- ESTILOS REFORMULADOS DA ABA DE EXTRATO --- */
         .extrato-container { padding: 15px; max-width: 600px; margin: 0 auto; }
@@ -481,7 +482,7 @@
             background: linear-gradient(135deg, #ff4500, #ff6a00);
             color: #fff;
             border: none;
-            padding: 8px 14px;
+            padding: 9px 16px;
             border-radius: 10px;
             font-weight: bold;
             font-size: 12px;
@@ -1248,10 +1249,13 @@
         <div class="bilhetes-container">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
             
-            <div class="bilhetes-tabs-nav">
-                <button class="btn-bilhete-tab active" id="btnTabBilhetesAtivos" onclick="mudarFiltroBilhete('ativos', this)">Ativos / Ao Vivo</button>
-                <button class="btn-bilhete-tab" id="btnTabBilhetesGanhas" onclick="mudarFiltroBilhete('ganhas', this)">Ganhas</button>
-                <button class="btn-bilhete-tab" id="btnTabBilhetesPerdidas" onclick="mudarFiltroBilhete('perdidas', this)">Perdidas</button>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <div class="bilhetes-tabs-nav" style="flex: 1; margin-bottom: 0;">
+                    <button class="btn-bilhete-tab active" id="btnTabBilhetesAtivos" onclick="mudarFiltroBilhete('ativos', this)">Ativos</button>
+                    <button class="btn-bilhete-tab" id="btnTabBilhetesGanhas" onclick="mudarFiltroBilhete('ganhas', this)">Ganhas</button>
+                    <button class="btn-bilhete-tab" id="btnTabBilhetesPerdidas" onclick="mudarFiltroBilhete('perdidas', this)">Perdidas</button>
+                </div>
+                <button class="btn-imprimir-pdf" onclick="imprimirExtratoPDF()">Imprimir / PDF</button>
             </div>
 
             <div id="listaMeusBilhetesImpressos">
@@ -1323,7 +1327,7 @@
         <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetesMultiplos()">CRIAR BILHETE E REGISTAR</button>
     </div>
 
-    <!-- MODAL DE MERCADOS COMPLETOS (1.5 até o máximo, escanteios, cartões, dupla chance, gols, ambas marcam) -->
+    <!-- MODAL DE MERCADOS COMPLETOS -->
     <div id="matchModal" class="modal-overlay">
         <div class="modal-card-4d">
             <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
@@ -1423,7 +1427,7 @@
         let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
         
         let jogoSelecionadoAtual = 'penalty';
-        let selecoesApostasMultiplas = []; // Carrinho de apostas múltiplas e simples
+        let selecoesApostasMultiplas = []; 
         let partidasApiCache = [];
         let filtroBilheteAtual = 'ativos';
         let fixtureIdAbertoAtual = null;
@@ -2034,7 +2038,7 @@
             });
         }
 
-        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS MÚLTIPLAS COM MERCADOS COMPLETOS --- */
+        /* --- API DE FUTEBOL E SISTEMA DE APOSTAS MÚLTIPLAS COM PLACAR EM TEMPO REAL --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
             container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>`;
@@ -2103,8 +2107,8 @@
                 html += `
                     <div class="match-card" onclick="abrirMercadosPartida(${match.fixture.id})">
                         <div class="match-header">
-                            <span>🏆 ${match.league.name}</span>
-                            <span style="color:#00ff88;">🔴 ${minutoExato}</span>
+                            <span>${match.league.name}</span>
+                            <span style="color:#00ff88;">Tempo Real: ${minutoExato}</span>
                         </div>
                         <div class="match-teams">
                             <span class="team-name"><img src="${match.teams.home.logo}" alt=""> ${match.teams.home.name}</span>
@@ -2132,7 +2136,6 @@
             document.getElementById('modalPartidaTitulo').innerText = `${match.teams.home.name} vs ${match.teams.away.name}`;
             document.getElementById('modalPartidaInfoSub').innerText = `${match.league.name} | Relógio: ${match.fixture.status.elapsed ? match.fixture.status.elapsed + "'" : 'Pré-jogo'}`;
             
-            // 1X2
             let grid1X2 = document.getElementById('modalOdds1X2');
             grid1X2.innerHTML = `
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '1 (${match.teams.home.name})', 1.85, ${match.fixture.id})"><span>1</span><b>1.85</b></div>
@@ -2140,7 +2143,6 @@
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '2 (${match.teams.away.name})', 2.10, ${match.fixture.id})"><span>2</span><b>2.10</b></div>
             `;
 
-            // Dupla Chance
             let gridDupla = document.getElementById('modalOddsDuplaChance');
             gridDupla.innerHTML = `
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: 1X (${match.teams.home.name} ou Empate)', 1.25, ${match.fixture.id})"><span>1X</span><b>1.25</b></div>
@@ -2148,14 +2150,12 @@
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Dupla Chance: X2 (Empate ou ${match.teams.away.name})', 1.40, ${match.fixture.id})"><span>X2</span><b>1.40</b></div>
             `;
 
-            // Ambas Marcam
             let gridBTTS = document.getElementById('modalOddsAmbasMarcam');
             gridBTTS.innerHTML = `
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Ambas Marcam: Sim', 1.78, ${match.fixture.id})"><span>Sim</span><b>1.78</b></div>
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Ambas Marcam: Não', 1.95, ${match.fixture.id})"><span>Não</span><b>1.95</b></div>
             `;
 
-            // Total de Gols (1.5 até 4.5)
             let gridGols = document.getElementById('modalOddsGols');
             gridGols.innerHTML = `
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Mais de 1.5 Gols', 1.38, ${match.fixture.id})"><span>Mais 1.5</span><b>1.38</b></div>
@@ -2168,7 +2168,6 @@
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Menos de 4.5 Gols', 1.10, ${match.fixture.id})"><span>Menos 4.5</span><b>1.10</b></div>
             `;
 
-            // Escanteios
             let gridEscanteios = document.getElementById('modalOddsEscanteios');
             gridEscanteios.innerHTML = `
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Escanteios - Mais de 8.5', 1.65, ${match.fixture.id})"><span>Mais 8.5 Escanteios</span><b>1.65</b></div>
@@ -2176,7 +2175,6 @@
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Escanteios - Mais de 10.5', 2.65, ${match.fixture.id})"><span>Mais 10.5 Escanteios</span><b>2.65</b></div>
             `;
 
-            // Cartões
             let gridCartoes = document.getElementById('modalOddsCartoes');
             gridCartoes.innerHTML = `
                 <div class="odd-card-4d" onclick="adicionarSelecaoCarrinhoModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Cartões - Mais de 3.5', 1.55, ${match.fixture.id})"><span>Mais 3.5 Cartões</span><b>1.55</b></div>
@@ -2320,13 +2318,18 @@
                 let selecoesHtml = '';
                 if (b.selecoes && b.selecoes.length > 0) {
                     b.selecoes.forEach(s => {
-                        // Buscar minuto ao vivo atual da partida se estiver ativa na API
                         let matchObj = partidasApiCache.find(m => m.fixture.id === s.fixtureId);
                         let minutoAoVivo = 'Encerrado';
+                        let placarAoVivoStr = '0 - 0';
+
                         if (matchObj && matchObj.fixture && matchObj.fixture.status) {
                             let statusShort = matchObj.fixture.status.short;
+                            let gHome = matchObj.goals.home ?? 0;
+                            let gAway = matchObj.goals.away ?? 0;
+                            placarAoVivoStr = `${gHome} - ${gAway}`;
+
                             if (statusShort === '1H' || statusShort === '2H' || statusShort === 'ET') {
-                                minutoAoVivo = `${matchObj.fixture.status.elapsed}' ao vivo`;
+                                minutoAoVivo = `${matchObj.fixture.status.elapsed}' em tempo real`;
                             } else if (statusShort === 'HT') {
                                 minutoAoVivo = 'Intervalo';
                             } else if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
@@ -2339,10 +2342,13 @@
                         }
 
                         selecoesHtml += `
-                            <div style="font-size: 11px; color: #ffb703; border-bottom:1px solid #232838; padding-bottom:6px; margin-bottom:6px;">
-                                ⚽ <b>${s.home} vs ${s.away}</b><br>
-                                Mercado escolhido: <span style="color:#00ff88; font-weight:bold;">${s.mercado}</span> (Odd: ${s.odd})<br>
-                                <span style="color:#00ff88;">🔴 Minuto: ${minutoAoVivo}</span>
+                            <div style="font-size: 11px; color: #ffb703; border-bottom:1px solid #232838; padding-bottom:8px; margin-bottom:8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <b>${s.home} vs ${s.away}</b>
+                                    <span style="background: #0b0c10; border: 1px solid #ff4500; padding: 2px 8px; border-radius: 8px; color: #00ff88; font-weight: 900; font-size: 11px;">Placar: ${placarAoVivoStr}</span>
+                                </div>
+                                <span style="color:#ddd;">Mercado: ${s.mercado} (Odd: ${s.odd})</span><br>
+                                <span style="color:#00ff88; font-weight:bold;">Tempo de Jogo: ${minutoAoVivo}</span>
                             </div>`;
                     });
                 }
@@ -2364,7 +2370,7 @@
                                 <div class="bilhete-info-val" style="color:#00ff88;">R$ ${b.retorno}</div>
                             </div>
                         </div>
-                        <div style="font-size: 10px; color: #888; margin-top: 8px; text-align: right;">Criado em: ${b.dataHora}</div>
+                        <div style="font-size: 10px; color: #888; margin-top: 10px; text-align: right;">Criado em: ${b.dataHora}</div>
                     </div>
                 `;
             });
@@ -2454,7 +2460,7 @@
                     <div class="extrato-item-detalhado">
                         <div class="extrato-item-info">
                             <div class="extrato-desc">${t.descricao}</div>
-                            <div class="extrato-hora">📅 ${t.data}</div>
+                            <div class="extrato-hora">${t.data}</div>
                         </div>
                         <div class="extrato-valor-badge" style="color:${corValor};">
                             ${sinal}R$ ${Math.abs(t.valor).toFixed(2)}
