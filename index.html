@@ -2169,13 +2169,13 @@
                     <div class="match-card" onclick="abrirMercadosPartida(${match.fixture.id})">
                         <div class="match-header">
                             <span>${match.league.name}</span>
-                            <span style="color:#00ff88;">Tempo Real: ${minutoExato}</span>
+                            <span style="color:#00ff88;" id="minuto-partida-${match.fixture.id}">Tempo Real: ${minutoExato}</span>
                         </div>
                         <div class="match-teams">
                             <span class="team-name"><img src="${match.teams.home.logo}" alt=""> ${match.teams.home.name}</span>
                             <div class="match-score-vs">
-                                <span class="match-vs-text">${statusShort === 'NS' ? 'VS' : (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN' ? 'ENCERRADO' : 'AO VIVO')}</span>
-                                <span class="match-real-score">${homeGols} - ${awayGols}</span>
+                                <span class="match-vs-text" id="status-partida-${match.fixture.id}">${statusShort === 'NS' ? 'VS' : (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN' ? 'ENCERRADO' : 'AO VIVO')}</span>
+                                <span class="match-real-score" id="placar-partida-${match.fixture.id}">${homeGols} - ${awayGols}</span>
                             </div>
                             <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
                         </div>
@@ -2449,15 +2449,27 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response) {
-                    // Atualiza o cache global com os dados mais recentes da API
                     partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET' || m.fixture.status.short === 'FT' || m.fixture.status.short === 'AET' || m.fixture.status.short === 'PEN');
 
+                    // Atualização em tempo real na tela de esportes sem precisar atualizar a página
                     dados.response.forEach(partidaAtualizada => {
                         let fixtureId = partidaAtualizada.fixture.id;
                         let statusShort = partidaAtualizada.fixture.status.short;
                         let gHome = partidaAtualizada.goals.home ?? 0;
                         let gAway = partidaAtualizada.goals.away ?? 0;
-                        
+                        let minutoExato = partidaAtualizada.fixture.status.elapsed ? `${partidaAtualizada.fixture.status.elapsed}'` : 'Pré-jogo';
+                        if(statusShort === 'HT') minutoExato = 'Intervalo';
+                        if(statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') minutoExato = 'Encerrado';
+
+                        // Atualiza elementos diretamente no DOM se estiverem visíveis
+                        let elPlacar = document.getElementById(`placar-partida-${fixtureId}`);
+                        let elMinuto = document.getElementById(`minuto-partida-${fixtureId}`);
+                        let elStatus = document.getElementById(`status-partida-${fixtureId}`);
+
+                        if (elPlacar) elPlacar.innerText = `${gHome} - ${gAway}`;
+                        if (elMinuto) elMinuto.innerText = `Tempo Real: ${minutoExato}`;
+                        if (elStatus) elStatus.innerText = statusShort === 'NS' ? 'VS' : (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN' ? 'ENCERRADO' : 'AO VIVO');
+
                         meusBilhetesSalvos.forEach(bilhete => {
                             if (bilhete.status === 'Ativo' && bilhete.selecoes) {
                                 let pertenceAoBilhete = bilhete.selecoes.some(s => s.fixtureId === fixtureId);
@@ -2512,14 +2524,12 @@
                     if(document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
                         renderizarBilhetesNaTela();
                     }
-                    if(document.getElementById('tab-esportes').classList.contains('active-tab')) {
-                        renderizarListaPartidasFiltro(document.querySelector('.btn-filtro-liga.ativo')?.innerText === 'Todas as Ligas' ? 'TODAS' : document.querySelector('.btn-filtro-liga.ativo')?.innerText);
-                    }
                 }
             } catch(e) {}
         }
 
-        setInterval(atualizarResultadosBilhetesAoVivo, 20000);
+        // Executa a cada 10 segundos para atualizar gols e minutos em tempo real automaticamente sem atualizar o site
+        setInterval(atualizarResultadosBilhetesAoVivo, 10000);
 
         function renderizarExtratoNaTela() {
             const container = document.getElementById('listaExtratoTransacoes');
