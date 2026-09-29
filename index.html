@@ -5,21 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cangaço Bet - Cassino & Jogos</title>
     <style>
+        /* MODO CLARO / ESCURO */
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
         body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
+
+        /* TOAST NOTIFICATIONS */
         #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; }
         .toast-notification { background: linear-gradient(135deg, #151821, #2b0b05); border: 1px solid #ff4500; border-left: 5px solid #ffb703; color: #fff; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); font-size: 13px; font-weight: bold; }
 
-                * {
+        /* ESTILOS DAS NOVAS ABAS */
+        .affiliate-box-card, .missions-container, .chat-section-wrapper { padding: 15px; max-width: 500px; margin: 0 auto; text-align: center; }
+        .affiliate-box-card { background: #151821; border: 1px solid #ff4500; border-radius: 16px; padding: 25px; margin-top: 15px; box-shadow: 0 8px 25px rgba(255,69,0,0.3); color: #fff; }
+        .affiliate-box-card h2 { color: #ffb703; margin-bottom: 10px; font-size: 18px; }
+        .affiliate-box-card p { font-size: 13px; color: #ccc; margin-bottom: 20px; }
+        .btn-affiliates-go { display: inline-block; background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff; text-decoration: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 15px rgba(255,69,0,0.5); }
+
+        .mission-item-card { background: #151821; border: 1px solid #232838; border-radius: 12px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-align: left; }
+        .mission-info h4 { font-size: 14px; color: #fff; margin-bottom: 4px; }
+        .mission-info p { font-size: 11px; color: #aaa; }
+        .btn-claim-mission { background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 900; font-size: 12px; cursor: pointer; }
+
+        .chat-messages-box { background: #0f1118; border: 1px solid #232838; border-radius: 12px; height: 300px; overflow-y: auto; padding: 12px; text-align: left; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; }
+        .chat-msg-row { font-size: 12px; color: #ddd; background: #151821; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #ff4500; }
+        .chat-msg-row b { color: #ffb703; }
+        .chat-input-area { display: flex; gap: 8px; }
+        .chat-input-box { flex: 1; padding: 10px 14px; background: #151821; border: 1px solid #232838; border-radius: 8px; color: #fff; font-size: 13px; }
+        .btn-send-chat { background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-
-            
         body {
-
             background-color: #0b0c10;
             color: #ffffff;
             padding-bottom: 25px;
@@ -184,7 +203,7 @@
             background: linear-gradient(180deg, #151821, #0f1118);
             border-right: 2px solid #ff4500; z-index: 999;
             transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8); overflow-y: auto;
         }
         .sidebar.open { left: 0; }
         .sidebar-header {
@@ -548,7 +567,7 @@
         .aviator-controls-box { width: 100%; background: #151821; padding: 15px; border-radius: 16px; border: 1px solid rgba(255,69,0,0.4); z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); }
         .btn-aviator-acao { width: 100%; padding: 16px; color: #000; border: none; border-radius: 50px; font-weight: 950; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5); text-transform: uppercase; transition: 0.2s; }
 
-        /* --- MINES ESTILOS (ATUALIZADO SEM BORDA AMARELA E COM FUNDO SOFISTICADO) --- */
+        /* --- MINES ESTILOS --- */
         #minesSectionContainer {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
             padding: 10px; width: 100%; max-width: 500px; margin: 0 auto;
@@ -584,6 +603,9 @@
     </style>
 </head>
 <body>
+
+    <!-- CONTAINER DE NOTIFICAÇÕES TOAST -->
+    <div id="toastContainer"></div>
 
     <div id="splashScreen">
         <img src="https://files.catbox.moe/qf2bly.jpeg" class="splash-banner" alt="Banner 4D">
@@ -638,6 +660,10 @@
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">Cassino & Jogos</div>
+        <div class="sidebar-item" onclick="mudarAba('afiliados'); fecharSidebar();">💰 Sistema de Afiliados</div>
+        <div class="sidebar-item" onclick="mudarAba('missoes'); fecharSidebar();">🎯 Missões Diárias</div>
+        <div class="sidebar-item" onclick="mudarAba('chat'); fecharSidebar();">💬 Chat ao Vivo</div>
+        <div class="sidebar-item" onclick="alternarModoEscuroClaro(); fecharSidebar();">🌗 Modo Claro / Escuro</div>
         <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">Penalty Cangaço</div>
         <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">Aviator</div>
         <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">Mines</div>
@@ -730,6 +756,45 @@
             <div class="game-card" onclick="jogarCassino('Gates of Olympus', 25)">
                 <img src="https://files.catbox.moe/7dkz4q.jpeg" class="game-img" alt="Gates of Olympus">
                 <div class="game-name">Gates of Olympus</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOVAS ABAS FUNCIONAIS -->
+    <div id="tab-afiliados" class="main-tab-content">
+        <div class="affiliate-box-card">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <h2>Programa de Afiliados</h2>
+            <p>Convide amigos com o seu link exclusivo e ganhe comissões direto na sua conta instantaneamente!</p>
+            <a href="#" class="btn-affiliates-go" onclick="clicarLinkAfiliado(event)">Copiar Link de Convite</a>
+        </div>
+    </div>
+
+    <div id="tab-missoes" class="main-tab-content">
+        <div class="missions-container">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Missões Disponíveis Hoje</div>
+            <div class="mission-item-card">
+                <div class="mission-info">
+                    <h4>Apostar 100$ em Jogos</h4>
+                    <p>Aposte 100$ e ganhe 150$ de Free Bet instantânea.</p>
+                </div>
+                <button class="btn-claim-mission" onclick="resgatarMissaoDiaria(150)">Resgatar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-chat" class="main-tab-content">
+        <div class="chat-section-wrapper">
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores</div>
+            <div class="chat-messages-box" id="chatMessagesBox">
+                <div class="chat-msg-row"><b>Ka**</b>: Alguém jogando o Penalty agora?</div>
+                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator 🔥</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInputText" class="chat-input-box" placeholder="Escreva sua mensagem...">
+                <button class="btn-send-chat" onclick="enviarMensagemChatAoVivo()">Enviar</button>
             </div>
         </div>
     </div>
@@ -893,7 +958,7 @@
         </div>
     </div>
 
-    <!-- ABA MINES (ATUALIZADA COM QUADRADOS DE (?) E SEM BORDA AMARELA) -->
+    <!-- ABA MINES -->
     <div id="tab-mines" class="main-tab-content">
         <div id="minesSectionContainer">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">
@@ -1173,6 +1238,12 @@
             document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active-tab'));
             if (aba === 'cassino') {
                 document.getElementById('tab-cassino').classList.add('active-tab');
+            } else if (aba === 'afiliados') {
+                document.getElementById('tab-afiliados').classList.add('active-tab');
+            } else if (aba === 'missoes') {
+                document.getElementById('tab-missoes').classList.add('active-tab');
+            } else if (aba === 'chat') {
+                document.getElementById('tab-chat').classList.add('active-tab');
             } else if (aba === 'penalty') {
                 jogoSelecionadoAtual = 'penalty';
                 iniciarCarregamentoJogo('Penalty Cangaço', 'https://files.catbox.moe/onqvbv.png');
@@ -1194,6 +1265,50 @@
             } else if (aba === 'suporte') {
                 document.getElementById('tab-suporte').classList.add('active-tab');
             }
+        }
+
+        /* --- NOVAS FUNÇÕES ADICIONADAS --- */
+        function dispararToast(mensagem) {
+            const container = document.getElementById('toastContainer');
+            if(!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.innerHTML = `<span>⚡</span> ${mensagem}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function alternarModoEscuroClaro() {
+            document.body.classList.toggle('light-theme');
+            dispararToast(document.body.classList.contains('light-theme') ? 'Modo Claro ativado!' : 'Modo Escuro ativado!');
+        }
+
+        function clicarLinkAfiliado(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText(window.location.href);
+            dispararToast('Link de afiliado copiado com sucesso!');
+        }
+
+        function resgatarMissaoDiaria(premio) {
+            if (!usuarioLogado) { dispararToast('Faça login para resgatar!'); abrirModalRegistro(); return; }
+            saldo += premio;
+            atualizarSaldoNaTela();
+            salvarDadosStorage();
+            dispararToast(`Resgatou R$ ${premio} de Free Bet!`);
+        }
+
+        function enviarMensagemChatAoVivo() {
+            if (!usuarioLogado) { dispararToast('Faça login para usar o chat!'); abrirModalRegistro(); return; }
+            const input = document.getElementById('chatInputText');
+            if(!input || !input.value.trim()) return;
+            let nomeMascarado = (usuarioLogado.nome || 'User').substring(0, 2) + '**';
+            const box = document.getElementById('chatMessagesBox');
+            if(box) {
+                box.innerHTML += `<div class="chat-msg-row"><b>${nomeMascarado}</b>: ${input.value.trim()}</div>`;
+                box.scrollTop = box.scrollHeight;
+            }
+            input.value = '';
+            dispararToast('Mensagem enviada no chat!');
         }
 
         function iniciarCarregamentoJogo(nomeJogo, imgCapa) {
@@ -1244,7 +1359,7 @@
             }, 500);
         }
 
-        /* --- LÓGICA DO MINES (ATUALIZADA COM QUADRADOS DE ?) --- */
+        /* --- LÓGICA DO MINES --- */
         let minesModo = 'real';
         let minesRodando = false;
         let minesApostaValor = 20.00;
