@@ -2072,11 +2072,15 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response && dados.response.length > 0) {
-                    partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET' || m.fixture.status.short === 'FT' || m.fixture.status.short === 'AET' || m.fixture.status.short === 'PEN');
+                    // Filtrar apenas jogos que NÃO estejam encerrados (removendo FT, AET, PEN)
+                    partidasApiCache = dados.response.filter(m => {
+                        let st = m.fixture.status.short;
+                        return st !== 'FT' && st !== 'AET' && st !== 'PEN' && st !== 'PST' && st !== 'CANC' && st !== 'ABD';
+                    });
                     renderizarListaPartidasFiltro('TODAS');
                     renderizarFiltroLigas(partidasApiCache);
                 } else {
-                    container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida oficial neste momento.</p>`;
+                    container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ativa ou agendada neste momento.</p>`;
                 }
             } catch (e) {
                 container.innerHTML = `<p style="color: #ff4500; text-align: center; padding: 20px;">Erro ao carregar dados da API de Futebol.</p>`;
@@ -2143,13 +2147,16 @@
 
         function renderizarListaPartidasFiltro(ligaFiltro) {
             const container = document.getElementById('lista-partidas-api');
-            let filtradas = partidasApiCache;
+            let filtradas = partidasApiCache.filter(m => {
+                let st = m.fixture.status.short;
+                return st !== 'FT' && st !== 'AET' && st !== 'PEN' && st !== 'PST' && st !== 'CANC' && st !== 'ABD';
+            });
             if (ligaFiltro !== 'TODAS') {
-                filtradas = partidasApiCache.filter(m => m.league.name === ligaFiltro);
+                filtradas = filtradas.filter(m => m.league.name === ligaFiltro);
             }
 
             if (filtradas.length === 0) {
-                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida encontrada para esta liga.</p>`;
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ativa ou agendada encontrada para esta liga.</p>`;
                 return;
             }
 
@@ -2158,7 +2165,6 @@
                 let statusShort = match.fixture.status.short;
                 let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}'` : 'Pré-jogo';
                 if(statusShort === 'HT') minutoExato = 'Intervalo';
-                if(statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') minutoExato = 'Encerrado';
 
                 let homeGols = match.goals.home ?? 0;
                 let awayGols = match.goals.away ?? 0;
@@ -2174,7 +2180,7 @@
                         <div class="match-teams">
                             <span class="team-name"><img src="${match.teams.home.logo}" alt=""> ${match.teams.home.name}</span>
                             <div class="match-score-vs">
-                                <span class="match-vs-text" id="status-partida-${match.fixture.id}">${statusShort === 'NS' ? 'VS' : (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN' ? 'ENCERRADO' : 'AO VIVO')}</span>
+                                <span class="match-vs-text" id="status-partida-${match.fixture.id}">${statusShort === 'NS' ? 'VS' : 'AO VIVO'}</span>
                                 <span class="match-real-score" id="placar-partida-${match.fixture.id}">${homeGols} - ${awayGols}</span>
                             </div>
                             <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
@@ -2449,9 +2455,12 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response) {
-                    partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET' || m.fixture.status.short === 'FT' || m.fixture.status.short === 'AET' || m.fixture.status.short === 'PEN');
+                    // Mantém apenas partidas ativas no cache, removendo as encerradas da listagem principal
+                    partidasApiCache = dados.response.filter(m => {
+                        let st = m.fixture.status.short;
+                        return st !== 'FT' && st !== 'AET' && st !== 'PEN' && st !== 'PST' && st !== 'CANC' && st !== 'ABD';
+                    });
 
-                    // Atualização em tempo real na tela de esportes sem precisar atualizar a página
                     dados.response.forEach(partidaAtualizada => {
                         let fixtureId = partidaAtualizada.fixture.id;
                         let statusShort = partidaAtualizada.fixture.status.short;
@@ -2459,16 +2468,20 @@
                         let gAway = partidaAtualizada.goals.away ?? 0;
                         let minutoExato = partidaAtualizada.fixture.status.elapsed ? `${partidaAtualizada.fixture.status.elapsed}'` : 'Pré-jogo';
                         if(statusShort === 'HT') minutoExato = 'Intervalo';
-                        if(statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') minutoExato = 'Encerrado';
 
-                        // Atualiza elementos diretamente no DOM se estiverem visíveis
-                        let elPlacar = document.getElementById(`placar-partida-${fixtureId}`);
-                        let elMinuto = document.getElementById(`minuto-partida-${fixtureId}`);
-                        let elStatus = document.getElementById(`status-partida-${fixtureId}`);
+                        // Se a partida encerrou, removemos do DOM se estiver listada, ou atualizamos se necessário
+                        if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
+                            let cardEl = document.getElementById(`match-card-container-${fixtureId}`);
+                            if(cardEl) cardEl.remove();
+                        } else {
+                            let elPlacar = document.getElementById(`placar-partida-${fixtureId}`);
+                            let elMinuto = document.getElementById(`minuto-partida-${fixtureId}`);
+                            let elStatus = document.getElementById(`status-partida-${fixtureId}`);
 
-                        if (elPlacar) elPlacar.innerText = `${gHome} - ${gAway}`;
-                        if (elMinuto) elMinuto.innerText = `Tempo Real: ${minutoExato}`;
-                        if (elStatus) elStatus.innerText = statusShort === 'NS' ? 'VS' : (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN' ? 'ENCERRADO' : 'AO VIVO');
+                            if (elPlacar) elPlacar.innerText = `${gHome} - ${gAway}`;
+                            if (elMinuto) elMinuto.innerText = `Tempo Real: ${minutoExato}`;
+                            if (elStatus) elStatus.innerText = statusShort === 'NS' ? 'VS' : 'AO VIVO';
+                        }
 
                         meusBilhetesSalvos.forEach(bilhete => {
                             if (bilhete.status === 'Ativo' && bilhete.selecoes) {
@@ -2528,7 +2541,6 @@
             } catch(e) {}
         }
 
-        // Executa a cada 10 segundos para atualizar gols e minutos em tempo real automaticamente sem atualizar o site
         setInterval(atualizarResultadosBilhetesAoVivo, 10000);
 
         function renderizarExtratoNaTela() {
