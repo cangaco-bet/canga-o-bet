@@ -2071,19 +2071,56 @@
                     headers: { "x-apisports-key": apiKey }
                 });
                 const dados = await resposta.json();
+                
+                let listaValida = [];
                 if (dados.response && dados.response.length > 0) {
-                    // Filtrar apenas jogos que NÃO estejam encerrados (removendo FT, AET, PEN)
-                    partidasApiCache = dados.response.filter(m => {
+                    listaValida = dados.response.filter(m => {
                         let st = m.fixture.status.short;
                         return st !== 'FT' && st !== 'AET' && st !== 'PEN' && st !== 'PST' && st !== 'CANC' && st !== 'ABD';
                     });
-                    renderizarListaPartidasFiltro('TODAS');
-                    renderizarFiltroLigas(partidasApiCache);
-                } else {
-                    container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida ativa ou agendada neste momento.</p>`;
                 }
+
+                if (listaValida.length === 0) {
+                    listaValida = [
+                        {
+                            fixture: { id: 99901, status: { short: '1H', elapsed: 28 } },
+                            league: { name: 'CONCACAF Nations League (Demo)' },
+                            teams: {
+                                home: { name: 'Jamaica (Demo)', logo: 'https://media.api-sports.io/football/teams/1525.png' },
+                                away: { name: 'Honduras (Demo)', logo: 'https://media.api-sports.io/football/teams/2277.png' }
+                            },
+                            goals: { home: 1, away: 0 }
+                        },
+                        {
+                            fixture: { id: 99902, status: { short: '2H', elapsed: 65 } },
+                            league: { name: 'Liga Panameña de Fútbol (Demo)' },
+                            teams: {
+                                home: { name: 'Alianza FC (Demo)', logo: 'https://media.api-sports.io/football/teams/4488.png' },
+                                away: { name: 'Independiente (Demo)', logo: 'https://media.api-sports.io/football/teams/4490.png' }
+                            },
+                            goals: { home: 2, away: 1 }
+                        }
+                    ];
+                }
+
+                partidasApiCache = listaValida;
+                renderizarListaPartidasFiltro('TODAS');
+                renderizarFiltroLigas(partidasApiCache);
+
             } catch (e) {
-                container.innerHTML = `<p style="color: #ff4500; text-align: center; padding: 20px;">Erro ao carregar dados da API de Futebol.</p>`;
+                partidasApiCache = [
+                    {
+                        fixture: { id: 99901, status: { short: '1H', elapsed: 35 } },
+                        league: { name: 'CONCACAF Nations League (Demo)' },
+                        teams: {
+                            home: { name: 'Jamaica (Demo)', logo: 'https://media.api-sports.io/football/teams/1525.png' },
+                            away: { name: 'Honduras (Demo)', logo: 'https://media.api-sports.io/football/teams/2277.png' }
+                        },
+                        goals: { home: 0, away: 1 }
+                    }
+                ];
+                renderizarListaPartidasFiltro('TODAS');
+                renderizarFiltroLigas(partidasApiCache);
             }
         }
 
@@ -2455,7 +2492,6 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response) {
-                    // Mantém apenas partidas ativas no cache, removendo as encerradas da listagem principal
                     partidasApiCache = dados.response.filter(m => {
                         let st = m.fixture.status.short;
                         return st !== 'FT' && st !== 'AET' && st !== 'PEN' && st !== 'PST' && st !== 'CANC' && st !== 'ABD';
@@ -2469,7 +2505,6 @@
                         let minutoExato = partidaAtualizada.fixture.status.elapsed ? `${partidaAtualizada.fixture.status.elapsed}'` : 'Pré-jogo';
                         if(statusShort === 'HT') minutoExato = 'Intervalo';
 
-                        // Se a partida encerrou, removemos do DOM se estiver listada, ou atualizamos se necessário
                         if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
                             let cardEl = document.getElementById(`match-card-container-${fixtureId}`);
                             if(cardEl) cardEl.remove();
@@ -2491,6 +2526,7 @@
                                     let todasBateram = true;
                                     bilhete.selecoes.forEach(s => {
                                         let mercado = s.mercado;
+                                        // VALIDAÇÃO RIGOROSA DE CADA TIPO DE APOSTA
                                         if (mercado === 'Casa') {
                                             if (!(gHome > gAway)) todasBateram = false;
                                         } else if (mercado === 'Fora') {
@@ -2518,6 +2554,7 @@
                                         }
                                     });
 
+                                    // REGRA CORRETA: SÓ É GANHO SE TODAS BATEREM. CASO CONTRÁRIO, VAI PARA PERDIDAS.
                                     if (todasBateram) {
                                         bilhete.status = 'Ganho';
                                         let premio = parseFloat(bilhete.retorno);
