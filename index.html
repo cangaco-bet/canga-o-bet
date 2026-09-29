@@ -2072,7 +2072,7 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response && dados.response.length > 0) {
-                    partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET');
+                    partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET' || m.fixture.status.short === 'FT' || m.fixture.status.short === 'AET' || m.fixture.status.short === 'PEN');
                     renderizarListaPartidasFiltro('TODAS');
                     renderizarFiltroLigas(partidasApiCache);
                 } else {
@@ -2119,17 +2119,14 @@
             let fatorTempo = Math.max(0.3, (90 - minuto) / 90);
 
             if (gHome > gAway) {
-                // Time da casa ganhando -> paga pouco para casa, alto para fora
                 oddHome = parseFloat((1.15 + (1.2 * (minuto / 90))).toFixed(2));
                 oddAway = parseFloat((4.50 + ((gHome - gAway) * 2.0) + (fatorTempo * 3)).toFixed(2));
                 oddDraw = parseFloat((3.80 + (fatorTempo * 1.5)).toFixed(2));
             } else if (gAway > gHome) {
-                // Time de fora ganhando -> paga pouco para fora, alto para casa
                 oddAway = parseFloat((1.15 + (1.2 * (minuto / 90))).toFixed(2));
                 oddHome = parseFloat((4.50 + ((gAway - gHome) * 2.0) + (fatorTempo * 3)).toFixed(2));
                 oddDraw = parseFloat((3.80 + (fatorTempo * 1.5)).toFixed(2));
             } else {
-                // Empate -> valores médios dependendo do minuto
                 if (minuto > 75) {
                     oddDraw = parseFloat((1.40 + (fatorTempo * 0.5)).toFixed(2));
                     oddHome = parseFloat((3.10 + (fatorTempo * 2)).toFixed(2));
@@ -2161,7 +2158,7 @@
                 let statusShort = match.fixture.status.short;
                 let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}'` : 'Pré-jogo';
                 if(statusShort === 'HT') minutoExato = 'Intervalo';
-                if(statusShort === 'FT') minutoExato = 'Encerrado';
+                if(statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') minutoExato = 'Encerrado';
 
                 let homeGols = match.goals.home ?? 0;
                 let awayGols = match.goals.away ?? 0;
@@ -2177,7 +2174,7 @@
                         <div class="match-teams">
                             <span class="team-name"><img src="${match.teams.home.logo}" alt=""> ${match.teams.home.name}</span>
                             <div class="match-score-vs">
-                                <span class="match-vs-text">${statusShort === 'NS' ? 'VS' : 'AO VIVO'}</span>
+                                <span class="match-vs-text">${statusShort === 'NS' ? 'VS' : (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN' ? 'ENCERRADO' : 'AO VIVO')}</span>
                                 <span class="match-real-score">${homeGols} - ${awayGols}</span>
                             </div>
                             <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
@@ -2445,7 +2442,6 @@
         }
 
         async function atualizarResultadosBilhetesAoVivo() {
-            if (partidasApiCache.length === 0) return;
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
@@ -2453,6 +2449,9 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response) {
+                    // Atualiza o cache global com os dados mais recentes da API
+                    partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET' || m.fixture.status.short === 'FT' || m.fixture.status.short === 'AET' || m.fixture.status.short === 'PEN');
+
                     dados.response.forEach(partidaAtualizada => {
                         let fixtureId = partidaAtualizada.fixture.id;
                         let statusShort = partidaAtualizada.fixture.status.short;
@@ -2512,6 +2511,9 @@
                     });
                     if(document.getElementById('tab-bilhetes').classList.contains('active-tab')) {
                         renderizarBilhetesNaTela();
+                    }
+                    if(document.getElementById('tab-esportes').classList.contains('active-tab')) {
+                        renderizarListaPartidasFiltro(document.querySelector('.btn-filtro-liga.ativo')?.innerText === 'Todas as Ligas' ? 'TODAS' : document.querySelector('.btn-filtro-liga.ativo')?.innerText);
                     }
                 }
             } catch(e) {}
