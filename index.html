@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,7 +9,7 @@
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
         body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
 
-        /* TOAST NOTIFICATIONS ELEGANTE NO CANTO SUPERIOR */
+        /* TOAST NOTIFICATIONS EM BOLHA FLUTUANTE ELEGANTE */
         #toastContainer {
             position: fixed;
             top: 20px;
@@ -19,36 +17,38 @@
             z-index: 999999;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            pointer-events: none;
         }
         .toast-notification {
-            background: linear-gradient(135deg, #151821, #2b0b05);
+            background: linear-gradient(135deg, rgba(21, 24, 33, 0.95), rgba(43, 11, 5, 0.95));
             border: 2px solid #ff4500;
-            border-left: 6px solid #ffb703;
+            border-left: 5px solid #ffb703;
             color: #fff;
-            padding: 12px 18px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-            font-size: 13px;
+            padding: 10px 16px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(255,69,0,0.4);
+            font-size: 11px;
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 12px;
-            animation: slideInToast 0.3s ease forwards;
-            max-width: 320px;
+            gap: 10px;
+            pointer-events: auto;
+            backdrop-filter: blur(5px);
+            animation: bubbleFloatIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-        .toast-icon-img {
-            width: 30px;
-            height: 30px;
+        .toast-emblema {
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid #ffb703;
             flex-shrink: 0;
-            box-shadow: 0 0 8px rgba(255,183,3,0.6);
+            box-shadow: 0 0 6px rgba(255,183,3,0.7);
         }
-        @keyframes slideInToast {
-            from { transform: translateX(120%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes bubbleFloatIn {
+            0% { transform: translateY(-30px) scale(0.6); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
         /* ESTILOS DAS NOVAS ABAS */
@@ -647,7 +647,7 @@
 </head>
 <body>
 
-    <!-- CONTAINER DE NOTIFICAÇÕES TOAST NO CANTO SUPERIOR -->
+    <!-- CONTAINER DE NOTIFICAÇÕES TOAST EM BOLHA FLUTUANTE -->
     <div id="toastContainer"></div>
 
     <div id="splashScreen">
@@ -752,7 +752,7 @@
             <div class="winners-title">OS ÚLTIMOS VENCEDORES</div>
             <div class="winners-scroll" id="winnersScroll">
                 <div class="winner-card">
-                    <img src="https://files.catbox.moe/75mifn.jpeg" alt="Tiger">
+                    <img src="https://files.catbox.moe/onqvbv.png" alt="Penalty">
                     <div class="winner-info">
                         <div class="winner-name">Kai***</div>
                         <div class="winner-prize">R$ 45.00 BRL</div>
@@ -828,8 +828,8 @@
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
             <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #ffb703;">Chat ao Vivo de Apostadores</div>
             <div class="chat-messages-box" id="chatMessagesBox">
-                <div class="chat-msg-row"><b>Kai***</b>: Alguém jogando o Penalty agora?</div>
-                <div class="chat-msg-row"><b>Luc***</b>: Acabei de forrar no Aviator</div>
+                <div class="chat-msg-row"><b>Ka**</b>: Alguém jogando o Penalty agora?</div>
+                <div class="chat-msg-row"><b>Lu**</b>: Acabei de forrar no Aviator 🔥</div>
             </div>
             <div class="chat-input-area">
                 <input type="text" id="chatInputText" class="chat-input-box" placeholder="Escreva sua mensagem...">
@@ -1197,7 +1197,7 @@
             const splash = document.getElementById('splashScreen');
             splash.style.opacity = '0';
             setTimeout(() => { splash.style.display = 'none'; }, 500);
-            dispararToast("Bem-vindo ao Cangaço Bet!");
+            dispararToastGeral("Bem-vindo ao Cangaço Bet!", "https://files.catbox.moe/qf2bly.jpeg");
         }
 
         const apiKey = '26203b2595a3fc5f4bdc92a2e768e757';
@@ -1212,7 +1212,6 @@
 
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
-        iniciarNotificacoesAutomaticasFicticias();
 
         function salvarDadosStorage() {
             localStorage.setItem('cangaco_bilhetes', JSON.stringify(meusBilhetesSalvos));
@@ -1308,52 +1307,51 @@
             }
         }
 
-        /* --- SISTEMA DE NOTIFICAÇÕES TOAST COM 3 LETRAS E **, EMBLEMA E FLUTUANTE --- */
-        function formatarNomeMascarado(nomeCompleto) {
-            let limpo = nomeCompleto.replace(/[^a-zA-Z]/g, '');
-            if(limpo.length < 3) limpo = 'Jog';
-            return limpo.substring(0, 3).toUpperCase() + '***';
-        }
-
-        function dispararToast(mensagem, iconeUrl = 'https://files.catbox.moe/qf2bly.jpeg') {
+        /* --- FUNÇÃO PARA EXIBIR TOAST COM EMBLEMA ESPECÍFICO E NOME COM 3 LETRAS E ** --- */
+        function dispararToastGeral(mensagem, urlEmblema) {
             const container = document.getElementById('toastContainer');
             if(!container) return;
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
             toast.innerHTML = `
-                <img src="${iconeUrl}" class="toast-icon-img" alt="Emblema">
+                <img src="${urlEmblema}" class="toast-emblema" alt="Logo">
                 <span>${mensagem}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(120%)';
+                toast.style.transform = 'translateY(-20px) scale(0.8)';
                 toast.style.transition = '0.3s ease';
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
 
-        function iniciarNotificacoesAutomaticasFicticias() {
-            const nomesFicticios = ["Matheus", "Gabriel", "Lucas", "Carlos", "Rafael", "Bruno", "Thiago", "Vinicius", "Marcos", "Diego"];
-            const avataresFicticios = [
-                'https://files.catbox.moe/75mifn.jpeg',
-                'https://files.catbox.moe/f5zgx9.webp',
-                'https://files.catbox.moe/9k06uq.jpeg',
-                'https://files.catbox.moe/7dkz4q.jpeg',
-                'https://files.catbox.moe/qf2bly.jpeg'
-            ];
-            
-            setInterval(() => {
-                let nomeAleatorio = nomesFicticios[Math.floor(Math.random() * nomesFicticios.length)];
-                let nomeMascarado = formatarNomeMascarado(nomeAleatorio);
-                let avatarAleatorio = avataresFicticios[Math.floor(Math.random() * avataresFicticios.length)];
-                let valor = (Math.random() * 450 + 35).toFixed(2);
-                
-                if (Math.random() > 0.5) {
-                    dispararToast(`O jogador <b>${nomeMascarado}</b> ganhou <b>R$ ${valor}</b> no Cangaço Bet!`, avatarAleatorio);
-                } else {
-                    dispararToast(`O jogador <b>${nomeMascarado}</b> sacou <b>R$ ${valor}</b> com sucesso!`, avatarAleatorio);
-                }
-            }, 7000);
+        /* --- GERADOR AUTOMÁTICO DE NOTIFICAÇÕES FICTÍCIAS APENAS PARA PENALTY, AVIATOR E MINES --- */
+        const nomesFicticios = ['Carlos', 'Mariana', 'Lucas', 'Gabriel', 'Beatriz', 'Matheus', 'Juliana', 'Bruno', 'Larissa', 'Rafael'];
+        const acoesFicticias = ['ganhou', 'sacou'];
+        const jogosDisponiveis = [
+            { nome: 'Penalty Cangaço', img: 'https://files.catbox.moe/onqvbv.png' },
+            { nome: 'Aviator', img: 'https://files.catbox.moe/f5zgx9.webp' },
+            { nome: 'Mines', img: 'https://files.catbox.moe/9k06uq.jpeg' }
+        ];
+
+        function gerarNotificacaoFicticiaAutomatica() {
+            let nomeAleatorio = nomesFicticios[Math.floor(Math.random() * nomesFicticios.length)];
+            let nomeMascarado = nomeAleatorio.substring(0, 3) + '**';
+            let acao = acoesFicticias[Math.floor(Math.random() * acoesFicticias.length)];
+            let valor = (Math.random() * 350 + 20).toFixed(2);
+            let jogoSorteado = jogosDisponiveis[Math.floor(Math.random() * jogosDisponiveis.length)];
+
+            let textoMensagem = acao === 'ganhou' 
+                ? `${nomeMascarado} ganhou R$ ${valor}!` 
+                : `${nomeMascarado} sacou R$ ${valor}!`;
+
+            dispararToastGeral(textoMensagem, jogoSorteado.img);
+        }
+
+        setInterval(gerarNotificacaoFicticiaAutomatica, 5500);
+
+        function dispararToast(mensagem) {
+            dispararToastGeral(mensagem, 'https://files.catbox.moe/qf2bly.jpeg');
         }
 
         function alternarModoEscuroClaro() {
@@ -1379,7 +1377,7 @@
             if (!usuarioLogado) { dispararToast('Faça login para usar o chat!'); abrirModalRegistro(); return; }
             const input = document.getElementById('chatInputText');
             if(!input || !input.value.trim()) return;
-            let nomeMascarado = formatarNomeMascarado(usuarioLogado.nome || 'User');
+            let nomeMascarado = (usuarioLogado.nome || 'User').substring(0, 3) + '**';
             const box = document.getElementById('chatMessagesBox');
             if(box) {
                 box.innerHTML += `<div class="chat-msg-row"><b>${nomeMascarado}</b>: ${input.value.trim()}</div>`;
@@ -1539,7 +1537,7 @@
 
                 document.getElementById('minesWinAmountText').innerText = `R$ ${lucro.toFixed(2)}`;
                 document.getElementById('minesWinBanner').style.display = 'block';
-                dispararToast(`Prêmio resgatado: R$ ${lucro.toFixed(2)}!`);
+                dispararToastGeral(`Sacou R$ ${lucro.toFixed(2)}!`, 'https://files.catbox.moe/9k06uq.jpeg');
 
                 btn.innerText = "JOGAR NOVAMENTE";
                 btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
@@ -1712,7 +1710,7 @@
                 document.getElementById('aviatorStatusText').innerText = "VOO FINALIZADO";
                 document.getElementById('aviatorWinAmountText').innerText = `R$ ${premioGanho.toFixed(2)}`;
                 document.getElementById('aviatorWinBanner').style.display = 'block';
-                dispararToast(`Saque efetuado com sucesso: R$ ${premioGanho.toFixed(2)}!`);
+                dispararToastGeral(`Sacou R$ ${premioGanho.toFixed(2)}!`, 'https://files.catbox.moe/f5zgx9.webp');
 
                 btn.innerText = "APOSTAR NOVAMENTE";
                 btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
@@ -1916,7 +1914,7 @@
                         if (nivelAtual >= 5) {
                             saldo += premioTotal; atualizarSaldoNaTela();
                             registarTransacao('premio', 'Prêmio Penalty Cangaço', premioTotal);
-                            dispararToast(`Prêmio máximo sacado: R$ ${premioTotal.toFixed(2)}!`);
+                            dispararToastGeral(`Sacou R$ ${premioTotal.toFixed(2)}!`, 'https://files.catbox.moe/onqvbv.png');
                             btn.innerText = "SACAR E REINICIAR";
                             nivelAtual = 0;
                         } else {
