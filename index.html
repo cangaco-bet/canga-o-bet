@@ -1307,8 +1307,17 @@
             }
         }
 
-        /* --- FUNÇÃO PARA EXIBIR TOAST COM EMBLEMA ESPECÍFICO E NOME COM 3 LETRAS E ** --- */
+        /* --- FUNÇÃO PARA EXIBIR TOAST COM EMBLEMA E NOME COM 3 LETRAS E ** --- */
         function dispararToastGeral(mensagem, urlEmblema) {
+            // VERIFICA SE ESTÁ DENTRO DE UM JOGO DE CASSINO (Penalty, Aviator ou Mines)
+            const abaPenaltyAtiva = document.getElementById('tab-penalty').classList.contains('active-tab');
+            const abaAviatorAtiva = document.getElementById('tab-aviator').classList.contains('active-tab');
+            const abaMinesAtiva = document.getElementById('tab-mines').classList.contains('active-tab');
+            
+            if (abaPenaltyAtiva || abaAviatorAtiva || abaMinesAtiva) {
+                return; // NÃO EXIBE NENHUMA NOTIFICAÇÃO ENQUANTO ESTIVER JOGANDO
+            }
+
             const container = document.getElementById('toastContainer');
             if(!container) return;
             const toast = document.createElement('div');
@@ -1537,7 +1546,6 @@
 
                 document.getElementById('minesWinAmountText').innerText = `R$ ${lucro.toFixed(2)}`;
                 document.getElementById('minesWinBanner').style.display = 'block';
-                dispararToastGeral(`Sacou R$ ${lucro.toFixed(2)}!`, 'https://files.catbox.moe/9k06uq.jpeg');
 
                 btn.innerText = "JOGAR NOVAMENTE";
                 btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
@@ -1710,7 +1718,6 @@
                 document.getElementById('aviatorStatusText').innerText = "VOO FINALIZADO";
                 document.getElementById('aviatorWinAmountText').innerText = `R$ ${premioGanho.toFixed(2)}`;
                 document.getElementById('aviatorWinBanner').style.display = 'block';
-                dispararToastGeral(`Sacou R$ ${premioGanho.toFixed(2)}!`, 'https://files.catbox.moe/f5zgx9.webp');
 
                 btn.innerText = "APOSTAR NOVAMENTE";
                 btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
@@ -1914,7 +1921,6 @@
                         if (nivelAtual >= 5) {
                             saldo += premioTotal; atualizarSaldoNaTela();
                             registarTransacao('premio', 'Prêmio Penalty Cangaço', premioTotal);
-                            dispararToastGeral(`Sacou R$ ${premioTotal.toFixed(2)}!`, 'https://files.catbox.moe/onqvbv.png');
                             btn.innerText = "SACAR E REINICIAR";
                             nivelAtual = 0;
                         } else {
