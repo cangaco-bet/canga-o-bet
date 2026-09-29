@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cangaço Bet - Cassino & Jogos</title>
     <style>
-        * {
+        body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
+        body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
+        #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; }
+        .toast-notification { background: linear-gradient(135deg, #151821, #2b0b05); border: 1px solid #ff4500; border-left: 5px solid #ffb703; color: #fff; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); font-size: 13px; font-weight: bold; }
+
+                * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
+
+            
         body {
+
             background-color: #0b0c10;
             color: #ffffff;
             padding-bottom: 25px;
