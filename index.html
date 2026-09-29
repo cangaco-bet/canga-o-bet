@@ -9,9 +9,32 @@
         body.light-theme { background-color: #f4f6f9; color: #1a1a1a; }
         body.light-theme header { background: linear-gradient(135deg, #ffffff, #e4e9ed); }
 
-        /* TOAST NOTIFICATIONS */
-        #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; }
-        .toast-notification { background: linear-gradient(135deg, #151821, #2b0b05); border: 1px solid #ff4500; border-left: 5px solid #ffb703; color: #fff; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); font-size: 13px; font-weight: bold; }
+        /* TOAST NOTIFICATIONS ELEGANTE NO CANTO SUPERIOR */
+        #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast-notification {
+            background: linear-gradient(135deg, #151821, #2b0b05);
+            border: 1px solid #ff4500;
+            border-left: 5px solid #ffb703;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: auto;
+            animation: slideInToast 0.3s ease, fadeOutToast 0.3s ease 2.7s forwards;
+        }
+        @keyframes slideInToast {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOutToast {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
 
         /* ESTILOS DAS NOVAS ABAS */
         .affiliate-box-card, .missions-container, .chat-section-wrapper { padding: 15px; max-width: 500px; margin: 0 auto; text-align: center; }
@@ -609,7 +632,7 @@
 </head>
 <body>
 
-    <!-- CONTAINER DE NOTIFICAÇÕES TOAST -->
+    <!-- CONTAINER DE NOTIFICAÇÕES TOAST NO CANTO SUPERIOR -->
     <div id="toastContainer"></div>
 
     <div id="splashScreen">
@@ -1268,13 +1291,13 @@
             }
         }
 
-        /* --- FUNÇÕES AUXILIARES --- */
+        /* --- FUNÇÕES DE TOAST PROFISSIONAL --- */
         function dispararToast(mensagem) {
             const container = document.getElementById('toastContainer');
             if(!container) return;
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
-            toast.innerHTML = `<span>⚡</span> ${mensagem}`;
+            toast.innerHTML = `<span>⚡</span> <span>${mensagem}</span>`;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
@@ -1374,6 +1397,7 @@
             minesModo = modo;
             document.getElementById('btnMinesModeReal').classList.toggle('active', modo === 'real');
             document.getElementById('btnMinesModeDemo').classList.toggle('active', modo === 'demo');
+            dispararToast(modo === 'real' ? 'Modo Real ativado!' : 'Modo Demo ativado!');
         }
 
         function alterarApostaMines(delta) {
@@ -1386,6 +1410,7 @@
         function atualizarConfigMines() {
             if(minesRodando) return;
             minesQuantidadeMinas = parseInt(document.getElementById('minesCountSelect').value);
+            dispararToast(`Configurado para ${minesQuantidadeMinas} minas!`);
         }
 
         function resetarMinesTela() {
@@ -1421,7 +1446,7 @@
         function acaoMinesBtn() {
             const btn = document.getElementById('btnMinesAcao');
             if (!minesRodando) {
-                if (minesModo === 'real' && saldo < minesApostaValor) { alert("Saldo insuficiente!"); return; }
+                if (minesModo === 'real' && saldo < minesApostaValor) { dispararToast("Saldo insuficiente!"); return; }
                 if (minesModo === 'real') {
                     saldo -= minesApostaValor;
                     atualizarSaldoNaTela();
@@ -1444,10 +1469,11 @@
                 btn.innerText = "SACAR";
                 btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
                 btn.style.color = "#fff";
+                dispararToast("Partida de Mines iniciada!");
 
                 renderizarGridMines();
             } else {
-                if(minesEstrelasReveladas === 0) { alert("Encontre ao menos uma estrela para poder sacar!"); return; }
+                if(minesEstrelasReveladas === 0) { dispararToast("Encontre ao menos uma estrela para poder sacar!"); return; }
                 
                 minesRodando = false;
                 let lucro = minesApostaValor * minesMultAtual;
@@ -1459,6 +1485,7 @@
 
                 document.getElementById('minesWinAmountText').innerText = `R$ ${lucro.toFixed(2)}`;
                 document.getElementById('minesWinBanner').style.display = 'block';
+                dispararToast(`Prêmio resgatado: R$ ${lucro.toFixed(2)}!`);
 
                 btn.innerText = "JOGAR NOVAMENTE";
                 btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
@@ -1491,6 +1518,7 @@
 
                 document.getElementById('minesExplosionEffect').style.display = 'block';
                 document.getElementById('minesCrashBanner').style.display = 'block';
+                dispararToast("Você acionou uma bomba!");
 
                 const btn = document.getElementById('btnMinesAcao');
                 btn.innerText = "EXPLODIU!";
@@ -1551,7 +1579,7 @@
         function acaoAviatorBtn() {
             const btn = document.getElementById('btnAviatorAcao');
             if (!aviatorRodando && !aviatorApostando) {
-                if (saldo < aviatorApostaValorAtual) { alert("Saldo insuficiente!"); return; }
+                if (saldo < aviatorApostaValorAtual) { dispararToast("Saldo insuficiente!"); return; }
                 saldo -= aviatorApostaValorAtual;
                 atualizarSaldoNaTela();
                 registarTransacao('perca', 'Aposta Aviator', -aviatorApostaValorAtual);
@@ -1568,6 +1596,7 @@
                 document.getElementById('explosionEffect').style.display = 'none';
                 document.getElementById('aviatorWinBanner').style.display = 'none';
                 document.getElementById('aviatorCrashBanner').style.display = 'none';
+                dispararToast("Avião descolou!");
                 
                 const plane = document.getElementById('aviatorPlane');
                 plane.style.display = 'block';
@@ -1603,6 +1632,7 @@
                         const expl = document.getElementById('explosionEffect');
                         expl.style.display = 'block';
                         document.getElementById('aviatorCrashBanner').style.display = 'block';
+                        dispararToast("Avião explodiu!");
 
                         btn.innerText = "EXPLODIU!";
                         btn.style.background = "#555";
@@ -1628,6 +1658,7 @@
                 document.getElementById('aviatorStatusText').innerText = "VOO FINALIZADO";
                 document.getElementById('aviatorWinAmountText').innerText = `R$ ${premioGanho.toFixed(2)}`;
                 document.getElementById('aviatorWinBanner').style.display = 'block';
+                dispararToast(`Saque efetuado com sucesso: R$ ${premioGanho.toFixed(2)}!`);
 
                 btn.innerText = "APOSTAR NOVAMENTE";
                 btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
@@ -1641,7 +1672,7 @@
         }
 
         function jogarCassino(nomeJogo, custoAposta) {
-            if (saldo < custoAposta) { alert("Saldo insuficiente!"); return; }
+            if (saldo < custoAposta) { dispararToast("Saldo insuficiente!"); return; }
             saldo -= custoAposta;
             atualizarSaldoNaTela();
             salvarDadosStorage();
@@ -1652,10 +1683,10 @@
                 saldo += premio;
                 atualizarSaldoNaTela();
                 registarTransacao('cassino_ganho', `Prêmio em ${nomeJogo}`, premio);
-                alert(`Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
+                dispararToast(`Ganhou R$ ${premio.toFixed(2)} em ${nomeJogo}!`);
             } else {
                 registarTransacao('cassino_perca', `Aposta em ${nomeJogo}`, -custoAposta);
-                alert(`Perdeu R$ ${custoAposta.toFixed(2)} em ${nomeJogo}.`);
+                dispararToast(`Perdeu R$ ${custoAposta.toFixed(2)} em ${nomeJogo}.`);
             }
         }
 
@@ -1668,11 +1699,11 @@
             const senha = document.getElementById('regSenha').value;
 
             if (!nome || !email || !telefone || !cpf || !nascimento || !senha) {
-                alert('Preencha todos os campos!'); return;
+                dispararToast('Preencha todos os campos!'); return;
             }
 
             dadosTempRegistro = { nome, email, telefone, cpf, nascimento, senha };
-            alert(`Código de Confirmação: 1234`);
+            dispararToast('Código de Confirmação enviado: 1234');
             document.getElementById('etapaCadastro1').style.display = 'none';
             document.getElementById('etapaCadastro2').style.display = 'block';
         }
@@ -1683,7 +1714,7 @@
             salvarDadosStorage();
             verificarSessaoAtiva();
             fecharModais();
-            alert(`Conta criada com sucesso!`);
+            dispararToast('Conta criada com sucesso!');
         }
 
         function realizarLogin() {
@@ -1695,24 +1726,24 @@
                 salvarDadosStorage();
                 verificarSessaoAtiva();
                 fecharModais();
-                alert(`Login efetuado com sucesso!`);
+                dispararToast('Login efetuado com sucesso!');
             } else {
-                alert("Dados incorretos!");
+                dispararToast("Dados incorretos!");
             }
         }
 
         function realizarDeposito() {
             const valorDep = parseFloat(document.getElementById('depositoValorInput').value) || 0;
-            if (valorDep <= 0) { alert("Valor inválido!"); return; }
+            if (valorDep <= 0) { dispararToast("Valor inválido!"); return; }
             saldo += valorDep;
             atualizarSaldoNaTela();
             registarTransacao('deposito', 'Depósito Pix', valorDep);
             fecharModais();
-            alert(`Depósito de R$ ${valorDep.toFixed(2)} efetuado!`);
+            dispararToast(`Depósito de R$ ${valorDep.toFixed(2)} efetuado!`);
         }
 
         function enviarMensagemSuporte() {
-            alert("Mensagem enviada ao suporte!");
+            dispararToast("Mensagem enviada ao suporte!");
             document.getElementById('suporteAssunto').value = "";
             document.getElementById('suporteMensagem').value = "";
         }
@@ -1755,8 +1786,9 @@
             if(jogadaEmAndamento) return;
             let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
             if (nivelAtual === 0) {
-                if (saldo < apostaVal) { alert("Saldo insuficiente!"); return; }
+                if (saldo < apostaVal) { dispararToast("Saldo insuficiente!"); return; }
                 saldo -= apostaVal; atualizarSaldoNaTela();
+                dispararToast(`Aposta de R$ ${apuestaVal.toFixed(2)} confirmada!`);
             }
             document.getElementById('winBanner').classList.remove('show');
             setTimeout(() => { document.getElementById('winBanner').style.display = 'none'; }, 300);
@@ -1823,12 +1855,14 @@
                         banner.style.display = 'block';
                         setTimeout(() => banner.classList.add('show'), 50);
                         nivelAtual++;
+                        dispararToast(`GOOOL! Multiplicador ${mult}x alcançado!`);
                         let btn = document.getElementById('btnConfirmarAposta');
                         btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
                         btn.style.color = "#000";
                         if (nivelAtual >= 5) {
                             saldo += premioTotal; atualizarSaldoNaTela();
                             registarTransacao('premio', 'Prêmio Penalty Cangaço', premioTotal);
+                            dispararToast(`Prêmio máximo sacado: R$ ${premioTotal.toFixed(2)}!`);
                             btn.innerText = "SACAR E REINICIAR";
                             nivelAtual = 0;
                         } else {
@@ -1841,6 +1875,7 @@
                         document.getElementById('winValorBranco').innerText = "Tente de novo";
                         banner.style.display = 'block';
                         setTimeout(() => banner.classList.add('show'), 50);
+                        dispararToast("O goleiro defendeu o penálti!");
                         let btn = document.getElementById('btnConfirmarAposta');
                         btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
                         btn.style.color = "#fff";
