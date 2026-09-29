@@ -386,18 +386,44 @@
         .floating-support-btn:hover { transform: scale(1.08); }
         .floating-support-btn svg { width: 28px; height: 28px; fill: #0f1015; }
 
-        .bilhetes-container { padding: 15px; }
-        .bilhete-impresso {
-            background: linear-gradient(145deg, #151821, #11141c); border: 1px solid #ff4500;
-            border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        /* --- ESTILOS REFORMULADOS DA ABA DE BILHETES --- */
+        .bilhetes-container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .bilhetes-tabs-nav {
+            display: flex; gap: 8px; margin-bottom: 15px; background: #151821; padding: 6px; border-radius: 14px; border: 1px solid #232838;
         }
-        .bilhete-header {
-            display: flex; justify-content: space-between; font-size: 12px; color: #ffb703;
-            font-weight: bold; border-bottom: 1px solid #232838; padding-bottom: 6px; margin-bottom: 8px;
+        .btn-bilhete-tab {
+            flex: 1; padding: 10px; background: transparent; border: none; border-radius: 10px;
+            color: #888; font-weight: 900; font-size: 12px; cursor: pointer; text-transform: uppercase; transition: 0.2s;
         }
-        .bilhete-status { margin-top: 8px; font-weight: bold; font-size: 12px; }
+        .btn-bilhete-tab.active {
+            background: linear-gradient(135deg, #ff4500, #ff6a00); color: #fff;
+            box-shadow: 0 4px 12px rgba(255,69,0,0.4);
+        }
+        .bilhete-detalhado-card {
+            background: linear-gradient(145deg, #151821, #11141c);
+            border: 1px solid #232838;
+            border-left: 4px solid #ff4500;
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            text-align: left;
+        }
+        .bilhete-card-header {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; color: #ffb703; font-weight: bold; border-bottom: 1px solid #232838;
+            padding-bottom: 8px; margin-bottom: 10px; text-transform: uppercase;
+        }
+        .bilhete-times-row {
+            font-size: 15px; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .bilhete-info-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; background: #0f1118; padding: 10px; border-radius: 10px; border: 1px solid #232838;
+        }
+        .bilhete-info-label { font-size: 10px; color: #888; text-transform: uppercase; }
+        .bilhete-info-val { font-size: 12px; font-weight: 900; color: #fff; }
 
-        /* --- ESTILOS REFORMULADOS DA ABA DE EXTRATO / HISTÓRICO --- */
+        /* --- ESTILOS REFORMULADOS DA ABA DE EXTRATO --- */
         .extrato-container { padding: 15px; max-width: 600px; margin: 0 auto; }
         .extrato-header-card {
             background: linear-gradient(135deg, #151821, #0f1118);
@@ -1175,27 +1201,34 @@
     <!-- ABA 2: ESPORTES AO VIVO -->
     <div id="tab-esportes" class="main-tab-content">
         <div class="sports-container" style="padding-top: 15px;">
-            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">Partidas em Tempo Real (Ao Vivo)</div>
+            <div style="font-size: 15px; font-weight: bold; margin-bottom: 8px; color: #ffb703;">Partidas Oficiais (Ao Vivo e Agendadas)</div>
             <div class="filtro-ligas-scroll" id="filtroLigasContainer">
                 <button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>
             </div>
             <div id="lista-partidas-api">
-                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas em direto...</p>
+                <p style="color: #888; text-align: center; padding: 20px;">A carregar partidas reais da API...</p>
             </div>
         </div>
     </div>
 
-    <!-- ABA 3: MEUS BILHETES -->
+    <!-- ABA 3: MEUS BILHETES REFORMULADA COM ABAS DE GANHAS E PERDIDAS -->
     <div id="tab-bilhetes" class="main-tab-content">
         <div class="bilhetes-container">
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #ffb703;">Comprovativos de Bilhetes ao Vivo</div>
+            <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
+            
+            <div class="bilhetes-tabs-nav">
+                <button class="btn-bilhete-tab active" id="btnTabBilhetesAtivos" onclick="mudarFiltroBilhete('ativos', this)">Ativos / Ao Vivo</button>
+                <button class="btn-bilhete-tab" id="btnTabBilhetesGanhas" onclick="mudarFiltroBilhete('ganhas', this)">Ganhas</button>
+                <button class="btn-bilhete-tab" id="btnTabBilhetesPerdidas" onclick="mudarFiltroBilhete('perdidas', this)">Perdidas</button>
+            </div>
+
             <div id="listaMeusBilhetesImpressos">
-                <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete confirmado ainda.</p>
+                <p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete encontrado.</p>
             </div>
         </div>
     </div>
 
-    <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES / EXTRATO REFORMULADA E DETALHADA -->
+    <!-- ABA 4: HISTÓRICO DE TRANSAÇÕES / EXTRATO -->
     <div id="tab-extrato" class="main-tab-content">
         <div class="extrato-container">
             <button class="btn-voltar-home" onclick="mudarAba('cassino')">Voltar para a Início</button>
@@ -1252,9 +1285,9 @@
         </div>
         <div class="bet-slip-info" id="betSelectionInfo">Nenhuma seleção feita.</div>
         <div style="font-size: 11px; color: #ffb703; margin-bottom: 6px;" id="oddTotalInfo">Odd Total: 0.00</div>
-        <input type="number" id="betValorInput" class="bet-slip-input" placeholder="Valor da Aposta (R$)" value="50">
+        <input type="number" id="betValorInput" class="bet-slip-input" placeholder="Valor da Aposta (R$)" value="50" oninput="atualizarCalculoRetorno()">
         <div style="font-size: 11px; color: #00ff88; margin-bottom: 6px;" id="retornoPotencial">Retorno potencial: R$ 0,00</div>
-        <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E IR PARA A TABELA</button>
+        <button class="btn-place-bet" onclick="confirmarEEnviarParaBilhetes()">CRIAR BILHETE E REGISTAR</button>
     </div>
 
     <div id="matchModal" class="modal-overlay">
@@ -1348,6 +1381,9 @@
         let usuarioLogado = JSON.parse(localStorage.getItem('cangaco_usuario')) || null;
         
         let jogoSelecionadoAtual = 'penalty';
+        let selecaoApostaAtual = null;
+        let partidasApiCache = [];
+        let filtroBilheteAtual = 'ativos';
 
         atualizarSaldoNaTela();
         verificarSessaoAtiva();
@@ -1446,7 +1482,6 @@
             }
         }
 
-        /* --- FUNÇÃO PARA EXIBIR TOAST COM EMBLEMA ESPECÍFICO E NOME COM 3 LETRAS E ** --- */
         function dispararToastGeral(mensagem, urlEmblema) {
             const container = document.getElementById('toastContainer');
             if(!container) return;
@@ -1464,7 +1499,6 @@
             }, 3500);
         }
 
-        /* --- GERADOR AUTOMÁTICO DE NOTIFICAÇÕES FICTÍCIAS APENAS PARA PENALTY, AVIATOR E MINES --- */
         const nomesFicticios = ['Carlos', 'Mariana', 'Lucas', 'Gabriel', 'Beatriz', 'Matheus', 'Juliana', 'Bruno', 'Larissa', 'Rafael'];
         const acoesFicticias = ['ganhou', 'sacou'];
         const jogosDisponiveis = [
@@ -1957,127 +1991,10 @@
             });
         }
 
-        /* --- PENALTY CANGAÇO --- */
-        let nivelAtual = 0;
-        let jogadaEmAndamento = false;
-        const multiplicadores = [1.92, 3.84, 7.68, 15.36, 30.72];
-
-        function alterarApostaPenalty(delta) {
-            if(jogadaEmAndamento) return;
-            let input = document.getElementById('penaltyBetInput');
-            let val = parseFloat(input.value) + (delta * 10);
-            if (val < 10) val = 10;
-            input.value = val.toFixed(2);
-        }
-
-        function iniciarNovoPenalty() {
-            if(jogadaEmAndamento) return;
-            let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
-            if (nivelAtual === 0) {
-                if (saldo < apostaVal) { dispararToast("Saldo insuficiente!"); return; }
-                saldo -= apostaVal; atualizarSaldoNaTela();
-                registarTransacao('perca', 'Aposta Penalty Cangaço', -apostaVal);
-                dispararToast(`Aposta de R$ ${apostaVal.toFixed(2)} confirmada!`);
-            }
-            document.getElementById('winBanner').classList.remove('show');
-            setTimeout(() => { document.getElementById('winBanner').style.display = 'none'; }, 300);
-            document.getElementById('bolaEl').style.transform = 'translateX(-50%) scale(1)';
-            document.getElementById('goleiroEl').style.transform = 'translateX(-50%) translateY(0) rotate(0deg)';
-            atualizarMultiplicadoresUI();
-            mostrarAlvos(true);
-            let btn = document.getElementById('btnConfirmarAposta');
-            btn.innerText = "ESCOLHA O ALVO";
-            btn.style.background = "#555";
-            btn.style.color = "#aaa";
-        }
-
-        function atualizarMultiplicadoresUI() {
-            for (let i = 1; i <= 5; i++) {
-                let badge = document.getElementById('m' + i);
-                badge.classList.remove('active');
-                if (i - 1 === nivelAtual) badge.classList.add('active');
-            }
-        }
-
-        function mostrarAlvos(status) {
-            let displayVal = status ? 'flex' : 'none';
-            for (let i = 1; i <= 5; i++) { document.getElementById('target' + i).style.display = displayVal; }
-        }
-
-        function chutarPenalty(cantoEscolhido) {
-            jogadaEmAndamento = true;
-            mostrarAlvos(false);
-            let apostaVal = parseFloat(document.getElementById('penaltyBetInput').value);
-            const penaltyAudio = document.getElementById('penaltyAudio');
-            if(penaltyAudio && penaltyAudio.paused) { penaltyAudio.play().catch(e => console.log(e)); }
-
-            let bola = document.getElementById('bolaEl');
-            let goleiro = document.getElementById('goleiroEl');
-            let cantoGoleiro = Math.random() < 0.70 ? cantoEscolhido : (Math.floor(Math.random() * 5) + 1);
-
-            let bolaMovimentos = {
-                1: 'translate(calc(-50% - 115px), -250px) scale(0.4)',
-                2: 'translate(calc(-50% + 115px), -250px) scale(0.4)',
-                3: 'translate(-50%, -250px) scale(0.4)',
-                4: 'translate(calc(-50% - 90px), -135px) scale(0.55)',
-                5: 'translate(calc(-50% + 90px), -135px) scale(0.55)'
-            };
-            let goleiroMovimentos = {
-                1: 'translate(calc(-50% - 85px), -70px) rotate(-65deg)',
-                2: 'translate(calc(-50% + 85px), -70px) rotate(65deg)',
-                3: 'translate(-50%, -85px) rotate(0deg)',
-                4: 'translate(calc(-50% - 100px), 10px) rotate(-85deg)',
-                5: 'translate(calc(-50% + 100px), 10px) rotate(85deg)'
-            };
-
-            setTimeout(() => {
-                bola.style.transform = bolaMovimentos[cantoEscolhido];
-                goleiro.style.transform = goleiroMovimentos[cantoGoleiro];
-                setTimeout(() => {
-                    let foiGol = (cantoGoleiro !== cantoEscolhido);
-                    let banner = document.getElementById('winBanner');
-                    if (foiGol) {
-                        let mult = multiplicadores[nivelAtual];
-                        let premioTotal = apostaVal * mult;
-                        document.getElementById('winValorVermelho').innerText = `R$ ${apostaVal.toFixed(2)}`;
-                        document.getElementById('winValorBranco').innerText = `R$ ${premioTotal.toFixed(2)}`;
-                        banner.style.display = 'block';
-                        setTimeout(() => banner.classList.add('show'), 50);
-                        nivelAtual++;
-                        dispararToast(`GOOOL! Multiplicador ${mult}x alcançado!`);
-                        let btn = document.getElementById('btnConfirmarAposta');
-                        btn.style.background = "linear-gradient(180deg, #00ff88 0%, #00cc6a 50%, #008f4b 100%)";
-                        btn.style.color = "#000";
-                        if (nivelAtual >= 5) {
-                            saldo += premioTotal; atualizarSaldoNaTela();
-                            registarTransacao('saque', `Saque / Prêmio Penalty Cangaço (${mult}x)`, premioTotal);
-                            btn.innerText = "SACAR E REINICIAR";
-                            nivelAtual = 0;
-                        } else {
-                            btn.innerText = "CONTINUAR CHUTANDO";
-                        }
-                        jogadaEmAndamento = false;
-                    } else {
-                        document.getElementById('winValorVermelho').innerText = "DEFESA!";
-                        document.getElementById('winValorVermelho').style.color = "#ff2a2a";
-                        document.getElementById('winValorBranco').innerText = "Tente de novo";
-                        banner.style.display = 'block';
-                        setTimeout(() => banner.classList.add('show'), 50);
-                        dispararToast("O goleiro defendeu o penálti!");
-                        let btn = document.getElementById('btnConfirmarAposta');
-                        btn.style.background = "linear-gradient(180deg, #ff4500 0%, #cc3500 100%)";
-                        btn.style.color = "#fff";
-                        btn.innerText = "NOVO PÊNALTI";
-                        nivelAtual = 0;
-                        jogadaEmAndamento = false;
-                    }
-                }, 450);
-            }, 50);
-        }
-
+        /* --- API DE FUTEBOL E SISTEMA DE BILHETES AO VIVO --- */
         async function carregarJogosReais() {
             const container = document.getElementById('lista-partidas-api');
-            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas ao vivo...</p>`;
+            container.innerHTML = `<p style="color: #888; text-align: center; padding: 20px;">A carregar partidas oficiais e ao vivo...</p>`;
             try {
                 const hoje = new Date().toISOString().split('T')[0];
                 const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
@@ -2085,31 +2002,262 @@
                 });
                 const dados = await resposta.json();
                 if (dados.response && dados.response.length > 0) {
-                    container.innerHTML = '';
-                    dados.response.slice(0, 5).forEach((match) => {
-                        container.innerHTML += `
-                            <div class="match-card">
-                                <div class="match-header"><span>${match.league.name}</span></div>
-                                <div class="match-teams">
-                                    <span class="team-name">${match.teams.home.name}</span>
-                                    <div class="match-score-vs"><span class="match-real-score">${match.goals.home ?? 0} - ${match.goals.away ?? 0}</span></div>
-                                    <span class="team-name">${match.teams.away.name}</span>
-                                </div>
-                            </div>`;
-                    });
+                    partidasApiCache = dados.response.filter(m => m.fixture.status.short === '1H' || m.fixture.status.short === '2H' || m.fixture.status.short === 'HT' || m.fixture.status.short === 'NS' || m.fixture.status.short === 'ET');
+                    renderizarListaPartidasFiltro('TODAS');
+                    renderizarFiltroLigas(partidasApiCache);
+                } else {
+                    container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida oficial neste momento.</p>`;
                 }
-            } catch (e) { container.innerHTML = `<p style="color: #aaa; text-align: center;">Nenhuma partida ao vivo no momento.</p>`; }
+            } catch (e) {
+                container.innerHTML = `<p style="color: #ff4500; text-align: center; padding: 20px;">Erro ao carregar dados da API de Futebol.</p>`;
+            }
+        }
+
+        function renderizarFiltroLigas(partidas) {
+            const filtroContainer = document.getElementById('filtroLigasContainer');
+            let ligasUnicas = [];
+            partidas.forEach(m => {
+                if(!ligasUnicas.includes(m.league.name)) ligasUnicas.push(m.league.name);
+            });
+            let html = `<button class="btn-filtro-liga ativo" onclick="filtrarLiga('TODAS', this)">Todas as Ligas</button>`;
+            ligasUnicas.slice(0, 10).forEach(l => {
+                html += `<button class="btn-filtro-liga" onclick="filtrarLiga('${l}', this)">${l}</button>`;
+            });
+            filtroContainer.innerHTML = html;
+        }
+
+        function filtrarLiga(ligaNome, btnEl) {
+            document.querySelectorAll('.btn-filtro-liga').forEach(b => b.classList.remove('ativo'));
+            btnEl.classList.add('ativo');
+            renderizarListaPartidasFiltro(ligaNome);
+        }
+
+        function renderizarListaPartidasFiltro(ligaFiltro) {
+            const container = document.getElementById('lista-partidas-api');
+            let filtradas = partidasApiCache;
+            if (ligaFiltro !== 'TODAS') {
+                filtradas = partidasApiCache.filter(m => m.league.name === ligaFiltro);
+            }
+
+            if (filtradas.length === 0) {
+                container.innerHTML = `<p style="color: #aaa; text-align: center; padding: 20px;">Nenhuma partida encontrada para esta liga.</p>`;
+                return;
+            }
+
+            let html = '';
+            filtradas.forEach(match => {
+                let statusShort = match.fixture.status.short;
+                let minutoExato = match.fixture.status.elapsed ? `${match.fixture.status.elapsed}'` : 'Pré-jogo';
+                if(statusShort === 'HT') minutoExato = 'Intervalo';
+                if(statusShort === 'FT') return; // Oculta encerradas da aba de apostas ativas conforme pedido
+
+                let homeGols = match.goals.home ?? 0;
+                let awayGols = match.goals.away ?? 0;
+                let oddHome = (1.75 + Math.random() * 0.5).toFixed(2);
+                let oddDraw = (3.20 + Math.random() * 0.8).toFixed(2);
+                let oddAway = (2.10 + Math.random() * 0.6).toFixed(2);
+
+                html += `
+                    <div class="match-card" onclick="abrirMercadosPartida(${match.fixture.id})">
+                        <div class="match-header">
+                            <span>🏆 ${match.league.name}</span>
+                            <span style="color:#00ff88;">🔴 ${minutoExato}</span>
+                        </div>
+                        <div class="match-teams">
+                            <span class="team-name"><img src="${match.teams.home.logo}" alt=""> ${match.teams.home.name}</span>
+                            <div class="match-score-vs">
+                                <span class="match-vs-text">${statusShort === 'NS' ? 'VS' : 'AO VIVO'}</span>
+                                <span class="match-real-score">${homeGols} - ${awayGols}</span>
+                            </div>
+                            <span class="team-name"><img src="${match.teams.away.logo}" alt=""> ${match.teams.away.name}</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px;" onclick="event.stopPropagation()">
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="selecionarAposta('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória ${match.teams.home.name}', ${oddHome}, ${match.fixture.id})">1: ${oddHome}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="selecionarAposta('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Empate', ${oddDraw}, ${match.fixture.id})">X: ${oddDraw}</button>
+                            <button class="btn-topo-acao" style="background:#191d28; border:1px solid #ff4500; font-size:11px;" onclick="selecionarAposta('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'Vitória ${match.teams.away.name}', ${oddAway}, ${match.fixture.id})">2: ${oddAway}</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function abrirMercadosPartida(fixtureId) {
+            let match = partidasApiCache.find(m => m.fixture.id === fixtureId);
+            if(!match) return;
+            document.getElementById('modalPartidaTitulo').innerText = `${match.teams.home.name} vs ${match.teams.away.name}`;
+            document.getElementById('modalPartidaInfoSub').innerText = `${match.league.name} | Relógio: ${match.fixture.status.elapsed ? match.fixture.status.elapsed + "'" : 'Pré-jogo'}`;
+            
+            let grid1X2 = document.getElementById('modalOdds1X2');
+            grid1X2.innerHTML = `
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '1 (${match.teams.home.name})', 1.85, ${match.fixture.id})"><span>1</span><b>1.85</b></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', 'X (Empate)', 3.40, ${match.fixture.id})"><span>X</span><b>3.40</b></div>
+                <div class="odd-card-4d" onclick="selecionarApostaModal('${match.teams.home.name}', '${match.teams.away.name}', '${match.league.name}', '2 (${match.teams.away.name})', 2.10, ${match.fixture.id})"><span>2</span><b>2.10</b></div>
+            `;
+            document.getElementById('matchModal').style.display = 'flex';
+        }
+
+        function fecharModalPartida() {
+            document.getElementById('matchModal').style.display = 'none';
+        }
+
+        function selecionarAposta(home, away, liga, mercado, odd, fixtureId) {
+            selecaoApostaAtual = { home, away, liga, mercado, odd, fixtureId };
+            document.getElementById('betSelectionInfo').innerHTML = `<b>${home} vs ${away}</b><br><span style="color:#ffb703;">Liga:</span> ${liga}<br><span style="color:#00ff88;">Seleção:</span> ${mercado}`;
+            document.getElementById('oddTotalInfo').innerText = `Odd: ${odd}`;
+            atualizarCalculoRetorno();
+            document.getElementById('betSlip').style.display = 'block';
+        }
+
+        function selecionarApostaModal(home, away, liga, mercado, odd, fixtureId) {
+            fecharModalPartida();
+            selecionarAposta(home, away, liga, mercado, odd, fixtureId);
+        }
+
+        function atualizarCalculoRetorno() {
+            let valor = parseFloat(document.getElementById('betValorInput').value) || 0;
+            let odd = selecaoApostaAtual ? selecaoApostaAtual.odd : 0;
+            let retorno = valor * odd;
+            document.getElementById('retornoPotencial').innerText = `Retorno potencial: R$ ${retorno.toFixed(2)}`;
+        }
+
+        function confirmarEEnviarParaBilhetes() {
+            if(!selecaoApostaAtual) return;
+            let valorAposta = parseFloat(document.getElementById('betValorInput').value) || 0;
+            if(valorAposta <= 0) { dispararToast("Valor inválido!"); return; }
+            if(saldo < valorAposta) { dispararToast("Saldo insuficiente para aposta!"); return; }
+
+            saldo -= valorAposta;
+            atualizarSaldoNaTela();
+            registarTransacao('perca', `Aposta Esportiva (${selecaoApostaAtual.home} vs ${selecaoApostaAtual.away})`, -valorAposta);
+
+            let novoBilhete = {
+                id: 'BILHETE-' + Math.floor(Math.random() * 900000 + 100000),
+                home: selecaoApostaAtual.home,
+                away: selecaoApostaAtual.away,
+                liga: selecaoApostaAtual.liga,
+                mercado: selecaoApostaAtual.mercado,
+                odd: selecaoApostaAtual.odd,
+                valor: valorAposta.toFixed(2),
+                retorno: (valorAposta * selecaoApostaAtual.odd).toFixed(2),
+                status: 'Ativo',
+                dataHora: new Date().toLocaleString('pt-BR'),
+                fixtureId: selecaoApostaAtual.fixtureId
+            };
+
+            meusBilhetesSalvos.unshift(novoBilhete);
+            salvarDadosStorage();
+            fecharBilhete();
+            dispararToast("Bilhete criado e registado com sucesso!");
+            mudarAba('bilhetes');
+        }
+
+        function mudarFiltroBilhete(filtro, btnEl) {
+            document.querySelectorAll('.btn-bilhete-tab').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            filtroBilheteAtual = filtro;
+            renderizarBilhetesNaTela();
         }
 
         function renderizarBilhetesNaTela() {
             const container = document.getElementById('listaMeusBilhetesImpressos');
-            if (meusBilhetesSalvos.length === 0) { container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete.</p>`; return; }
+            let filtrados = meusBilhetesSalvos.filter(b => {
+                if(filtroBilheteAtual === 'ativos') return b.status === 'Ativo';
+                if(filtroBilheteAtual === 'ganhas') return b.status === 'Ganho';
+                if(filtroBilheteAtual === 'perdidas') return b.status === 'Perdido';
+                return true;
+            });
+
+            if (filtrados.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Nenhum bilhete nesta categoria.</p>`;
+                return;
+            }
+
             let html = '';
-            meusBilhetesSalvos.forEach(b => {
-                html += `<div class="bilhete-impresso"><div class="bilhete-header"><span>BILHETE</span><span>R$ ${b.valor}</span></div><div class="bilhete-status" style="color:${b.cor};">Estado: ${b.status}</div></div>`;
+            filtrados.forEach(b => {
+                let corStatus = '#ffb703';
+                if(b.status === 'Ganho') corStatus = '#00ff88';
+                if(b.status === 'Perdido') corStatus = '#ff4500';
+
+                html += `
+                    <div class="bilhete-detalhado-card">
+                        <div class="bilhete-card-header">
+                            <span>ID: ${b.id}</span>
+                            <span style="color:${corStatus}; font-weight:900;">${b.status.toUpperCase()}</span>
+                        </div>
+                        <div class="bilhete-times-row">
+                            <span>⚽ ${b.home} vs ${b.away}</span>
+                        </div>
+                        <div style="font-size: 11px; color: #ffb703; margin-bottom: 6px;">Liga Exata: ${b.liga}</div>
+                        <div style="font-size: 11px; color: #00ff88; margin-bottom: 8px;">Aposta Escolhida: ${b.mercado} (Odd: ${b.odd})</div>
+                        <div class="bilhete-info-grid">
+                            <div>
+                                <div class="bilhete-info-label">Valor Apostado</div>
+                                <div class="bilhete-info-val" style="color:#ff4500;">R$ ${b.valor}</div>
+                            </div>
+                            <div>
+                                <div class="bilhete-info-label">Retorno Potencial</div>
+                                <div class="bilhete-info-val" style="color:#00ff88;">R$ ${b.retorno}</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 10px; color: #888; margin-top: 8px; text-align: right;">Criado em: ${b.dataHora}</div>
+                    </div>
+                `;
             });
             container.innerHTML = html;
         }
+
+        /* --- ATUALIZAÇÃO AUTOMÁTICA DE PLACAR, MINUTOS E RESULTADOS DOS BILHETES --- */
+        async function atualizarResultadosBilhetesAoVivo() {
+            if (partidasApiCache.length === 0) return;
+            try {
+                const hoje = new Date().toISOString().split('T')[0];
+                const resposta = await fetch(`https://v3.football.api-sports.io/fixtures?date=${hoje}`, {
+                    headers: { "x-apisports-key": apiKey }
+                });
+                const dados = await resposta.json();
+                if (dados.response) {
+                    dados.response.forEach(partidaAtualizada => {
+                        let fixtureId = partidaAtualizada.fixture.id;
+                        let statusShort = partidaAtualizada.fixture.status.short;
+                        
+                        // Atualiza bilhetes ativos correspondentes
+                        meusBilhetesSalvos.forEach(bilhete => {
+                            if (bilhete.fixtureId === fixtureId && bilhete.status === 'Ativo') {
+                                if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
+                                    // Simula a resolução do bilhete com base no resultado final da API
+                                    let homeGols = partidaAtualizada.goals.home ?? 0;
+                                    let awayGols = partidaAtualizada.goals.away ?? 0;
+                                    
+                                    let ganhou = false;
+                                    if (bilhete.mercado.includes('Vitória ' + bilhete.home) && homeGols > awayGols) ganhou = true;
+                                    else if (bilhete.mercado.includes('Vitória ' + bilhete.away) && awayGols > homeGols) ganhou = true;
+                                    else if (bilhete.mercado.includes('Empate') && homeGols === awayGols) ganhou = true;
+                                    else {
+                                        ganhou = Math.random() >= 0.5; // Fallback se mercado específico
+                                    }
+
+                                    if (ganhou) {
+                                        bilhete.status = 'Ganho';
+                                        let premio = parseFloat(bilhete.retorno);
+                                        saldo += premio;
+                                        atualizarSaldoNaTela();
+                                        registarTransacao('saque', `Prêmio Bilhete Ganho (${bilhete.id})`, premio);
+                                        dispararToast(`Bilhete ${bilhete.id} foi GANHO! R$ ${premio.toFixed(2)} adicionado!`);
+                                    } else {
+                                        bilhete.status = 'Perdido';
+                                        dispararToast(`Bilhete ${bilhete.id} foi dado como PERDIDO.`);
+                                    }
+                                    salvarDadosStorage();
+                                }
+                            }
+                        });
+                    });
+                }
+            } catch(e) {}
+        }
+
+        setInterval(atualizarResultadosBilhetesAoVivo, 20000);
 
         function renderizarExtratoNaTela() {
             const container = document.getElementById('listaExtratoTransacoes');
