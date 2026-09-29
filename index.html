@@ -187,6 +187,11 @@
             background: transparent; color: #ffb703; border: 1px solid #ffb703;
             padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px;
         }
+        .btn-topo-tema {
+            background: #191d28; border: 1px solid #ff4500; color: #ffb703;
+            width: 34px; height: 34px; border-radius: 8px; font-size: 14px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
 
         .quick-search-bar { padding: 12px 15px; background: #0f1118; border-bottom: 1px solid #1a1d28; }
         .quick-search-input {
@@ -637,6 +642,7 @@
         </div>
         <div class="header-right">
             <div class="saldo-topo-3d">Saldo: R$ <span id="saldoAtual">1000.00</span></div>
+            <button class="btn-topo-tema" onclick="alternarModoEscuroClaro()" title="Modo Claro / Escuro">🌗</button>
             <button class="btn-topo-login" onclick="abrirModalLogin()">ENTRAR</button>
             <button class="btn-topo-acao" onclick="abrirModalRegistro()">REGISTRAR</button>
         </div>
@@ -660,13 +666,10 @@
             <div class="sidebar-close" onclick="fecharSidebar()">&times;</div>
         </div>
         <div class="sidebar-item" onclick="mudarAba('cassino'); fecharSidebar();">Cassino & Jogos</div>
-        <div class="sidebar-item" onclick="mudarAba('afiliados'); fecharSidebar();">💰 Sistema de Afiliados</div>
-        <div class="sidebar-item" onclick="mudarAba('missoes'); fecharSidebar();">🎯 Missões Diárias</div>
-        <div class="sidebar-item" onclick="mudarAba('chat'); fecharSidebar();">💬 Chat ao Vivo</div>
-        <div class="sidebar-item" onclick="alternarModoEscuroClaro(); fecharSidebar();">🌗 Modo Claro / Escuro</div>
-        <div class="sidebar-item" onclick="mudarAba('penalty'); fecharSidebar();">Penalty Cangaço</div>
-        <div class="sidebar-item" onclick="mudarAba('aviator'); fecharSidebar();">Aviator</div>
-        <div class="sidebar-item" onclick="mudarAba('mines'); fecharSidebar();">Mines</div>
+        <div class="sidebar-item" onclick="mudarAba('afiliados'); fecharSidebar();">Sistema de Afiliados</div>
+        <div class="sidebar-item" onclick="mudarAba('missoes'); fecharSidebar();">Missões Diárias</div>
+        <div class="sidebar-item" onclick="mudarAba('chat'); fecharSidebar();">Chat ao Vivo</div>
+        <div class="sidebar-item" onclick="alternarModoEscuroClaro(); fecharSidebar();">Modo Claro / Escuro</div>
         <div class="sidebar-item" onclick="mudarAba('esportes'); fecharSidebar();">Apostas Esportivas</div>
         <div class="sidebar-item" onclick="mudarAba('bilhetes'); fecharSidebar();">Meus Bilhetes</div>
         <div class="sidebar-item" onclick="mudarAba('extrato'); fecharSidebar();">Histórico / Extrato</div>
@@ -1267,7 +1270,7 @@
             }
         }
 
-        /* --- NOVAS FUNÇÕES ADICIONADAS --- */
+        /* --- FUNÇÕES AUXILIARES --- */
         function dispararToast(mensagem) {
             const container = document.getElementById('toastContainer');
             if(!container) return;
